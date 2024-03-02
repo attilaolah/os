@@ -26,14 +26,13 @@
       ];
       luks.devices = {
         crypta = {
-          # 2T NVMe SSD.
-          device = "/dev/disk/by-uuid/8efccfcb-8c61-4844-89c9-3dbc1a900de4";
+          device = "/dev/nvme0n1";  # 2T
           allowDiscards = true;
           preLVM = true;
         };
         cryptb = {
           # 2T NVMe SSD.
-          device = "/dev/disk/by-uuid/a4d6ae21-1535-42d0-b5a9-c249d1db71d4";
+          device = "/dev/nvme1n1";  # 2T
           allowDiscards = true;
           preLVM = true;
         };
