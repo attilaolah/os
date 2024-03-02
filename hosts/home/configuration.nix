@@ -49,6 +49,7 @@
       # LVM volume over crypta + cryptb.
       device = "/dev/nixvg/root";
       fsType = "ext4";
+      options = [ "lazytime" ];
     };
     "${config.boot.loader.efi.efiSysMountPoint}" = {
       # TMP; TODO: Move to 2Gi USB ESP partition.
