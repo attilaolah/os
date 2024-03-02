@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   system.stateVersion = "23.11";
@@ -6,14 +6,9 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   boot = {
-    # Enable TTY0 logging.
-    # https://github.com/nix-community/nixos-generators?tab=readme-ov-file#format-specific-notes
-    kernelParams = [ "console=tty0" ];
+    kernelModules = [ "kvm-intel" ];
     loader = {
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi";
-      };
+      efi.canTouchEfiVariables = true;
       grub = {
         enable = true;
         device = "nodev";
@@ -22,7 +17,13 @@
       };
     };
     initrd = {
-      kernelModules = [ "amdgpu" "kvm-intel" ];
+      kernelModules = [ "amdgpu" ];
+      availableKernelModules = [
+        "ahci"
+        "nvme"
+        "usbhid"
+        "xhci_pci"
+      ];
       luks.devices = {
         crypta = {
           # 2T NVMe SSD.
@@ -49,7 +50,7 @@
       device = "/dev/nixvg/root";
       fsType = "ext4";
     };
-    "boot" = {
+    "${config.boot.loader.efi.efiSysMountPoint}" = {
       # TMP; TODO: Move to 2Gi USB ESP partition.
       device = "/dev/disk/by-uuid/EC50-CA49";
       fsType = "vfat";
@@ -65,10 +66,17 @@
 
   hardware = {
     # CPU: Intel Xeon E5-2666 v3
-    cpu.intel.updateMicrocode = true;
-    opengl.extraPackages = with pkgs; [
-      rocmPackages.clr.icd
-    ];
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    enableRedistributableFirmware = true;
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [
+        amdvlk
+        rocm-opencl-icd
+        rocm-opencl-runtime
+        rocmPackages.clr.icd
+      ];
+    };
     pulseaudio.enable = true;
   };
 
@@ -121,6 +129,10 @@
     openssh = {
       enable = true;
       startWhenNeeded = true;  # make it socket-activated
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+      };
     };
 
     # Only used on the virtual console.
