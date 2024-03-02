@@ -60,8 +60,6 @@
 
   console = {
     earlySetup = true;
-    # TODO: Remove, no need.
-    # keyMap = "dvorak-programmer";
     useXkbConfig = true; # use xkb.options
   };
 
@@ -115,7 +113,6 @@
   };
 
   networking = {
-    # TODO: useDHCP = lib.mkForce true;
     hostName = "home";
     search = [ "dorn.haus" ];
     firewall.allowedTCPPorts = [ 22 8080 ];
