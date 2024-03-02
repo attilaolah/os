@@ -17,6 +17,12 @@
       device = "/dev/mapper/cryptusb";
       fsType = "ext4";
       options = [ "noatime" "nodiratime" ];
+      encrypted = {
+        enable = true;
+        label = "cryptusb";
+        #  # 256G USB 3.2 drive, for backups.
+        blkDev = "/dev/disk/by-uuid/6a582085-8b4a-4e16-88d8-a3fd492dbdb2";
+      };
     };
   };
 }
