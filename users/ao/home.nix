@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.username = "atl";
-  home.homeDirectory = "/home/atl";
+  home.username = "ao";
+  home.homeDirectory = "/home/ao";
   home.stateVersion = "23.11";
 
   nix.package = pkgs.nix;
