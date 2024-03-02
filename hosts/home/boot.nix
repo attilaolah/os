@@ -1,6 +1,7 @@
 {
   boot = {
     kernelModules = [ "kvm-intel" ];
+    blacklistedKernelModules = [ "radeon" ];
     loader = {
       efi.canTouchEfiVariables = true;
       grub = {
