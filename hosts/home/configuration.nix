@@ -165,7 +165,6 @@
   environment.systemPackages = with pkgs; [
     git
     neovim
-    wget
   ];
 
   programs = {

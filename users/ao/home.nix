@@ -5,11 +5,7 @@
   home.homeDirectory = "/home/ao";
   home.stateVersion = "23.11";
 
-  nix.package = pkgs.nix;
   home.packages = with pkgs; [
-    # Nix (configured above):
-    config.nix.package
-
     # Shell & tools:
     fish
     tmux
@@ -20,6 +16,11 @@
 
     # Editors:
     neovim
+
+    # Hyprland deps:
+    foot
+    waybar
+    wofi
 
     # Utilities:
     curl
@@ -57,6 +58,11 @@
     elan
     android-tools
     virtualenv
+
+    # GUI apps:
+    google-chrome
+    firefox
+    gimp
   ];
 
   nixpkgs.config.allowUnfree = true;
