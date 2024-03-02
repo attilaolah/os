@@ -9,9 +9,14 @@
       options = [ "lazytime" ];
     };
     "${config.boot.loader.efi.efiSysMountPoint}" = {
-      # TMP; TODO: Move to 2Gi USB ESP partition.
-      device = "/dev/disk/by-uuid/EC50-CA49";
+      # ESP @ USB 3.2 drive, boot partition.
+      device = "/dev/disk/by-uuid/12CE-A600";
       fsType = "vfat";
+    };
+    "/home/ao/backup" = {
+      device = "/dev/mapper/cryptusb";
+      fsType = "ext4";
+      options = [ "noatime" "nodiratime" ];
     };
   };
 }

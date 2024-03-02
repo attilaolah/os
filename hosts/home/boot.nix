@@ -3,12 +3,16 @@
     kernelModules = [ "kvm-intel" ];
     blacklistedKernelModules = [ "radeon" ];
     loader = {
-      efi.canTouchEfiVariables = true;
       grub = {
         enable = true;
         device = "nodev";
-        efiSupport = true;
         enableCryptodisk = true;
+        efiSupport = true;
+
+        # Save EFI binary as EFI/BOOT/BOOTX64.EFI. This is not really
+        # necessary, but this way the system can boot even if NVRAM entries get
+        # wiped for whatever reason: just boot from removable device as usual.
+        efiInstallAsRemovable = true;
       };
     };
     initrd = {
@@ -31,6 +35,10 @@
           device = "/dev/disk/by-uuid/a4d6ae21-1535-42d0-b5a9-c249d1db71d4";
           allowDiscards = true;
           preLVM = true;
+        };
+        cryptusb = {
+          # 256G USB 3.2 drive, for backups.
+          device = "/dev/disk/by-uuid/6a582085-8b4a-4e16-88d8-a3fd492dbdb2";
         };
       };
       services.lvm.enable = true;
