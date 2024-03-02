@@ -2,8 +2,7 @@
   description = "NixOS flakes for attilaolah's personal computers.";
 
   inputs = {
-    # renovate: datasource=github-releases depName=nixpkgs/nixos
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
