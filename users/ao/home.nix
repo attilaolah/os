@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [
+    ./file.nix
+  ];
+
   home.username = "ao";
   home.homeDirectory = "/home/ao";
   home.stateVersion = "23.11";
@@ -70,24 +74,6 @@
   home.sessionPath = [
     "${config.home.homeDirectory}/local/bin"
   ];
-
-  home.file = {
-    # ~/.config:
-    ".config/fish/functions/fish_prompt.fish".source = ./src/_.config/fish/functions/fish_prompt.fish;
-    ".config/foot/foot.ini".source = ./src/_.config/foot/foot.ini;
-    ".config/hypr/hyprland.conf".source = ./src/_.config/hypr/hyprland.conf;
-    ".config/hypr/hyprpaper.conf".source = ./src/_.config/hypr/hyprpaper.conf;
-    ".config/nvim/init.lua".source = ./src/_.config/nvim/init.lua;
-    ".config/sway/config".source = ./src/_.config/sway/config;
-    ".config/wallpapers/alpeli-1020m.jpg".source = ./src/_.config/wallpapers/alpeli-1020m.jpg;
-    # ~/.*:
-    ".bash_profile".source = ./src/_.bash_profile;
-    ".bashrc".source = ./src/_.bashrc;
-    ".hgrc".source = ./src/_.hgrc;
-    ".profile".source = ./src/_.profile;
-    ".tmux.conf".source = ./src/_.tmux.conf;
-    ".zshrc".source = ./src/_.zshrc;
-  };
 
   home.sessionVariables = {
     # Shell:
