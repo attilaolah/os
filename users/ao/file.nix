@@ -10,10 +10,7 @@
     };
 
     # ~/.*:
-    ".bash_profile".source = ./src/_.bash_profile;
-    ".bashrc".source = ./src/_.bashrc;
     ".hgrc".source = ./src/_.hgrc;
-    ".profile".source = ./src/_.profile;
     ".tmux.conf".source = ./src/_.tmux.conf;
     ".zshrc".source = ./src/_.zshrc;
 
