@@ -7,6 +7,14 @@
     networkmanager.enable = true;
     nftables.enable = true;
 
+    extraHosts = ''
+      192.168.0.1 wifi
+      192.168.1.1 modem
+
+      # W/ FQDN for WireGuard roaming.
+      192.168.1.4 jh jh.dorn.haus
+    '';
+
     wireguard.interfaces = {
       dh8 = {
         ips = [
