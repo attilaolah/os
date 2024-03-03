@@ -1,6 +1,9 @@
+{ config, ... }:
+
 {
   boot = {
     kernelModules = [ "kvm-intel" ];
+    kernelParams = [ "ip=192.168.0.2::192.168.0.1:255.255.255.0:home::none" ];
     blacklistedKernelModules = [ "radeon" ];
     loader = {
       grub = {
@@ -39,7 +42,10 @@
       };
       services.lvm.enable = true;
       # Start SSH during boot, to allow remote unlocking of LUKS volumes.
-      network.ssh.enable = true;
+      network.ssh = {
+        enable = true;
+        authorizedKeys = config.users.users.ao.openssh.authorizedKeys.keys;
+      };
     };
   };
 }
