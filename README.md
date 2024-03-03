@@ -1,12 +1,11 @@
-# ❄️ NixOS flakes
+# NixOS: ❄️ Flakes & 🏠 Home Manager configs
 
-Inspired by nixinator/nothing.
+Inspired by [nixinator/nothing][1]. More details [in this comment][2], on how
+to use the config, or how to build it, even for remote targets. Mind. Blown. 🤯
 
-[nixinator/nothing]: ahttps://github.com/nixinator/nothing.
+[1]: ahttps://github.com/nixinator/nothing.
 
-More details [in this comment][1], on how to use the config, or how to build it, even for remote targets. Mind blown. 🤯
-
-[1]: https://discourse.nixos.org/t/proper-way-to-build-a-remote-system-with-flakes/17661/12
+[2]: https://discourse.nixos.org/t/proper-way-to-build-a-remote-system-with-flakes/17661/12
 
 ## 🛠️ Installing
 
