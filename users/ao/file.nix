@@ -10,9 +10,7 @@
     };
 
     # ~/.*:
-    ".hgrc".source = ./src/_.hgrc;
     ".tmux.conf".source = ./src/_.tmux.conf;
-    ".zshrc".source = ./src/_.zshrc;
 
     # ~/.config:
     ".config/fish/functions/fish_prompt.fish".source = ./src/_.config/fish/functions/fish_prompt.fish;
