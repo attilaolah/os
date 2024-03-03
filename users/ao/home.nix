@@ -3,15 +3,18 @@
 {
   imports = [
     ./file.nix
+    ./programs/fish.nix
+    ./programs/git.nix
+    ./programs/gpg.nix
   ];
 
   home.username = "ao";
   home.homeDirectory = "/home/ao";
+  # TODO: Renovate!
   home.stateVersion = "23.11";
 
   home.packages = with pkgs; [
     # Shell & tools:
-    fish
     tmux
     tree
     zoxide
@@ -42,8 +45,8 @@
     fd
 
     # Development environment:
-    git
-    bazelisk
+    # TODO: Renovate!
+    bazel_7
     buildifier
     buildozer
     clang
@@ -56,6 +59,7 @@
     go
     nodejs
     nodePackages.pnpm
+    # TODO: Renovate!
     python311Full
     python311Packages.ipython
     ruby
@@ -94,81 +98,4 @@
     defaultCacheTtl = 1800;  # 30m
     pinentryFlavor = "curses";
   };
-
-  programs.fish = {
-    enable = true;
-    shellAbbrs = {
-      "..." = "cd ../..";
-      "...." = "cd ../../..";
-
-      l = "ls -lh";
-      ll = "ls -la";
-
-      f = "fd";
-
-      v = "nvim";
-      vi = "nvim";
-      vim = "nvim";
-      nv = "nvim";
-
-      bazel = "bazelisk";
-
-      g = "git status";
-      ga = "git add -p .";
-      gb = "git branch -avv";
-      gc = "git commit -v";
-      gg = "git commit -m";
-      gl = "git log --abbrev-commit --decorate --graph --pretty=oneline";
-      gp = "git push";
-      gr = "git remote -v";
-
-      c = "curl -s --dump-header /dev/stderr";
-
-      kb-us = "setxkbmap -layout us -option caps:escape";
-      kb-dvp = "setxkbmap -layout us -variant dvp -option altwin:meta_win -option caps:escape -option compose:ralt -option keypad:atm -option kpdl:semi -option numpad:shift3";
-
-      nix-try = "nix-shell --run $SHELL --packages";
-
-      # Hyprland is so cool it starts with a capital letter.
-      # Nevertheless, nobody likes excessive pinky usage, so let's fix that.
-      h = "Hyprland";
-    };
-    interactiveShellInit = ''
-      set --universal fish_greeting
-      source ${pkgs.fzf}/share/fish/vendor_functions.d/fzf_key_bindings.fish
-      source ${pkgs.fzf}/share/fish/vendor_conf.d/load-fzf-key-bindings.fish
-      ${pkgs.zoxide}/bin/zoxide init --cmd cd fish | source
-      ${pkgs.any-nix-shell}/bin/any-nix-shell fish | source
-      ${pkgs.direnv}/bin/direnv hook fish | source
-    '';
-  };
-
-  programs.gpg = {
-    enable = true;
-    settings = {
-      default-key = "07E6C0643FD142C3";
-    };
-  };
-
-  programs.git = {
-    enable = true;
-    userName = "Attila Oláh";
-    userEmail = "attilaolah@gmail.com";
-    signing = {
-      signByDefault = true;
-      key = "07E6C0643FD142C3";
-    };
-    aliases = {
-      ci = "commit";
-      co = "checkout";
-    };
-    extraConfig = {
-      pull = { rebase = true; };
-      push = { autoSetupRemote = true; };
-      init = { defaultBranch = "main"; };
-    };
-  };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }
