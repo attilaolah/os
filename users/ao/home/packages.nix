@@ -18,7 +18,9 @@
     rsync
     screenfetch
     silver-searcher
+    sops
     tmux
+    traceroute
     tree
     wget
     zoxide
