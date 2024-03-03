@@ -11,8 +11,8 @@
       192.168.0.1 wifi
       192.168.1.1 modem
 
-      # W/ FQDN for WireGuard roaming.
-      192.168.1.4 jh jh.dorn.haus
+      # W/ FQDN to override public addresses:
+      192.168.4.1 jh jh.dorn.haus
     '';
 
     wireguard.interfaces = {
@@ -29,7 +29,7 @@
               "::/0"         # IPv6: all traffic
               "10.8.0.0/16"  # IPv4: 16-bit network only
             ];
-            endpoint = "192.168.1.4:45340";
+            endpoint = "jh:45340";
             persistentKeepalive = 24;
           }
         ];
