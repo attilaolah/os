@@ -16,7 +16,7 @@
       };
     };
     initrd = {
-      kernelModules = [ "amdgpu" ];
+      kernelModules = [ "amdgpu" "r8169" ];
       availableKernelModules = [
         "ahci"
         "nvme"
