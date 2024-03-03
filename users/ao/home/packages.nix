@@ -40,7 +40,6 @@
     # Common dev tools.
     # More specific ones should go into per-project flakes.
     android-tools
-    # TODO: Renovate!
     bazel_7
     buildifier
     buildozer
@@ -54,10 +53,11 @@
     nodePackages.pnpm
     nodejs
     pkg-config
-    # TODO: Renovate!
-    (python311.withPackages (ps: with ps; [ ipython ]))
     ruby
     rustup
     virtualenv
+
+    # Python:
+    (python312.withPackages (ps: with ps; [ ipython ]))
   ];
 }
