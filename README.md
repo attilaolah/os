@@ -3,7 +3,7 @@
 Inspired by [nixinator/nothing][1]. More details [in this comment][2], on how
 to use the config, or how to build it, even for remote targets. Mind. Blown. 🤯
 
-[1]: ahttps://github.com/nixinator/nothing.
+[1]: https://github.com/nixinator/nothing.
 
 [2]: https://discourse.nixos.org/t/proper-way-to-build-a-remote-system-with-flakes/17661/12
 
