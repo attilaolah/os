@@ -8,6 +8,7 @@
     ./networking.nix
     ./programs.nix
     ./services.nix
+    ./systemd.nix
     ./users.nix
   ];
   system.stateVersion = "23.11";
@@ -18,10 +19,6 @@
     earlySetup = true;
     useXkbConfig = true; # use xkb.options
   };
-
-  systemd.tmpfiles.rules = [
-    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
-  ];
 
   security = {
     polkit.enable = true;
