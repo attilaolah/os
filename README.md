@@ -49,7 +49,7 @@ This will install the workstation (`#home` config).
 
 Add remote builds for other machines:
 
-- Crostiniand
+- Crostini
 - VirtualBox
 
 Set up [impermanence][6].

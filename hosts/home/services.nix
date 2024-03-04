@@ -20,6 +20,13 @@ in {
   services = {
     blueman.enable = true;
     dbus.enable = true;
+    pipewire = {
+      enable = true;
+
+      alsa.enable = true;
+      jack.enable = true;
+      pulse.enable = true;
+    };
 
     openssh = {
       enable = true;

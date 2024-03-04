@@ -18,6 +18,5 @@
       ];
     };
     bluetooth.enable = true;
-    pulseaudio.enable = true;
   };
 }
