@@ -14,6 +14,7 @@
         rocmPackages.clr.icd
       ];
     };
+    bluetooth.enable = true;
     pulseaudio.enable = true;
   };
 }

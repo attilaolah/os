@@ -1,5 +1,6 @@
 {
   services = {
+    blueman.enable = true;
     dbus.enable = true;
 
     openssh = {
