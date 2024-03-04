@@ -16,6 +16,13 @@
         # necessary, but this way the system can boot even if NVRAM entries get
         # wiped for whatever reason: just boot from removable device as usual.
         efiInstallAsRemovable = true;
+
+        useOSProber = false;
+        extraEntries = ''
+          menuentry 'UEFI Firmware Settings' { fwsetup }
+          menuentry 'Power off' { halt }
+          menuentry 'Reboot' { reboot }
+        '';
       };
     };
     initrd = {
