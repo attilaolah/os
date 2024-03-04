@@ -9,6 +9,7 @@
     ./networking.nix
     ./programs.nix
     ./services.nix
+    ./services/xserver/xkb.nix
     ./systemd.nix
     ./users.nix
   ];

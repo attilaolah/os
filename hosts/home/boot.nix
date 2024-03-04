@@ -35,20 +35,18 @@
         "usbhid"
         "xhci_pci"
       ];
-      luks.devices = {
-        crypta = {
-          device = "/dev/nvme0n1";  # 2T
+      luks.devices = let
+        luksDev = ctrl: {
+          device = "/dev/nvme${toString ctrl}n1";  # 2T
           allowDiscards = true;
           preLVM = true;
         };
-        cryptb = {
-          # 2T NVMe SSD.
-          device = "/dev/nvme1n1";  # 2T
-          allowDiscards = true;
-          preLVM = true;
-        };
+      in {
+        crypta = (luksDev 0);  # 2T
+        cryptb = (luksDev 1);  # 2T
       };
       services.lvm.enable = true;
+
       # Start SSH during boot, to allow remote unlocking of LUKS volumes.
       network.ssh = {
         enable = true;
