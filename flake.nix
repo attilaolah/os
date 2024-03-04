@@ -19,22 +19,21 @@
     nixpkgs,
     nixos-unstable,
     home-manager,
+    hyprland,
     ...
   } @ inputs: {
-    nixosConfigurations = {
-      home = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          (import ./hosts/home/configuration.nix)
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.ao = import ./users/ao/home.nix;
-          }
-        ];
-        specialArgs = {inherit inputs;};
-      };
+    nixosConfigurations.home = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        (import ./hosts/home/configuration.nix)
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.ao = import ./home-manager/home.nix;
+        }
+      ];
+      specialArgs = {inherit inputs;};
     };
   };
 }

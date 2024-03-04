@@ -1,0 +1,43 @@
+{lib, ...}: let
+  # Monitor layout:
+  # ╔═══╗         ╔═══╗
+  # ║ L ║╔═══════╗║ D ║
+  # ║ E ║║ S A M ║║ E ║
+  # ║ N ║╚═══════╝║ L ║
+  # ╚═══╝         ╚═══╝
+  M1 = "Lenovo Group Limited P27h-20 V906V9HY";
+  M2 = "Samsung Electric Company U32J59x HNMW200264";
+  M3 = "Dell Inc. DELL P2720DC 81WTK01K1SFS";
+
+  monitor = [
+    "$M1, 2560x1440@60, 0x0,      1, transform, 1"
+    "$M2, 3840x2160@60, 1440x200, 1"
+    "$M3, 2560x1440@60, 5280x0,   1, transform, 3"
+  ];
+
+  workspace = [
+    "1, monitor:$M1, default:true"
+    "2, monitor:$M2, default:true"
+    "3, monitor:$M3, default:true"
+  ];
+
+  exec-once = "hyprctl dispatch focusmonitor $M2";
+in {
+  "$M1" = "desc:${M1}";
+  "$M2" = "desc:${M2}";
+  "$M3" = "desc:${M3}";
+
+  inherit monitor workspace exec-once;
+
+  # RAW Hyprland config, for hyprland.greet.conf.
+  hyprconf = lib.concatStringsSep "\n" (
+    [
+      "$M1 = desc:${M1}"
+      "$M2 = desc:${M2}"
+      "$M3 = desc:${M3}"
+    ]
+    ++ (map (x: "monitor = ${x}") monitor)
+    ++ (map (x: "workspace = ${x}") workspace)
+    ++ ["exec-once = ${exec-once}"]
+  );
+}

@@ -20,12 +20,14 @@ Other notable repos:
 - [n3oney/nixus]
 - [khaneliman/khanelinix]
 - [stephenreynolds/nix-config]
+- [3rfaan/arch-everforest]
 
 [nixinator/nothing]: https://github.com/nixinator/nothing
 [sjcobb2022/nixos-config]: https://github.com/sjcobb2022/nixos-config
 [n3oney/nixus]: https://github.com/n3oney/nixus
 [khaneliman/khanelinix]: https://github.com/khaneliman/khanelinix
 [stephenreynolds/nix-config]: https://github.com/stephenreynolds/nix-config
+[3rfaan/arch-everforest]: https://github.com/3rfaan/arch-everforest
 
 See also [this comment][2], on how to use the config, or how to build it, even
 for remote targets. Mind. Blown. 🤯

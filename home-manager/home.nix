@@ -10,6 +10,8 @@
     ./programs/fish.nix
     ./programs/git.nix
     ./programs/gpg.nix
+    ./wayland/window_manager/hyprland.nix
+    ./services/gpg_agent.nix
   ];
 
   home = {
@@ -28,11 +30,4 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    defaultCacheTtl = 7200; # 2h
-    pinentryFlavor = "curses";
-  };
 }
