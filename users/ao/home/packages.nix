@@ -22,6 +22,7 @@
     tmux
     traceroute
     tree
+    usbutils
     wget
     zoxide
 
@@ -38,6 +39,7 @@
     gimp
     inkscape
     rawtherapee
+    gnome.cheese
 
     # Common dev tools.
     # More specific ones should go into per-project flakes.
