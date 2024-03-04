@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./boot.nix
     ./file_systems.nix
@@ -40,7 +43,7 @@
 
   nix = {
     package = pkgs.nixUnstable;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = ["nix-command" "flakes"];
   };
 
   nixpkgs.config.allowUnfree = true;

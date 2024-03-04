@@ -14,7 +14,13 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixos-unstable, home-manager, ... }@inputs: {
+  outputs = {
+    self,
+    nixpkgs,
+    nixos-unstable,
+    home-manager,
+    ...
+  } @ inputs: {
     nixosConfigurations = {
       home = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -27,7 +33,7 @@
             home-manager.users.ao = import ./users/ao/home.nix;
           }
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = {inherit inputs;};
       };
     };
   };

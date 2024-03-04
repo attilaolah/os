@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [
     # CLI utilities:
     age
@@ -62,6 +65,6 @@
     virtualenv
 
     # Python:
-    (python312.withPackages (ps: with ps; [ ipython ]))
+    (python312.withPackages (ps: with ps; [ipython]))
   ];
 }

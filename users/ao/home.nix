@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./file.nix
     ./home/packages.nix
@@ -24,13 +27,12 @@
     };
   };
 
-
   nixpkgs.config.allowUnfree = true;
 
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    defaultCacheTtl = 7200;  # 2h
+    defaultCacheTtl = 7200; # 2h
     pinentryFlavor = "curses";
   };
 }

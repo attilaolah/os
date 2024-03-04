@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   hardware = {
     # CPU: Intel Xeon E5-2666 v3
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

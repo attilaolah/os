@@ -13,9 +13,9 @@
       co = "checkout";
     };
     extraConfig = {
-      pull = { rebase = true; };
-      push = { autoSetupRemote = true; };
-      init = { defaultBranch = "main"; };
+      pull = {rebase = true;};
+      push = {autoSetupRemote = true;};
+      init = {defaultBranch = "main";};
     };
   };
 }

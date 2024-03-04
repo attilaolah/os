@@ -1,6 +1,10 @@
-{ config, inputs, lib, pkgs, ... }:
-
-let
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  ...
+}: let
   regreet = lib.getExe config.programs.regreet.package;
   hyprland = inputs.hyprland.packages.${pkgs.system}.hyprland;
   hyprland-keyboard = ''
@@ -20,7 +24,6 @@ let
     ${(builtins.readFile ../../hyprland/greet.conf)}
     exec-once = ${regreet} -l debug; ${hyprland}/bin/hyprctl dispatch exit
   ''}";
-
 in {
   services = {
     blueman.enable = true;
@@ -28,7 +31,7 @@ in {
 
     openssh = {
       enable = true;
-      startWhenNeeded = true;  # make it socket-activated
+      startWhenNeeded = true; # make it socket-activated
       settings = {
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;

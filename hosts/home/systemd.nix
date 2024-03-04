@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   systemd = {
     tmpfiles.rules = [
       # AMD ROCm HIP location, as expected by some 3rd party apps.

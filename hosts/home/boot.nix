@@ -1,11 +1,9 @@
-{ config, ... }:
-
-{
+{config, ...}: {
   boot = {
     plymouth.enable = true;
-    kernelModules = [ "kvm-intel" ];
-    kernelParams = [ "ip=192.168.0.2::192.168.0.1:255.255.255.0:home::none" ];
-    blacklistedKernelModules = [ "radeon" ];
+    kernelModules = ["kvm-intel"];
+    kernelParams = ["ip=192.168.0.2::192.168.0.1:255.255.255.0:home::none"];
+    blacklistedKernelModules = ["radeon"];
     loader = {
       grub = {
         enable = true;
@@ -27,7 +25,7 @@
       };
     };
     initrd = {
-      kernelModules = [ "amdgpu" "r8169" ];
+      kernelModules = ["amdgpu" "r8169"];
       availableKernelModules = [
         "ahci"
         "nvme"
@@ -37,13 +35,13 @@
       ];
       luks.devices = let
         luksDev = ctrl: {
-          device = "/dev/nvme${toString ctrl}n1";  # 2T
+          device = "/dev/nvme${toString ctrl}n1"; # 2T
           allowDiscards = true;
           preLVM = true;
         };
       in {
-        crypta = (luksDev 0);  # 2T
-        cryptb = (luksDev 1);  # 2T
+        crypta = luksDev 0; # 2T
+        cryptb = luksDev 1; # 2T
       };
       services.lvm.enable = true;
 
