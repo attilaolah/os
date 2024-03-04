@@ -1,8 +1,26 @@
-{ inputs, pkgs, ... }:
+{ config, inputs, lib, pkgs, ... }:
 
 let
-  tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
-  hyprland-session = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/share/wayland-sessions";
+  regreet = lib.getExe config.programs.regreet.package;
+  hyprland = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  hyprland-keyboard = ''
+  input {
+    kb_layout = ${config.services.xserver.xkb.layout}
+    kb_variant = ${config.services.xserver.xkb.variant}
+    kb_options = ${config.services.xserver.xkb.options}
+  }
+  '';
+
+  # 1st Hyperland only runs "command" (regreet) and exits.
+  # ReGreet itself will then run a second session with the user's config.
+  hyprland-greet = "${hyprland}/bin/Hyprland --config ${pkgs.writeText "hyprland.greet.conf" ''
+    ${(builtins.readFile ./hyprland/greet.conf)}
+    ${(builtins.readFile ./hyprland/input.conf)}
+    ${(builtins.readFile ./hyprland/monitors.conf)}
+    ${hyprland-keyboard}
+    exec-once = ${regreet} -l debug; ${hyprland}/bin/hyprctl dispatch exit
+  ''}";
+
 in {
   services = {
     blueman.enable = true;
@@ -21,14 +39,20 @@ in {
     xserver.xkb = {
       layout = "us";
       variant = "dvp";
-      options = "caps:escape,compose:ralt,keypad:atm,kpdl:semi,numpad:shift3";
+      options = (lib.concatStringsSep "," [
+        "caps:escape"
+        "compose:ralt"
+        "keypad:atm"
+        "kpdl:semi"
+        "numpad:shift3"
+      ]);
     };
 
     greetd = {
       enable = true;
       settings = {
         default_session = {
-          command = "${tuigreet} --time --remember --remember-session --sessions ${hyprland-session}";
+          command = hyprland-greet;
           user = "greeter";
         };
       };

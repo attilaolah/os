@@ -4,6 +4,7 @@
   imports = [
     ./boot.nix
     ./file_systems.nix
+    ./fonts.nix
     ./hardware.nix
     ./networking.nix
     ./programs.nix
