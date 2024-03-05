@@ -14,6 +14,7 @@
     ./wayland/window_manager/hyprland.nix
     ./services/gpg_agent.nix
     ./gtk.nix
+    ./qt.nix
   ];
 
   home = {
@@ -29,13 +30,6 @@
       GOPATH = "${config.home.homeDirectory}/dev/go";
       RUSTUP_HOME = "${config.home.homeDirectory}/dev/rustup";
     };
-  };
-
-  qt = {
-    enable = true;
-
-    style.name = "breeze";
-    platformTheme = "gnome";
   };
 
   nixpkgs.config.allowUnfree = true;
