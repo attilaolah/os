@@ -37,6 +37,10 @@
     waybar
     wofi
 
+    # Gnome apps:
+    gnome.cheese
+    gnome.nautilus
+
     # Browsers:
     firefox
     google-chrome
@@ -45,7 +49,6 @@
     gimp
     inkscape
     rawtherapee
-    gnome.cheese
 
     # Common dev tools.
     # More specific ones should go into per-project flakes.
