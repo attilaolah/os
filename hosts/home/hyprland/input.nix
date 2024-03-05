@@ -1,4 +1,4 @@
-{config, ...}: let
+{config, ...}: rec {
   input = {
     # Keyboard:
     kb_layout = config.services.xserver.xkb.layout;
@@ -11,8 +11,6 @@
     touchpad.natural_scroll = false;
     sensitivity = 0;
   };
-in {
-  inherit input;
 
   # RAW Hyprland config, for hyprland.greet.conf.
   hyprconf = with input; ''
@@ -25,7 +23,11 @@ in {
 
       # Mouse:
       follow_mouse = ${toString follow_mouse}
-      touchpad:natural_scroll = ${toString touchpad.natural_scroll}
+      touchpad:natural_scroll = ${
+      if touchpad.natural_scroll
+      then "yes"
+      else "no"
+    }
       sensitivity = ${toString sensitivity}
     }
   '';
