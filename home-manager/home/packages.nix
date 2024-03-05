@@ -35,10 +35,10 @@
     foot
     pavucontrol
     waybar
-    rofi
 
     # Gnome apps:
     gnome.cheese
+    gnome.eog
     gnome.nautilus
 
     # Browsers:

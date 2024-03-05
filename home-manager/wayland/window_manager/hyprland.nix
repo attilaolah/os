@@ -9,6 +9,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   xkb = import ../../../hosts/home/services/xserver/xkb.nix {inherit lib;};
@@ -27,9 +28,10 @@ in {
         "waybar"
       ];
 
-      "$MENU" = "rofi -show drun";
-      "$TERM" = "foot";
-      "$BROWSER" = "google-chrome-stable --enable-unsafe-webgpu";
+      "$TERM" = "${pkgs.foot}/bin/foot";
+      "$MENU" = "${pkgs.rofi}/bin/rofi -show drun -theme ${config.home.homeDirectory}/.config/rofi/launchers/type-3/style-10.rasi";
+      "$POWER" = "${pkgs.rofi}/bin/rofi -show p -modi \"p:${pkgs.rofi-power-menu}/bin/rofi-power-menu --no-text\" -theme ${config.home.homeDirectory}/.config/rofi/powermenu/type-2/style-1.rasi";
+      "$BROWSER" = "${pkgs.google-chrome}/bin/google-chrome-stable --enable-unsafe-webgpu";
 
       general = {
         allow_tearing = false;
@@ -82,7 +84,7 @@ in {
 
       bind =
         [
-          "$MOD SHIFT, ESCAPE, exit,"
+          "$MOD SHIFT, ESCAPE, exec, $POWER"
           "$MOD, Return, exec, $TERM"
           "$MOD, Space, togglefloating,"
           "$MOD, Escape, killactive,"

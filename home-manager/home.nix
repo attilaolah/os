@@ -10,8 +10,10 @@
     ./programs/fish.nix
     ./programs/git.nix
     ./programs/gpg.nix
+    ./programs/rofi.nix
     ./wayland/window_manager/hyprland.nix
     ./services/gpg_agent.nix
+    ./gtk.nix
   ];
 
   home = {
@@ -27,6 +29,13 @@
       GOPATH = "${config.home.homeDirectory}/dev/go";
       RUSTUP_HOME = "${config.home.homeDirectory}/dev/rustup";
     };
+  };
+
+  qt = {
+    enable = true;
+
+    style.name = "breeze";
+    platformTheme = "gnome";
   };
 
   nixpkgs.config.allowUnfree = true;
