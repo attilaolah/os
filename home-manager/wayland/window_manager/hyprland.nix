@@ -27,7 +27,7 @@ in {
         "waybar"
       ];
 
-      "$MENU" = "wofi --show run";
+      "$MENU" = "rofi -show drun";
       "$TERM" = "foot";
       "$BROWSER" = "google-chrome-stable --enable-unsafe-webgpu";
 

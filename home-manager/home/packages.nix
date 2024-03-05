@@ -35,7 +35,7 @@
     foot
     pavucontrol
     waybar
-    wofi
+    rofi
 
     # Gnome apps:
     gnome.cheese
