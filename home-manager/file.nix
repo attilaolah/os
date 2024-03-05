@@ -29,7 +29,12 @@ in {
 
     # ~/.config:
     ".config/fish/functions/fish_prompt.fish".source = ./src/_.config/fish/functions/fish_prompt.fish;
-    ".config/foot/foot.ini".source = ./src/_.config/foot/foot.ini;
+    ".config/foot/foot.ini".text = lib.generators.toINI {} {
+      main = {
+        font = "monospace:size=14";
+        font-size-adjustment = 2;
+      };
+    };
     ".config/nvim/init.lua".source = ./src/_.config/nvim/init.lua;
     ".config/wallpapers/alpeli-1020m.jpg".source = ./src/_.config/wallpapers/alpeli-1020m.jpg;
 
