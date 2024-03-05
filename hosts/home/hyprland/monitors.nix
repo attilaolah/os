@@ -8,6 +8,10 @@
   M1 = "Lenovo Group Limited P27h-20 V906V9HY";
   M2 = "Samsung Electric Company U32J59x HNMW200264";
   M3 = "Dell Inc. DELL P2720DC 81WTK01K1SFS";
+in rec {
+  "$M1" = "desc:${M1}";
+  "$M2" = "desc:${M2}";
+  "$M3" = "desc:${M3}";
 
   monitor = [
     "$M1, 2560x1440@60, 0x0,      1, transform, 1"
@@ -22,12 +26,6 @@
   ];
 
   exec-once = "hyprctl dispatch focusmonitor $M2";
-in {
-  "$M1" = "desc:${M1}";
-  "$M2" = "desc:${M2}";
-  "$M3" = "desc:${M3}";
-
-  inherit monitor workspace exec-once;
 
   # RAW Hyprland config, for hyprland.greet.conf.
   hyprconf = lib.concatStringsSep "\n" (
