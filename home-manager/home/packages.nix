@@ -14,6 +14,8 @@
     fd
     fzf
     gnupg
+    gotop
+    htop
     mktemp
     neovim
     pinentry
@@ -29,8 +31,9 @@
     wget
     zoxide
 
-    # Hyprland deps:
+    # Desktop utilities:
     foot
+    pavucontrol
     waybar
     wofi
 
