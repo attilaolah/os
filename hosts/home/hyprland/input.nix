@@ -16,7 +16,7 @@ in {
 
   # RAW Hyprland config, for hyprland.greet.conf.
   hyprconf = with input; ''
-    input = {
+    input {
       # Keyboard:
       kb_layout = ${kb_layout}
       kb_variant = ${kb_variant}
