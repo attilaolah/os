@@ -3,7 +3,7 @@
     enable = true;
 
     theme = {
-      name = "Vimix-dark";
+      name = "vimix-dark-doder";
       package = pkgs.vimix-gtk-themes;
     };
 

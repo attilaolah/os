@@ -34,6 +34,8 @@
     # Desktop utilities:
     foot
     pavucontrol
+    vimix-gtk-themes
+    vimix-icon-theme
     waybar
 
     # Gnome apps:
