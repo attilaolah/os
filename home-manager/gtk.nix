@@ -3,12 +3,15 @@
     enable = true;
 
     theme = {
-      name = "vimix-dark-doder";
-      package = pkgs.vimix-gtk-themes;
+      name = "vimix-dark-grey";
+      package = pkgs.vimix-gtk-themes.override {
+        themeVariants = ["grey"];
+        colorVariants = ["dark"];
+      };
     };
 
     iconTheme = {
-      name = "Vimix-dark";
+      name = "Vimix-Black-dark";
       package = pkgs.vimix-icon-theme;
     };
 
