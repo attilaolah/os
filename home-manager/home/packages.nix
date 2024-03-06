@@ -16,6 +16,7 @@
     gnupg
     gotop
     htop
+    killall
     mktemp
     neovim
     pinentry
@@ -48,6 +49,7 @@
     google-chrome
 
     # Other GUI apps:
+    blender-hip
     gimp
     inkscape
     rawtherapee
