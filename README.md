@@ -30,9 +30,10 @@ Other notable repos:
 [3rfaan/arch-everforest]: https://github.com/3rfaan/arch-everforest
 
 See also [this comment][2], on how to use the config, or how to build it, even
-for remote targets. Mind. Blown. 🤯
+for remote targets. Mind. Blown. 🤯 Also check out [Xe's blog][7].
 
 [2]: https://discourse.nixos.org/t/proper-way-to-build-a-remote-system-with-flakes/17661/12
+[7]: https://xeiaso.net/blog
 
 ## 🛠️ Installing
 
