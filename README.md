@@ -15,19 +15,21 @@ of course Vimjoyer's excellent videos, e.g. [this one][5].
 
 Other notable repos:
 
+- [3rfaan/arch-everforest]
+- [iynaix/dotfiles]
+- [khaneliman/khanelinix]
+- [n3oney/nixus]
 - [nixinator/nothing]
 - [sjcobb2022/nixos-config]
-- [n3oney/nixus]
-- [khaneliman/khanelinix]
 - [stephenreynolds/nix-config]
-- [3rfaan/arch-everforest]
 
+[3rfaan/arch-everforest]: https://github.com/3rfaan/arch-everforest
+[iynaix/dotfiles]: https://github.com/iynaix/dotfiles
+[khaneliman/khanelinix]: https://github.com/khaneliman/khanelinix
+[n3oney/nixus]: https://github.com/n3oney/nixus
 [nixinator/nothing]: https://github.com/nixinator/nothing
 [sjcobb2022/nixos-config]: https://github.com/sjcobb2022/nixos-config
-[n3oney/nixus]: https://github.com/n3oney/nixus
-[khaneliman/khanelinix]: https://github.com/khaneliman/khanelinix
 [stephenreynolds/nix-config]: https://github.com/stephenreynolds/nix-config
-[3rfaan/arch-everforest]: https://github.com/3rfaan/arch-everforest
 
 See also [this comment][2], on how to use the config, or how to build it, even
 for remote targets. Mind. Blown. 🤯 Also check out [Xe's blog][7].

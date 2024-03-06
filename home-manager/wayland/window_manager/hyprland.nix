@@ -12,10 +12,18 @@
   pkgs,
   ...
 }: let
-  xkb = import ../../../hosts/home/services/xserver/xkb.nix {inherit lib;};
   input = import ../../../hosts/home/hyprland/input.nix {config = xkb;};
   monitors = import ../../../hosts/home/hyprland/monitors.nix {inherit lib;};
+  xkb = import ../../../hosts/home/services/xserver/xkb.nix {inherit lib;};
+
   workspaces = [1 2 3 4 5 6 7 8];
+
+  foot = lib.getExe pkgs.foot;
+  google-chrome = lib.getExe' pkgs.google-chrome "google-chrome-stable";
+  hypridle = lib.getExe pkgs.hypridle;
+  rofi = lib.getExe pkgs.rofi;
+  rofi-power-menu = lib.getExe pkgs.rofi-power-menu;
+  waybar = lib.getExe pkgs.waybar;
 in {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -24,14 +32,15 @@ in {
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";
 
       exec-once = [
+        hypridle  # TODO: ReGreet!
         monitors.exec-once
-        "waybar"
+        waybar
       ];
 
-      "$TERM" = "${pkgs.foot}/bin/foot";
-      "$MENU" = "${pkgs.rofi}/bin/rofi -show drun -theme ${config.home.homeDirectory}/.config/rofi/launchers/type-3/style-10.rasi";
-      "$POWER" = "${pkgs.rofi}/bin/rofi -show p -modi \"p:${pkgs.rofi-power-menu}/bin/rofi-power-menu --no-text\" -theme ${config.home.homeDirectory}/.config/rofi/powermenu/type-2/style-1.rasi";
-      "$BROWSER" = "${pkgs.google-chrome}/bin/google-chrome-stable --enable-unsafe-webgpu";
+      "$TERM" = "${foot}";
+      "$MENU" = "${rofi} -show drun -theme ${config.home.homeDirectory}/.config/rofi/launchers/type-3/style-10.rasi";
+      "$POWER" = "${rofi} -show p -modi \"p:${rofi-power-menu} --no-text\" -theme ${config.home.homeDirectory}/.config/rofi/powermenu/type-2/style-1.rasi";
+      "$BROWSER" = "${google-chrome} --enable-unsafe-webgpu";
 
       general = {
         allow_tearing = false;

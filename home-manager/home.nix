@@ -23,8 +23,8 @@
     stateVersion = "23.11";
 
     sessionVariables = with config.home; {
-      SHELL = "${pkgs.fish}/bin/fish";
-      VISUAL = "nvim";
+      SHELL = lib.getExe pkgs.fish;
+      VISUAL = lib.getExe' pkgs.neovim "nvim";
 
       # Development environment:
       GOPATH = "${homeDirectory}/dev/go";

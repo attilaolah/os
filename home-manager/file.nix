@@ -15,6 +15,12 @@
       cp --recursive files $out
     '';
   };
+
+  brightnessctl = lib.getExe pkgs.brightnessctl;
+  hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
+  hyprlock = lib.getExe pkgs.hyprlock;
+  loginctl = lib.getExe' pkgs.systemd "loginctl";
+  pidof = lib.getExe' pkgs.procps "pidof";
 in {
   home.file = {
     # SOPS: https://getsops.io
@@ -40,5 +46,28 @@ in {
 
     # Rofi config collection.
     ".config/rofi".source = rofi-configs.out;
+
+    ".config/hypr/hypridle.conf".text = ''
+      general {
+        lock_cmd = ${pidof} ${hyprlock} || ${hyprlock}
+        before_sleep_cmd = ${loginctl} lock-session
+        after_sleep_cmd = ${hyprctl} dispatch dpms on
+      }
+
+      listener {
+        timeout = ${toString (60 * 2)}
+        on-timeout = ${brightnessctl} --save set 5%
+        on-resume = ${brightnessctl} --restore
+      }
+      listener {
+        timeout = ${toString (60 * 10)}
+        on-timeout = ${hyprctl} dispatch dpms off
+        on-resume = ${hyprctl} dispatch dpms on
+      }
+      listener {
+        timeout = ${toString (60 * 10 + 20)}
+        on-timeout = ${loginctl} lock-session
+      }
+    '';
   };
 }

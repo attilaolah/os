@@ -16,8 +16,8 @@
         GTK = {
           application_prefer_dark_theme = true;
           cursor_theme_name = "Adwaita";
-          icon_theme_name = "Vimix-dark";
-          theme_name = "vimix-dark-doder";
+          icon_theme_name = "Vimix-Black-dark";
+          theme_name = "vimix-dark-grey";
         };
       };
     };
