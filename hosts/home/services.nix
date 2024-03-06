@@ -7,6 +7,7 @@
     ./services/nginx.nix
     ./services/openssh.nix
     ./services/pipewire.nix
+    ./services/prometheus.nix
     ./services/xserver/xkb.nix
   ];
 }
