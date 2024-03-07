@@ -39,7 +39,7 @@ in {
 
       "$TERM" = "${foot}";
       "$MENU" = "${rofi} -show drun -theme ${config.home.homeDirectory}/.config/rofi/launchers/type-3/style-10.rasi";
-      "$POWER" = "${rofi} -show p -modi \"p:${rofi-power-menu} --no-text\" -theme ${config.home.homeDirectory}/.config/rofi/powermenu/type-2/style-1.rasi";
+      "$POWER" = "${rofi} -show menu -modi \"menu:${rofi-power-menu}\"";
       "$BROWSER" = "${google-chrome} --enable-unsafe-webgpu";
 
       general = {
