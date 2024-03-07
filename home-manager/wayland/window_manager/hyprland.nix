@@ -32,7 +32,7 @@ in {
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";
 
       exec-once = [
-        hypridle  # TODO: ReGreet!
+        hypridle # TODO: ReGreet!
         monitors.exec-once
         waybar
       ];

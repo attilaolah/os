@@ -26,6 +26,7 @@
       system = "x86_64-linux";
       modules = [
         ./hosts/home/configuration.nix
+        (import ./hosts/home/overlays.nix)
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

@@ -1,3 +1,4 @@
+{pkgs,...}:
 {
   programs = {
     fish.enable = true;
@@ -20,6 +21,8 @@
           theme_name = "vimix-dark-grey";
         };
       };
+
+      package = pkgs.regreet;
     };
   };
 }
