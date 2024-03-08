@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   gtk = {
     enable = true;
 
@@ -15,9 +19,8 @@
       package = pkgs.vimix-icon-theme;
     };
 
-    cursorTheme = {
-      name = "Adwaita";
-      size = 30;
+    cursorTheme = with config.home.pointerCursor; {
+      inherit name size;
     };
 
     gtk3.extraConfig = {

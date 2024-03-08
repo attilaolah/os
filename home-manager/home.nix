@@ -40,6 +40,14 @@
       # XDG_MUSIC_DIR not set
       # XDG_TEMPLATES_DIR not set
     };
+
+    pointerCursor = {
+      name = "Adwaita";
+      size = 24;
+      package = pkgs.gnome.adwaita-icon-theme;
+      gtk.enable = true;
+      x11.enable = true;
+    };
   };
 
   nixpkgs.config.allowUnfree = true;
