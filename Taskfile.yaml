@@ -1,0 +1,24 @@
+---
+version: 3
+
+tasks:
+  build:
+    desc: Build NixOS flake
+    cmds:
+      - nixos-rebuild build --flake .#home
+
+  diff:
+    desc: Build & diff against the current system
+    cmds:
+      - task: build
+      - nvd diff /run/current-system result
+
+  install:
+    desc: Install (update) the current system
+    cmds:
+      - sudo nixos-rebuild switch --flake .#home
+
+  format:
+    desc: Format Nix files.
+    cmds:
+      - alejandra .

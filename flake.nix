@@ -21,9 +21,11 @@
     home-manager,
     hyprland,
     ...
-  } @ inputs: {
+  } @ inputs: let
+    system = "x86_64-linux";
+  in {
     nixosConfigurations.home = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      inherit system;
       modules = [
         ./hosts/home/configuration.nix
         (import ./hosts/home/overlays.nix)
@@ -36,5 +38,17 @@
       ];
       specialArgs = {inherit inputs;};
     };
+
+    devShells.${system}.default = let
+      pkgs = import nixpkgs {inherit system;};
+    in
+      pkgs.mkShell {
+        buildInputs = with pkgs; [
+          alejandra
+          go-task
+          nvd
+          sops
+        ];
+      };
   };
 }
