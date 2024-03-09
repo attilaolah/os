@@ -5,15 +5,15 @@
   ...
 }: {
   fonts = {
-    enableDefaultPackages = false;
+    enableDefaultPackages = true;
 
     fontconfig = {
       enable = true;
+      subpixel.rgba = "rgb";  # centre monitor
       defaultFonts = {
         sansSerif = ["Inter"];
         serif = ["Roboto Serif"];
         monospace = ["TwilioSansM Nerd Font"];
-        emoji = ["JoyPixels"];
       };
     };
 
@@ -21,7 +21,6 @@
       hack-font
       inter
       joypixels
-      liberation_ttf
       nerdfonts
       noto-fonts
       noto-fonts-cjk
