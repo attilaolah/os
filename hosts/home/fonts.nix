@@ -21,11 +21,14 @@
       hack-font
       inter
       joypixels
+      liberation_ttf
       nerdfonts
       noto-fonts
       noto-fonts-cjk
       roboto
+      roboto-mono
       roboto-serif
+      roboto-slab
     ];
   };
 
