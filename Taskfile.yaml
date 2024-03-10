@@ -3,7 +3,7 @@ version: 3
 
 tasks:
   build:
-    desc: Build NixOS flake
+    desc: Build NixOS flakes
     cmds:
       - nixos-rebuild build --flake .#home
 
@@ -18,7 +18,18 @@ tasks:
     cmds:
       - sudo nixos-rebuild switch --flake .#home
 
+  update:
+    desc: Update Nix flakes
+    cmds:
+      - nix flake update
+      - task: install
+
   format:
-    desc: Format Nix files.
+    desc: Format Nix files
     cmds:
       - alejandra .
+
+  check:
+    desc: Check Nix flakes
+    cmds:
+      - nix flake check
