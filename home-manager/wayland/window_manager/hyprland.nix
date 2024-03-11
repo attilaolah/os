@@ -130,7 +130,6 @@ in {
       bindm = [
         # Move/resize windows with MOD + LMB/RMB and dragging
         "$MOD, mouse:272, movewindow"
-        # TODO: Why does this not work any more?
         "$MOD, mouse:273, resizewindow"
       ];
 
