@@ -9,7 +9,7 @@
 
     fontconfig = {
       enable = true;
-      subpixel.rgba = "rgb";  # centre monitor
+      subpixel.rgba = "rgb"; # centre monitor
       defaultFonts = {
         sansSerif = ["Inter"];
         serif = ["Roboto Serif"];
