@@ -14,6 +14,10 @@
     ./services.nix
     ./systemd.nix
     ./users.nix
+    # Both Docker & Podman are installed.
+    # Podman tends to work just fine, but it is nice to have a fallback.
+    ./virtualisation/docker.nix
+    ./virtualisation/podman.nix
   ];
   system.stateVersion = "23.11";
   time.timeZone = "Europe/Zurich";

@@ -52,6 +52,11 @@
     inkscape
     rawtherapee
 
+    # Virtualisation:
+    docker-compose
+    podman-compose
+    podman-tui
+
     # Common dev tools.
     # More specific ones should go into per-project flakes.
     android-tools
