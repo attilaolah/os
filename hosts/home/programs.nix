@@ -1,7 +1,14 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  hyprland,
+  ...
+}: {
   programs = {
     fish.enable = true;
-    hyprland.enable = true;
+    hyprland = {
+      enable = true;
+      #package = hyprland.package;
+    };
 
     neovim = {
       enable = true;

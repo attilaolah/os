@@ -43,7 +43,6 @@
     gnome.nautilus
 
     # Browsers:
-    firefox
     google-chrome
 
     # Other GUI apps:
@@ -78,10 +77,11 @@
     virtualenv
 
     # Python:
-    (python311.withPackages (ps: with ps; [
-      ipython
-      jupyter
-      pandas
-    ]))
+    (python311.withPackages (ps:
+      with ps; [
+        ipython
+        jupyter
+        pandas
+      ]))
   ];
 }

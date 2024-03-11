@@ -20,7 +20,7 @@
 
   foot = lib.getExe pkgs.foot;
   google-chrome = lib.getExe' pkgs.google-chrome "google-chrome-stable";
-  hypridle = lib.getExe pkgs.hypridle;
+  #hypridle = lib.getExe pkgs.hypridle;
   rofi = lib.getExe pkgs.rofi;
   rofi-power-menu = lib.getExe pkgs.rofi-power-menu;
   waybar = lib.getExe pkgs.waybar;
@@ -32,7 +32,7 @@ in {
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";
 
       exec-once = [
-        hypridle # TODO: ReGreet!
+        #hypridle # TODO: ReGreet!
         monitors.exec-once
         waybar
       ];

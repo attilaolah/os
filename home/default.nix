@@ -2,19 +2,27 @@
   config,
   lib,
   pkgs,
+  hypridle,
+  hyprlock,
+  inputs,
   ...
 }: {
   imports = [
     ./file.nix
     ./home/packages.nix
+    ./programs/firefox.nix
     ./programs/fish.nix
     ./programs/git.nix
     ./programs/gpg.nix
     ./programs/rofi.nix
+    #./programs/hyprlock.nix
     ./wayland/window_manager/hyprland.nix
     ./services/gpg_agent.nix
+    ./services/hypridle.nix
     ./gtk.nix
     ./qt.nix
+    #hyprlock.homeManagerModules.default
+    #inputs.hypridle.homeManagerModules.default
   ];
 
   home = {
