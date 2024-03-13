@@ -55,5 +55,6 @@
     git
     neovim
     slurp
+    xdg-open
   ];
 }
