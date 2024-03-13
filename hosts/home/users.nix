@@ -17,6 +17,7 @@
           "wheel" # for sudo
           "docker" # for docker (non-rootless)
           "podman" # for podman (non-rootless)
+          "vboxusers" # for virtualbox
         ];
         openssh.authorizedKeys.keys = [
           # https://github.com/attilaolah.keys
