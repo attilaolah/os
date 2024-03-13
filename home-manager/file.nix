@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -68,6 +69,10 @@ in {
         timeout = ${toString (60 * 10 + 20)}
         on-timeout = ${loginctl} lock-session
       }
+    '';
+
+    ".config/davfs.conf".text = ''
+      secrets ${config.home.homeDirectory}/.config/davfs.secrets
     '';
   };
 }
