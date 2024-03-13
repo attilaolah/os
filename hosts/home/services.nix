@@ -1,6 +1,8 @@
 {
   imports = [
+    ./services/autofs.nix
     ./services/blueman.nix
+    ./services/davfs2.nix
     ./services/dbus.nix
     ./services/grafana.nix
     ./services/greetd.nix

@@ -78,10 +78,11 @@
     virtualenv
 
     # Python:
-    (python311.withPackages (ps: with ps; [
-      ipython
-      jupyter
-      pandas
-    ]))
+    (python311.withPackages (ps:
+      with ps; [
+        ipython
+        jupyter
+        pandas
+      ]))
   ];
 }
