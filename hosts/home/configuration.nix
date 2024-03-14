@@ -18,6 +18,7 @@
     # Podman tends to work just fine, but it is nice to have a fallback.
     ./virtualisation/docker.nix
     ./virtualisation/podman.nix
+    ./virtualisation/virtualbox.nix
   ];
   system.stateVersion = "23.11";
   time.timeZone = "Europe/Zurich";
