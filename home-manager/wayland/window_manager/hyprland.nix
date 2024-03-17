@@ -32,7 +32,9 @@ in {
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";
 
       exec-once = [
-        hypridle # TODO: ReGreet!
+        # TODO: Starting HyprIdle seems to cause a screen freeze.
+        # Disable it here temporarily until I figure out what's wrong.
+        # hypridle # TODO: ReGreet!
         monitors.exec-once
         waybar
       ];
