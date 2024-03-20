@@ -13,23 +13,21 @@
       defaultFonts = {
         sansSerif = ["Inter"];
         serif = ["Roboto Serif"];
-        monospace = ["TwilioSansM Nerd Font"];
+        monospace = ["JetbrainsMono Nerd Font"];
       };
     };
 
     packages = with pkgs; [
       hack-font
       inter
-      joypixels
       nerdfonts
       noto-fonts
       noto-fonts-cjk
+      noto-fonts-color-emoji
       roboto
       roboto-mono
       roboto-serif
       roboto-slab
     ];
   };
-
-  nixpkgs.config.joypixels.acceptLicense = true;
 }
