@@ -38,7 +38,7 @@ in {
     ".config/fish/functions/fish_prompt.fish".source = ./src/_.config/fish/functions/fish_prompt.fish;
     ".config/foot/foot.ini".text = lib.generators.toINI {} {
       main = {
-        font = "monospace:size=14";
+        font = "monospace:size=16";
         font-size-adjustment = 2;
       };
     };
