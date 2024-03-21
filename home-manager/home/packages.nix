@@ -35,9 +35,16 @@
       # NVim:
       neovim
       # NVim dependencies:
+      alejandra
+      ansible-language-server
+      gofumpt
       gopls
-      lua-language-server stylua
-      rust-analyzer rustfmt
+      lua-language-server
+      nil
+      rust-analyzer
+      rustfmt
+      stylua
+      vscode-langservers-extracted
       yaml-language-server
 
       # Desktop utilities:
@@ -92,6 +99,7 @@
       # NPM packages:
       pnpm
       prettier
+      typescript-language-server
     ])
     ++ (with gnome; [
       # Gnome apps:
