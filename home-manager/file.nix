@@ -42,7 +42,8 @@ in {
         font-size-adjustment = 2;
       };
     };
-    ".config/nvim/init.lua".source = ./src/_.config/nvim/init.lua;
+    # TODO: NvChad!
+    #".config/nvim/init.lua".source = ./src/_.config/nvim/init.lua;
     ".config/wallpapers/alpeli-1020m.jpg".source = ./src/_.config/wallpapers/alpeli-1020m.jpg;
 
     # Rofi config collection.
