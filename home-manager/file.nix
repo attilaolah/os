@@ -32,10 +32,10 @@ in {
     };
 
     # ~/.*:
-    ".tmux.conf".source = ./src/_.tmux.conf;
+    ".config/tmux/tmux.conf".source = ./.config/tmux/tmux.conf;
 
     # ~/.config:
-    ".config/fish/functions/fish_prompt.fish".source = ./src/_.config/fish/functions/fish_prompt.fish;
+    ".config/fish/functions/fish_prompt.fish".source = ./.config/fish/functions/fish_prompt.fish;
     ".config/foot/foot.ini".text = lib.generators.toINI {} {
       main = {
         font = "monospace:size=16";
@@ -44,14 +44,14 @@ in {
     };
 
     # NVim config:
-    ".config/nvim/init.lua".source = ./src/_.config/nvim/init.lua;
-    ".config/nvim/lua/chadrc.lua".source = ./src/_.config/nvim/lua/chadrc.lua;
-    ".config/nvim/lua/configs/conform.lua".source = ./src/_.config/nvim/lua/configs/conform.lua;
-    ".config/nvim/lua/configs/lazy.lua".source = ./src/_.config/nvim/lua/configs/lazy.lua;
-    ".config/nvim/lua/configs/lspconfig.lua".source = ./src/_.config/nvim/lua/configs/lspconfig.lua;
-    ".config/nvim/lua/mappings.lua".source = ./src/_.config/nvim/lua/mappings.lua;
-    ".config/nvim/lua/options.lua".source = ./src/_.config/nvim/lua/options.lua;
-    ".config/nvim/lua/plugins/init.lua".source = ./src/_.config/nvim/lua/plugins/init.lua;
+    ".config/nvim/init.lua".source = ./.config/nvim/init.lua;
+    ".config/nvim/lua/chadrc.lua".source = ./.config/nvim/lua/chadrc.lua;
+    ".config/nvim/lua/configs/conform.lua".source = ./.config/nvim/lua/configs/conform.lua;
+    ".config/nvim/lua/configs/lazy.lua".source = ./.config/nvim/lua/configs/lazy.lua;
+    ".config/nvim/lua/configs/lspconfig.lua".source = ./.config/nvim/lua/configs/lspconfig.lua;
+    ".config/nvim/lua/mappings.lua".source = ./.config/nvim/lua/mappings.lua;
+    ".config/nvim/lua/options.lua".source = ./.config/nvim/lua/options.lua;
+    ".config/nvim/lua/plugins/init.lua".source = ./.config/nvim/lua/plugins/init.lua;
 
     # Rofi config collection.
     ".config/rofi".source = rofi-configs.out;
@@ -84,6 +84,6 @@ in {
     '';
 
     # Wallpaper:
-    ".config/wallpapers/alpeli-1020m.jpg".source = ./src/_.config/wallpapers/alpeli-1020m.jpg;
+    ".config/wallpapers/alpeli-1020m.jpg".source = ./.config/wallpapers/alpeli-1020m.jpg;
   };
 }
