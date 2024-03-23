@@ -42,9 +42,16 @@ in {
         font-size-adjustment = 2;
       };
     };
-    # TODO: NvChad!
-    #".config/nvim/init.lua".source = ./src/_.config/nvim/init.lua;
-    ".config/wallpapers/alpeli-1020m.jpg".source = ./src/_.config/wallpapers/alpeli-1020m.jpg;
+
+    # NVim config:
+    ".config/nvim/init.lua".source = ./src/_.config/nvim/init.lua;
+    ".config/nvim/lua/chadrc.lua".source = ./src/_.config/nvim/lua/chadrc.lua;
+    ".config/nvim/lua/configs/conform.lua".source = ./src/_.config/nvim/lua/configs/conform.lua;
+    ".config/nvim/lua/configs/lazy.lua".source = ./src/_.config/nvim/lua/configs/lazy.lua;
+    ".config/nvim/lua/configs/lspconfig.lua".source = ./src/_.config/nvim/lua/configs/lspconfig.lua;
+    ".config/nvim/lua/mappings.lua".source = ./src/_.config/nvim/lua/mappings.lua;
+    ".config/nvim/lua/options.lua".source = ./src/_.config/nvim/lua/options.lua;
+    ".config/nvim/lua/plugins/init.lua".source = ./src/_.config/nvim/lua/plugins/init.lua;
 
     # Rofi config collection.
     ".config/rofi".source = rofi-configs.out;
@@ -75,5 +82,8 @@ in {
     ".config/davfs.conf".text = ''
       secrets ${config.home.homeDirectory}/.config/davfs.secrets
     '';
+
+    # Wallpaper:
+    ".config/wallpapers/alpeli-1020m.jpg".source = ./src/_.config/wallpapers/alpeli-1020m.jpg;
   };
 }
