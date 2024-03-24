@@ -69,8 +69,10 @@
     devShells.${system}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
         alejandra
+        doctl
         go-task
         nvd
+        s3cmd
         sops
       ];
     };
