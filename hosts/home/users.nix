@@ -14,7 +14,7 @@
 
       ao = {
         isNormalUser = true;
-        description = "Attila O.";
+        description = "Attila O.,,,"; # GECOS
         initialHashedPassword = "$6$vIhSgctj5NiIagWv$OJQuVZnf8diIJQQHG83WxCaEr3gczTNyiQJGDCU1gqpgrA7.gnjaIJ19KjLJbyAIBWxhqd51E/6hgmHeziJIe0";
         group = "ao";
         extraGroups =
