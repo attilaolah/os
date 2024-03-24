@@ -30,7 +30,6 @@ in {
       tmux
       traceroute
       tree
-      usbutils
       wget
       zoxide
 
@@ -54,35 +53,13 @@ in {
       podman-compose
       podman-tui
 
-      # Common dev tools.
-      # More specific ones should go into per-project flakes.
-      android-tools
-      bazel_7
-      buildifier
-      buildozer
-      clang
-      clang-tools
-      clangStdenv
-      gnumake
-      # TODO: disable on digital-ocean
-      pkg-config
-      cmake
-      elan
-      go
-      nodejs
-      ruby
-      # TODO: disable on digital-ocean
-      rustc
-      cargo
-
-      # Python:
+      # Python, the basics:
       (python311.withPackages (ps:
         with ps; [
           ipython
           jupyter
           pandas
         ]))
-      virtualenv
     ]
     ++ (with nodePackages; [
       # NPM packages:
@@ -105,6 +82,9 @@ in {
       gimp
       inkscape
       rawtherapee
+
+      # Misc.
+      usbutils
     ]
     ++ desktopList (with gnome; [
       # Gnome apps:
