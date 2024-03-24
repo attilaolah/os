@@ -2,7 +2,7 @@
 local M = {}
 
 M.ui = {
-  theme = "onedark",
+  theme = "catppuccin",
   statusline = {
     separator_style = "block",
   },
