@@ -32,37 +32,21 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {ao = import ./home-manager/home.nix;};
-  in rec {
-    nixosConfigurations = {
-      home = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./hosts/home/configuration.nix
-          (import ./hosts/home/overlays.nix)
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              inherit useGlobalPkgs useUserPackages users;
-              extraSpecialArgs = {desktop = true;};
-            };
-          }
-        ];
-        specialArgs = {inherit inputs;};
-      };
-      roam = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./hosts/roam/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              inherit useGlobalPkgs useUserPackages users;
-              extraSpecialArgs = {desktop = false;};
-            };
-          }
-        ];
-        specialArgs = {inherit inputs;};
-      };
+  in {
+    nixosConfigurations.home = nixpkgs.lib.nixosSystem {
+      inherit system;
+      modules = [
+        ./hosts/home/configuration.nix
+        (import ./hosts/home/overlays.nix)
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            inherit useGlobalPkgs useUserPackages users;
+            extraSpecialArgs = {desktop = true;};
+          };
+        }
+      ];
+      specialArgs = {inherit inputs;};
     };
 
     roam = nixos-generators.nixosGenerate {
@@ -83,7 +67,20 @@
 
     # For applying local settings with:
     # home-manager switch --flake .#roam
-    homeConfigurations.roam = nixosConfigurations.roam.config.home-manager.users.ao.home;
+    homeConfigurations.roam = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [
+        ./hosts/roam/configuration.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            inherit useGlobalPkgs useUserPackages users;
+            extraSpecialArgs = {desktop = false;};
+          };
+        }
+      ];
+      specialArgs = {inherit inputs;};
+    };
 
     devShells.${system}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
