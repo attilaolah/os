@@ -64,12 +64,14 @@ in {
       clang-tools
       clangStdenv
       gnumake
+      # TODO: disable on digital-ocean
       pkg-config
       cmake
       elan
       go
       nodejs
       ruby
+      # TODO: disable on digital-ocean
       rustc
       cargo
 
