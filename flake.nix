@@ -33,20 +33,36 @@
     useUserPackages = true;
     users = {ao = import ./home-manager/home.nix;};
   in rec {
-    nixosConfigurations.home = nixpkgs.lib.nixosSystem {
-      inherit system;
-      modules = [
-        ./hosts/home/configuration.nix
-        (import ./hosts/home/overlays.nix)
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            inherit useGlobalPkgs useUserPackages users;
-            extraSpecialArgs = {desktop = true;};
-          };
-        }
-      ];
-      specialArgs = {inherit inputs;};
+    nixosConfigurations = {
+      home = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./hosts/home/configuration.nix
+          (import ./hosts/home/overlays.nix)
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              inherit useGlobalPkgs useUserPackages users;
+              extraSpecialArgs = {desktop = true;};
+            };
+          }
+        ];
+        specialArgs = {inherit inputs;};
+      };
+      roam = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./hosts/roam/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              inherit useGlobalPkgs useUserPackages users;
+              extraSpecialArgs = {desktop = false;};
+            };
+          }
+        ];
+        specialArgs = {inherit inputs;};
+      };
     };
 
     roam = nixos-generators.nixosGenerate {
