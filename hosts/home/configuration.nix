@@ -6,11 +6,21 @@
     ./hardware.nix
     ./networking.nix
     ./programs.nix
-    ./services.nix
+    ./services/autofs.nix
+    ./services/blueman.nix
+    ./services/davfs2.nix
+    ./services/dbus.nix
+    ./services/grafana.nix
+    ./services/greetd.nix
+    ./services/loki.nix
+    ./services/nginx.nix
+    ./services/openssh.nix
+    ./services/pipewire.nix
+    ./services/prometheus.nix
+    ./services/promtail.nix
+    ./services/xserver/xkb.nix
     ./systemd.nix
     ./users.nix
-    # Both Docker & Podman are installed.
-    # Podman tends to work just fine, but it is nice to have a fallback.
     ./virtualisation/docker.nix
     ./virtualisation/podman.nix
     ./virtualisation/virtualbox.nix

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   programs.rofi = {
     enable = true;
 
@@ -6,6 +10,6 @@
       rofi-power-menu
     ];
 
-    terminal = "${pkgs.foot}/bin/foot";
+    terminal = lib.getExe pkgs.foot;
   };
 }

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   users = {
     mutableUsers = false;
     defaultUserShell = pkgs.fish;
@@ -13,12 +17,25 @@
         description = "Attila O.";
         initialHashedPassword = "$6$vIhSgctj5NiIagWv$OJQuVZnf8diIJQQHG83WxCaEr3gczTNyiQJGDCU1gqpgrA7.gnjaIJ19KjLJbyAIBWxhqd51E/6hgmHeziJIe0";
         group = "ao";
-        extraGroups = [
-          "wheel" # for sudo
-          "docker" # for docker (non-rootless)
-          "podman" # for podman (non-rootless)
-          "vboxusers" # for virtualbox
-        ];
+        extraGroups =
+          [
+            "wheel" # for sudo
+          ]
+          ++ (
+            if config.virtualisation.docker.enable
+            then ["docker"] # non-rootless
+            else []
+          )
+          ++ (
+            if config.virtualisation.podman.enable
+            then ["podman"] # non-rootless
+            else []
+          )
+          ++ (
+            if config.virtualisation.virtualbox.host.enable
+            then ["vboxusers"]
+            else []
+          );
         openssh.authorizedKeys.keys = [
           # https://github.com/attilaolah.keys
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIiR17IcWh8l3OxxKSt+ODrUMLU98ZoJ+XvcR17iX9/P"

@@ -1,9 +1,11 @@
 {
-  config,
+  desktop,
   lib,
   pkgs,
   ...
-}: {
+}: let
+  desktopList = list: lib.lists.optionals desktop list;
+in {
   home.packages = with pkgs;
     [
       # CLI utilities:
@@ -47,21 +49,6 @@
       vscode-langservers-extracted
       yaml-language-server
 
-      # Desktop utilities:
-      pavucontrol
-      vimix-gtk-themes
-      vimix-icon-theme
-
-      # Browsers:
-      firefox
-      google-chrome
-
-      # Other GUI apps:
-      blender-hip
-      gimp
-      inkscape
-      rawtherapee
-
       # Virtualisation:
       docker-compose
       podman-compose
@@ -101,7 +88,23 @@
       prettier
       typescript-language-server
     ])
-    ++ (with gnome; [
+    ++ desktopList [
+      # Desktop utilities:
+      pavucontrol
+      vimix-gtk-themes
+      vimix-icon-theme
+
+      # Browsers:
+      firefox
+      google-chrome
+
+      # Other GUI apps:
+      blender-hip
+      gimp
+      inkscape
+      rawtherapee
+    ]
+    ++ desktopList (with gnome; [
       # Gnome apps:
       cheese
       eog
