@@ -27,6 +27,18 @@ in {
       ".config/nvim/lua/plugins/init.lua".source = ./.config/nvim/lua/plugins/init.lua;
     }
     // desktopAttrs (let
+      foot-catppuccin-mocha = pkgs.stdenv.mkDerivation {
+        name = "foot-catppuccin-mocha";
+        src = pkgs.fetchFromGitHub {
+          owner = "catppuccin";
+          repo = "foot";
+          rev = "ee5549af72ab78520ac2aa1c671bf5c2d347c8ca";
+          sha256 = "sha256-3hK9klXwdHhprG2wUMt7nBfbL1mb/gl+k/MtJUuY000=";
+        };
+        installPhase = ''
+          cp --recursive catppuccin-mocha.ini $out
+        '';
+      };
       rofi-configs = pkgs.stdenv.mkDerivation {
         name = "rofi-configs";
         src = pkgs.fetchFromGitHub {
@@ -47,12 +59,14 @@ in {
       pidof = lib.getExe' pkgs.procps "pidof";
     in {
       # TODO: Use xdg.configFile!
-      ".config/foot/foot.ini".text = lib.generators.toINI {} {
-        main = {
-          font = "monospace:size=16";
-          font-size-adjustment = 2;
-        };
-      };
+      ".config/foot/foot.ini".text =
+        (lib.generators.toINI {} {
+          main = {
+            font = "monospace:size=16";
+            font-size-adjustment = 2;
+          };
+        })
+        + builtins.readFile foot-catppuccin-mocha;
 
       ".config/rofi".source = rofi-configs.out;
 
