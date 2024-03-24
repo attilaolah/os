@@ -31,7 +31,8 @@
     system = "x86_64-linux";
     useGlobalPkgs = true;
     useUserPackages = true;
-  in {
+    users = {ao = import ./home-manager/home.nix;};
+  in rec {
     nixosConfigurations.home = nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
@@ -40,8 +41,7 @@
         home-manager.nixosModules.home-manager
         {
           home-manager = {
-            inherit useGlobalPkgs useUserPackages;
-            users.ao = import ./home-manager/home.nix;
+            inherit useGlobalPkgs useUserPackages users;
             extraSpecialArgs = {desktop = true;};
           };
         }
@@ -57,14 +57,17 @@
         home-manager.nixosModules.home-manager
         {
           home-manager = {
-            inherit useGlobalPkgs useUserPackages;
-            users.ao = import ./home-manager/home.nix;
+            inherit useGlobalPkgs useUserPackages users;
             extraSpecialArgs = {desktop = false;};
           };
         }
       ];
       specialArgs = {inherit inputs;};
     };
+
+    # For applying local settings with:
+    # home-manager switch --flake .#roam
+    homeConfigurations.roam = nixosConfigurations.roam.config.home-manager.users.ao.home;
 
     devShells.${system}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
