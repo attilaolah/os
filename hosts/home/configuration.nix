@@ -59,7 +59,6 @@
 
   environment.systemPackages = with pkgs; [
     git
-    neovim
     slurp
     xdg-utils
   ];

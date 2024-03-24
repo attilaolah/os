@@ -25,7 +25,5 @@
 
   environment.systemPackages = with pkgs; [
     git
-    neovim
-    slurp
   ];
 }
