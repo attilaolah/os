@@ -4,10 +4,6 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +18,6 @@
     self,
     nixpkgs,
     nixos-unstable,
-    nixos-generators,
     home-manager,
     hyprland,
     ...
@@ -49,37 +44,14 @@
       specialArgs = {inherit inputs;};
     };
 
-    roam = nixos-generators.nixosGenerate {
-      inherit system;
-      format = "do";
-      modules = [
-        ./hosts/roam/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            inherit useGlobalPkgs useUserPackages users;
-            extraSpecialArgs = {desktop = false;};
-          };
-        }
-      ];
-      specialArgs = {inherit inputs;};
-    };
-
     # For applying local settings with:
     # home-manager switch --flake .#roam
     homeConfigurations.roam = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [
-        ./hosts/roam/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            inherit useGlobalPkgs useUserPackages users;
-            extraSpecialArgs = {desktop = false;};
-          };
-        }
+        ./home-manager/home.nix
       ];
-      specialArgs = {inherit inputs;};
+      extraSpecialArgs = {desktop = false;};
     };
 
     devShells.${system}.default = pkgs.mkShell {
