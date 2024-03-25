@@ -37,7 +37,7 @@
         {
           home-manager = {
             inherit useGlobalPkgs useUserPackages users;
-            extraSpecialArgs = {desktop = true;};
+            extraSpecialArgs.desktop = true;
           };
         }
       ];
@@ -48,10 +48,8 @@
     # home-manager switch --flake .#roam
     homeConfigurations.roam = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      modules = [
-        ./home-manager/home.nix
-      ];
-      extraSpecialArgs = {desktop = false;};
+      modules = [./home-manager/home.nix];
+      extraSpecialArgs.desktop = false;
     };
 
     devShells.${system}.default = pkgs.mkShell {
