@@ -18,6 +18,7 @@
     ./services/pipewire.nix
     ./services/prometheus.nix
     ./services/promtail.nix
+    ./services/tailscale.nix
     ./services/xserver/xkb.nix
     ./systemd.nix
     ./users.nix
