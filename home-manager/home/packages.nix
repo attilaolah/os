@@ -21,6 +21,7 @@ in {
       htop
       killall
       mktemp
+      pciutils
       pinentry
       ripgrep
       rsync
@@ -30,6 +31,7 @@ in {
       tmux
       traceroute
       tree
+      usbutils
       wget
       zoxide
 
@@ -82,9 +84,7 @@ in {
       gimp
       inkscape
       rawtherapee
-
-      # Misc.
-      usbutils
+      slack
     ]
     ++ desktopList (with gnome; [
       # Gnome apps:
