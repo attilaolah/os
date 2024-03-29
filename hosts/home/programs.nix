@@ -1,8 +1,7 @@
 {pkgs, ...}: {
   programs = {
+    # Terminal:
     fish.enable = true;
-    hyprland.enable = true;
-
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -10,6 +9,8 @@
       vimAlias = true;
     };
 
+    # Window manager:
+    hyprland.enable = true;
     regreet = {
       enable = true;
       settings = {

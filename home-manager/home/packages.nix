@@ -1,9 +1,11 @@
 {
-  config,
+  desktop,
   lib,
   pkgs,
   ...
-}: {
+}: let
+  desktopList = list: lib.lists.optionals desktop list;
+in {
   home.packages = with pkgs;
     [
       # CLI utilities:
@@ -28,7 +30,6 @@
       tmux
       traceroute
       tree
-      usbutils
       wget
       zoxide
 
@@ -47,6 +48,26 @@
       vscode-langservers-extracted
       yaml-language-server
 
+      # Virtualisation:
+      docker-compose
+      podman-compose
+      podman-tui
+
+      # Python, the basics:
+      (python311.withPackages (ps:
+        with ps; [
+          ipython
+          jupyter
+          pandas
+        ]))
+    ]
+    ++ (with nodePackages; [
+      # NPM packages:
+      pnpm
+      prettier
+      typescript-language-server
+    ])
+    ++ desktopList [
       # Desktop utilities:
       pavucontrol
       vimix-gtk-themes
@@ -62,46 +83,10 @@
       inkscape
       rawtherapee
 
-      # Virtualisation:
-      docker-compose
-      podman-compose
-      podman-tui
-
-      # Common dev tools.
-      # More specific ones should go into per-project flakes.
-      android-tools
-      bazel_7
-      buildifier
-      buildozer
-      clang
-      clang-tools
-      clangStdenv
-      gnumake
-      pkg-config
-      cmake
-      elan
-      go
-      nodejs
-      ruby
-      rustc
-      cargo
-
-      # Python:
-      (python311.withPackages (ps:
-        with ps; [
-          ipython
-          jupyter
-          pandas
-        ]))
-      virtualenv
+      # Misc.
+      usbutils
     ]
-    ++ (with nodePackages; [
-      # NPM packages:
-      pnpm
-      prettier
-      typescript-language-server
-    ])
-    ++ (with gnome; [
+    ++ desktopList (with gnome; [
       # Gnome apps:
       cheese
       eog

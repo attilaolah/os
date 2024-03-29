@@ -2,7 +2,10 @@
   boot = {
     plymouth.enable = true;
     kernelModules = ["kvm-intel"];
-    kernelParams = ["ip=192.168.0.2::192.168.0.1:255.255.255.0:home::none"];
+    kernelParams = [
+      "ip=192.168.0.2::192.168.0.1:255.255.255.0:home::none"
+      "quiet"
+    ];
     blacklistedKernelModules = ["radeon"];
     loader = {
       grub = {

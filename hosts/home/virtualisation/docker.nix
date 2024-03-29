@@ -1,7 +1,7 @@
 let
   settings = {
     ipv6 = true;
-    fixed-cidr-v6 = fd10:6::/64;
+    fixed-cidr-v6 = "fd10:6::/64";
   };
 in {
   virtualisation.docker = {

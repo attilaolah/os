@@ -22,7 +22,11 @@
     hyprland,
     ...
   } @ inputs: let
+    pkgs = import nixpkgs {inherit system;};
     system = "x86_64-linux";
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users = {ao = import ./home-manager/home.nix;};
   in {
     nixosConfigurations.home = nixpkgs.lib.nixosSystem {
       inherit system;
@@ -31,24 +35,30 @@
         (import ./hosts/home/overlays.nix)
         home-manager.nixosModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.ao = import ./home-manager/home.nix;
+          home-manager = {
+            inherit useGlobalPkgs useUserPackages users;
+            extraSpecialArgs.desktop = true;
+          };
         }
       ];
       specialArgs = {inherit inputs;};
     };
 
-    devShells.${system}.default = let
-      pkgs = import nixpkgs {inherit system;};
-    in
-      pkgs.mkShell {
-        buildInputs = with pkgs; [
-          alejandra
-          go-task
-          nvd
-          sops
-        ];
-      };
+    # For applying local settings with:
+    # home-manager switch --flake .#roam
+    homeConfigurations.roam = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [./home-manager/home.nix];
+      extraSpecialArgs.desktop = false;
+    };
+
+    devShells.${system}.default = pkgs.mkShell {
+      buildInputs = with pkgs; [
+        alejandra
+        go-task
+        nvd
+        sops
+      ];
+    };
   };
 }
