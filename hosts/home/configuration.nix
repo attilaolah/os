@@ -12,6 +12,7 @@
     ./services/dbus.nix
     ./services/grafana.nix
     ./services/greetd.nix
+    ./services/gvfs.nix
     ./services/loki.nix
     ./services/nginx.nix
     ./services/openssh.nix
