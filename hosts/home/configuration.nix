@@ -20,6 +20,7 @@
     ./services/prometheus.nix
     ./services/promtail.nix
     ./services/tailscale.nix
+    ./services/teleport.nix
     ./services/xserver/xkb.nix
     ./systemd.nix
     ./users.nix
