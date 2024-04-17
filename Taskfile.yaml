@@ -22,7 +22,7 @@ tasks:
     desc: Update Nix flakes
     cmds:
       - nix flake update
-      - task: install
+      - task: diff
 
   format:
     desc: Format Nix files
