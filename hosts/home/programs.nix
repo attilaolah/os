@@ -31,5 +31,6 @@
       enable = true;
       polkitPolicyOwners = ["ao"];
     };
+    wireshark.enable = true;
   };
 }
