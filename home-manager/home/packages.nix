@@ -28,6 +28,7 @@ in {
       screenfetch
       silver-searcher
       sops
+      termshark
       tmux
       traceroute
       tree
@@ -86,6 +87,7 @@ in {
       inkscape
       rawtherapee
       slack
+      wireshark
     ]
     ++ desktopList (with gnome; [
       # Gnome apps:
