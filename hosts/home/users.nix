@@ -35,6 +35,11 @@
             if config.virtualisation.virtualbox.host.enable
             then ["vboxusers"]
             else []
+          )
+          ++ (
+            if config.programs.wireshark.enable
+            then ["wireshark"]
+            else []
           );
         openssh.authorizedKeys.keys = [
           # https://github.com/attilaolah.keys
