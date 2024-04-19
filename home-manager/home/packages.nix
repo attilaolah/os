@@ -19,6 +19,7 @@ in {
       gnupg
       gotop
       htop
+      jq
       killall
       mktemp
       pciutils
@@ -34,6 +35,7 @@ in {
       tree
       usbutils
       wget
+      yq
       zoxide
 
       # NVim:
@@ -72,8 +74,7 @@ in {
       typescript-language-server
     ])
     ++ desktopList [
-      # Desktop utilities:
-      pavucontrol
+      # Theming:
       vimix-gtk-themes
       vimix-icon-theme
 
@@ -85,6 +86,7 @@ in {
       blender-hip
       gimp
       inkscape
+      pavucontrol
       rawtherapee
       slack
       wireshark
