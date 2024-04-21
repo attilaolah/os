@@ -7,7 +7,6 @@
 # ╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚═╝  ╚═╝
 #
 {
-  config,
   lib,
   pkgs,
   ...
@@ -46,44 +45,35 @@ in {
         + " --no-actions"
         + " --columns 4"
         + " --lines 12";
-      "$BROWSER" = "${google-chrome} --enable-unsafe-webgpu";
+      "$BROWSER" =
+        "${google-chrome}"
+        + " --enable-features=SkiaGraphite,Vulkan"
+        + " --enable-skia-graphite"
+        + " --enable-unsafe-webgpu"
+        + " --ozone-platform=wayland";
 
       general = {
         allow_tearing = false;
-        border_size = 2;
-        gaps_in = 2;
-        gaps_out = 4;
+        border_size = 8;
+        gaps_in = 0;
+        gaps_out = 0;
         layout = "dwindle";
 
-        "col.active_border" = "rgba(a7c080ff)";
-        "col.inactive_border" = "rgba(3d484dff)";
+        "col.active_border" = "rgba(181825ff)";
+        "col.inactive_border" = "rgba(11111bff)";
       };
+      dwindle.preserve_split = true;
 
+      animations.enabled = false;
       decoration = {
         blur.enabled = false;
         drop_shadow = true;
-        rounding = 2;
+        rounding = 0;
         shadow_range = 8;
         shadow_render_power = 3;
 
         "col.shadow" = "rgba(1a1a1aee)";
       };
-
-      animations = {
-        enabled = true;
-
-        bezier = "mybez, 0.05, 0.9, 0.1, 1.05";
-        animation = [
-          "windows, 1, 2, mybez"
-          "windowsOut, 1, 2, default, popin 80%"
-          "border, 1, 4, default"
-          "borderangle, 1, 4, default"
-          "fade, 1, 2, default"
-          "workspaces, 1, 4, default"
-        ];
-      };
-
-      dwindle.preserve_split = true;
 
       "$MOD" = "SUPER";
 
