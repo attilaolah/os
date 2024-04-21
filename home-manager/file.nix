@@ -15,7 +15,6 @@ in {
         ];
       };
       # TODO: Use xdg.configFile!
-      ".config/tmux/tmux.conf".source = ./.config/tmux/tmux.conf;
       ".config/fish/functions/fish_prompt.fish".source = ./.config/fish/functions/fish_prompt.fish;
       ".config/nvim/init.lua".source = ./.config/nvim/init.lua;
       ".config/nvim/lua/chadrc.lua".source = ./.config/nvim/lua/chadrc.lua;
@@ -25,6 +24,7 @@ in {
       ".config/nvim/lua/mappings.lua".source = ./.config/nvim/lua/mappings.lua;
       ".config/nvim/lua/options.lua".source = ./.config/nvim/lua/options.lua;
       ".config/nvim/lua/plugins/init.lua".source = ./.config/nvim/lua/plugins/init.lua;
+      ".config/tmux/tmux.conf".source = ./.config/tmux/tmux.conf;
     }
     // desktopAttrs (let
       foot-catppuccin-mocha = pkgs.stdenv.mkDerivation {
@@ -37,18 +37,6 @@ in {
         };
         installPhase = ''
           cp --recursive catppuccin-mocha.ini $out
-        '';
-      };
-      rofi-configs = pkgs.stdenv.mkDerivation {
-        name = "rofi-configs";
-        src = pkgs.fetchFromGitHub {
-          owner = "adi1090x";
-          repo = "rofi";
-          rev = "216e4fe5dc7326c43f35936586fc9925f82986c9";
-          sha256 = "sha256-KWaA+20fZGhRmvX2g4LlZ0WNNBUSdwO/pUqHy88oiPk=";
-        };
-        installPhase = ''
-          cp --recursive files $out
         '';
       };
 
@@ -67,8 +55,6 @@ in {
           };
         })
         + builtins.readFile foot-catppuccin-mocha;
-
-      ".config/rofi".source = rofi-configs.out;
 
       ".config/hypr/hypridle.conf".text = ''
         general {
@@ -100,5 +86,7 @@ in {
 
       # Wallpaper:
       ".config/wallpapers/alpeli-1020m.jpg".source = ./.config/wallpapers/alpeli-1020m.jpg;
+
+      ".config/wofi/style.css".source = ./.config/wofi/style.css;
     });
 }

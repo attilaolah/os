@@ -21,9 +21,8 @@
   foot = lib.getExe pkgs.foot;
   google-chrome = lib.getExe' pkgs.google-chrome "google-chrome-stable";
   hypridle = lib.getExe pkgs.hypridle;
-  rofi = lib.getExe pkgs.rofi;
-  rofi-power-menu = lib.getExe pkgs.rofi-power-menu;
   waybar = lib.getExe pkgs.waybar;
+  wofi = lib.getExe pkgs.wofi;
 in {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -38,8 +37,15 @@ in {
       ];
 
       "$TERM" = "${foot}";
-      "$MENU" = "${rofi} -show drun -theme ${config.home.homeDirectory}/.config/rofi/launchers/type-3/style-10.rasi";
-      "$POWER" = "${rofi} -show menu -modi \"menu:${rofi-power-menu}\"";
+      "$MENU" =
+        "${wofi}"
+        + " --show drun"
+        + " --allow-images"
+        + " --allow-markup"
+        + " --hide-scroll"
+        + " --no-actions"
+        + " --columns 4"
+        + " --lines 12";
       "$BROWSER" = "${google-chrome} --enable-unsafe-webgpu";
 
       general = {
@@ -93,7 +99,6 @@ in {
 
       bind =
         [
-          "$MOD SHIFT, ESCAPE, exec, $POWER"
           "$MOD, Return, exec, $TERM"
           "$MOD, Space, togglefloating,"
           "$MOD, Escape, killactive,"
