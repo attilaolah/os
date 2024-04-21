@@ -51,6 +51,7 @@ in {
 
     interactiveShellInit = with lib; ''
       set --universal fish_greeting
+      set --global --export GPG_TTY (${getExe' pkgs.coreutils "tty"})
       source ${pkgs.fzf}/share/fish/vendor_functions.d/fzf_key_bindings.fish
       source ${pkgs.fzf}/share/fish/vendor_conf.d/load-fzf-key-bindings.fish
       ${getExe pkgs.zoxide} init --cmd cd fish | source
