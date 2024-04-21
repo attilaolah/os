@@ -19,7 +19,6 @@ in {
     ]
     ++ desktopList [
       ./gtk.nix
-      ./programs/rofi.nix
       ./qt.nix
       ./wayland/window_manager/hyprland.nix
     ];

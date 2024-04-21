@@ -1,0 +1,60 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: 16px;
+  font-family: "JetBrainsMono Nerd Font 14";
+}
+
+/* The name of the window itself. */
+#window {
+  background-color: #1e1e2e;
+}
+
+/* The name of the box that contains everything. */
+#outer-box {
+  margin: 8px;
+  background-color: #282a36;
+}
+
+/* The name of the search bar. */
+#input {
+  margin: 8px;
+  padding: 4px 12px 4px 16px;
+  border: none;
+  border-left: 8px solid #89b4fa;
+  border-radius: 0;
+  box-shadow: none;
+
+  color: #f8f8f2;
+  background-color: #44475a;
+}
+#input > :first-child {
+  padding-right: 16px;
+}
+
+/* The name of the box containing all of the entries. */
+#inner-box {
+  margin: 0 4px 0 0;
+  background-color: #282a36;
+}
+
+/* The name of all the text in entries. */
+#text {
+  margin: 8px;
+  color: #f8f8f2;
+}
+
+/* The name of all entries. */
+#entry {
+  padding: 4px 8px 4px 16px;
+  margin: 0 4px 0 8px;
+}
+
+#entry:selected {
+  background-color: #44475a;
+
+  border-radius: 0;
+  border-left: 8px solid #89b4fa;
+  padding-left: 8px;
+}
