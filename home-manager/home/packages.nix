@@ -22,6 +22,7 @@ in {
       jq
       killall
       mktemp
+      openssl
       pciutils
       pinentry
       ripgrep
