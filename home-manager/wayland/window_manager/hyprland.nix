@@ -7,6 +7,7 @@
 # ╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚═╝  ╚═╝
 #
 {
+  config,
   lib,
   pkgs,
   ...
@@ -17,11 +18,18 @@
 
   workspaces = [1 2 3 4 5 6 7 8];
 
+  date = lib.getExe' pkgs.coreutils "date";
   foot = lib.getExe pkgs.foot;
   google-chrome = lib.getExe' pkgs.google-chrome "google-chrome-stable";
+  grim = lib.getExe pkgs.grim;
   hypridle = lib.getExe pkgs.hypridle;
+  mkdir = lib.getExe' pkgs.coreutils "mkdir";
+  slurp = lib.getExe pkgs.slurp;
+  tr = lib.getExe' pkgs.coreutils "tr";
   waybar = lib.getExe pkgs.waybar;
   wofi = lib.getExe pkgs.wofi;
+
+  photos-screen = "${config.home.homeDirectory}/photos/screen";
 in {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -33,6 +41,7 @@ in {
         hypridle # TODO: ReGreet!
         monitors.exec-once
         waybar
+        "${mkdir} --parents \"${photos-screen}\""
       ];
 
       "$TERM" = "${foot}";
@@ -51,6 +60,10 @@ in {
         + " --enable-skia-graphite"
         + " --enable-unsafe-webgpu"
         + " --ozone-platform=wayland";
+      "$PRINT" =
+        "${grim}"
+        + " -g \"$(${slurp})\""
+        + " \"${photos-screen}/$(${date} --iso-8601=seconds | ${tr} : -).png\"";
 
       general = {
         allow_tearing = false;
@@ -67,12 +80,8 @@ in {
       animations.enabled = false;
       decoration = {
         blur.enabled = false;
-        drop_shadow = true;
+        drop_shadow = false;
         rounding = 0;
-        shadow_range = 8;
-        shadow_render_power = 3;
-
-        "col.shadow" = "rgba(1a1a1aee)";
       };
 
       "$MOD" = "SUPER";
@@ -96,6 +105,7 @@ in {
           "$MOD, B, exec, $BROWSER" #    [b]rowser
           "$MOD, D, pseudo," #           [d]windle
           "$MOD, F, fullscreen," #       [f]ullscrean
+          "$MOD, P, exec, $PRINT" #      [p]rint screen
           "$MOD, R, exec, $MENU" #       [r]un
           "$MOD, T, togglesplit," #      [t]ile (dwindle)
 
