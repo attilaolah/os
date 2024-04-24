@@ -8,6 +8,7 @@
       viAlias = true;
       vimAlias = true;
     };
+    nix-index.enableFishIntegration = true;
     _1password.enable = true;
 
     # Window manager:
