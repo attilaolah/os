@@ -44,6 +44,7 @@ in {
       # NVim dependencies:
       alejandra
       ansible-language-server
+      cue
       go
       gofumpt
       gopls
