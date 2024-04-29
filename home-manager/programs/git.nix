@@ -16,6 +16,7 @@
       pull.rebase = true;
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
+      advice.skippedCherryPicks = false;
     };
   };
 }
