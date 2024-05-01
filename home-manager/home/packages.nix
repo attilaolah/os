@@ -92,6 +92,9 @@ in {
       rawtherapee
       slack
       wireshark
+
+      # Utilities:
+      nufraw-thumbnailer
     ]
     ++ desktopList (with gnome; [
       # Gnome apps:
