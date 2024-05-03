@@ -94,6 +94,7 @@ in {
       wireshark
 
       # Utilities:
+      libnotify
       nufraw-thumbnailer
     ]
     ++ desktopList (with gnome; [
