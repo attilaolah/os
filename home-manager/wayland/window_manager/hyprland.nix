@@ -25,11 +25,13 @@
   hypridle = lib.getExe pkgs.hypridle;
   mkdir = lib.getExe' pkgs.coreutils "mkdir";
   slurp = lib.getExe pkgs.slurp;
+  swaync = lib.getExe' pkgs.swaynotificationcenter "swaync";
+  swaync-client = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
   tr = lib.getExe' pkgs.coreutils "tr";
   waybar = lib.getExe pkgs.waybar;
   wofi = lib.getExe pkgs.wofi;
 
-  photos-screen = "${config.home.homeDirectory}/photos/screen";
+  screenshots = "${config.home.homeDirectory}/photos/screen";
 in {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -38,10 +40,11 @@ in {
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";
 
       exec-once = [
-        hypridle # TODO: ReGreet!
+        hypridle
         monitors.exec-once
+        swaync
         waybar
-        "${mkdir} --parents \"${photos-screen}\""
+        "${mkdir} --parents \"${screenshots}\""
       ];
 
       "$TERM" = "${foot}";
@@ -63,7 +66,10 @@ in {
       "$PRINT" =
         "${grim}"
         + " -g \"$(${slurp})\""
-        + " \"${photos-screen}/$(${date} --iso-8601=seconds | ${tr} : -).png\"";
+        + " \"${screenshots}/$(${date} --iso-8601=seconds | ${tr} : -).png\"";
+      "$NOTIF" =
+        "${swaync-client}"
+        + " --toggle-panel";
 
       general = {
         allow_tearing = false;
@@ -105,6 +111,7 @@ in {
           "$MOD, B, exec, $BROWSER" #    [b]rowser
           "$MOD, D, pseudo," #           [d]windle
           "$MOD, F, fullscreen," #       [f]ullscrean
+          "$MOD, N, exec, $NOTIF" #      [n]otification centre
           "$MOD, P, exec, $PRINT" #      [p]rint screen
           "$MOD, R, exec, $MENU" #       [r]un
           "$MOD, T, togglesplit," #      [t]ile (dwindle)
