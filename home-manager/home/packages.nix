@@ -16,18 +16,19 @@ in {
       direnv
       fd
       fzf
+      gnumake
       gnupg
       gotop
       htop
       jq
       killall
       mktemp
+      neofetch
       openssl
       pciutils
       pinentry
       ripgrep
       rsync
-      screenfetch
       silver-searcher
       sops
       termshark
