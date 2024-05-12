@@ -1,10 +1,11 @@
 # NixOS: ❄️ Flakes & 🏠 Home Manager configs
 
 NixOS configuration for personal hosts, along with dotfiles and other home
-configuration in [users/ao][3]. K8s cluster configs live [in the ops repo][4].
+configuration in [home-manarer][3]. K8s cluster configs live
+[in the ops repo][4].
 
-[3]: https://github.com/attilaolah/os/tree/main/users/ao
-[4]: https://github.com/attilaolah/ops
+[3]: https://github.com/attilaolah/os/tree/main/home-manager
+[4]: https://gitlab.com/dornhaus/ops
 
 ## 💡 Inspiration
 
