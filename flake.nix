@@ -28,20 +28,40 @@
     useUserPackages = true;
     users = {ao = import ./home-manager/home.nix;};
   in {
-    nixosConfigurations.home = nixpkgs.lib.nixosSystem {
-      inherit system;
-      modules = [
-        ./hosts/home/configuration.nix
-        (import ./hosts/home/overlays.nix)
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            inherit useGlobalPkgs useUserPackages users;
-            extraSpecialArgs.desktop = true;
-          };
-        }
-      ];
-      specialArgs = {inherit inputs;};
+    nixosConfigurations = {
+      home = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./hosts/home/configuration.nix
+          (import ./hosts/home/overlays.nix)
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              inherit useGlobalPkgs useUserPackages users;
+              extraSpecialArgs.desktop = true;
+            };
+          }
+        ];
+        specialArgs = {inherit inputs;};
+      };
+      carbon = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./hosts/carbon/configuration.nix
+          (import ./hosts/home/overlays.nix)
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              inherit useGlobalPkgs useUserPackages users;
+              extraSpecialArgs = {
+                desktop = true;
+                work = true;
+              };
+            };
+          }
+        ];
+        specialArgs = {inherit inputs;};
+      };
     };
 
     # For applying local settings with:
