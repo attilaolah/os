@@ -1,11 +1,8 @@
-{config, ...}: {
+{
   boot = {
     plymouth.enable = true;
     kernelModules = ["kvm-intel"];
-    kernelParams = [
-      "ip=192.168.0.2::192.168.0.1:255.255.255.0:home::none"
-      "quiet"
-    ];
+    kernelParams = ["quiet"];
     blacklistedKernelModules = ["radeon"];
     loader = {
       grub = {
@@ -28,7 +25,7 @@
       };
     };
     initrd = {
-      kernelModules = ["amdgpu" "r8169"];
+      kernelModules = ["amdgpu"];
       availableKernelModules = [
         "ahci"
         "nvme"
@@ -47,12 +44,6 @@
         cryptb = luksDev 1; # 2T
       };
       services.lvm.enable = true;
-
-      # Start SSH during boot, to allow remote unlocking of LUKS volumes.
-      network.ssh = {
-        enable = true;
-        authorizedKeys = config.users.users.ao.openssh.authorizedKeys.keys;
-      };
     };
   };
 }
