@@ -8,10 +8,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland = {
-      url = "github:hyprwm/hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # https://lix.systems
     lix = {
@@ -30,7 +26,6 @@
     nixpkgs,
     nixos-unstable,
     home-manager,
-    hyprland,
     lix-module,
     ...
   } @ inputs: let
