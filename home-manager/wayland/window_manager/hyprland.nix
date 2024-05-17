@@ -59,9 +59,10 @@ in {
         + " --lines 12";
       "$BROWSER" =
         "${google-chrome}"
-        + " --enable-features=SkiaGraphite,Vulkan"
-        + " --enable-skia-graphite"
-        + " --enable-unsafe-webgpu"
+        # TODO: Enable these flags once they become more stable?
+        #+ " --enable-features=SkiaGraphite,Vulkan"
+        #+ " --enable-skia-graphite"
+        #+ " --enable-unsafe-webgpu"
         + " --ozone-platform=wayland";
       "$PRINT" =
         "${grim}"
