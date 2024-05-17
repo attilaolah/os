@@ -14,6 +14,7 @@ in {
       curl
       dig
       direnv
+      fastfetch
       fd
       fzf
       gnumake
@@ -23,7 +24,6 @@ in {
       jq
       killall
       mktemp
-      neofetch
       openssl
       pciutils
       pinentry
@@ -82,7 +82,6 @@ in {
       vimix-icon-theme
 
       # Browsers:
-      firefox
       google-chrome
 
       # Other GUI apps:
