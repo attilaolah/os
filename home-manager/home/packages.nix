@@ -86,6 +86,7 @@ in {
 
       # Other GUI apps:
       blender-hip
+      discord
       gimp
       inkscape
       pavucontrol
