@@ -45,6 +45,7 @@ in {
       # NVim dependencies:
       alejandra
       ansible-language-server
+      cargo
       cue
       go
       gofumpt
