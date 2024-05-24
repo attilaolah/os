@@ -45,6 +45,7 @@ in {
       # NVim dependencies:
       alejandra
       ansible-language-server
+      cargo
       cue
       go
       gofumpt
@@ -86,6 +87,7 @@ in {
 
       # Other GUI apps:
       blender-hip
+      discord
       gimp
       inkscape
       pavucontrol
