@@ -44,6 +44,7 @@
         {
           home-manager = {
             inherit useGlobalPkgs useUserPackages users;
+            backupFileExtension = "bkp";
             extraSpecialArgs.desktop = true;
           };
         }
