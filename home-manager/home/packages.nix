@@ -25,8 +25,10 @@ in {
       killall
       mktemp
       openssl
+      p7zip
       pciutils
       pinentry
+      rar
       ripgrep
       rsync
       silver-searcher
@@ -35,9 +37,11 @@ in {
       tmux
       traceroute
       tree
+      unzip
       usbutils
       wget
       yq
+      zip
       zoxide
 
       # NVim:
