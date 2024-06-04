@@ -1,4 +1,4 @@
-{lib, ...}: let
+let
   # Monitor layout:
   # ╔═══╗         ╔═══╗
   # ║ D ║╔═══════╗║ L ║
@@ -8,7 +8,7 @@
   M1 = "Dell Inc. DELL P2720DC 81WTK01K1SFS";
   M2 = "Samsung Electric Company U32J59x HNMW200264";
   M3 = "Lenovo Group Limited P27h-20 V906V9HY";
-in rec {
+in {
   "$M1" = "desc:${M1}";
   "$M2" = "desc:${M2}";
   "$M3" = "desc:${M3}";
@@ -26,16 +26,4 @@ in rec {
   ];
 
   exec-once = "hyprctl dispatch focusmonitor $M2";
-
-  # RAW Hyprland config, for hyprland.greet.conf.
-  hyprconf = lib.concatStringsSep "\n" (
-    [
-      "$M1 = desc:${M1}"
-      "$M2 = desc:${M2}"
-      "$M3 = desc:${M3}"
-    ]
-    ++ (map (x: "monitor = ${x}") monitor)
-    ++ (map (x: "workspace = ${x}") workspace)
-    ++ ["exec-once = ${exec-once}"]
-  );
 }
