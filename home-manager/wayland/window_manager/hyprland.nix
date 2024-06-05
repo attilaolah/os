@@ -8,8 +8,10 @@
 #
 {
   config,
+  hyprlock,
   lib,
   pkgs,
+  system,
   ...
 }: let
   input = import ../../../hosts/home/hyprland/input.nix {config = xkb;};
@@ -22,7 +24,8 @@
   foot = lib.getExe pkgs.foot;
   google-chrome = lib.getExe' pkgs.google-chrome "google-chrome-stable";
   grim = lib.getExe pkgs.grim;
-  hypridle = lib.getExe pkgs.hypridle;
+  hidle = lib.getExe pkgs.hypridle;
+  hlock = lib.getExe hyprlock.packages.${system}.default;
   mkdir = lib.getExe' pkgs.coreutils "mkdir";
   slurp = lib.getExe pkgs.slurp;
   swaync = lib.getExe' pkgs.swaynotificationcenter "swaync";
@@ -40,7 +43,7 @@ in {
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";
 
       exec-once = [
-        hypridle
+        hidle
         monitors.exec-once
         swaync
         waybar
@@ -71,6 +74,7 @@ in {
       "$NOTIF" =
         "${swaync-client}"
         + " --toggle-panel";
+      "$LOCK" = hlock;
 
       general = {
         allow_tearing = false;
@@ -112,6 +116,7 @@ in {
           "$MOD, B, exec, $BROWSER" #    [b]rowser
           "$MOD, D, pseudo," #           [d]windle
           "$MOD, F, fullscreen," #       [f]ullscrean
+          "$MOD, L, exec, $LOCK" #       [l]ock
           "$MOD, N, exec, $NOTIF" #      [n]otification centre
           "$MOD, P, exec, $PRINT" #      [p]rint screen
           "$MOD, R, exec, $MENU" #       [r]un

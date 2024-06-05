@@ -8,6 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # https://lix.systems
     lix = {
@@ -26,6 +30,7 @@
     nixpkgs,
     nixos-unstable,
     home-manager,
+    hyprlock,
     lix-module,
     ...
   } @ inputs: let
@@ -45,7 +50,12 @@
           home-manager = {
             inherit useGlobalPkgs useUserPackages users;
             backupFileExtension = "bkp";
-            extraSpecialArgs.desktop = true;
+            extraSpecialArgs =
+              inputs
+              // {
+                inherit system;
+                desktop = true;
+              };
           };
         }
 
