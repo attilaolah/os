@@ -21,6 +21,7 @@ in {
       ./gtk.nix
       ./qt.nix
       ./wayland/window_manager/hyprland.nix
+      ./xdg/config_file.nix
     ];
 
   home =
