@@ -23,6 +23,7 @@ jobs:
       with:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
         install_url: https://install.lix.systems/lix
+        install_options: ""
         extra_nix_config: |
           auto-optimise-store = true
           experimental-features = nix-command flakes
