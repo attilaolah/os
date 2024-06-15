@@ -50,6 +50,7 @@ in {
       alejandra
       ansible-language-server
       cargo
+      clang_18 # todo: renovate
       cue
       go
       gofumpt
@@ -67,7 +68,7 @@ in {
       podman-compose
       podman-tui
 
-      # Python, the basics:
+      # Python, the basics (todo: renovate):
       (python311.withPackages (ps:
         with ps; [
           ipython
