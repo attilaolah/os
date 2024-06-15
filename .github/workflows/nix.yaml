@@ -22,14 +22,9 @@ jobs:
       uses: cachix/install-nix-action@v26
       with:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
-        install_url: https://install.lix.systems/lix
-        install_options: ""
         extra_nix_config: |
           auto-optimise-store = true
           experimental-features = nix-command flakes
-      env:
-        NIX_INSTALLER_NO_CONFIRM: 1
-        NIX_INSTALLER_ENABLE_FLAKES: 1
 
     - name: Check Nix flake
       run: nix flake check
