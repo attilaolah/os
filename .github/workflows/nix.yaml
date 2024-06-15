@@ -9,17 +9,20 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on:
+    - nscloud-ubuntu-22.04-amd64-2x4-with-cache
+    - nscloud-cache-size-20gb
+    - nscloud-git-mirror-5gb
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install Nix
-        uses: cachix/install-nix-action@v26
-        with:
-          install_url: https://nixos.org/nix/install
-          extra_nix_config: |
-            auto-optimise-store = true
-            experimental-features = nix-command flakes
-      - name: Check Nix flake
-        run: nix flake check
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Install Nix
+      uses: cachix/install-nix-action@v26
+      with:
+        install_url: https://nixos.org/nix/install
+        extra_nix_config: |
+          auto-optimise-store = true
+          experimental-features = nix-command flakes
+    - name: Check Nix flake
+      run: nix flake check
