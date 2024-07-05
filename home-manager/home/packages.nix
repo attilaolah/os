@@ -103,11 +103,10 @@ in {
       # Utilities:
       libnotify
       nufraw-thumbnailer
-    ]
-    ++ desktopList (with gnome; [
+
       # Gnome apps:
       cheese
       eog
       nautilus
-    ]);
+    ];
 }
