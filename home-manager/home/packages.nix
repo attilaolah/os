@@ -107,6 +107,7 @@ in {
       # Gnome apps:
       cheese
       eog
+      file-roller
       nautilus
     ];
 }
