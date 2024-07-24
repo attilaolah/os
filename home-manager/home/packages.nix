@@ -69,7 +69,7 @@ in {
       podman-tui
 
       # Python, the basics (todo: renovate):
-      (python311.withPackages (ps:
+      (python312.withPackages (ps:
         with ps; [
           ipython
           jupyter
