@@ -60,14 +60,6 @@
       specialArgs = {inherit inputs;};
     };
 
-    # For applying local settings with:
-    # home-manager switch --flake .#roam
-    homeConfigurations.roam = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [./home-manager/home.nix];
-      extraSpecialArgs.desktop = false;
-    };
-
     devShells.${system}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
         alejandra
