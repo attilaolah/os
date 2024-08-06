@@ -19,6 +19,7 @@
         group = "ao";
         extraGroups =
           [
+            "input" # for /dev/input/* access
             "wheel" # for sudo
           ]
           ++ (
