@@ -49,7 +49,7 @@
 
     extra-substituters = [
       "https://cache.lix.systems" # lix.systems
-      "https://devenv.cachix.org;" # devenv.sh
+      "https://devenv.cachix.org" # devenv.sh
       "https://nixpkgs-python.cachix.org" # devenv.sh python
     ];
     trusted-public-keys = [
