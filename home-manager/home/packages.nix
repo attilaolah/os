@@ -12,6 +12,7 @@ in {
       age
       any-nix-shell
       curl
+      devenv
       dig
       direnv
       fastfetch
