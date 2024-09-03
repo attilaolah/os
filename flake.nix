@@ -49,6 +49,7 @@
               inputs
               // {
                 inherit system;
+                username = "ao";
                 desktop = true;
               };
           };
@@ -58,6 +59,17 @@
         lix-module.nixosModules.default
       ];
       specialArgs = {inherit inputs;};
+    };
+
+    # For applying local settings with:
+    # home-manager switch --flake .#wsl
+    homeConfigurations.wsl = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [./home-manager/home.nix];
+      extraSpecialArgs = {
+        username = "olaa";
+        desktop = false;
+      };
     };
 
     devShells.${system}.default = pkgs.mkShell {
