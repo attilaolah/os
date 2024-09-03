@@ -11,6 +11,7 @@ in {
       # CLI utilities:
       age
       any-nix-shell
+      colordiff
       curl
       devenv
       dig
