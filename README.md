@@ -55,6 +55,16 @@ Add remote builds for other machines:
 
 - Crostini
 - VirtualBox
+- WSL
+- Secrets & keys
+
+The WSL config is currently only managing home-manager, the host config should
+be committed eventually. For now the home-manager config can be installed as a
+flake:
+
+```sh
+nix run nixpkgs#home-manager -- switch --flake github:attilaolah/os#wsl
+```
 
 Set up [impermanence][6].
 
