@@ -3,6 +3,7 @@
   desktop,
   lib,
   pkgs,
+  username,
   ...
 }: let
   desktopAttrs = attrs: lib.attrsets.optionalAttrs desktop attrs;
@@ -26,8 +27,8 @@ in {
 
   home =
     {
-      username = "ao";
-      homeDirectory = "/home/ao";
+      inherit username;
+      homeDirectory = "/home/${username}";
       stateVersion = "23.11";
 
       sessionVariables = with config.home;

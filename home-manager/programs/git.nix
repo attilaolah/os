@@ -17,6 +17,7 @@
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
       advice.skippedCherryPicks = false;
+      credential.helper = "cache --timeout=3600";
     };
   };
 }

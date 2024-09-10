@@ -1,4 +1,4 @@
-{
+{username, ...}: {
   programs = {
     # Terminal:
     fish.enable = true;
@@ -16,7 +16,7 @@
     # GUI programs:
     _1password-gui = {
       enable = true;
-      polkitPolicyOwners = ["ao"];
+      polkitPolicyOwners = [username];
     };
     wireshark.enable = true;
   };

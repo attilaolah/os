@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  username,
   ...
 }: {
   users = {
@@ -12,11 +13,11 @@
     users = {
       root.initialHashedPassword = "$6$chB8XnZbQno6p5Zp$IE6xp/WGQYYwZGgAkQE9juhofD./R2ITPryZftBellWbeRKUtGBjBGOER6g9Qym.oDiMpkPc7OFOE4fxAV.fd/";
 
-      ao = {
+      "${username}" = {
         isNormalUser = true;
         description = "Attila O.,,,"; # GECOS
         initialHashedPassword = "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
-        group = "ao";
+        group = username;
         extraGroups =
           [
             "input" # for /dev/input/* access
@@ -51,6 +52,6 @@
       };
     };
 
-    groups.ao = {};
+    groups.${username} = {};
   };
 }

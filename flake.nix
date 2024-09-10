@@ -33,7 +33,7 @@
     system = "x86_64-linux";
     useGlobalPkgs = true;
     useUserPackages = true;
-    users = {ao = import ./home-manager/home.nix;};
+    username = "ao";
   in {
     nixosConfigurations.home = nixpkgs.lib.nixosSystem {
       inherit system;
@@ -43,21 +43,33 @@
         home-manager.nixosModules.home-manager
         {
           home-manager = {
-            inherit useGlobalPkgs useUserPackages users;
+            inherit useGlobalPkgs useUserPackages;
             backupFileExtension = "bkp";
             extraSpecialArgs =
               inputs
               // {
-                inherit system;
+                inherit system username;
                 desktop = true;
               };
+            users.${username} = import ./home-manager/home.nix;
           };
         }
 
         # https://lix.systems
         lix-module.nixosModules.default
       ];
-      specialArgs = {inherit inputs;};
+      specialArgs = {inherit inputs username;};
+    };
+
+    # For applying local settings with:
+    # home-manager switch --flake .#wsl
+    homeConfigurations.wsl = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [./home-manager/home.nix];
+      extraSpecialArgs = {
+        username = "olaa";
+        desktop = false;
+      };
     };
 
     devShells.${system}.default = pkgs.mkShell {
