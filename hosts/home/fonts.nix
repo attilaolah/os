@@ -13,6 +13,7 @@
     };
 
     packages = with pkgs; [
+      corefonts
       hack-font
       inter
       nerdfonts
@@ -23,6 +24,7 @@
       roboto-mono
       roboto-serif
       roboto-slab
+      vistafonts
     ];
   };
 }

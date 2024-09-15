@@ -30,6 +30,7 @@ in {
       p7zip
       pciutils
       pinentry
+      pwgen
       rar
       ripgrep
       rsync

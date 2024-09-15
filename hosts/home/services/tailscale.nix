@@ -1,6 +1,6 @@
 {
   services.tailscale = {
     enable = true;
-    extraUpFlags = "--accept-routes";
+    extraUpFlags = "--accept-routes --shields-up";
   };
 }
