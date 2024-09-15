@@ -7,12 +7,14 @@
     ./networking.nix
     ./programs.nix
     ./services/autofs.nix
+    ./services/avahi.nix
     ./services/blueman.nix
     ./services/davfs2.nix
     ./services/dbus.nix
     ./services/gvfs.nix
     ./services/openssh.nix
     ./services/pipewire.nix
+    ./services/printing.nix
     ./services/tailscale.nix
     ./services/teleport.nix
     ./services/xserver/xkb.nix
