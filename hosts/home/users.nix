@@ -24,6 +24,16 @@
             "wheel" # for sudo
           ]
           ++ (
+            if config.hardware.sane.enable
+            then ["scanner"]
+            else []
+          )
+          ++ (
+            if config.services.printing.enable
+            then ["lp"]
+            else []
+          )
+          ++ (
             if config.virtualisation.docker.enable
             then ["docker"] # non-rootless
             else []

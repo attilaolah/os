@@ -18,5 +18,12 @@
       ];
     };
     bluetooth.enable = true;
+    sane = {
+      enable = true;
+      extraBackends = with pkgs; [
+        hplipWithPlugin
+      ];
+      disabledDefaultBackends = ["escl"];
+    };
   };
 }
