@@ -54,7 +54,7 @@ in {
       ansible-language-server
       black
       cargo
-      clang_18 # todo: renovate
+      clang_19 # todo: renovate
       cue
       go
       gofumpt
