@@ -54,7 +54,7 @@ in {
       ansible-language-server
       black
       cargo
-      clang_19 # todo: renovate
+      clang_19
       cue
       go
       gofumpt
@@ -74,7 +74,7 @@ in {
       podman-compose
       podman-tui
 
-      # Python, the basics (todo: renovate):
+      # Python, the basics
       (python312.withPackages (ps:
         with ps; [
           ipython
