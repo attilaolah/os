@@ -3,7 +3,9 @@
   pkgs,
   username,
   ...
-}: {
+}: let
+  filterGroups = attrs: builtins.attrNames (pkgs.lib.filterAttrs (_: v: v) attrs);
+in {
   users = {
     mutableUsers = false;
     defaultUserShell = pkgs.fish;
@@ -15,44 +17,19 @@
 
       "${username}" = {
         isNormalUser = true;
-        description = "Attila O.,,,"; # GECOS
+        description = "Attila O.,,,,attila@dorn.haus"; # GECOS
         initialHashedPassword = "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
         group = username;
-        extraGroups =
-          [
-            "input" # for /dev/input/* access
-            "wheel" # for sudo
-          ]
-          ++ (
-            if config.hardware.sane.enable
-            then ["scanner"]
-            else []
-          )
-          ++ (
-            if config.services.printing.enable
-            then ["lp"]
-            else []
-          )
-          ++ (
-            if config.virtualisation.docker.enable
-            then ["docker"] # non-rootless
-            else []
-          )
-          ++ (
-            if config.virtualisation.podman.enable
-            then ["podman"] # non-rootless
-            else []
-          )
-          ++ (
-            if config.virtualisation.virtualbox.host.enable
-            then ["vboxusers"]
-            else []
-          )
-          ++ (
-            if config.programs.wireshark.enable
-            then ["wireshark"]
-            else []
-          );
+        extraGroups = filterGroups {
+          input = true; # for /dev/input/* access
+          wheel = true; # for sudo
+          scanner = config.hardware.sane.enable;
+          lp = config.services.printing.enable;
+          docker = config.virtualisation.docker.enable;
+          podman = config.virtualisation.podman.enable;
+          vboxusers = config.virtualisation.virtualbox.host.enable;
+          wireshark = config.programs.wireshark.enable;
+        };
         openssh.authorizedKeys.keys = [
           # https://github.com/attilaolah.keys
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIiR17IcWh8l3OxxKSt+ODrUMLU98ZoJ+XvcR17iX9/P"
