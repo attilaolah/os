@@ -60,6 +60,7 @@ in {
       gopls
       lua-language-server
       nil
+      pyright
       rust-analyzer
       rustfmt
       stylua
