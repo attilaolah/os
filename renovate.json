@@ -27,10 +27,10 @@
       "customType": "regex",
       "fileMatch": ["flake\\.nix$"],
       "matchStrings": [
-        "(?<depName>https://git\..*?)/archive/(?<currentValue>.*?)\\.tar\\.gz.*"
+        "(?<depName>https://git\\..*?)/archive/(?<currentValue>.*?)\\.tar\\.gz.*"
       ],
       "datasourceTemplate": "git-tags",
       "versioningTemplate": "semver"
-    },
-  ],
+    }
+  ]
 }
