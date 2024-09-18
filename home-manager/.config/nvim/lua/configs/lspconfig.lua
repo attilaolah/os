@@ -9,6 +9,7 @@ local servers = {
   "cssls",
   "html",
   "nil_ls",
+  "pyright",
   "rust_analyzer",
   "tsserver",
 }
