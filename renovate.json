@@ -21,7 +21,7 @@
       ],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "python/cpython",
-      "currentValueTemplate": "{{group.major}}.{{group.minor}}"
+      "currentValueTemplate": "{{major}}.{{minor}}"
     },
     {
       "customType": "regex",
@@ -31,6 +31,20 @@
       ],
       "datasourceTemplate": "git-tags",
       "versioningTemplate": "semver"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Major & minor only",
+      "matchDepNames": ["python/cpython"],
+      "matchUpdateTypes": ["patch", "pin"],
+      "enabled": false
+    },
+    {
+      "description": "Major only",
+      "matchDepNames": ["llvm/llvm-project"],
+      "matchUpdateTypes": ["minor", "patch", "pin"],
+      "enabled": false
     }
   ],
   "dependencyDashboard": true
