@@ -5,6 +5,7 @@ local options = {
     html = { "prettier" },
     nix = { "alejandra" },
     rust = { "rustfmt" },
+    python = { "isort", "black" },
   },
 
   format_on_save = {

@@ -52,12 +52,14 @@ in {
       # NVim dependencies:
       alejandra
       ansible-language-server
+      black
       cargo
       clang_18 # todo: renovate
       cue
       go
       gofumpt
       gopls
+      isort
       lua-language-server
       nil
       pyright
