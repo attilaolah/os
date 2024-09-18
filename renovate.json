@@ -35,7 +35,13 @@
   ],
   "packageRules": [
     {
-      "description": "Only update once a month",
+      "description": "Major & minor only",
+      "matchDepNames": ["python/cpython"],
+      "matchUpdateTypes": ["patch", "pin"],
+      "enabled": false
+    },
+    {
+      "description": "Major only",
       "matchDepNames": ["llvm/llvm-project"],
       "matchUpdateTypes": ["minor", "patch", "pin"],
       "enabled": false
