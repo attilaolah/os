@@ -33,5 +33,13 @@
       "versioningTemplate": "semver"
     }
   ],
+  "packageRules": [
+    {
+      "description": "Only update once a month",
+      "matchDepNames": ["llvm/llvm-project"],
+      "matchUpdateTypes": ["minor", "patch", "pin"],
+      "enabled": false
+    }
+  ],
   "dependencyDashboard": true
 }
