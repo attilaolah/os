@@ -21,7 +21,7 @@
       ],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "python/cpython",
-      "currentValueTemplate": "{{group.major}}.{{group.minor}}"
+      "currentValueTemplate": "{{major}}.{{groups}}"
     },
     {
       "customType": "regex",
