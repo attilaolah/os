@@ -32,5 +32,6 @@
       "datasourceTemplate": "git-tags",
       "versioningTemplate": "semver"
     }
-  ]
+  ],
+  "dependencyDashboard": true
 }
