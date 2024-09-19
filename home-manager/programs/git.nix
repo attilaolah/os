@@ -3,7 +3,7 @@
     enable = true;
 
     userName = "Attila Oláh";
-    userEmail = "attilaolah@gmail.com";
+    userEmail = "attila.olah@netstal.com";
     signing = {
       signByDefault = true;
       key = "07E6C0643FD142C3";
