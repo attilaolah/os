@@ -59,13 +59,13 @@ in {
       go
       gofumpt
       gopls
-      isort
       lua-language-server
       nil
       pyright
       rust-analyzer
       rustfmt
       stylua
+      usort
       vscode-langservers-extracted
       yaml-language-server
 
