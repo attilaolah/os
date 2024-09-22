@@ -6,22 +6,22 @@
   imports = [
     ../home/fonts.nix
     ../home/programs.nix
-    ../home/services/autofs.nix
-    ../home/services/avahi.nix
-    ../home/services/blueman.nix
-    ../home/services/davfs2.nix
-    ../home/services/dbus.nix
-    ../home/services/gvfs.nix
-    ../home/services/openssh.nix
-    ../home/services/pipewire.nix
-    ../home/services/printing.nix
-    ../home/services/tailscale.nix
-    ../home/services/teleport.nix
+    # ../home/services/autofs.nix
+    # ../home/services/avahi.nix
+    # ../home/services/blueman.nix
+    # ../home/services/davfs2.nix
+    # ../home/services/dbus.nix
+    # ../home/services/gvfs.nix
+    # ../home/services/openssh.nix
+    # ../home/services/pipewire.nix
+    # ../home/services/printing.nix
+    # ../home/services/tailscale.nix
+    # ../home/services/teleport.nix
     ../home/services/xserver/xkb.nix
     ../home/users.nix
-    ../home/virtualisation/docker.nix
-    ../home/virtualisation/podman.nix
-    ../home/virtualisation/virtualbox.nix
+    # ../home/virtualisation/docker.nix
+    # ../home/virtualisation/podman.nix
+    # ../home/virtualisation/virtualbox.nix
     ./boot.nix
     ./file_systems.nix
     ./hardware.nix

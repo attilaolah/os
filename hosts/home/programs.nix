@@ -8,16 +8,16 @@
       viAlias = true;
       vimAlias = true;
     };
-    _1password.enable = true;
+    # _1password.enable = true;
 
     # Window manager:
     hyprland.enable = true;
 
     # GUI programs:
-    _1password-gui = {
-      enable = true;
-      polkitPolicyOwners = [username];
-    };
-    wireshark.enable = true;
+    # _1password-gui = {
+    #   enable = true;
+    #   polkitPolicyOwners = [username];
+    # };
+    # wireshark.enable = true;
   };
 }
