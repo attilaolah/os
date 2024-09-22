@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  username,
+  ...
+}: {
   imports = [
     ./boot.nix
     ./file_systems.nix
@@ -49,6 +53,7 @@
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
 
+    trusted-users = [username];
     extra-substituters = [
       "https://cache.lix.systems" # lix.systems
       "https://devenv.cachix.org" # devenv.sh
