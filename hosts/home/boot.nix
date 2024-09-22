@@ -2,7 +2,7 @@
   boot = {
     plymouth.enable = true;
     kernelModules = ["kvm-intel"];
-    kernelParams = ["quiet"];
+    kernelParams = ["copytoram" "quiet"];
     blacklistedKernelModules = ["radeon"];
     loader = {
       grub = {
