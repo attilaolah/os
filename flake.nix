@@ -38,30 +38,59 @@
     useUserPackages = true;
     username = "ao";
   in {
-    nixosConfigurations.home = nixpkgs.lib.nixosSystem {
-      inherit system;
-      modules = [
-        ./hosts/home/configuration.nix
-        (import ./hosts/home/overlays.nix)
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            inherit useGlobalPkgs useUserPackages;
-            backupFileExtension = "bkp";
-            extraSpecialArgs =
-              inputs
-              // {
-                inherit system username;
-                desktop = true;
-              };
-            users.${username} = import ./home-manager/home.nix;
-          };
-        }
+    nixosConfigurations = {
+      home = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./hosts/home/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              inherit useGlobalPkgs useUserPackages;
+              backupFileExtension = "bkp";
+              extraSpecialArgs =
+                inputs
+                // {
+                  inherit system username;
+                  desktop = true;
+                };
+              users.${username} = import ./home-manager/home.nix;
+            };
+          }
 
-        # https://lix.systems
-        lix-module.nixosModules.default
-      ];
-      specialArgs = {inherit inputs username;};
+          # https://lix.systems
+          lix-module.nixosModules.default
+        ];
+        specialArgs = {inherit inputs username;};
+      };
+
+      work = let
+        username = "olaa";
+      in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/work/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                inherit useGlobalPkgs useUserPackages;
+                backupFileExtension = "bkp";
+                extraSpecialArgs =
+                  inputs
+                  // {
+                    inherit system username;
+                    desktop = true;
+                  };
+                users.${username} = import ./home-manager/home.nix;
+              };
+            }
+
+            # https://lix.systems
+            lix-module.nixosModules.default
+          ];
+          specialArgs = {inherit inputs username;};
+        };
     };
 
     # For applying local settings with:
