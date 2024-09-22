@@ -1,5 +1,8 @@
 # NixOS: ❄️ Flakes & 🏠 Home Manager configs
 
+![GitHub Checks](https://img.shields.io/github/check-runs/attilaolah/os/main)
+[![Renovate](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://mend.io/renovate)
+
 NixOS configuration for personal hosts, along with dotfiles and other home
 configuration in [home-manarer][3]. K8s cluster configs live
 [in the ops repo][4].
