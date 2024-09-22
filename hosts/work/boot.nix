@@ -27,7 +27,7 @@
         "xhci_pci"
       ];
       luks.devices.usbroot = {
-        device = "/dev/disk/by-uuid/todo";
+        device = "/dev/disk/by-uuid/ff9bd816-1bdc-4585-8277-d6cf057cfc0a";
         preLVM = true;
       };
       services.lvm.enable = true;

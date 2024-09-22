@@ -36,10 +36,9 @@
     system = "x86_64-linux";
     useGlobalPkgs = true;
     useUserPackages = true;
-    username = "ao";
-  in {
-    nixosConfigurations = {
-      home = nixpkgs.lib.nixosSystem {
+
+    nixos-system = username:
+      nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           ./hosts/home/configuration.nix
@@ -63,34 +62,10 @@
         ];
         specialArgs = {inherit inputs username;};
       };
-
-      work = let
-        username = "olaa";
-      in
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            ./hosts/work/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                inherit useGlobalPkgs useUserPackages;
-                backupFileExtension = "bkp";
-                extraSpecialArgs =
-                  inputs
-                  // {
-                    inherit system username;
-                    desktop = true;
-                  };
-                users.${username} = import ./home-manager/home.nix;
-              };
-            }
-
-            # https://lix.systems
-            lix-module.nixosModules.default
-          ];
-          specialArgs = {inherit inputs username;};
-        };
+  in {
+    nixosConfigurations = {
+      home = nixos-system "ao";
+      work = nixos-system "olaa";
     };
 
     # For applying local settings with:
