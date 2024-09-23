@@ -1,16 +1,4 @@
-{pkgs, ...}: let
-  tmux-window-name = pkgs.tmuxPlugins.mkTmuxPlugin {
-    pluginName = "window-name";
-    version = "unstable-2024-08-30";
-    rttpFilePath = "tmux_window_name.tmux";
-    src = pkgs.fetchFromGitHub {
-      owner = "ofirgall";
-      repo = "tmux-window-name";
-      rev = "dc97a79ac35a9db67af558bb66b3a7ad41c924e7";
-      hash = "sha256-o7ZzlXwzvbrZf/Uv0jHM+FiHjmBO0mI63pjeJwVJEhE=";
-    };
-  };
-in {
+{pkgs, ...}: {
   programs.tmux = {
     enable = true;
 
@@ -32,9 +20,6 @@ in {
           set -g @catppuccin_status_left_separator "█"
           set -g @catppuccin_status_right_separator "█"
         '';
-      }
-      {
-        plugin = tmux-window-name;
       }
     ];
 
