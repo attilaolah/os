@@ -3,7 +3,9 @@
   pkgs,
   username,
   ...
-}: {
+}: let
+  filterGroups = attrs: builtins.attrNames (pkgs.lib.filterAttrs (_: v: v) attrs);
+in {
   users = {
     mutableUsers = false;
     defaultUserShell = pkgs.fish;
@@ -15,50 +17,30 @@
 
       "${username}" = {
         isNormalUser = true;
-        description = "Attila O.,,,"; # GECOS
+        description = "Attila O.,,,,attila@dorn.haus"; # GECOS
         initialHashedPassword = "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
         group = username;
-        extraGroups =
-          [
-            "input" # for /dev/input/* access
-            "wheel" # for sudo
-          ]
-          ++ (
-            if config.hardware.sane.enable
-            then ["scanner"]
-            else []
-          )
-          ++ (
-            if config.services.printing.enable
-            then ["lp"]
-            else []
-          )
-          ++ (
-            if config.virtualisation.docker.enable
-            then ["docker"] # non-rootless
-            else []
-          )
-          ++ (
-            if config.virtualisation.podman.enable
-            then ["podman"] # non-rootless
-            else []
-          )
-          ++ (
-            if config.virtualisation.virtualbox.host.enable
-            then ["vboxusers"]
-            else []
-          )
-          ++ (
-            if config.programs.wireshark.enable
-            then ["wireshark"]
-            else []
-          );
-        openssh.authorizedKeys.keys = [
-          # https://github.com/attilaolah.keys
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIiR17IcWh8l3OxxKSt+ODrUMLU98ZoJ+XvcR17iX9/P"
-          # Pixel 7, temporary key
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICfD87bfG50ZUVNMtf1EAMcNDne5H+qELuLZL6919lyd"
-        ];
+        extraGroups = with config;
+          filterGroups {
+            input = true; # for /dev/input/* access
+            wheel = true; # for sudo
+            scanner = hardware.sane.enable;
+            lp = services.printing.enable;
+            docker = virtualisation.docker.enable;
+            podman = virtualisation.podman.enable;
+            vboxusers = virtualisation.virtualbox.host.enable;
+            wireshark = programs.wireshark.enable;
+          };
+        openssh.authorizedKeys.keys = let
+          gh-keys = with pkgs.lib.strings;
+            splitString "\n" (removeSuffix "\n" (builtins.readFile (pkgs.fetchurl {
+              url = "https://github.com/attilaolah.keys";
+              hash = "sha256-U1t5aTwRMlnjmiUcZcKZ1Hu6/QpZO2OWLG+4UaiRnHE=";
+            })));
+          # Pixel 7, temporary key:
+          extra-keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICfD87bfG50ZUVNMtf1EAMcNDne5H+qELuLZL6919lyd"];
+        in
+          gh-keys ++ extra-keys;
       };
     };
 
