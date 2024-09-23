@@ -13,9 +13,7 @@ in {
     [
       ./file.nix
       ./home/packages.nix
-      ./programs/fish.nix
-      ./programs/git.nix
-      ./programs/gpg.nix
+      ./programs
       ./services/gpg_agent.nix
     ]
     ++ desktopList [
