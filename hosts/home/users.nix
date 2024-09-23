@@ -32,8 +32,11 @@ in {
             wireshark = programs.wireshark.enable;
           };
         openssh.authorizedKeys.keys = [
-          # https://github.com/attilaolah.keys
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIiR17IcWh8l3OxxKSt+ODrUMLU98ZoJ+XvcR17iX9/P"
+          pkgs.fetchurl
+          {
+            url = "https://github.com/attilaolah.keys";
+            hash = pkgs.lib.fakeHash;
+          }
           # Pixel 7, temporary key
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICfD87bfG50ZUVNMtf1EAMcNDne5H+qELuLZL6919lyd"
         ];
