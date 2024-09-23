@@ -8,6 +8,7 @@
       settings = {
         ipv6 = true;
         fixed-cidr-v6 = "fd10:6::/64";
+        features.containerd-snapshotter = true;
       };
     };
   };
