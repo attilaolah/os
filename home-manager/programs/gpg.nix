@@ -1,17 +1,20 @@
-{
+{pkgs, ...}: {
   programs.gpg = {
     enable = true;
     mutableKeys = false;
     mutableTrust = false;
     publicKeys = [
       {
-        source = ./gpg.asc;
+        source = pkgs.fetchurl {
+          url = "https://github.com/attilaolah.gpg";
+          hash = "sha256-0xBHzPfbfx8buL3kH4EjNDaetZ5REWTMZQe4X1qNVBE=";
+        };
         trust = "ultimate";
       }
       {
-        source = builtins.fetchurl {
+        source = pkgs.fetchurl {
           url = "https://github.com/web-flow.gpg";
-          sha256 = "sha256:117gldk49gc76y7wqq6a4kjgkrlmdsrb33qw2l1z9wqcys3zd2kf";
+          hash = "sha256-bor2h/YM8/QDFRyPsbJuleb55CTKYMyPN4e9RGaj74Q=";
         };
         trust = "full";
       }
