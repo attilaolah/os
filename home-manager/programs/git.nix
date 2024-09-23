@@ -3,7 +3,7 @@
     enable = true;
 
     userName = "Attila Oláh";
-    userEmail = "attila.olah@netstal.com";
+    userEmail = "attila@dorn.haus";
     signing = with config.programs.gpg; {
       signByDefault = enable;
       key = settings.default-key;
