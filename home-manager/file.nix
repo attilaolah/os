@@ -28,7 +28,6 @@ in {
       ".config/nvim/lua/mappings.lua".source = ./.config/nvim/lua/mappings.lua;
       ".config/nvim/lua/options.lua".source = ./.config/nvim/lua/options.lua;
       ".config/nvim/lua/plugins/init.lua".source = ./.config/nvim/lua/plugins/init.lua;
-      # ".config/tmux/tmux.conf".source = ./.config/tmux/tmux.conf;
     }
     // desktopAttrs (let
       foot-catppuccin-mocha = pkgs.stdenv.mkDerivation {
