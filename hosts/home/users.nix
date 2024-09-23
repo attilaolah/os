@@ -31,15 +31,16 @@ in {
             vboxusers = virtualisation.virtualbox.host.enable;
             wireshark = programs.wireshark.enable;
           };
-        openssh.authorizedKeys.keys = [
-          pkgs.fetchurl
-          {
-            url = "https://github.com/attilaolah.keys";
-            hash = pkgs.lib.fakeHash;
-          }
-          # Pixel 7, temporary key
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICfD87bfG50ZUVNMtf1EAMcNDne5H+qELuLZL6919lyd"
-        ];
+        openssh.authorizedKeys.keys = let
+          gh-keys = with pkgs.lib.strings;
+            splitString "\n" (removeSuffix "\n" (builtins.readFile (pkgs.fetchurl {
+              url = "https://github.com/attilaolah.keys";
+              hash = "sha256-U1t5aTwRMlnjmiUcZcKZ1Hu6/QpZO2OWLG+4UaiRnHE=";
+            })));
+          # Pixel 7, temporary key:
+          extra-keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICfD87bfG50ZUVNMtf1EAMcNDne5H+qELuLZL6919lyd"];
+        in
+          gh-keys ++ extra-keys;
       };
     };
 
