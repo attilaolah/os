@@ -1,12 +1,12 @@
-{
+{config, ...}: {
   programs.git = {
     enable = true;
 
     userName = "Attila Oláh";
     userEmail = "attila.olah@netstal.com";
-    signing = {
-      signByDefault = true;
-      key = "07E6C0643FD142C3";
+    signing = with config.programs.gpg; {
+      signByDefault = enable;
+      key = settings.default-key;
     };
     aliases = {
       ci = "commit";
