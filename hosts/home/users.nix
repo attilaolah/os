@@ -20,16 +20,17 @@ in {
         description = "Attila O.,,,,attila@dorn.haus"; # GECOS
         initialHashedPassword = "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
         group = username;
-        extraGroups = filterGroups {
-          input = true; # for /dev/input/* access
-          wheel = true; # for sudo
-          scanner = config.hardware.sane.enable;
-          lp = config.services.printing.enable;
-          docker = config.virtualisation.docker.enable;
-          podman = config.virtualisation.podman.enable;
-          vboxusers = config.virtualisation.virtualbox.host.enable;
-          wireshark = config.programs.wireshark.enable;
-        };
+        extraGroups = with config;
+          filterGroups {
+            input = true; # for /dev/input/* access
+            wheel = true; # for sudo
+            scanner = hardware.sane.enable;
+            lp = services.printing.enable;
+            docker = virtualisation.docker.enable;
+            podman = virtualisation.podman.enable;
+            vboxusers = virtualisation.virtualbox.host.enable;
+            wireshark = programs.wireshark.enable;
+          };
         openssh.authorizedKeys.keys = [
           # https://github.com/attilaolah.keys
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIiR17IcWh8l3OxxKSt+ODrUMLU98ZoJ+XvcR17iX9/P"
