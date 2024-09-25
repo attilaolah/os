@@ -11,6 +11,16 @@
     aliases = {
       ci = "commit";
       co = "checkout";
+      l = ''
+        !log() {
+          git log \
+            --pretty=format:"%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s" \
+            --date=short \
+            --decorate \
+            --graph
+        }
+        log
+      '';
     };
     extraConfig = {
       pull.rebase = true;

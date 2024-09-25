@@ -33,9 +33,9 @@ in {
         gb = "git branch -avv";
         gc = "git commit -v";
         gg = "git commit -m";
-        gl = "git log --abbrev-commit --decorate --graph --pretty=oneline";
         gp = "git push";
         gr = "git remote -v";
+        gl = "git l";
 
         n = "nix-pkg-run";
         nix-try = "nix-shell --packages";
