@@ -37,6 +37,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     username = "ao";
+    email = "attila@dorn.haus";
   in {
     nixosConfigurations.home = nixpkgs.lib.nixosSystem {
       inherit system;
@@ -51,7 +52,7 @@
             extraSpecialArgs =
               inputs
               // {
-                inherit system username;
+                inherit system username email;
                 desktop = true;
               };
             users.${username} = import ./home-manager/home.nix;
@@ -61,7 +62,7 @@
         # https://lix.systems
         lix-module.nixosModules.default
       ];
-      specialArgs = {inherit inputs username;};
+      specialArgs = {inherit inputs username email;};
     };
 
     # For applying local settings with:
@@ -70,6 +71,7 @@
       inherit pkgs;
       modules = [./home-manager/home.nix];
       extraSpecialArgs = {
+        inherit email;
         username = "olaa";
         desktop = false;
       };

@@ -2,6 +2,7 @@
   config,
   pkgs,
   username,
+  email,
   ...
 }: let
   filterGroups = attrs: builtins.attrNames (pkgs.lib.filterAttrs (_: v: v) attrs);
@@ -17,7 +18,7 @@ in {
 
       "${username}" = {
         isNormalUser = true;
-        description = "Attila O.,,,,attila@dorn.haus"; # GECOS
+        description = "Attila O.,,,,${email}"; # GECOS
         initialHashedPassword = "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
         group = username;
         extraGroups = with config;
