@@ -18,7 +18,7 @@
       co = "checkout";
       l = lib.concatStringsSep " " [
         "!git log"
-        "--pretty=format:\"%C(yellow)%h %Cred%ad %Cblue%al%Cgreen%d %Creset%s\""
+        "--pretty=format:\"%C(yellow)%h %Cred%ad %Cblue%aL%Cgreen%d %Creset%s\""
         "--date=short"
         "--decorate"
         "--graph"
@@ -29,6 +29,7 @@
       pull.rebase = true;
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
+      log.mailmap = true;
       advice.skippedCherryPicks = false;
       credential.helper = "cache --timeout=3600";
     };
