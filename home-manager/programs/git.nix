@@ -1,6 +1,7 @@
 {
   config,
   email,
+  lib,
   ...
 }: {
   programs.git = {
@@ -15,17 +16,14 @@
     aliases = {
       ci = "commit";
       co = "checkout";
-      l = ''
-        !log() {
-          git log \
-            --pretty=format:"%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s" \
-            --date=short \
-            --decorate \
-            --graph \
-            "$@"
-        }
-        log
-      '';
+      l = lib.concatStringsSep " " [
+        "!git log"
+        "--pretty=format:\"%C(yellow)%h %Cred%ad %Cblue%al%Cgreen%d %Creset%s\""
+        "--date=short"
+        "--decorate"
+        "--graph"
+        "\"$@\""
+      ];
     };
     extraConfig = {
       pull.rebase = true;
