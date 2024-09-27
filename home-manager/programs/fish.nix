@@ -41,8 +41,22 @@ in {
         nix-try = "nix-shell --packages";
       }
       // desktopAttrs {
-        kb-us = "setxkbmap -layout us -option caps:escape";
-        kb-dvp = "setxkbmap -layout us -variant dvp -option altwin:meta_win -option caps:escape -option compose:ralt -option keypad:atm -option kpdl:semi -option numpad:shift3";
+        kb-us = ''
+          setxkbmap \
+            -layout us \
+            -option caps:escape"
+        '';
+        kb-dvp = ''
+          setxkbmap \
+            -layout us \
+            -variant dvp \
+            -option altwin:meta_win \
+            -option caps:escape \
+            -option compose:ralt \
+            -option keypad:atm \
+            -option kpdl:semi \
+            -option numpad:shift3
+        '';
       };
 
     functions = {
