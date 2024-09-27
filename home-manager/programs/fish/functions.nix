@@ -6,9 +6,16 @@
   grep = lib.getExe pkgs.gnugrep;
   nix = lib.getExe pkgs.nix;
   sed = lib.getExe pkgs.gnused;
+  tr = lib.getExe' pkgs.coreutils "tr";
+  wc = lib.getExe' pkgs.coreutils "wc";
 in {
   programs.fish.functions = {
     nixpkg-run = "${nix} run nixpkgs#$argv[1] -- $argv[2..]";
+
+    __prompt_space = ''
+      set_color normal
+      echo -n -s " "
+    '';
 
     __prompt_segment = ''
       # Get colours
@@ -45,23 +52,23 @@ in {
     '';
 
     __show_jobs = ''
-      set -l jobs $(jobs | wc -l)
+      set -l jobs (jobs | ${wc} -l)
       if [ $jobs -ne 0 ]
-        __prompt_segment normal normal " "
-        __prompt_segment yellow black \ueba2" $jobs"
+        __prompt_space
+        __prompt_segment yellow black "$jobs"\ueba2" "
       end
     '';
 
     __show_retval = ''
       if [ $RETVAL -ne 0 ]
-        __prompt_segment normal normal " "
-        __prompt_segment red black "$RETVAL⏎"
+        __prompt_space
+        __prompt_segment red black "$RETVAL"\uea87" "
       end
     '';
 
     __show_venv = ''
       if set -q VIRTUAL_ENV
-        __prompt_segment normal normal " "
+        __prompt_space
         if [ "$VIRTUAL_ENV_PROJECT-" = "-" ]
           __set_venv_project  # try setting it manually
         end
@@ -85,29 +92,52 @@ in {
       '';
     };
 
+    __show_git_prompt = ''
+      set -l prompt (fish_git_prompt)
+      if test -n "$prompt"
+        __prompt_space
+        __prompt_segment cyan black \ue65d(
+          echo $prompt |
+            ${sed} --regexp-extended \
+              --expr 's/[()]//g' \
+              --expr 's|([^/])[a-zA-Z]*/|\1/|' \
+              --expr 's|^((./)?[A-Z]+-[0-9]+).*|\1|' \
+              --expr 's/^(.{16}).*/\1…/' |
+            ${tr} '[:upper:]' '[:lower:]'
+        )
+      end
+    '';
+
     __show_pwd = ''
-      __prompt_segment normal blue " "(prompt_pwd)
+      __prompt_space
+      __prompt_segment black white \uea83" "(prompt_pwd)
     '';
 
     __show_prompt = ''
       set -l uid (id -u $USER)
       if [ $uid -eq 0 ]
-        __prompt_segment normal normal " "
+        __prompt_space
         __prompt_segment red black "#"
       else
-        __prompt_segment normal white ' $'
+        __prompt_space
+        __prompt_segment normal white '$'
       end
-      __prompt_segment normal normal " "
     '';
 
     fish_prompt = ''
       set -g RETVAL $status
       __show_shlvl_user_host
       __show_venv
-      __show_jobs
-      __show_retval
+      __show_git_prompt
       __show_pwd
       __show_prompt
+      __prompt_space
+      set_color normal
+    '';
+
+    fish_right_prompt = ''
+      __show_retval
+      __show_jobs
       set_color normal
     '';
   };
