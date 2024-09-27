@@ -12,9 +12,22 @@ in {
   programs.fish.functions = {
     nixpkg-run = "${nix} run nixpkgs#$argv[1] -- $argv[2..]";
 
-    __prompt_space = ''
+    __pad_from_left = ''
       set_color normal
-      echo -n -s " "
+      set_color $argv[1]
+      echo -n \u2590
+    '';
+
+    __pad_from_left_thin = ''
+      set_color normal
+      set_color $argv[1]
+      echo -n \u2595
+    '';
+
+    __pad_from_right = ''
+      set_color normal
+      set_color $argv[1]
+      echo -n \u258d
     '';
 
     __prompt_segment = ''
@@ -43,36 +56,40 @@ in {
       set -l who (whoami)
       set -l host (hostname -s)
 
+      __pad_from_left $bg
       __prompt_segment $bg $fg \uf489" $SHLVL $who"
 
       if [ "$who" != "$host" ]
         # Skip @host bit if hostname == username
         __prompt_segment $bg $fg "@$host"
       end
+
+      __pad_from_right $bg
     '';
 
     __show_jobs = ''
       set -l jobs (jobs | ${wc} -l)
       if [ $jobs -ne 0 ]
-        __prompt_space
+        __pad_from_left_thin yellow
         __prompt_segment yellow black "$jobs"\ueba2" "
       end
     '';
 
     __show_retval = ''
       if [ $RETVAL -ne 0 ]
-        __prompt_space
+        __pad_from_left_thin red
         __prompt_segment red black "$RETVAL"\uea87" "
       end
     '';
 
     __show_venv = ''
       if set -q VIRTUAL_ENV
-        __prompt_space
         if [ "$VIRTUAL_ENV_PROJECT-" = "-" ]
           __set_venv_project  # try setting it manually
         end
+        __pad_from_left yellow
         __prompt_segment yellow black \ued1b" $VIRTUAL_ENV_PROJECT"
+        __pad_from_right yellow
       end
     '';
 
@@ -95,8 +112,8 @@ in {
     __show_git_prompt = ''
       set -l prompt (fish_git_prompt)
       if test -n "$prompt"
-        __prompt_space
-        __prompt_segment cyan black \ue65d(
+        __pad_from_left cyan
+        __prompt_segment cyan black \uf418(
           echo $prompt |
             ${sed} --regexp-extended \
               --expr 's/[()]//g' \
@@ -105,21 +122,21 @@ in {
               --expr 's/^(.{16}).*/\1…/' |
             ${tr} '[:upper:]' '[:lower:]'
         )
+        __pad_from_right cyan
       end
     '';
 
     __show_pwd = ''
-      __prompt_space
+      __pad_from_left black
       __prompt_segment black white \uea83" "(prompt_pwd)
+      __pad_from_right black
     '';
 
     __show_prompt = ''
       set -l uid (id -u $USER)
       if [ $uid -eq 0 ]
-        __prompt_space
         __prompt_segment red black "#"
       else
-        __prompt_space
         __prompt_segment normal white '$'
       end
     '';
@@ -131,8 +148,8 @@ in {
       __show_git_prompt
       __show_pwd
       __show_prompt
-      __prompt_space
       set_color normal
+      echo -n " "
     '';
 
     fish_right_prompt = ''
