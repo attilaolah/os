@@ -3,7 +3,10 @@
   pkgs,
   ...
 }: let
+  echo = lib.getExe' pkgs.coreutils "echo";
+  grep = lib.getExe pkgs.gnugrep;
   nix = lib.getExe pkgs.nix;
+  sed = lib.getExe pkgs.gnused;
 in {
   programs.fish.functions = {
     nixpkg-run = "${nix} run nixpkgs#$argv[1] -- $argv[2..]";
@@ -19,7 +22,7 @@ in {
 
       # Print text
       if [ -n "$argv[3]" ]
-        echo -n -s $argv[3]
+        ${echo} -n -s $argv[3]
       end
     '';
 
@@ -72,8 +75,8 @@ in {
       body = ''
         if test -e "$VIRTUAL_ENV/pyvenv.cfg"
           set -g VIRTUAL_ENV_PROJECT (
-            grep "^prompt\s*=\s*" "$VIRTUAL_ENV/pyvenv.cfg" |
-            sed \
+            ${grep} "^prompt\s*=\s*" "$VIRTUAL_ENV/pyvenv.cfg" |
+            ${sed} \
               -e "s/^prompt\s*=\s*//" \
               -e "s/\(.*\)-py\([[:digit:]]\.*[[:digit:]]*\)/\2:\1/"
           )
