@@ -37,7 +37,7 @@ in {
         gr = "git remote -v";
         gl = "git l";
 
-        n = "nix-pkg-run";
+        nx = "nix-pkg-run";
         nix-try = "nix-shell --packages";
       }
       // desktopAttrs {
