@@ -6,6 +6,19 @@
   ...
 }: let
   desktopAttrs = attrs: lib.attrsets.optionalAttrs desktop attrs;
+  foot-catppuccin-mocha = pkgs.stdenv.mkDerivation {
+    name = "foot-catppuccin-mocha";
+    # TODO: renovate
+    src = pkgs.fetchFromGitHub {
+      owner = "catppuccin";
+      repo = "foot";
+      rev = "ee5549af72ab78520ac2aa1c671bf5c2d347c8ca";
+      sha256 = "sha256-3hK9klXwdHhprG2wUMt7nBfbL1mb/gl+k/MtJUuY000=";
+    };
+    installPhase = ''
+      cp --recursive catppuccin-mocha.ini $out
+    '';
+  };
 in {
   home.file =
     {
@@ -19,7 +32,6 @@ in {
         Match host * exec "gpg-connect-agent UPDATESTARTUPTTY /bye"
       '';
       # TODO: Use xdg.configFile!
-      ".config/fish/functions/fish_prompt.fish".source = ./.config/fish/functions/fish_prompt.fish;
       ".config/nvim/init.lua".source = ./.config/nvim/init.lua;
       ".config/nvim/lua/chadrc.lua".source = ./.config/nvim/lua/chadrc.lua;
       ".config/nvim/lua/configs/conform.lua".source = ./.config/nvim/lua/configs/conform.lua;
@@ -30,20 +42,6 @@ in {
       ".config/nvim/lua/plugins/init.lua".source = ./.config/nvim/lua/plugins/init.lua;
     }
     // desktopAttrs (let
-      foot-catppuccin-mocha = pkgs.stdenv.mkDerivation {
-        name = "foot-catppuccin-mocha";
-        # TODO: renovate
-        src = pkgs.fetchFromGitHub {
-          owner = "catppuccin";
-          repo = "foot";
-          rev = "ee5549af72ab78520ac2aa1c671bf5c2d347c8ca";
-          sha256 = "sha256-3hK9klXwdHhprG2wUMt7nBfbL1mb/gl+k/MtJUuY000=";
-        };
-        installPhase = ''
-          cp --recursive catppuccin-mocha.ini $out
-        '';
-      };
-
       brightnessctl = lib.getExe pkgs.brightnessctl;
       hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
       hyprlock = lib.getExe pkgs.hyprlock;
