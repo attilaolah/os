@@ -62,15 +62,15 @@ function show_venv -d "Show Python active virtual env"
 end
 
 function _set_venv_project --on-variable VIRTUAL_ENV
-  if test -e "$VIRTUAL_ENV/.project"
-    set -g VIRTUAL_ENV_PROJECT (cat "$VIRTUAL_ENV/.project")
-  else if test -e "$VIRTUAL_ENV/pyvenv.cfg"
+  if test -e "$VIRTUAL_ENV/pyvenv.cfg"
     set -g VIRTUAL_ENV_PROJECT (
-      grep "^prompt\s*=\s*" .venv/pyvenv.cfg |
+      grep "^prompt\s*=\s*" "$VIRTUAL_ENV/pyvenv.cfg" |
       sed \
         -e "s/^prompt\s*=\s*//" \
         -e "s/\(.*\)-py\([[:digit:]]\.*[[:digit:]]*\)/\2:\1/"
     )
+  else if test -e "$VIRTUAL_ENV/.project"
+    set -g VIRTUAL_ENV_PROJECT (cat "$VIRTUAL_ENV/.project")
   end
 end
 
