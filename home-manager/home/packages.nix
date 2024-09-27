@@ -11,6 +11,7 @@ in {
       # CLI utilities:
       age
       any-nix-shell
+      bitwarden-cli
       colordiff
       curl
       devenv
@@ -97,6 +98,7 @@ in {
       google-chrome
 
       # Other GUI apps:
+      bitwarden
       blender-hip
       discord
       gimp
