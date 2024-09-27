@@ -1,4 +1,3 @@
-## Function to show a segment
 function prompt_segment -d "Function to show a segment"
   # Get colors
   set -l bg $argv[1]
@@ -14,53 +13,67 @@ function prompt_segment -d "Function to show a segment"
   end
 end
 
-## Function to show current status
-function show_ssh -d "Function to show the current status"
+function show_shlvl_user_host -d "Show the shell level, username and host"
+  set -l bg white
+  set -l fg black
+
   if [ -n "$SSH_CLIENT" ]
-    prompt_segment blue white "SSH"
+    set bg blue  # indicator for remote sessions
+  end
+
+  set -l who (whoami)
+  set -l host (hostname -s)
+
+  prompt_segment $bg $fg \uf489" $SHLVL $who"
+
+  if [ "$who" != "$host" ]
+    # Skip @host bit if hostname == username
+    prompt_segment $bg $fg "@$host"
   end
 end
 
-## Function to show current shell level
-function show_shlvl -d "Function to show the current shell level"
-  set -l colour green
+function show_shlvl -d "Show the current shell level"
+  prompt_segment $bg black ":$SHLVL"
+end
+
+function show_jobs -d "Show the number of background jobs"
+  set -l jobs $(jobs | wc -l)
+  if [ $jobs -ne 0 ]
+    prompt_segment normal normal " "
+    prompt_segment yellow black \ueba2" $jobs"
+  end
+end
+
+function show_retval -d "Show process failures (return value)"
   if [ $RETVAL -ne 0 ]
-    set colour red
+    prompt_segment normal normal " "
+    prompt_segment red black "$RETVAL⏎"
   end
-  prompt_segment normal white "L"
-  prompt_segment normal $colour "$SHLVL"
-  prompt_segment normal white " "
 end
 
-function show_virtualenv -d "Show active Python virtual environments"
+function show_venv -d "Show Python active virtual env"
   if set -q VIRTUAL_ENV
-    set -l venvname (basename "$VIRTUAL_ENV")
-    prompt_segment normal white " [$venvname]"
-  end
-end
-
-## Show user if not in default users
-function show_user -d "Show user"
-  if not contains $USER $default_user; or test -n "$SSH_CLIENT"
-    set -l host (hostname -s)
-    set -l who (whoami)
-    prompt_segment normal yellow "$who"
-
-    # Skip @ bit if hostname == username
-    if [ "$who" != "$host" ]
-      prompt_segment normal white "@"
-      prompt_segment normal green "$host"
+    prompt_segment normal normal " "
+    if [ "$VIRTUAL_ENV_PROJECT-" = "-" ]
+      _set_venv_project  # try setting it manually
     end
+    prompt_segment yellow black \ued1b" $VIRTUAL_ENV_PROJECT"
   end
 end
 
 function _set_venv_project --on-variable VIRTUAL_ENV
-    if test -e $VIRTUAL_ENV/.project
-        set -g VIRTUAL_ENV_PROJECT (cat $VIRTUAL_ENV/.project)
-    end
+  if test -e "$VIRTUAL_ENV/.project"
+    set -g VIRTUAL_ENV_PROJECT (cat "$VIRTUAL_ENV/.project")
+  else if test -e "$VIRTUAL_ENV/pyvenv.cfg"
+    set -g VIRTUAL_ENV_PROJECT (
+      grep "^prompt\s*=\s*" .venv/pyvenv.cfg |
+      sed \
+        -e "s/^prompt\s*=\s*//" \
+        -e "s/\(.*\)-py\([[:digit:]]\.*[[:digit:]]*\)/\2:\1/"
+    )
+  end
 end
 
-# Show directory
 function show_pwd -d "Show the current directory"
   set -l pwd
   if [ (string match -r '^'"$VIRTUAL_ENV_PROJECT" $PWD) ]
@@ -71,28 +84,23 @@ function show_pwd -d "Show the current directory"
   prompt_segment normal blue " $pwd "
 end
 
-# Show prompt w/ privilege cue
-function show_prompt -d "Shows prompt with cue for current priv"
+function show_prompt -d "Shows prompt with cue for privilege"
   set -l uid (id -u $USER)
-    if [ $uid -eq 0 ]
-    prompt_segment red white "! "
-    set_color normal
-    echo -n -s " "
+  if [ $uid -eq 0 ]
+    prompt_segment red black "#"
   else
-    prompt_segment normal white "\$ "
-    end
-
-  set_color normal
+    prompt_segment normal white '$'
+  end
+  prompt_segment normal normal " "
 end
 
-## SHOW PROMPT
 function fish_prompt
   set -g RETVAL $status
-  show_ssh
-  show_shlvl
-  show_user
-  # No need, since `source bin/activate.fish` already shows this.
-  #show_virtualenv
+  show_shlvl_user_host
+  show_venv
+  show_jobs
+  show_retval
   show_pwd
   show_prompt
+  set_color normal
 end
