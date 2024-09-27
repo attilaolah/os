@@ -122,12 +122,12 @@ in {
       set -l prompt (fish_git_prompt)
       if test -n "$prompt"
         __pad_from_left cyan
-        __prompt_segment cyan black \uf418(
+        __prompt_segment cyan black \uf418" "(
           echo $prompt |
             ${sed} --regexp-extended \
-              --expr 's/[()]//g' \
+              --expr 's/[() ]//g' \
               --expr 's|([^/])[a-zA-Z]*/|\1/|' \
-              --expr 's|^((./)?[A-Z]+-[0-9]+).*|\1|' \
+              --expr 's|^((./)?[A-Z]+-[0-9]+)-.*|\1|' \
               --expr 's/^(.{16}).*/\1…/' |
             ${tr} '[:upper:]' '[:lower:]'
         )
