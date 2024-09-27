@@ -1,9 +1,13 @@
-{config, ...}: {
+{
+  config,
+  email,
+  ...
+}: {
   programs.git = {
     enable = true;
 
     userName = "Attila Oláh";
-    userEmail = "attila@dorn.haus";
+    userEmail = email;
     signing = with config.programs.gpg; {
       signByDefault = enable;
       key = settings.default-key;
