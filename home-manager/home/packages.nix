@@ -15,7 +15,6 @@ in {
       curl
       devenv
       dig
-      direnv
       fastfetch
       fd
       fzf
