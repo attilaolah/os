@@ -3,7 +3,6 @@
   pkgs,
   ...
 }: let
-  echo = lib.getExe' pkgs.coreutils "echo";
   grep = lib.getExe pkgs.gnugrep;
   nix = lib.getExe pkgs.nix;
   sed = lib.getExe pkgs.gnused;
@@ -22,7 +21,7 @@ in {
 
       # Print text
       if [ -n "$argv[3]" ]
-        ${echo} -n -s $argv[3]
+        echo -n -s $argv[3]
       end
     '';
 
