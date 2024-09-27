@@ -1,5 +1,6 @@
 {
   imports = [
+    ./dircolors.nix
     ./direnv.nix
     ./fd.nix
     ./fish.nix
