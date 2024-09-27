@@ -1,6 +1,7 @@
 {
   imports = [
     ./direnv.nix
+    ./fd.nix
     ./fish.nix
     ./git.nix
     ./gpg.nix
