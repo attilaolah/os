@@ -102,6 +102,7 @@ in {
       pavucontrol
       rawtherapee
       slack
+      teams-for-linux
       wireshark
 
       # Utilities:
