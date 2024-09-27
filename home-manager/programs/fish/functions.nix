@@ -46,11 +46,12 @@ in {
     '';
 
     __show_shlvl_user_host = ''
-      set -l bg white
-      set -l fg black
+      set -l bg black
+      set -l fg white
 
       if [ -n "$SSH_CLIENT" ]
-        set bg blue  # indicator for remote sessions
+        set bg blue
+        set fg black
       end
 
       set -l who (whoami)
@@ -82,14 +83,22 @@ in {
       end
     '';
 
+    __show_devenv = ''
+      if set -q DEVENV_ROOT
+        __pad_from_left yellow
+        __prompt_segment yellow black \uf121" "
+        __pad_from_right yellow
+      end
+    '';
+
     __show_venv = ''
       if set -q VIRTUAL_ENV
         if [ "$VIRTUAL_ENV_PROJECT-" = "-" ]
           __set_venv_project  # try setting it manually
         end
-        __pad_from_left yellow
-        __prompt_segment yellow black \ued1b" $VIRTUAL_ENV_PROJECT"
-        __pad_from_right yellow
+        __pad_from_left green
+        __prompt_segment green black \ued1b" $VIRTUAL_ENV_PROJECT"
+        __pad_from_right green
       end
     '';
 
@@ -113,12 +122,12 @@ in {
       set -l prompt (fish_git_prompt)
       if test -n "$prompt"
         __pad_from_left cyan
-        __prompt_segment cyan black \uf418(
+        __prompt_segment cyan black \uf418" "(
           echo $prompt |
             ${sed} --regexp-extended \
-              --expr 's/[()]//g' \
+              --expr 's/[() ]//g' \
               --expr 's|([^/])[a-zA-Z]*/|\1/|' \
-              --expr 's|^((./)?[A-Z]+-[0-9]+).*|\1|' \
+              --expr 's|^((./)?[A-Z]+-[0-9]+)-.*|\1|' \
               --expr 's/^(.{16}).*/\1…/' |
             ${tr} '[:upper:]' '[:lower:]'
         )
@@ -144,6 +153,7 @@ in {
     fish_prompt = ''
       set -g RETVAL $status
       __show_shlvl_user_host
+      __show_devenv
       __show_venv
       __show_git_prompt
       __show_pwd
