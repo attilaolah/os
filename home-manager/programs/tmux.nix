@@ -6,7 +6,6 @@
     clock24 = true;
     escapeTime = 0;
     mouse = true;
-    newSession = true;
     prefix = "M-a";
     reverseSplit = true;
     sensibleOnTop = true;
