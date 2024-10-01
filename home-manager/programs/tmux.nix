@@ -29,8 +29,8 @@
       # Re-numbber windows on close.
       set-option -g renumber-windows on
 
-      # Set by tmux-vim-navigator.
-      unbind -n C-L
+      # Undo tmux-vim-navigator binding.
+      unbind -n C-l
     '';
   };
 }
