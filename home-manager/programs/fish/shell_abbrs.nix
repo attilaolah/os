@@ -18,7 +18,7 @@
     nv = "nvim";
     nvi = "nvim";
 
-    c = "curl -s --dump-header /dev/stderr";
+    c = "curl --dump-header /dev/stderr";
 
     g = "git status";
     ga = "git add -p .";
