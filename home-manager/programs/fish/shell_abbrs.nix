@@ -1,5 +1,8 @@
 {
-  programs.fish.shellAbbrs = {
+  programs.fish.shellAbbrs = let
+    np = "nix-shell --packages";
+    nr = "nixpkg-run";
+  in {
     "..." = "cd ../..";
     "...." = "cd ../../..";
     ":q" = "exit";
@@ -26,7 +29,9 @@
     gr = "git remote -v";
     gl = "git l";
 
-    nt = "nix-shell --packages";
-    nx = "nixpkg-run";
+    inherit np nr;
+    nix-try = np;
+    nt = np;
+    nx = np;
   };
 }
