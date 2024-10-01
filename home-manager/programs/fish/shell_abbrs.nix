@@ -11,6 +11,7 @@
     ll = "ls -la";
     f = "fd";
     t = "tree";
+    tm = "tmx";
 
     v = "nvim";
     vi = "nvim";
