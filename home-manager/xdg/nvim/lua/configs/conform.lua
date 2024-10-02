@@ -18,4 +18,4 @@ local options = {
   end,
 }
 
-require("conform").setup(options)
+return options
