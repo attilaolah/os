@@ -6,15 +6,12 @@ return {
   {
     "stevearc/conform.nvim",
     event = "BufWritePre",
-    config = function()
-      require "configs.conform"
-    end,
+    opts = require "configs.conform",
   },
 
   {
     "neovim/nvim-lspconfig",
     config = function()
-      require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
     end,
   },
@@ -41,6 +38,7 @@ return {
         "gosum",
         "gotmpl",
         "gpg",
+        "helm",
         "html",
         "http",
         "ini",
@@ -52,10 +50,8 @@ return {
         "markdown_inline",
         "nix",
         "printf",
-        "typescript",
         "promql",
         "proto",
-        "textproto",
         "pug",
         "python",
         "ruby",
@@ -64,6 +60,8 @@ return {
         "ssh_config",
         "starlark",
         "terraform",
+        "textproto",
+        "typescript",
         "vim",
         "vimdoc",
         "xml",
