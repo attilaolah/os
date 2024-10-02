@@ -7,8 +7,11 @@ local M = {}
 
 M.base46 = {
   theme = "catppuccin",
+}
+
+M.ui = {
   statusline = {
-    separator_stile = "block",
+    separator_style = "block",
   },
 }
 
