@@ -15,12 +15,12 @@ in {
       ./home/packages.nix
       ./programs
       ./services/gpg_agent.nix
+      ./xdg/config_file.nix
     ]
     ++ desktopList [
       ./gtk.nix
       ./qt.nix
       ./wayland/window_manager/hyprland.nix
-      ./xdg/config_file.nix
     ];
 
   home =
