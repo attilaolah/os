@@ -9,6 +9,7 @@
     prefix = "M-a";
     reverseSplit = true;
     sensibleOnTop = true;
+    terminal = "screen-256color";
 
     plugins = with pkgs.tmuxPlugins; [
       better-mouse-mode
