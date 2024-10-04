@@ -9,10 +9,10 @@
     prefix = "M-a";
     reverseSplit = true;
     sensibleOnTop = true;
+    terminal = "screen-256color";
 
     plugins = with pkgs.tmuxPlugins; [
       better-mouse-mode
-      vim-tmux-navigator
       {
         plugin = catppuccin;
         extraConfig = ''
@@ -23,14 +23,17 @@
     ];
 
     extraConfig = ''
-      # M-a a: switch between this & last window.
+      # M-a (twice): switch between this & last window.
       bind-key M-a last-window
 
       # Re-numbber windows on close.
       set-option -g renumber-windows on
 
-      # Undo tmux-vim-navigator binding.
-      unbind -n C-l
+      # Ctrl+Alt+Arrow navigation:
+      bind -n C-M-Up select-pane -U
+      bind -n C-M-Down select-pane -D
+      bind -n C-M-Left select-pane -L
+      bind -n C-M-Right select-pane -R
     '';
   };
 }
