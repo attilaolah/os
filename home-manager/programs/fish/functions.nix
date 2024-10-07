@@ -88,6 +88,10 @@ in {
         __pad_from_left yellow
         __prompt_segment yellow black \uf121" "
         __pad_from_right yellow
+      else if set -q IN_NIX_SHELL
+        __pad_from_left magenta
+        __prompt_segment magenta black \uf313" "
+        __pad_from_right magenta
       end
     '';
 
