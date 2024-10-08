@@ -45,6 +45,7 @@ return {
         "javascript",
         "json",
         "jsonnet",
+        "kotlin",
         "lua",
         "markdown",
         "markdown_inline",

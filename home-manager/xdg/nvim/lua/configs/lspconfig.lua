@@ -8,6 +8,7 @@ local servers = {
   "ansiblels",
   "cssls",
   "html",
+  "kotlin_language_server",
   "nil_ls",
   "pyright",
   "rust_analyzer",
