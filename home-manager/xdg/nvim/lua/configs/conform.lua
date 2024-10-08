@@ -1,11 +1,12 @@
 local options = {
   formatters_by_ft = {
-    lua = { "stylua" },
     css = { "prettier" },
     html = { "prettier" },
+    kotlin = { "ktfmt" },
+    lua = { "stylua" },
     nix = { "alejandra" },
-    rust = { "rustfmt" },
     python = { "usort", "black" },
+    rust = { "rustfmt" },
   },
 
   format_on_save = function(bufnr)
