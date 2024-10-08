@@ -10,8 +10,10 @@ local options = {
   },
 
   format_on_save = function(bufnr)
-    -- Black is painfully slow, give it some slack.
-    local slow = vim.bo[bufnr].filetype == "python"
+    local slow = vim.tbl_contains({
+      "python", -- black is slow
+      "kotlin", -- ktfmt is slow
+    }, vim.bo[bufnr].filetype)
     return {
       timeout_ms = slow and 2000 or 500,
       lsp_fallback = true,
