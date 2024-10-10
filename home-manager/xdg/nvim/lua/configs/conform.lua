@@ -1,19 +1,29 @@
 local options = {
   formatters_by_ft = {
-    lua = { "stylua" },
     css = { "prettier" },
     html = { "prettier" },
+    kotlin = { "ktfmt" },
+    lua = { "stylua" },
     nix = { "alejandra" },
-    rust = { "rustfmt" },
     python = { "usort", "black" },
+    rust = { "rustfmt" },
+    ["_"] = { "trim_whitespace" },
+  },
+
+  formatters = {
+    ktfmt = {
+      prepend_args = { "--google-style" },
+    },
   },
 
   format_on_save = function(bufnr)
-    -- Black is painfully slow, give it some slack.
-    local slow = vim.bo[bufnr].filetype == "python"
+    local slow = vim.tbl_contains({
+      "python", -- black is slow
+      "kotlin", -- ktfmt is slow
+    }, vim.bo[bufnr].filetype)
     return {
       timeout_ms = slow and 2000 or 500,
-      lsp_fallback = true,
+      lsp_fallback = "fallback",
     }
   end,
 }

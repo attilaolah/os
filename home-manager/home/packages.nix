@@ -58,6 +58,8 @@ in {
       go
       gofumpt
       gopls
+      kotlin-language-server
+      ktfmt
       lua-language-server
       nil
       pyright
