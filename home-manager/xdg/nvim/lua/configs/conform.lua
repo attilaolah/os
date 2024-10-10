@@ -7,6 +7,13 @@ local options = {
     nix = { "alejandra" },
     python = { "usort", "black" },
     rust = { "rustfmt" },
+    ["_"] = { "trim_whitespace" },
+  },
+
+  formatters = {
+    ktfmt = {
+      prepend_args = { "--google-style" },
+    },
   },
 
   format_on_save = function(bufnr)
@@ -16,7 +23,7 @@ local options = {
     }, vim.bo[bufnr].filetype)
     return {
       timeout_ms = slow and 2000 or 500,
-      lsp_fallback = true,
+      lsp_fallback = "fallback",
     }
   end,
 }
