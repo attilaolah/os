@@ -16,6 +16,7 @@ in {
       devenv
       dig
       fastfetch
+      file
       fzf
       gnumake
       gnupg
