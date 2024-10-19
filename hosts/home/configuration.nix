@@ -20,7 +20,6 @@
     ./services/pipewire.nix
     ./services/printing.nix
     ./services/tailscale.nix
-    ./services/teleport.nix
     ./services/xserver/xkb.nix
     ./systemd.nix
     ./users.nix
