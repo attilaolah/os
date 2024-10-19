@@ -17,7 +17,7 @@
     lix-module = {
       # Include PR below until a new release is tagged.
       # https://git.lix.systems/lix-project/nixos-module/pulls/34
-      # url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
+      # url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1.tar.gz";
       url = "https://git.lix.systems/lix-project/nixos-module/archive/0dda9887467c1ac338d277e358e7eb86e08d34b4.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
