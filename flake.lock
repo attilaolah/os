@@ -133,15 +133,15 @@
     "lix": {
       "flake": false,
       "locked": {
-        "lastModified": 1729298361,
-        "narHash": "sha256-hiGtfzxFkDc9TSYsb96Whg0vnqBVV7CUxyscZNhed0U=",
-        "rev": "ad9d06f7838a25beec425ff406fe68721fef73be",
+        "lastModified": 1729296222,
+        "narHash": "sha256-fwJyGrkTemR1SwkAPXfxlY0RYCxy34NedmR35amytCc=",
+        "rev": "60578b4d7d0dfc296c61cae963b6b2763422788e",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/ad9d06f7838a25beec425ff406fe68721fef73be.tar.gz?rev=ad9d06f7838a25beec425ff406fe68721fef73be"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/60578b4d7d0dfc296c61cae963b6b2763422788e.tar.gz?rev=60578b4d7d0dfc296c61cae963b6b2763422788e"
       },
       "original": {
         "type": "tarball",
-        "url": "https://git.lix.systems/lix-project/lix/archive/2.91.1.tar.gz"
+        "url": "https://git.lix.systems/lix-project/lix/archive/main.tar.gz"
       }
     },
     "lix-module": {
@@ -154,15 +154,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1729302939,
-        "narHash": "sha256-slp0zWHKvbCzhiBwwe6VX6jODEY+PKhHyiAoHgM5Bdc=",
-        "rev": "6478f624b2a00367e0e3d750a2c7a9f3afb72712",
+        "lastModified": 1727743893,
+        "narHash": "sha256-jowmo2aEzrEpPSM96IWtajuogdJm7DjAWxFTEb7Ct0s=",
+        "rev": "81d9ff97c93289bb1592ae702d11173724a643fa",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/nixos-module/archive/6478f624b2a00367e0e3d750a2c7a9f3afb72712.tar.gz?rev=6478f624b2a00367e0e3d750a2c7a9f3afb72712"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/nixos-module/archive/81d9ff97c93289bb1592ae702d11173724a643fa.tar.gz?rev=81d9ff97c93289bb1592ae702d11173724a643fa"
       },
       "original": {
         "type": "tarball",
-        "url": "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1.tar.gz"
+        "url": "https://git.lix.systems/lix-project/nixos-module/archive/81d9ff97c93289bb1592ae702d11173724a643fa.tar.gz"
       }
     },
     "nixos-unstable": {

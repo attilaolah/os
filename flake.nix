@@ -15,7 +15,9 @@
 
     lix-module = {
       # https://lix.systems
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1.tar.gz";
+      # Include the below commit directly until the next release.
+      # url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1.tar.gz";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/81d9ff97c93289bb1592ae702d11173724a643fa.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
