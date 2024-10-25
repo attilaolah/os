@@ -12,8 +12,7 @@
       enable = true;
       extraPackages = with pkgs; [
         amdvlk
-        rocm-opencl-icd
-        rocm-opencl-runtime
+        rocmPackages.clr
         rocmPackages.clr.icd
       ];
     };
