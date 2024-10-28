@@ -18,7 +18,7 @@
       inter
       nerdfonts
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-color-emoji
       roboto
       roboto-mono
