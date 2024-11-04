@@ -33,3 +33,19 @@ tasks:
     desc: Check Nix flakes
     cmds:
       - nix flake check
+
+  wsl:build:
+    desc: Build NixOS home-manager config
+    cmds:
+      - nix run nixpkgs#home-manager -- build --flake .#wsl
+
+  wsl:diff:
+    desc: Build & diff against the current home-manager config
+    cmds:
+      - task: wsl:build
+      - nvd diff ~/.local/state/home-manager/gcroots/current-home result
+
+  wsl:install:
+    desc: Install (update) the current home-manager config
+    cmds:
+      - nix run nixpkgs#home-manager -- switch --flake .#wsl
