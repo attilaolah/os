@@ -10,11 +10,17 @@
     enableRedistributableFirmware = true;
     graphics = {
       enable = true;
-      extraPackages = with pkgs; [
-        amdvlk
-        rocmPackages.clr
-        rocmPackages.clr.icd
-      ];
+    };
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement = {
+        enable = false;
+        finegrained = false;
+      };
+      open = false;
+      nvidiaSettings = true;
+
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
     };
     bluetooth.enable = true;
     sane = {

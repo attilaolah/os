@@ -25,7 +25,7 @@
       };
     };
     initrd = {
-      kernelModules = ["amdgpu"];
+      kernelModules = ["nvidia"];
       availableKernelModules = [
         "ahci"
         "nvme"

@@ -98,7 +98,6 @@ in {
       google-chrome
 
       # Other GUI apps:
-      blender-hip
       discord
       gimp
       inkscape
@@ -117,5 +116,8 @@ in {
       eog
       file-roller
       nautilus
+
+      # Disable Blender+AMD due to build failures.
+      # blender-hip
     ];
 }
