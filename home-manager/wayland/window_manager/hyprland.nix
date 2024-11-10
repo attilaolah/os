@@ -14,9 +14,10 @@
   system,
   ...
 }: let
-  input = import ../../../hosts/home/hyprland/input.nix {config = xserver.xkb;};
+  input = import ../../../hosts/home/hyprland/input.nix {
+    config = import ../../../hosts/home/services/xserver.nix {inherit lib;};
+  };
   monitors = import ../../../hosts/home/hyprland/monitors.nix;
-  xserver = import ../../../hosts/home/services/xserver.nix {inherit lib;};
 
   workspaces = [1 2 3 4 5 6 7 8];
 
