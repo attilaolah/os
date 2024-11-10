@@ -8,9 +8,7 @@
     # CPU: Intel Xeon E5-2666 v3
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     enableRedistributableFirmware = true;
-    graphics = {
-      enable = true;
-    };
+    graphics.enable = true;
     nvidia = {
       modesetting.enable = true;
       powerManagement = {
