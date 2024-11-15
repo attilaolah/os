@@ -95,6 +95,7 @@ in {
       vimix-icon-theme
 
       # Browsers:
+      firefox
       google-chrome
 
       # Other GUI apps:
