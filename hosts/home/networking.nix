@@ -17,8 +17,9 @@ in {
       127.0.0.2 ${host.fqdn}
 
       10.0.0.1 modem
-      10.10.10.10 dorn.haus
       192.168.0.1 wifi
+
+      10.10.4.43 dorn.haus
     '';
   };
 }
