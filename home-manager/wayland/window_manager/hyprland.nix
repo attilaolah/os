@@ -156,6 +156,22 @@ in {
         disable_splash_rendering = true;
         force_default_wallpaper = 0;
       };
+
+      # NVIDIA flicker workaround, should be reverted eventually.
+      # https://github.com/hyprwm/Hyprland/issues/7252#issuecomment-2345792172
+      render = {
+        explicit_sync = 2;
+        explicit_sync_kms = 0;
+      };
+
+      opengl = {
+        nvidia_anti_flicker = 0;
+        force_introspection = 2;
+      };
+
+      misc.vfr = 0;
+
+      debug.damage_tracking = 0;
     };
   };
 }
