@@ -2,8 +2,7 @@
   boot = {
     plymouth.enable = true;
     kernelModules = ["kvm-intel"];
-    kernelParams = ["copytoram" "quiet"];
-    blacklistedKernelModules = ["radeon"];
+    kernelParams = ["copytoram" "quiet" "nvidia.NVreg_EnableGpuFirmware=0"];
     loader = {
       grub = {
         enable = true;
@@ -25,7 +24,7 @@
       };
     };
     initrd = {
-      kernelModules = ["amdgpu"];
+      kernelModules = ["nvidia"];
       availableKernelModules = [
         "ahci"
         "nvme"

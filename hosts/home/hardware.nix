@@ -8,13 +8,17 @@
     # CPU: Intel Xeon E5-2666 v3
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     enableRedistributableFirmware = true;
-    graphics = {
-      enable = true;
-      extraPackages = with pkgs; [
-        amdvlk
-        rocmPackages.clr
-        rocmPackages.clr.icd
-      ];
+    graphics.enable = true;
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement = {
+        enable = false;
+        finegrained = false;
+      };
+      open = false;
+      nvidiaSettings = true;
+
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
     bluetooth.enable = true;
     sane = {

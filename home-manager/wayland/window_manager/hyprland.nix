@@ -14,9 +14,10 @@
   system,
   ...
 }: let
-  input = import ../../../hosts/home/hyprland/input.nix {config = xkb;};
+  input = import ../../../hosts/home/hyprland/input.nix {
+    config = import ../../../hosts/home/services/xserver.nix {inherit lib;};
+  };
   monitors = import ../../../hosts/home/hyprland/monitors.nix;
-  xkb = import ../../../hosts/home/services/xserver/xkb.nix {inherit lib;};
 
   workspaces = [1 2 3 4 5 6 7 8];
 
@@ -155,6 +156,22 @@ in {
         disable_splash_rendering = true;
         force_default_wallpaper = 0;
       };
+
+      # NVIDIA flicker workaround, should be reverted eventually.
+      # https://github.com/hyprwm/Hyprland/issues/7252#issuecomment-2345792172
+      render = {
+        explicit_sync = 2;
+        explicit_sync_kms = 0;
+      };
+
+      opengl = {
+        nvidia_anti_flicker = 0;
+        force_introspection = 2;
+      };
+
+      misc.vfr = 0;
+
+      debug.damage_tracking = 0;
     };
   };
 }
