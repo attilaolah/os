@@ -92,7 +92,7 @@ in {
       animations.enabled = false;
       decoration = {
         blur.enabled = false;
-        drop_shadow = false;
+        shadow.enabled = false;
         rounding = 0;
       };
 
