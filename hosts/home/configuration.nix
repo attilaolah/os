@@ -53,17 +53,15 @@
     experimental-features = ["nix-command" "flakes"];
 
     trusted-users = [username];
-    # Temporarily disable devenv substituters.
-    # They seem to be causing issues with missing store paths.
     extra-substituters = [
       "https://cache.lix.systems" # lix.systems
-      # "https://devenv.cachix.org" # devenv.sh
-      # "https://nixpkgs-python.cachix.org" # devenv.sh python
+      "https://devenv.cachix.org" # devenv.sh
+      "https://nixpkgs-python.cachix.org" # devenv.sh python
     ];
     trusted-public-keys = [
       "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
-      # "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-      # "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
+      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+      "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
     ];
   };
 
