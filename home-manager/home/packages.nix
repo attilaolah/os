@@ -63,6 +63,7 @@ in {
       lua-language-server
       nil
       pyright
+      rustc
       rust-analyzer
       rustfmt
       stylua
