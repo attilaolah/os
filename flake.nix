@@ -11,14 +11,6 @@
       url = "github:hyprwm/hyprlock";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    lix-module = {
-      # https://lix.systems
-      # Include the below commit directly until the next release.
-      # url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1.tar.gz";
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/81d9ff97c93289bb1592ae702d11173724a643fa.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -26,7 +18,6 @@
     nixpkgs,
     home-manager,
     hyprlock,
-    lix-module,
     ...
   } @ inputs: let
     pkgs = import nixpkgs {inherit system;};
@@ -55,9 +46,6 @@
             users.${username} = import ./home-manager/home.nix;
           };
         }
-
-        # https://lix.systems
-        lix-module.nixosModules.default
       ];
       specialArgs = {inherit inputs username email;};
     };
