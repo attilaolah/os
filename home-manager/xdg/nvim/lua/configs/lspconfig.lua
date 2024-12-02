@@ -11,8 +11,33 @@ local servers = {
   "kotlin_language_server",
   "nil_ls",
   "pyright",
-  "rust_analyzer",
   "ts_ls",
+}
+
+-- Rust
+lspconfig.rust_analyzer.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  settings = {
+    rust_analyzer = {
+      cargo = {
+        allFeatures = true,
+      },
+      checkOnSave = {
+        allFeatures = true,
+        command = "clippy",
+        extraArgs = {
+          "--",
+          "--no-deps",
+          "-Wclippy::pedantic",
+        },
+      },
+      procMacro = {
+        enable = true,
+      },
+    },
+  },
 }
 
 -- Go
