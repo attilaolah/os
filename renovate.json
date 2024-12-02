@@ -22,15 +22,6 @@
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "python/cpython",
       "currentValueTemplate": "{{major}}.{{minor}}"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": ["flake\\.nix$"],
-      "matchStrings": [
-        "(?<depName>https://git\\..*?)/archive/(?<currentValue>.*?)\\.tar\\.gz.*"
-      ],
-      "datasourceTemplate": "git-tags",
-      "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
