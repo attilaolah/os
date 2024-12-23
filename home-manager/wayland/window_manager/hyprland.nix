@@ -166,11 +166,12 @@ in {
         explicit_sync_kms = 0;
       };
 
-      cursor = {
-        # NVIDIA experimental hardware cursor support.
-        no_hardware_cursors = 0;
-        use_cpu_buffer = true;
-      };
+      # NVIDIA experimental hardware cursor support.
+      # Currently very much broken on rotated monitors.
+      # cursor = {
+      #   no_hardware_cursors = 0;
+      #   use_cpu_buffer = true;
+      # };
 
       opengl = {
         nvidia_anti_flicker = 0;
