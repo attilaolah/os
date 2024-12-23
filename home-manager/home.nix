@@ -44,7 +44,7 @@ in {
           XDG_DESKTOP_DIR = homeDirectory;
           XDG_DOWNLOAD_DIR = "${homeDirectory}/dl";
           XDG_PICTURES_DIR = "${homeDirectory}/photos";
-          XDG_PUBLICSHARE_DIR = "${homeDirectory}/p2p";
+          XDG_PUBLICSHARE_DIR = "${homeDirectory}/share";
           XDG_VIDEOS_DIR = "${homeDirectory}/videos";
           # XDG_DOCUMENTS_DIR not set
           # XDG_MUSIC_DIR not set

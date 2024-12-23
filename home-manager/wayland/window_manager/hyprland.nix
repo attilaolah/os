@@ -8,6 +8,7 @@
 #
 {
   config,
+  hyprland,
   hyprlock,
   lib,
   pkgs,
@@ -39,6 +40,7 @@
 in {
   wayland.windowManager.hyprland = {
     enable = true;
+    package = hyprland.packages.${system}.default;
     settings = {
       inherit (input) input;
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";
@@ -162,6 +164,12 @@ in {
       render = {
         explicit_sync = 2;
         explicit_sync_kms = 0;
+      };
+
+      cursor = {
+        # NVIDIA experimental hardware cursor support.
+        no_hardware_cursors = 0;
+        use_cpu_buffer = true;
       };
 
       opengl = {
