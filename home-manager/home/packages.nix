@@ -18,6 +18,7 @@ in {
       devenv
       dig
       fastfetch
+      ffmpeg
       file
       fzf
       gnumake
