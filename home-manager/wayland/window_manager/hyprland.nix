@@ -65,6 +65,8 @@ in {
         + " --lines 12";
       "$BROWSER" =
         "${google-chrome}"
+        # Force dark mode until the underlying issues are resolved.
+        + " --force-dark-mode"
         # TODO: Enable these flags once they become more stable?
         #+ " --enable-features=SkiaGraphite,Vulkan"
         #+ " --enable-skia-graphite"
