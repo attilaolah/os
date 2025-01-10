@@ -2,11 +2,16 @@
   description = "NixOS flakes for attilaolah's personal computers.";
 
   inputs = {
+    # NixOS
     nixpkgs.url = "nixpkgs/nixos-unstable";
+
+    # Home Manager
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Hyprland
     hyprland = {
       url = "github:hyprwm/hyprland";
       inputs.nixpkgs.follows = "nixpkgs";

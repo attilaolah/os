@@ -10,7 +10,6 @@
     ./hardware.nix
     ./networking.nix
     ./programs.nix
-    ./services/autofs.nix
     ./services/avahi.nix
     ./services/blueman.nix
     ./services/davfs2.nix

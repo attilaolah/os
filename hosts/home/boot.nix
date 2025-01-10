@@ -15,6 +15,10 @@
         # wiped for whatever reason: just boot from removable device as usual.
         efiInstallAsRemovable = true;
 
+        # Lately the initial ram disk has grown quite a bit.
+        # Maybe some kernel module that is included transitively is too big?
+        configurationLimit = 5;
+
         useOSProber = false;
         extraEntries = ''
           menuentry 'UEFI Firmware Settings' { fwsetup }
