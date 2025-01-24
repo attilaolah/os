@@ -1,9 +1,7 @@
 {
   desktop,
-  hyprland-qtutils,
   lib,
   pkgs,
-  system,
   ...
 }: let
   desktopList = list: lib.lists.optionals desktop list;
@@ -115,7 +113,6 @@ in {
       # Utilities:
       libnotify
       nufraw-thumbnailer
-      hyprland-qtutils.packages.${system}.default
 
       # Gnome apps:
       cheese
