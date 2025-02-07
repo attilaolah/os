@@ -78,7 +78,7 @@ in {
       podman-tui
 
       # Python, the basics
-      (python312.withPackages (ps:
+      (python313.withPackages (ps:
         with ps; [
           ipython
           jupyter
