@@ -175,10 +175,7 @@ in {
       #   use_cpu_buffer = true;
       # };
 
-      opengl = {
-        nvidia_anti_flicker = 0;
-        force_introspection = 2;
-      };
+      opengl.nvidia_anti_flicker = true;
 
       misc.vfr = 0;
 
