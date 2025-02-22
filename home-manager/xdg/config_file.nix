@@ -12,11 +12,11 @@
     src = pkgs.fetchFromGitHub {
       owner = "catppuccin";
       repo = "foot";
-      rev = "ee5549af72ab78520ac2aa1c671bf5c2d347c8ca";
-      sha256 = "sha256-3hK9klXwdHhprG2wUMt7nBfbL1mb/gl+k/MtJUuY000=";
+      rev = "962ff1a5b6387bc5419e9788a773a080eea5f1e1";
+      sha256 = "sha256-eVH3BY2fZe0/OjqucM/IZthV8PMsM9XeIijOg8cNE1Y=";
     };
     installPhase = ''
-      cp --recursive catppuccin-mocha.ini $out
+      cp --recursive themes/catppuccin-mocha.ini $out
     '';
   };
 in {
