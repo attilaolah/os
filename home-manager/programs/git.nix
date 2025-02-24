@@ -31,7 +31,7 @@
       init.defaultBranch = "main";
       log.mailmap = true;
       advice.skippedCherryPicks = false;
-      credential.helper = "cache --timeout=3600";
+      credential.helper = "cache --timeout=${toString (60 * 60 * 8)}";
     };
   };
 }
