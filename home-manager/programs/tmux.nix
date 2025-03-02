@@ -18,6 +18,11 @@
         extraConfig = ''
           set -g @catppuccin_status_left_separator "█"
           set -g @catppuccin_status_right_separator "█"
+
+          set -g status-left ""
+
+          set -g status-right "#{E:@catppuccin_status_application}"
+          set -ag status-right "#{E:@catppuccin_status_session}"
         '';
       }
     ];
