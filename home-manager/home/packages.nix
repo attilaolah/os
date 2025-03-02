@@ -59,6 +59,7 @@ in {
       go
       gofumpt
       gopls
+      helm-ls
       kotlin-language-server
       ktfmt
       lua-language-server

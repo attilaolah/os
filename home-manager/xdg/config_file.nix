@@ -24,6 +24,7 @@ in {
     {
       "hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
       "nvim/init.lua".source = ./nvim/init.lua;
+      "nvim/lua/autocmds.lua".source = ./nvim/lua/autocmds.lua;
       "nvim/lua/chadrc.lua".source = ./nvim/lua/chadrc.lua;
       "nvim/lua/configs/conform.lua".source = ./nvim/lua/configs/conform.lua;
       "nvim/lua/configs/lazy.lua".source = ./nvim/lua/configs/lazy.lua;

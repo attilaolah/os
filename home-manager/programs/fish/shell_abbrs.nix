@@ -29,6 +29,7 @@
     gp = "git push";
     gr = "git remote -v";
     gl = "git l";
+    gll = "git ll";
 
     inherit np nr;
     nix-try = np;

@@ -32,6 +32,20 @@ lspconfig.gopls.setup {
   },
 }
 
+-- Helm
+lspconfig.helm_ls.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  settings = {
+    ["helm-ls"] = {
+      yamlls = {
+        path = "yaml-language-server",
+      },
+    },
+  },
+}
+
 -- YAML
 lspconfig.yamlls.setup {
   on_attach = nvlsp.on_attach,

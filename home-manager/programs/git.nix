@@ -13,16 +13,38 @@
       signByDefault = enable;
       key = settings.default-key;
     };
-    aliases = {
+    aliases = let
+      fmtl = lib.concatStringsSep " " [
+        "%C(yellow)%h%C(reset)"
+        "%C(bold cyan)%ad%C(reset)"
+        "%C(blue)%aL%C(reset)"
+        "%s%C(auto)%d%C(reset)"
+      ];
+      fmtll = lib.concatStringsSep " " [
+        "%C(yellow)%h%C(reset)"
+        "%C(bold cyan)%aD%C(reset)"
+        "%C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n"
+        "      " # pad to abbrev-commit length
+        "%C(white)%s%C(reset)"
+        "%C(dim white)- %an [%aL]%C(reset)"
+      ];
+    in {
       ci = "commit";
       co = "checkout";
       l = lib.concatStringsSep " " [
         "!git log"
-        "--pretty=format:\"%C(yellow)%h %Cred%ad %Cblue%aL%Cgreen%d %Creset%s\""
+        "--pretty=format:\"${fmtl}\""
         "--date=short"
         "--decorate"
         "--graph"
         "\"$@\""
+      ];
+      ll = lib.concatStringsSep " " [
+        "!git log"
+        "--format=format:\"${fmtll}\""
+        "--abbrev-commit"
+        "--decorate"
+        "--graph"
       ];
     };
     extraConfig = {
