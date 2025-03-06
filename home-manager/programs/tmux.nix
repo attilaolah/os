@@ -18,6 +18,14 @@
         extraConfig = ''
           set -g @catppuccin_status_left_separator "█"
           set -g @catppuccin_status_right_separator "█"
+
+          set-option -g @catppuccin_window_text " #{=2:pane_current_command}|#{b:pane_current_path}"
+          set-option -g @catppuccin_window_current_text " #{=2:pane_current_command}|#{b:pane_current_path}"
+
+          set  -g status-left  ""
+          set  -g status-right "#{E:@catppuccin_status_application}"
+          set -ag status-right "#{E:@catppuccin_status_session}"
+          set -ag status-right "#{E:@catppuccin_status_host}"
         '';
       }
     ];
