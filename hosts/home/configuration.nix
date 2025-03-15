@@ -24,7 +24,6 @@
     ./users.nix
     ./virtualisation/docker.nix
     ./virtualisation/podman.nix
-    ./virtualisation/virtualbox.nix
   ];
   system.stateVersion = "23.11";
   time.timeZone = "Europe/Zurich";

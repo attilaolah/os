@@ -23,13 +23,12 @@ in {
         group = username;
         extraGroups = with config;
           filterGroups {
-            input = true; # for /dev/input/* access
             wheel = true; # for sudo
+            input = true; # for /dev/input/* access
             scanner = hardware.sane.enable;
             lp = services.printing.enable;
             docker = virtualisation.docker.enable;
             podman = virtualisation.podman.enable;
-            vboxusers = virtualisation.virtualbox.host.enable;
             wireshark = programs.wireshark.enable;
           };
         openssh.authorizedKeys.keys = let
