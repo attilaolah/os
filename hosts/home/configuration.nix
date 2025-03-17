@@ -1,8 +1,35 @@
 {
+  lib,
   pkgs,
   username,
   ...
-}: {
+}: let
+  domain = "localhost";
+  sanIps = ["::1" "127.0.4.43" "127.0.0.1"];
+  sanDns = [domain "home"];
+
+  certs =
+    pkgs.runCommand "mkcert"
+    {nativeBuildInputs = [pkgs.step-cli];}
+    ''
+      mkdir -p $out
+      cd $out
+
+      # Root CA
+      step certificate create "LOCAL CA" ca.crt ca.key \
+        --profile=root-ca --no-password --insecure
+
+      # Server certificate & key
+      echo step certificate create "${domain}" tls.crt tls.key \
+        --san=${lib.concatStringsSep " --san=" (sanDns ++ sanIps)} \
+        --ca=ca.crt --ca-key=ca.key --expires=10y \
+        --kty=EC --curve=P-256 --no-password --insecure
+      step certificate create "${domain}" tls.crt tls.key \
+        --san=${lib.concatStringsSep " --san=" (sanDns ++ sanIps)} \
+        --ca=ca.crt --ca-key=ca.key --not-after=${toString (10 * 365 * 24)}h \
+        --kty=EC --curve=P-256 --no-password --insecure
+    '';
+in {
   imports = [
     ./boot.nix
     ./file_systems.nix
@@ -15,6 +42,7 @@
     ./services/davfs2.nix
     ./services/dbus.nix
     ./services/gvfs.nix
+    ./services/nginx.nix
     ./services/openssh.nix
     ./services/pipewire.nix
     ./services/printing.nix
@@ -37,6 +65,7 @@
   security = {
     polkit.enable = true;
     sudo.execWheelOnly = true;
+    pki.certificates = [(builtins.readFile "${certs}/ca.crt")];
   };
 
   xdg.portal = {
@@ -63,9 +92,16 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    git
-    slurp
-    xdg-utils
-  ];
+  environment = {
+    etc = {
+      "tls/tls.crt".source = "${certs}/tls.crt";
+      "tls/tls.key".source = "${certs}/tls.key";
+      "tls/ca.crt".source = "${certs}/ca.crt";
+    };
+    systemPackages = with pkgs; [
+      git
+      slurp
+      xdg-utils
+    ];
+  };
 }
