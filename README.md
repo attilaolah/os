@@ -56,8 +56,6 @@ This will install the workstation (`#home` config).
 
 Add remote builds for other machines:
 
-- Crostini
-- VirtualBox
 - WSL
 - Secrets & keys
 

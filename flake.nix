@@ -41,7 +41,6 @@
       inherit system;
       modules = [
         ./hosts/home/configuration.nix
-        (import ./hosts/home/overlays.nix)
         home-manager.nixosModules.home-manager
         {
           home-manager = {
