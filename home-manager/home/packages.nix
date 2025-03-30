@@ -82,8 +82,9 @@ in {
       (python313.withPackages (ps:
         with ps; [
           ipython
+          jmespath
           jupyter
-          pandas
+          polars
         ]))
     ]
     ++ (with nodePackages; [
