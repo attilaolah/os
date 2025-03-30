@@ -15,8 +15,8 @@
     };
 
     iconTheme = {
-      name = "Vimix-Black-dark";
-      package = pkgs.vimix-icon-theme;
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
     };
 
     cursorTheme = with config.home.pointerCursor; {

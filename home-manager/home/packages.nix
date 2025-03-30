@@ -82,8 +82,9 @@ in {
       (python313.withPackages (ps:
         with ps; [
           ipython
+          jmespath
           jupyter
-          pandas
+          polars
         ]))
     ]
     ++ (with nodePackages; [
@@ -96,6 +97,9 @@ in {
       # Theming:
       vimix-gtk-themes
       vimix-icon-theme
+      gsettings-desktop-schemas
+      dconf-editor
+      glib
 
       # Browsers:
       firefox
