@@ -46,6 +46,7 @@ in {
     ./services/openssh.nix
     ./services/pipewire.nix
     ./services/printing.nix
+    ./services/rpcbind.nix
     ./services/tailscale.nix
     ./services/xserver.nix
     ./systemd.nix
