@@ -60,6 +60,4 @@ in {
         x11.enable = true;
       };
     };
-
-  nixpkgs.config.allowUnfree = true;
 }
