@@ -30,7 +30,10 @@
     hyprlock,
     ...
   } @ inputs: let
-    pkgs = import nixpkgs {inherit system;};
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
     system = "x86_64-linux";
     useGlobalPkgs = true;
     useUserPackages = true;
