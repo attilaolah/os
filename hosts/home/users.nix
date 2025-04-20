@@ -25,6 +25,7 @@ in {
           filterGroups {
             wheel = true; # for sudo
             input = true; # for /dev/input/* access
+            nfsadmin = true; # homelab direct nfs access
             scanner = hardware.sane.enable;
             lp = services.printing.enable;
             docker = virtualisation.docker.enable;
@@ -44,6 +45,9 @@ in {
       };
     };
 
-    groups.${username} = {};
+    groups = {
+      ${username} = {};
+      nfsadmin.gid = 2049;
+    };
   };
 }

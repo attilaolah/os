@@ -3,6 +3,7 @@
     plymouth.enable = true;
     kernelModules = ["kvm-intel"];
     kernelParams = ["copytoram" "quiet" "nvidia.NVreg_EnableGpuFirmware=0"];
+    supportedFilesystems = ["nfs"];
     loader = {
       grub = {
         enable = true;
