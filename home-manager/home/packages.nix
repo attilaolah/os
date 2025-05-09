@@ -54,7 +54,7 @@ in {
       ansible-language-server
       black
       cargo
-      clang_19
+      clang_20
       cue
       go
       gofumpt
