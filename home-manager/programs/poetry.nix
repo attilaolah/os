@@ -1,3 +1,0 @@
-{
-  programs.poetry.enable = true;
-}
