@@ -1,5 +1,6 @@
 {
   imports = [
+    ./command-not-found.nix
     ./dircolors.nix
     ./direnv.nix
     ./fd.nix
@@ -7,6 +8,8 @@
     ./git.nix
     ./gpg.nix
     ./rbw.nix
+    ./tealdeer.nix
     ./tmux.nix
+    ./uv.nix
   ];
 }
