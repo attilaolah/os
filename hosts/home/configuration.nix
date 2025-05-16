@@ -41,6 +41,7 @@ in {
     ./services/blueman.nix
     ./services/davfs2.nix
     ./services/dbus.nix
+    ./services/greetd.nix
     ./services/gvfs.nix
     ./services/nginx.nix
     ./services/openssh.nix
