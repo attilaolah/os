@@ -32,6 +32,7 @@ in {
       pinentry
       pwgen
       rar
+      rclone
       ripgrep
       rsync
       silver-searcher
