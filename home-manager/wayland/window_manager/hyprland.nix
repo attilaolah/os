@@ -40,6 +40,7 @@
 in {
   wayland.windowManager.hyprland = {
     enable = true;
+    systemd.enable = false;
     package = hyprland.packages.${system}.default;
     settings = {
       inherit (input) input;

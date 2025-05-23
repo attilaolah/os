@@ -41,7 +41,6 @@ in {
     ./services/blueman.nix
     ./services/davfs2.nix
     ./services/dbus.nix
-    ./services/greetd.nix
     ./services/gvfs.nix
     ./services/nginx.nix
     ./services/openssh.nix
@@ -73,8 +72,9 @@ in {
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-hyprland
       xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-wlr
     ];
   };
 
@@ -99,6 +99,11 @@ in {
       "tls/tls.crt".source = "${certs}/tls.crt";
       "tls/tls.key".source = "${certs}/tls.key";
       "tls/ca.crt".source = "${certs}/ca.crt";
+    };
+    sessionVariables = {
+      XDG_CURRENT_DESKTOP = "Hyprland";
+      NIXOS_OZONE_WL = "1"; # Wayland for Chrom{e,ium}
+      QT_QPA_PLATFORM = "wayland";
     };
     systemPackages = with pkgs; [
       git

@@ -10,8 +10,19 @@
     };
 
     # Window manager:
-    hyprland.enable = true;
+    uwsm = {
+      enable = true;
+      waylandCompositors.hyprland = {
+        prettyName = "Hyprland";
+        binPath = "/run/current-system/sw/bin/Hyprland";
+      };
+    };
+    hyprland = {
+      enable = true;
+      withUWSM = true;
+    };
 
+    # Misc. utilities:
     wireshark.enable = true;
   };
 }

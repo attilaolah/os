@@ -36,7 +36,6 @@ in {
 
           # Development environment:
           GOPATH = "${homeDirectory}/dev/go";
-          # RUSTUP_HOME not set
         }
         // desktopAttrs
         {
