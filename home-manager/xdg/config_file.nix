@@ -34,7 +34,6 @@ in {
       "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     }
     // desktopAttrs (let
-      brightnessctl = lib.getExe pkgs.brightnessctl;
       hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
       hyprlock = lib.getExe pkgs.hyprlock;
       loginctl = lib.getExe' pkgs.systemd "loginctl";
@@ -57,11 +56,6 @@ in {
           after_sleep_cmd = ${hyprctl} dispatch dpms on
         }
 
-        listener {
-          timeout = ${toString (60 * 2)}
-          on-timeout = ${brightnessctl} --save set 5%
-          on-resume = ${brightnessctl} --restore
-        }
         listener {
           timeout = ${toString (60 * 20)}
           on-timeout = ${hyprctl} dispatch dpms off

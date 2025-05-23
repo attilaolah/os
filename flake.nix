@@ -16,10 +16,6 @@
       url = "github:hyprwm/hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprlock = {
-      url = "github:hyprwm/hyprlock";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -27,7 +23,6 @@
     nixpkgs,
     home-manager,
     hyprland,
-    hyprlock,
     ...
   } @ inputs: let
     pkgs = import nixpkgs {

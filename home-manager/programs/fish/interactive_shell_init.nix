@@ -5,7 +5,6 @@
 }: let
   any-nix-shell = lib.getExe pkgs.any-nix-shell;
   direnv = lib.getExe pkgs.direnv;
-  helm-ls = lib.getExe pkgs.helm-ls;
   zoxide = lib.getExe pkgs.zoxide;
 in {
   programs.fish.interactiveShellInit = ''
@@ -16,7 +15,6 @@ in {
 
     ${any-nix-shell} fish | source
     ${direnv} hook fish | source
-    ${helm-ls} completion fish | source
     ${zoxide} init --cmd cd fish | source
   '';
 }
