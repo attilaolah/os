@@ -21,6 +21,7 @@
       enable = true;
       withUWSM = true;
     };
+    hyprlock.enable = true;
 
     # Misc. utilities:
     wireshark.enable = true;

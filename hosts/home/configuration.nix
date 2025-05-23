@@ -42,6 +42,7 @@ in {
     ./services/davfs2.nix
     ./services/dbus.nix
     ./services/gvfs.nix
+    ./services/hypridle.nix
     ./services/nginx.nix
     ./services/openssh.nix
     ./services/pipewire.nix

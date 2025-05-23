@@ -9,7 +9,6 @@
 {
   config,
   hyprland,
-  hyprlock,
   lib,
   pkgs,
   system,
@@ -26,8 +25,7 @@
   foot = lib.getExe pkgs.foot;
   google-chrome = lib.getExe' pkgs.google-chrome "google-chrome-stable";
   grim = lib.getExe pkgs.grim;
-  hidle = lib.getExe pkgs.hypridle;
-  hlock = lib.getExe hyprlock.packages.${system}.default;
+  hlock = lib.getExe pkgs.hyprlock;
   mkdir = lib.getExe' pkgs.coreutils "mkdir";
   slurp = lib.getExe pkgs.slurp;
   swaync = lib.getExe' pkgs.swaynotificationcenter "swaync";
@@ -47,7 +45,6 @@ in {
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";
 
       exec-once = [
-        hidle
         monitors.exec-once
         swaync
         waybar
