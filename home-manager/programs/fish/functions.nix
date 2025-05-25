@@ -14,35 +14,42 @@ in {
     nixpkg-run = "${nix} run nixpkgs#$argv[1] -- $argv[2..]";
 
     __pad_from_left = ''
-      set_color normal
-      set_color $argv[1]
-      echo -n \u2590
+      if test "$__minimal_prompt" -eq 0
+        set_color normal
+        set_color $argv[1]
+        echo -n \u2590
+      end
     '';
 
     __pad_from_left_thin = ''
-      set_color normal
-      set_color $argv[1]
-      echo -n \u2595
+      if test "$__minimal_prompt" -eq 0
+        set_color normal
+        set_color $argv[1]
+        echo -n \u2595
+      end
     '';
 
     __pad_from_right = ''
-      set_color normal
-      set_color $argv[1]
-      echo -n \u258d
+      if test "$__minimal_prompt" -eq 0
+        set_color normal
+        set_color $argv[1]
+        echo -n \u258d
+      end
     '';
 
     __prompt_segment = ''
-      # Get colours
       set -l bg $argv[1]
       set -l fg $argv[2]
+      set -l text $argv[3]
 
-      # Set 'em
-      set_color -b $bg
-      set_color $fg
+      if test "$__minimal_prompt" -eq 0
+        set_color -b $bg
+        set_color $fg
+      end
 
       # Print text
-      if [ -n "$argv[3]" ]
-        echo -n -s $argv[3]
+      if test -n "$text"
+        echo -n -s $text
       end
     '';
 
@@ -50,7 +57,7 @@ in {
       set -l bg black
       set -l fg white
 
-      if [ -n "$SSH_CLIENT" ]
+      if test -n "$SSH_CLIENT"
         set bg blue
         set fg black
       end
@@ -61,7 +68,7 @@ in {
       __pad_from_left $bg
       __prompt_segment $bg $fg \uf489" $SHLVL $who"
 
-      if [ "$who" != "$host" ]
+      if test "$who" != "$host"
         # Skip @host bit if hostname == username
         __prompt_segment $bg $fg "@$host"
       end
@@ -71,16 +78,16 @@ in {
 
     __show_jobs = ''
       set -l jobs (jobs | ${wc} -l)
-      if [ $jobs -ne 0 ]
+      if test $jobs -ne 0
         __pad_from_left_thin yellow
         __prompt_segment yellow black "$jobs"\ueba2" "
       end
     '';
 
     __show_retval = ''
-      if [ $RETVAL -ne 0 ]
+      if test $__status -ne 0
         __pad_from_left_thin red
-        __prompt_segment red black "$RETVAL"\uea87" "
+        __prompt_segment red black "$__status"\uea87" "
       end
     '';
 
@@ -98,7 +105,7 @@ in {
 
     __show_venv = ''
       if set -q VIRTUAL_ENV
-        if [ "$VIRTUAL_ENV_PROJECT-" = "-" ]
+        if test "$VIRTUAL_ENV_PROJECT-" = "-"
           __set_venv_project  # try setting it manually
         end
         __pad_from_left green
@@ -142,13 +149,17 @@ in {
 
     __show_pwd = ''
       __pad_from_left black
-      __prompt_segment black white \uea83" "(prompt_pwd)
+      if test "$__minimal_prompt" -eq 0
+        __prompt_segment black white \uea83" "(prompt_pwd)
+      else
+        __prompt_segment black white (prompt_pwd)" "
+      end
       __pad_from_right black
     '';
 
     __show_prompt = ''
       set -l uid (id -u $USER)
-      if [ $uid -eq 0 ]
+      if test $uid -eq 0
         __prompt_segment red black "#"
       else
         __prompt_segment normal white '$'
@@ -156,11 +167,18 @@ in {
     '';
 
     fish_prompt = ''
-      set -g RETVAL $status
-      __show_shlvl_user_host
-      __show_devenv
-      __show_venv
-      __show_git_prompt
+      set -g __status $status
+      set -g __minimal_prompt (
+        test -z "$DISPLAY" -a "$TERM" = "linux"
+        and echo 1
+        or echo 0
+      )
+      if test "$__minimal_prompt" -eq 0
+        __show_shlvl_user_host
+        __show_devenv
+        __show_venv
+        __show_git_prompt
+      end
       __show_pwd
       __show_prompt
       set_color normal
@@ -168,8 +186,10 @@ in {
     '';
 
     fish_right_prompt = ''
-      __show_retval
-      __show_jobs
+      if test "$__minimal_prompt" -eq 0
+        __show_retval
+        __show_jobs
+      end
       set_color normal
     '';
   };
