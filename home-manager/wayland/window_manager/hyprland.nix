@@ -157,6 +157,9 @@ in {
       misc = {
         disable_splash_rendering = true;
         force_default_wallpaper = 0;
+
+        # RawTherapee renders keep causing this to pop up.
+        anr_missed_pings = 8; # default = 1
       };
 
       # NVIDIA flicker workaround, should be reverted eventually.
