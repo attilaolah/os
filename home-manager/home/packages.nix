@@ -15,6 +15,7 @@ in {
       curl
       devenv
       dig
+      exiftool
       fastfetch
       ffmpeg
       file
