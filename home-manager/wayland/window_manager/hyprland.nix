@@ -31,7 +31,6 @@
   swaync = lib.getExe' pkgs.swaynotificationcenter "swaync";
   swaync-client = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
   tr = lib.getExe' pkgs.coreutils "tr";
-  waybar = lib.getExe pkgs.waybar;
   wofi = lib.getExe pkgs.wofi;
 
   screenshots = "${config.home.homeDirectory}/photos/screen";
@@ -47,7 +46,6 @@ in {
       exec-once = [
         monitors.exec-once
         swaync
-        waybar
         "${mkdir} --parents \"${screenshots}\""
       ];
 
