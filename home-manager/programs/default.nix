@@ -11,5 +11,6 @@
     ./tealdeer.nix
     ./tmux.nix
     ./uv.nix
+    ./waybar
   ];
 }
