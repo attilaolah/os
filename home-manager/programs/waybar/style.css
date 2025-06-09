@@ -89,26 +89,24 @@ tooltip label {
 }
 
 #taskbar {
+  padding: 0 4px;
 }
 
 #taskbar button {
-  min-width: 130px;
-  border-bottom: 3px solid rgba(255, 255, 255, 0.3);
-  margin-left: 2px;
-  margin-right: 2px;
-  padding-left: 8px;
-  padding-right: 8px;
+  border-bottom: 4px solid rgba(255, 255, 255, 0.3);
+  margin: 0 4px 0;
+  padding: 4px 12px 0;
   color: white;
   transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 #taskbar button.active {
-  border-bottom: 3px solid white;
+  border-bottom: 4px solid white;
   background: @bg_active;
 }
 
 #taskbar button:hover {
-  border-bottom: 3px solid white;
+  border-bottom: 4px solid white;
   background: @bg_hover;
   color: @content_main;
 }
@@ -122,7 +120,7 @@ tooltip label {
   padding-right: 3px;
   color: @warning_color;
   font-size: initial;
-  border-bottom: 3px dashed @warning_color;
+  border-bottom: 2px dashed @warning_color;
   transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
@@ -136,7 +134,7 @@ tooltip label {
   margin: 3px 12px 0;
 }
 #tray > .needs-attention {
-  border-bottom: 3px solid @warning_color;
+  border-bottom: 2px solid @warning_color;
 }
 
 #pulseaudio {

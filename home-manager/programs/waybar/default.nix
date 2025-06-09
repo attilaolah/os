@@ -81,9 +81,9 @@
         tooltip = false;
       };
       "wlr/taskbar" = {
-        format = "{icon} {title:.24}";
-        icon-size = 28;
-        spacing = 3;
+        format = "{icon}";
+        icon-size = 24;
+        spacing = 0;
         on-click-middle = "close";
         tooltip-format = "{title}";
         ignore-list = [];
