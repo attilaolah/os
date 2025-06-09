@@ -1,7 +1,6 @@
 {
   virtualisation.docker = {
     enable = true;
-
     enableOnBoot = false; # use socket activation
 
     daemon.settings = {
