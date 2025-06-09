@@ -118,7 +118,6 @@
           "$MOD, Return, exec, $TERM"
           "$MOD, Space, togglefloating,"
           "$MOD, Escape, killactive,"
-          "$MOD, A, exec, pavucontrol" # [A]udio
           "$MOD, B, exec, $WEB" #        [W]eb
           "$MOD, D, pseudo," #           [D]windle
           "$MOD, F, fullscreen," #       [F]ullscrean

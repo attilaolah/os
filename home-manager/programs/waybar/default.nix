@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   programs.waybar = {
     enable = true;
     style = ./style.css;
@@ -12,9 +16,9 @@
       gtk-layer-shell = true;
       margin-bottom = -1;
       passthrough = false;
-      height = 41;
+      height = 48;
       modules-left = [
-        "custom/os_button"
+        "custom/os-button"
         "hyprland/workspaces"
         "wlr/taskbar"
       ];
@@ -31,12 +35,12 @@
         "clock"
       ];
       "hyprland/workspaces" = {
-        icon-size = 32;
+        icon-size = 24;
         spacing = 16;
         on-scroll-up = "hyprctl dispatch workspace r+1";
         on-scroll-down = "hyprctl dispatch workspace r-1";
       };
-      "custom/os_button" = let
+      "custom/os-button" = let
         menu = pkgs.writeShellApplication {
           name = "waybar-os-button";
           runtimeInputs = with pkgs; [wofi];
@@ -91,29 +95,8 @@
         spacing = 3;
       };
       clock = {
-        format = "      {:%R\n %d.%m.%Y}";
-        tooltip-format = "<tt><small>{calendar}</small></tt>";
-        calendar = {
-          mode = "year";
-          mode-mon-col = 3;
-          weeks-pos = "right";
-          on-scroll = 1;
-          on-click-right = "mode";
-          format = {
-            months = "<span color='#ffead3'><b>{}</b></span>";
-            days = "<span color='#ecc6d9'><b>{}</b></span>";
-            weeks = "<span color='#99ffdd'><b>W{}</b></span>";
-            weekdays = "<span color='#ffcc66'><b>{}</b></span>";
-            today = "<span color='#ff6699'><b><u>{}</u></b></span>";
-          };
-        };
-        actions = {
-          on-click-right = "mode";
-          on-click-forward = "tz_up";
-          on-click-backward = "tz_down";
-          on-scroll-up = "shift_up";
-          on-scroll-down = "shift_down";
-        };
+        format = "             {:%R\n %d.%m.%Y}";
+        tooltip = false;
       };
       network = {
         format-wifi = " {icon}";
@@ -126,6 +109,7 @@
           "󰤢 "
           "󰤨 "
         ];
+        tooltip = false;
       };
       battery = {
         states = {
@@ -152,7 +136,7 @@
         ];
       };
       pulseaudio = {
-        max-volume = 150;
+        max-volume = 120;
         scroll-step = 10;
         format = "{icon}";
         tooltip-format = "{volume}%";
@@ -164,7 +148,7 @@
             " "
           ];
         };
-        on-click = "pwvucontrol";
+        on-click = lib.getExe pkgs.pavucontrol;
       };
     };
   };
