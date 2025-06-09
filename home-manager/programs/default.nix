@@ -7,6 +7,7 @@
     ./fish
     ./git.nix
     ./gpg.nix
+    ./hyprlock
     ./rbw.nix
     ./tealdeer.nix
     ./tmux.nix

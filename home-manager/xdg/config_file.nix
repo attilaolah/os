@@ -22,7 +22,6 @@
 in {
   xdg.configFile =
     {
-      "hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
       "nvim/init.lua".source = ./nvim/init.lua;
       "nvim/lua/autocmds.lua".source = ./nvim/lua/autocmds.lua;
       "nvim/lua/chadrc.lua".source = ./nvim/lua/chadrc.lua;
@@ -33,13 +32,8 @@ in {
       "nvim/lua/options.lua".source = ./nvim/lua/options.lua;
       "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     }
-    // desktopAttrs (let
-      hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
-      hyprlock = lib.getExe pkgs.hyprlock;
-      loginctl = lib.getExe' pkgs.systemd "loginctl";
-      pidof = lib.getExe' pkgs.procps "pidof";
-    in {
-      # TODO: Use xdg.configFile!
+    // desktopAttrs {
+      # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.foot.settings
       "foot/foot.ini".text =
         (lib.generators.toINI {} {
           main = {
@@ -49,29 +43,11 @@ in {
         })
         + builtins.readFile foot-catppuccin-mocha;
 
-      "hypr/hypridle.conf".text = ''
-        general {
-          lock_cmd = ${pidof} ${hyprlock} || ${hyprlock}
-          before_sleep_cmd = ${loginctl} lock-session
-          after_sleep_cmd = ${hyprctl} dispatch dpms on
-        }
-
-        listener {
-          timeout = ${toString (60 * 20)}
-          on-timeout = ${hyprctl} dispatch dpms off
-          on-resume = ${hyprctl} dispatch dpms on
-        }
-      '';
-      # TODO: re-enable!
-      # listener {
-      #   timeout = ${toString (60 * 20 + 20)}
-      #   on-timeout = ${loginctl} lock-session
-      # }
-
       "davfs.conf".text = ''
         secrets ${config.home.homeDirectory}/.config/davfs.secrets
       '';
 
+      # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.wofi.style
       "wofi/style.css".source = ./wofi/style.css;
-    });
+    };
 }

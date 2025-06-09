@@ -13,29 +13,25 @@
   pkgs,
   system,
   ...
-}: let
-  input = import ../../../hosts/home/hyprland/input.nix {
-    config = import ../../../hosts/home/services/xserver.nix {inherit lib;};
-  };
-  monitors = import ../../../hosts/home/hyprland/monitors.nix;
+}: {
+  wayland.windowManager.hyprland = let
+    input = import ../../../hosts/home/hyprland/input.nix {
+      config = import ../../../hosts/home/services/xserver.nix {inherit lib;};
+    };
+    monitors = import ../../../hosts/home/hyprland/monitors.nix;
 
-  workspaces = [1 2 3 4 5 6 7 8];
+    workspaces = [1 2 3 4 5 6 7 8];
 
-  date = lib.getExe' pkgs.coreutils "date";
-  foot = lib.getExe pkgs.foot;
-  google-chrome = lib.getExe' pkgs.google-chrome "google-chrome-stable";
-  grim = lib.getExe pkgs.grim;
-  hlock = lib.getExe pkgs.hyprlock;
-  mkdir = lib.getExe' pkgs.coreutils "mkdir";
-  slurp = lib.getExe pkgs.slurp;
-  swaync = lib.getExe' pkgs.swaynotificationcenter "swaync";
-  swaync-client = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
-  tr = lib.getExe' pkgs.coreutils "tr";
-  wofi = lib.getExe pkgs.wofi;
+    date = lib.getExe' pkgs.coreutils "date";
+    foot = lib.getExe pkgs.foot;
+    grim = lib.getExe pkgs.grim;
+    mkdir = lib.getExe' pkgs.coreutils "mkdir";
+    slurp = lib.getExe pkgs.slurp;
+    tr = lib.getExe' pkgs.coreutils "tr";
+    wofi = lib.getExe pkgs.wofi;
 
-  screenshots = "${config.home.homeDirectory}/photos/screen";
-in {
-  wayland.windowManager.hyprland = {
+    screenshots = "${config.home.homeDirectory}/photos/screen";
+  in {
     enable = true;
     systemd.enable = false;
     package = hyprland.packages.${system}.default;
@@ -45,8 +41,8 @@ in {
 
       exec-once = [
         monitors.exec-once
-        swaync
         "${mkdir} --parents \"${screenshots}\""
+        (lib.getExe' pkgs.swaynotificationcenter "swaync")
       ];
 
       "$TERM" = "${foot}";
@@ -59,23 +55,32 @@ in {
         + " --no-actions"
         + " --columns 4"
         + " --lines 12";
-      "$BROWSER" =
-        "${google-chrome}"
+      "$WEB" = lib.getExe (pkgs.writeShellApplication {
+        name = "hyprland-web";
+        runtimeInputs = with pkgs; [google-chrome];
         # Force dark mode until the underlying issues are resolved.
-        + " --force-dark-mode"
-        # TODO: Enable these flags once they become more stable?
-        #+ " --enable-features=SkiaGraphite,Vulkan"
-        #+ " --enable-skia-graphite"
-        #+ " --enable-unsafe-webgpu"
-        + " --ozone-platform=wayland";
+        text = ''
+          exec google-chrome-stable --ozone-platform=wayland --force-dark-mode
+        '';
+      });
       "$PRINT" =
         "${grim}"
         + " -g \"$(${slurp})\""
         + " \"${screenshots}/$(${date} --iso-8601=seconds | ${tr} : -).png\"";
-      "$NOTIF" =
-        "${swaync-client}"
-        + " --toggle-panel";
-      "$LOCK" = hlock;
+      "$NOTIF" = lib.getExe (pkgs.writeShellApplication {
+        name = "hyprland-notifications";
+        runtimeInputs = with pkgs; [swaynotificationcenter];
+        text = ''
+          exec swaync-client --toggle-panel
+        '';
+      });
+      "$LOCK" = lib.getExe (pkgs.writeShellApplication {
+        name = "hyprland-lock-session";
+        runtimeInputs = with pkgs; [hyprlock];
+        text = ''
+          exec hyprlock --immediate
+        '';
+      });
 
       general = {
         allow_tearing = false;
@@ -113,15 +118,15 @@ in {
           "$MOD, Return, exec, $TERM"
           "$MOD, Space, togglefloating,"
           "$MOD, Escape, killactive,"
-          "$MOD, A, exec, pavucontrol" # [a]udio
-          "$MOD, B, exec, $BROWSER" #    [b]rowser
-          "$MOD, D, pseudo," #           [d]windle
-          "$MOD, F, fullscreen," #       [f]ullscrean
-          "$MOD, L, exec, $LOCK" #       [l]ock
-          "$MOD, N, exec, $NOTIF" #      [n]otification centre
-          "$MOD, P, exec, $PRINT" #      [p]rint screen
-          "$MOD, R, exec, $MENU" #       [r]un
-          "$MOD, T, togglesplit," #      [t]ile (dwindle)
+          "$MOD, A, exec, pavucontrol" # [A]udio
+          "$MOD, B, exec, $WEB" #        [W]eb
+          "$MOD, D, pseudo," #           [D]windle
+          "$MOD, F, fullscreen," #       [F]ullscrean
+          "$MOD, L, exec, $LOCK" #       [L]ock
+          "$MOD, N, exec, $NOTIF" #      [N]otification Centre
+          "$MOD, P, exec, $PRINT" #      [P]rint Screen
+          "$MOD, R, exec, $MENU" #       [R]un
+          "$MOD, T, togglesplit," #      [T]ile (Dwindle)
 
           # Move focus with MOD + arrow keys
           "$MOD, left, movefocus, l"
