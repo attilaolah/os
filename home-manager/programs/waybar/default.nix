@@ -24,12 +24,12 @@
       ];
       modules-center = [];
       modules-right = [
+        "tray"
+        "pulseaudio"
         "cpu"
         "temperature"
         "memory"
         "disk"
-        "tray"
-        "pulseaudio"
         "network"
         "battery"
         "clock"
@@ -55,8 +55,9 @@
       };
       cpu = {
         interval = 5;
-        format = "  {usage}%";
+        format = "{usage}%| ";
         max-length = 10;
+        tooltip = false;
       };
       temperature = {
         hwmon-path-abs = "/sys/devices/platform/coretemp.0/hwmon";
@@ -68,18 +69,16 @@
       };
       disk = {
         interval = 30;
-        format = "󰋊 {percentage_used}%";
+        format = "{percentage_used}%|󰋊";
         path = "/";
-        tooltip = true;
+        tooltip = false;
         unit = "GB";
-        tooltip-format = "free: {free} / total: {total}";
       };
       memory = {
         interval = 10;
-        format = "  {percentage}%";
+        format = "{percentage}%| ";
         max-length = 10;
-        tooltip = true;
-        tooltip-format = "RAM {used:0.1f}GiB used";
+        tooltip = false;
       };
       "wlr/taskbar" = {
         format = "{icon} {title:.24}";
@@ -95,7 +94,7 @@
         spacing = 3;
       };
       clock = {
-        format = "             {:%R\n %d.%m.%Y}";
+        format = "      {:%R\n %d.%m.%Y}";
         tooltip = false;
       };
       network = {

@@ -55,7 +55,6 @@ tooltip label {
   transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 #custom-os-button:hover {
-  background: @bg_hover;
   color: @content_main;
 }
 
@@ -73,10 +72,10 @@ tooltip label {
   background-color: rgba(255, 255, 255, 0.5);
 
   padding: 0 8px;
-  margin-top: 6px;
+  margin-top: 4px;
   margin-bottom: -2px;
-  border-radius: 2px;
-  box-shadow: 6px -6px 0 0 rgba(255, 255, 255, 0.75);
+  border-radius: 1px;
+  box-shadow: 4px -4px 0 0 rgba(255, 255, 255, 0.75);
   transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 #workspaces button.urgent {
@@ -86,7 +85,7 @@ tooltip label {
 #workspaces button:hover > * {
   color: black;
   background: white;
-  box-shadow: 6px -6px 0 0 rgba(255, 255, 255, 0.25);
+  box-shadow: 4px -4px 0 0 rgba(255, 255, 255, 0.25);
 }
 
 #taskbar {
@@ -114,12 +113,6 @@ tooltip label {
   color: @content_main;
 }
 
-#cpu,
-#disk,
-#memory {
-  padding: 3px;
-}
-
 #temperature {
   color: transparent;
   font-size: 0px;
@@ -140,30 +133,36 @@ tooltip label {
 }
 
 #tray {
-  margin-left: 8px;
-  margin-right: 8px;
+  margin: 3px 12px 0;
 }
 #tray > .needs-attention {
   border-bottom: 3px solid @warning_color;
 }
 
 #pulseaudio {
+  padding: 3px 12px 0 4px;
   font-family: "JetBrainsMono Nerd Font";
-  padding-left: 3px;
-  padding-right: 3px;
   transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
   font-size: 14px;
 }
-#pulseaudio:hover {
-  background: @bg_hover;
+
+#cpu,
+#disk,
+#memory {
+  padding: 3px 8px 0;
+  font-size: 14px;
+  font-weight: 200;
+  font-family: "JetBrainsMono", monospace;
 }
 
 #network {
-  padding: 0 4px;
+  padding: 4px 2px 0;
   font-size: 18px;
 }
 
 #clock {
   padding: 0 12px 0 4px;
   font-size: 11.7px;
+  font-weight: 400;
+  font-family: "JetBrainsMono", monospace;
 }
