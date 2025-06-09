@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   programs.hyprlock = {
     enable = true;
     settings = let
@@ -12,6 +16,7 @@
 
       # Common values:
       monitor = "";
+      prefix = "hyprlock";
     in {
       general = {
         disable_loading_bar = true;
@@ -85,17 +90,19 @@
         labels = [
           ({
               text = let
-                components = [
-                  "uptime"
-                  "cut -d, -f1"
-                  "awk -Fup '{ print $NF }'"
-                  "sed -E 's/\s+/ /g'"
-                  "tr '[:lower:]' '[:upper:]'"
-                  ''awk '{ print "UP" $ALL }''
-                ];
-              in ''
-                cmd[update:1000] ${lib.concatStringsSep " | " components}
-              '';
+                app = pkgs.writeShellApplication {
+                  name = "${prefix}-uptime";
+                  runtimeInputs = with pkgs; [coreutils gawk gnused];
+                  text = ''
+                    uptime |
+                      cut -d, -f1 |
+                      awk -Fup '{ print $NF }' |
+                      sed -E 's/\s+/ /g' |
+                      tr '[:lower:]' '[:upper:]' |
+                      awk '{ print "UP" $ALL }'
+                  '';
+                };
+              in "cmd[update:1000] ${lib.getExe app}";
 
               position = "48, 64";
               halign = "left";
@@ -103,9 +110,16 @@
             // asText)
 
           ({
-              text = ''
-                cmd[update:200] cat /proc/loadavg"
-              '';
+              text = let
+                app = pkgs.writeShellApplication {
+                  name = "${prefix}-load-avg";
+                  runtimeInputs = with pkgs; [coreutils];
+                  text = ''
+                    echo -n "LOAD AVG: "
+                    cat /proc/loadavg
+                  '';
+                };
+              in "cmd[update:200] ${lib.getExe app}";
 
               position = "48, 24";
               halign = "left";
@@ -113,9 +127,15 @@
             // asSubtext)
 
           ({
-              text = ''
-                cmd[update:1000] echo "$TIME"
-              '';
+              text = let
+                app = pkgs.writeShellApplication {
+                  name = "${prefix}-time";
+                  runtimeInputs = with pkgs; [coreutils];
+                  text = ''
+                    date +"%H:%M"
+                  '';
+                };
+              in "cmd[update:1000] ${lib.getExe app}";
 
               position = "-48, 64";
               halign = "right";
@@ -123,9 +143,16 @@
             // asText)
 
           ({
-              text = ''
-                cmd[update:1000] date +"%a %Y-%m-%d" | tr '[:lower:]' '[:upper:]'
-              '';
+              text = let
+                app = pkgs.writeShellApplication {
+                  name = "${prefix}-date";
+                  runtimeInputs = with pkgs; [coreutils];
+                  text = ''
+                    date +"%a %Y-%m-%d" |
+                      tr '[:lower:]' '[:upper:]'
+                  '';
+                };
+              in "cmd[update:1000] ${lib.getExe app}";
 
               position = "-48, 24";
               halign = "right";
