@@ -14,7 +14,7 @@ in {
       ./file.nix
       ./home/packages.nix
       ./programs
-      ./services/gpg_agent.nix
+      ./services
       ./xdg/config_file.nix
     ]
     ++ desktopList [

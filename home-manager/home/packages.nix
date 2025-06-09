@@ -109,6 +109,7 @@ in {
 
       # Other GUI apps:
       discord
+      foot
       gimp
       inkscape
       pavucontrol

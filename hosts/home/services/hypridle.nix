@@ -1,1 +1,0 @@
-{services.hypridle.enable = true;}
