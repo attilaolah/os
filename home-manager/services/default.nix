@@ -1,7 +1,16 @@
 {
-  imports = [
-    ./gpg_agent.nix
-    ./hypridle.nix
-    ./hyprpaper.nix
-  ];
+  desktop,
+  lib,
+  ...
+}: let
+  desktopList = list: lib.lists.optionals desktop list;
+in {
+  imports =
+    [
+      ./gpg_agent.nix
+    ]
+    ++ desktopList [
+      ./hypridle.nix
+      ./hyprpaper
+    ];
 }
