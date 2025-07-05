@@ -38,8 +38,7 @@
       listener = [
         {
           timeout = 20 * 60;
-          on-timeout =
-            dpmsOff;
+          on-timeout = dpmsOff;
           on-resume = dpmsOn;
         }
         {
