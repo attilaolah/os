@@ -21,7 +21,7 @@
       general = {
         disable_loading_bar = true;
         hide_cursor = true;
-        grace = 2;
+        grace = 20;
       };
 
       background = [

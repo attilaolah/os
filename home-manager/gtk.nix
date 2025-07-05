@@ -7,7 +7,7 @@
     enable = true;
 
     theme = {
-      name = "vimix-dark-grey";
+      name = "Vimix-dark-grey";
       package = pkgs.vimix-gtk-themes.override {
         themeVariants = ["grey"];
         colorVariants = ["dark"];
