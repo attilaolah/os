@@ -32,16 +32,18 @@ in {
             podman = virtualisation.podman.enable;
             wireshark = programs.wireshark.enable;
           };
-        openssh.authorizedKeys.keys = let
-          gh-keys = with pkgs.lib.strings;
+        openssh.authorizedKeys.keys =
+          (let
+            inherit (pkgs.lib.strings) splitString removeSuffix;
+          in
             splitString "\n" (removeSuffix "\n" (builtins.readFile (pkgs.fetchurl {
               url = "https://github.com/attilaolah.keys";
               hash = "sha256-U1t5aTwRMlnjmiUcZcKZ1Hu6/QpZO2OWLG+4UaiRnHE=";
-            })));
-          # Pixel 7, temporary key:
-          extra-keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBzKOTbqz9f7/ZNvt1RsmvCGccBJ96Sk3SGwOHDNldfG"];
-        in
-          gh-keys ++ extra-keys;
+            }))))
+          ++ [
+            # Pixel 7, temporary key:
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBzKOTbqz9f7/ZNvt1RsmvCGccBJ96Sk3SGwOHDNldfG"
+          ];
       };
     };
 
