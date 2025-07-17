@@ -41,8 +41,8 @@ in {
               hash = "sha256-U1t5aTwRMlnjmiUcZcKZ1Hu6/QpZO2OWLG+4UaiRnHE=";
             }))))
           ++ [
-            # Pixel 7, temporary key:
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBzKOTbqz9f7/ZNvt1RsmvCGccBJ96Sk3SGwOHDNldfG"
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP0Y/37XG4iBs4hHLI88dQQJhtVVal69GRF7HpHT+60J"  # work laptop
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBzKOTbqz9f7/ZNvt1RsmvCGccBJ96Sk3SGwOHDNldfG"  # phone
           ];
       };
     };
