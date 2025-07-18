@@ -54,8 +54,8 @@ in {
     '';
 
     __show_shlvl_user_host = ''
-      set -l bg black
-      set -l fg white
+      set -l bg white
+      set -l fg black
 
       if test -n "$SSH_CLIENT"
         set bg blue

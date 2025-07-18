@@ -56,8 +56,13 @@ This will install the workstation (`#home` config).
 
 Add remote builds for other machines:
 
-- WSL
+- WSL config
 - Secrets & keys
+- Set up [impermanence][6]
+
+[6]: https://nixos.wiki/wiki/Impermanence
+
+## WSL
 
 The WSL config is currently only managing home-manager, the host config should
 be committed eventually. For now the home-manager config can be installed as a
@@ -67,6 +72,8 @@ flake:
 nix run nixpkgs#home-manager -- switch --flake github:attilaolah/os#wsl
 ```
 
-Set up [impermanence][6].
+To use the `olaa` user with Systemd (with its own slice), lingering should be enabled:
 
-[6]: https://nixos.wiki/wiki/Impermanence
+```sh
+sudo loginctl enable-linger olaa
+```
