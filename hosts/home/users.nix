@@ -38,11 +38,10 @@ in {
           in
             splitString "\n" (removeSuffix "\n" (builtins.readFile (pkgs.fetchurl {
               url = "https://github.com/attilaolah.keys";
-              hash = "sha256-U1t5aTwRMlnjmiUcZcKZ1Hu6/QpZO2OWLG+4UaiRnHE=";
+              hash = "sha256-Y63CD0ZqmOhnFhRXwsp2Xb5aaoIWr7nUwHAvov38buc=";
             }))))
           ++ [
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP0Y/37XG4iBs4hHLI88dQQJhtVVal69GRF7HpHT+60J"  # work laptop
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBzKOTbqz9f7/ZNvt1RsmvCGccBJ96Sk3SGwOHDNldfG"  # phone
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBzKOTbqz9f7/ZNvt1RsmvCGccBJ96Sk3SGwOHDNldfG" # phone
           ];
       };
     };
