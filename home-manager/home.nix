@@ -33,6 +33,7 @@ in {
         {
           SHELL = lib.getExe pkgs.fish;
           VISUAL = lib.getExe' pkgs.neovim "nvim";
+          EDITOR = lib.getExe' pkgs.neovim "nvim";
 
           # Development environment:
           GOPATH = "${homeDirectory}/dev/go";
