@@ -32,7 +32,8 @@ in {
       sessionVariables = with config.home;
         {
           SHELL = lib.getExe pkgs.fish;
-          VISUAL = lib.getExe' pkgs.neovim "nvim";
+          VISUAL = lib.getExe pkgs.neovim;
+          EDITOR = lib.getExe pkgs.neovim;
 
           # Development environment:
           GOPATH = "${homeDirectory}/dev/go";
