@@ -81,6 +81,11 @@ in {
       podman-compose
       podman-tui
 
+      # AI stuff:
+      codex
+      gemini-cli
+      # qwen-code: https://github.com/nixos/nixpkgs/issues/427851
+
       # Python, the basics
       (python313.withPackages (ps:
         with ps; [
