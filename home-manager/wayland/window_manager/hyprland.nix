@@ -164,13 +164,6 @@
         anr_missed_pings = 8; # default = 1
       };
 
-      # NVIDIA flicker workaround, should be reverted eventually.
-      # https://github.com/hyprwm/Hyprland/issues/7252#issuecomment-2345792172
-      render = {
-        explicit_sync = 2;
-        explicit_sync_kms = 0;
-      };
-
       # NVIDIA experimental hardware cursor support.
       # Currently very much broken on rotated monitors.
       # cursor = {
