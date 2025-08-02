@@ -12,8 +12,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "catppuccin";
       repo = "foot";
-      rev = "962ff1a5b6387bc5419e9788a773a080eea5f1e1";
-      sha256 = "sha256-eVH3BY2fZe0/OjqucM/IZthV8PMsM9XeIijOg8cNE1Y=";
+      rev = "8d263e0e6b58a6b9ea507f71e4dbf6870aaf8507";
+      sha256 = "sha256-bpGVDESE6Pr7kaFgfAWJ/5KC9mRPlv2ciYwRr6jcIKs=";
     };
     installPhase = ''
       cp --recursive themes/catppuccin-mocha.ini $out
