@@ -39,6 +39,7 @@ in {
       rsync
       silver-searcher
       sops
+      subversion
       termshark
       tmux
       traceroute
