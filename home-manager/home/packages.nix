@@ -48,7 +48,7 @@ in {
       unzip
       usbutils
       wget
-      yq
+      yq-go
       zip
       zoxide
 
