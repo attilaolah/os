@@ -44,6 +44,7 @@ in {
       tmux
       traceroute
       tree
+      ty
       unzip
       usbutils
       wget
