@@ -42,7 +42,7 @@
           on-resume = dpmsOn;
         }
         {
-          timeout = 2 * 60;
+          timeout = 12 * 60;
           on-timeout = lockSession;
         }
       ];
