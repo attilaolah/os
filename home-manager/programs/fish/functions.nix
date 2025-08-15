@@ -10,7 +10,7 @@
   wc = lib.getExe' pkgs.coreutils "wc";
 in {
   programs.fish.functions = {
-    hyprstart = "uwsm check may-start && exec uwsm start -S hyprland-uwsm.desktop";
+    hyprstart = "uwsm check may-start && exec uwsm start hyprland-uwsm.desktop";
     nixpkg-run = "${nix} run nixpkgs#$argv[1] -- $argv[2..]";
 
     __pad_from_left = ''
