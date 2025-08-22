@@ -39,14 +39,16 @@ in {
       rsync
       silver-searcher
       sops
+      subversion
       termshark
       tmux
       traceroute
       tree
+      ty
       unzip
       usbutils
       wget
-      yq
+      yq-go
       zip
       zoxide
 

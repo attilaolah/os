@@ -19,6 +19,8 @@
       cp --recursive themes/catppuccin-mocha.ini $out
     '';
   };
+
+  toINI = lib.generators.toINI {};
 in {
   xdg.configFile =
     {
@@ -35,7 +37,7 @@ in {
     // desktopAttrs {
       # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.foot.settings
       "foot/foot.ini".text =
-        (lib.generators.toINI {} {
+        (toINI {
           main = {
             font = "monospace:size=16";
             font-size-adjustment = 2;
