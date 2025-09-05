@@ -1,3 +1,4 @@
+# https://mynixos.com/home-manager/options/services.hypridle
 {
   lib,
   pkgs,

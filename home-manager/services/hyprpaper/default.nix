@@ -1,3 +1,4 @@
+# https://mynixos.com/home-manager/options/services.hyprpaper
 {
   services.hyprpaper = {
     enable = true;

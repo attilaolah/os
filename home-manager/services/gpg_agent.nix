@@ -1,3 +1,4 @@
+# https://mynixos.com/home-manager/options/services.gpg-agent
 {pkgs, ...}: {
   services.gpg-agent = {
     enable = true;
