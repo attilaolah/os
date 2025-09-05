@@ -11,6 +11,7 @@ in {
       # CLI utilities:
       age
       any-nix-shell
+      bitbucket-cli
       bun
       colordiff
       curl
@@ -21,13 +22,16 @@ in {
       ffmpeg
       file
       fzf
+      gh
       gnumake
       gnupg
       gotop
       htop
+      jira-cli-go
       jq
       killall
       mktemp
+      nixpkgs-review
       openssl
       p7zip
       pciutils
