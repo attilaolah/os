@@ -12,5 +12,6 @@ in {
     ++ desktopList [
       ./hypridle.nix
       ./hyprpaper
+      ./swaync.nix
     ];
 }
