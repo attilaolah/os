@@ -60,7 +60,8 @@ in {
       neovim
       # NVim dependencies:
       alejandra
-      ansible-language-server
+      # Unmaintained, maybe pick it up.
+      # ansible-language-server
       black
       cargo
       clang_20
