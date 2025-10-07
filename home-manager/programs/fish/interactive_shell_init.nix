@@ -2,20 +2,16 @@
   lib,
   pkgs,
   ...
-}: let
-  any-nix-shell = lib.getExe pkgs.any-nix-shell;
-  direnv = lib.getExe pkgs.direnv;
-  gpgconf = lib.getExe' pkgs.gnupg "gpgconf";
-  zoxide = lib.getExe pkgs.zoxide;
-in {
+}: {
   programs.fish.interactiveShellInit = ''
     set --universal fish_greeting
-    set --global --export GPG_AGENT_INFO (${gpgconf} --list-dirs agent-socket)
+    set --global --export GPG_AGENT_INFO (
+      ${lib.getExe' pkgs.gnupg "gpgconf"} --list-dirs agent-socket
+    )
 
-    source ${pkgs.fzf}/share/fzf/key-bindings.fish
-
-    ${any-nix-shell} fish | source
-    ${direnv} hook fish | source
-    ${zoxide} init --cmd cd fish | source
+    ${lib.getExe pkgs.direnv} hook fish | source
+    ${lib.getExe pkgs.fzf} --fish | source
+    ${lib.getExe pkgs.zoxide} init --cmd cd fish | source
+    ${lib.getExe pkgs.any-nix-shell} fish | source
   '';
 }
