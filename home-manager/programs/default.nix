@@ -7,6 +7,7 @@
 in {
   imports =
     [
+      ./atuin.nix
       ./dircolors.nix
       ./direnv.nix
       ./fd.nix
