@@ -24,7 +24,7 @@ in {
     )
 
     source ${catppuccin-fzf-mocha}
-    set --univerzal --export FZF_DEFAULT_OPTS "--style=full $FZF_DEFAULT_OPTS"
+    set --universal --export FZF_DEFAULT_OPTS "--style=full $FZF_DEFAULT_OPTS"
 
     ${lib.getExe pkgs.direnv} hook fish | source
     ${lib.getExe pkgs.fzf} --fish | source
