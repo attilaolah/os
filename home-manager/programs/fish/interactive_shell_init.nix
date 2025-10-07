@@ -10,7 +10,7 @@
       owner = "catppuccin";
       repo = "fzf";
       rev = "7c2e05606f2e75840b1ba367b1f997cd919809b3";
-      sha256 = lib.fakeHash;
+      sha256 = "sha256-fs3bOs1vfrtuono0yg1xjTSpzoS5m8ZRMD+CjAp+sDU=";
     };
     installPhase = ''
       cp --recursive themes/catppuccin-fzf-mocha.fish $out
