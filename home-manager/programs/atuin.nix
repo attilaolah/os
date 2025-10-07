@@ -7,6 +7,7 @@
     settings = {
       style = "full";
       invert = true;
+      enter_accept = true;
       workspaces = true;
       sync.records = true;
       theme.name = "catppuccin-mocha-mauve";
