@@ -7,10 +7,12 @@
 in {
   imports =
     [
+      ./atuin.nix
       ./dircolors.nix
       ./direnv.nix
       ./fd.nix
       ./fish
+      ./fzf.nix
       ./git.nix
       ./gpg.nix
       ./nix-index.nix

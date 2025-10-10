@@ -21,7 +21,6 @@ in {
       fastfetch
       ffmpeg
       file
-      fzf
       gh
       gnumake
       gnupg
