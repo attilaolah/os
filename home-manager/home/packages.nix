@@ -92,13 +92,14 @@ in {
       gemini-cli
       # qwen-code: https://github.com/nixos/nixpkgs/issues/427851
 
-      # Python, the basics
-      (python313.withPackages (ps:
+      # Python, the basics:
+      (python314.withPackages (ps:
         with ps; [
-          ipython
           jmespath
-          jupyter
-          polars
+          # TODO: add others when supported:
+          # ipython
+          # jupyter
+          # polars
         ]))
     ]
     ++ (with nodePackages; [
