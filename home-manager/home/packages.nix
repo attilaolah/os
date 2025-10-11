@@ -96,10 +96,10 @@ in {
       (python314.withPackages (ps:
         with ps; [
           jmespath
+          polars
           # TODO: add others when supported:
           # ipython
           # jupyter
-          # polars
         ]))
     ]
     ++ (with nodePackages; [
