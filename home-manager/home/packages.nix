@@ -97,9 +97,8 @@ in {
         with ps; [
           jmespath
           polars
-          # TODO: add others when supported:
+          # TODO: add when supported:
           # ipython
-          # jupyter
         ]))
     ]
     ++ (with nodePackages; [
