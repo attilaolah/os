@@ -10,16 +10,14 @@
     l = "ls -lh";
     ll = "ls -la";
     f = "fd";
+    r = "rg";
     t = "tree";
     tm = "tmx";
 
-    v = "nvim";
-    vi = "nvim";
-    vim = "nvim";
-    nv = "nvim";
-    nvi = "nvim";
+    v = "vi";
 
-    c = "curl --dump-header /dev/stderr";
+    c = "curl -D/dev/stderr -s";
+    k = "kubectl";
 
     g = "git status";
     ga = "git add -p .";
@@ -34,6 +32,5 @@
     inherit np nr;
     nix-try = np;
     nt = np;
-    nx = np;
   };
 }

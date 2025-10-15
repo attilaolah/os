@@ -29,6 +29,8 @@ in {
       jira-cli-go
       jq
       killall
+      kubectl
+      kubernetes-helm
       mktemp
       nixpkgs-review
       openssl
@@ -90,15 +92,15 @@ in {
       # AI stuff:
       codex
       gemini-cli
-      # qwen-code: https://github.com/nixos/nixpkgs/issues/427851
+      qwen-code
 
-      # Python, the basics
-      (python313.withPackages (ps:
+      # Python, the basics:
+      (python314.withPackages (ps:
         with ps; [
-          ipython
           jmespath
-          jupyter
           polars
+          # TODO: add when supported:
+          # ipython
         ]))
     ]
     ++ (with nodePackages; [
