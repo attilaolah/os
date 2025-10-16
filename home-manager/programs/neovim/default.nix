@@ -2,6 +2,7 @@
   programs.neovim =
     (import ../../../hosts/home/programs/neovim.nix)
     // {
+      vimdiffAlias = true;
       extraPackages = with pkgs; [
         # Language servers:
         kotlin-language-server
