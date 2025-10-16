@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   programs.neovim =
-    (import ../../hosts/home/programs/neovim.nix)
+    (import ../../../hosts/home/programs/neovim.nix)
     // {
       extraPackages = with pkgs; [
         # Language servers:
@@ -12,5 +12,6 @@
         # Unmaintained, maybe pick it up.
         # ansible-language-server
       ];
+      extraLuaConfig = builtins.readFile ./init.lua;
     };
 }
