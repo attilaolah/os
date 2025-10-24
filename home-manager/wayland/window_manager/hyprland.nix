@@ -59,8 +59,13 @@
         name = "hyprland-web";
         runtimeInputs = with pkgs; [google-chrome];
         # Force dark mode until the underlying issues are resolved.
+        # Disable Wayland colour management, to work around Hyprland issue, see here:
+        # https://github.com/hyprwm/Hyprland/discussions/11961#discussioncomment-14620023
         text = ''
-          exec google-chrome-stable --ozone-platform=wayland --force-dark-mode
+          exec google-chrome-stable \
+            --ozone-platform=wayland \
+            --disable-features=WaylandWpColorManagerV1 \
+            --force-dark-mode
         '';
       });
       "$PRINT" =
