@@ -14,6 +14,17 @@
     plugins = with pkgs.tmuxPlugins; [
       better-mouse-mode
       {
+        plugin = vim-tmux-navigator;
+        extraConfig = ''
+          set -g @vim_navigator_mapping_up "C-M-Up"
+          set -g @vim_navigator_mapping_down "C-M-Down"
+          set -g @vim_navigator_mapping_left "C-M-Left"
+          set -g @vim_navigator_mapping_right "C-M-Right"
+
+          set -g @vim_navigator_prefix_mapping_clear_screen ""
+        '';
+      }
+      {
         plugin = catppuccin;
         extraConfig = ''
           set -g @catppuccin_status_left_separator "█"
@@ -36,12 +47,6 @@
 
       # Re-numbber windows on close.
       set-option -g renumber-windows on
-
-      # Ctrl+Alt+Arrow navigation:
-      bind -n C-M-Up select-pane -U
-      bind -n C-M-Down select-pane -D
-      bind -n C-M-Left select-pane -L
-      bind -n C-M-Right select-pane -R
     '';
   };
 }

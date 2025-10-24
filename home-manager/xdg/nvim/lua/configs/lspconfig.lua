@@ -1,7 +1,6 @@
 -- load defaults i.e lua_lsp
 require("nvchad.configs.lspconfig").defaults()
 
-local lspconfig = require "lspconfig"
 local nvlsp = require "nvchad.configs.lspconfig"
 
 local servers = {
@@ -15,11 +14,17 @@ local servers = {
   "ts_ls",
 }
 
--- Go
-lspconfig.gopls.setup {
+-- LSPs with default config
+vim.lsp.enable(servers)
+
+vim.lsp.config("*", {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
+})
+
+-- Go
+vim.lsp.config("gopls", {
   settings = {
     gopls = {
       analyses = {
@@ -30,13 +35,10 @@ lspconfig.gopls.setup {
       usePlaceholders = true,
     },
   },
-}
+})
 
 -- Helm
-lspconfig.helm_ls.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
+vim.lsp.config("helm_ls", {
   settings = {
     ["helm-ls"] = {
       yamlls = {
@@ -44,13 +46,10 @@ lspconfig.helm_ls.setup {
       },
     },
   },
-}
+})
 
 -- YAML
-lspconfig.yamlls.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
+vim.lsp.config("yamlls", {
   settings = {
     yaml = {
       schemas = {
@@ -58,13 +57,4 @@ lspconfig.yamlls.setup {
       },
     },
   },
-}
-
--- LSPs with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
-  }
-end
+})

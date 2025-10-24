@@ -57,12 +57,8 @@ in {
       zip
       zoxide
 
-      # NVim:
-      neovim
-      # NVim dependencies:
+      # NeoVim dependencies:
       alejandra
-      # Unmaintained, maybe pick it up.
-      # ansible-language-server
       black
       cargo
       clang_20
@@ -71,9 +67,7 @@ in {
       gofumpt
       gopls
       helm-ls
-      kotlin-language-server
       ktfmt
-      lua-language-server
       nil
       pyright
       rustc
@@ -81,8 +75,6 @@ in {
       rustfmt
       stylua
       usort
-      vscode-langservers-extracted
-      yaml-language-server
 
       # Virtualisation:
       docker-compose

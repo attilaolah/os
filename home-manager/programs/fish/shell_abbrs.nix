@@ -14,7 +14,7 @@
     t = "tree";
     tm = "tmx";
 
-    v = "vi";
+    v = "nvim";
 
     c = "curl -D/dev/stderr -s";
     k = "kubectl";

@@ -15,6 +15,7 @@ in {
       ./fzf.nix
       ./git.nix
       ./gpg.nix
+      ./neovim
       ./nix-index.nix
       ./rbw.nix
       ./tealdeer.nix
