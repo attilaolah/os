@@ -36,7 +36,7 @@ in {
       openssl
       p7zip
       pciutils
-      pinentry
+      pinentry-tty
       pwgen
       rar
       rclone

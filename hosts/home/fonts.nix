@@ -24,7 +24,7 @@
       roboto-mono
       roboto-serif
       roboto-slab
-      vistafonts
+      vista-fonts
     ];
   };
 }
