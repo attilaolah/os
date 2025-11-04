@@ -55,7 +55,10 @@
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
       log.mailmap = true;
-      advice.skippedCherryPicks = false;
+      advice = {
+        forceDeleteBranch = false;
+        skippedCherryPicks = false;
+      };
       credential.helper = "cache --timeout=${toString (60 * 60 * 8)}";
     };
   };
