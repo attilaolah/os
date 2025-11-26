@@ -5,12 +5,15 @@ local nvlsp = require "nvchad.configs.lspconfig"
 
 local servers = {
   "cssls",
+  "gopls",
+  "helm_ls",
   "html",
   "kotlin_language_server",
   "nil_ls",
   "pyright",
   "rust_analyzer",
   "ts_ls",
+  "yamlls",
   -- "ansiblels", -- unmaintained
 }
 
