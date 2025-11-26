@@ -4,7 +4,6 @@ require("nvchad.configs.lspconfig").defaults()
 local nvlsp = require "nvchad.configs.lspconfig"
 
 local servers = {
-  "ansiblels",
   "cssls",
   "html",
   "kotlin_language_server",
@@ -12,6 +11,7 @@ local servers = {
   "pyright",
   "rust_analyzer",
   "ts_ls",
+  -- "ansiblels", -- unmaintained
 }
 
 -- LSPs with default config
