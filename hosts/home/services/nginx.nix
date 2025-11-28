@@ -1,8 +1,7 @@
-{pkgs, ...}: {
+{
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
-    package = pkgs.nginxQuic;
 
     virtualHosts."localhost" = {
       serverAliases = ["[::1]" "127.0.4.43" "home"];
