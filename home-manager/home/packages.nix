@@ -61,7 +61,7 @@ in {
       alejandra
       black
       cargo
-      clang_20
+      clang_21
       cue
       go
       gofumpt
