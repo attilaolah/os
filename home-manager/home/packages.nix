@@ -11,6 +11,7 @@ in {
       # CLI utilities:
       age
       any-nix-shell
+      bat
       bitbucket-cli
       bun
       colordiff
@@ -61,7 +62,7 @@ in {
       alejandra
       black
       cargo
-      clang_21
+      clang
       cue
       go
       gofumpt
