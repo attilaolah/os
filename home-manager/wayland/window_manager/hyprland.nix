@@ -31,7 +31,7 @@
         (lib.getExe' pkgs.swaynotificationcenter "swaync")
       ];
 
-      "$TERM" = "${lib.getExe pkgs.foot}";
+      "$TERM" = lib.getExe pkgs.foot;
       "$MENU" = lib.getExe (pkgs.writeShellApplication {
         name = "hyprland-shortcut-menu";
         runtimeInputs = with pkgs; [wofi];
