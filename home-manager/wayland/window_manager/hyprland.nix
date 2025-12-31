@@ -8,10 +8,8 @@
 #
 {
   config,
-  hyprland,
   lib,
   pkgs,
-  system,
   ...
 }: {
   wayland.windowManager.hyprland = let
@@ -21,42 +19,35 @@
     monitors = import ../../../hosts/home/hyprland/monitors.nix;
 
     workspaces = [1 2 3 4 5 6 7 8];
-
-    date = lib.getExe' pkgs.coreutils "date";
-    foot = lib.getExe pkgs.foot;
-    grim = lib.getExe pkgs.grim;
-    mkdir = lib.getExe' pkgs.coreutils "mkdir";
-    slurp = lib.getExe pkgs.slurp;
-    tr = lib.getExe' pkgs.coreutils "tr";
-    wofi = lib.getExe pkgs.wofi;
-
-    screenshots = "${config.home.homeDirectory}/photos/screen";
   in {
     enable = true;
     systemd.enable = false;
-    package = hyprland.packages.${system}.default;
     settings = {
       inherit (input) input;
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";
 
       exec-once = [
         monitors.exec-once
-        "${mkdir} --parents \"${screenshots}\""
         (lib.getExe' pkgs.swaynotificationcenter "swaync")
       ];
 
-      "$TERM" = "${foot}";
-      "$MENU" =
-        "${wofi}"
-        + " --show drun"
-        + " --allow-images"
-        + " --allow-markup"
-        + " --hide-scroll"
-        + " --no-actions"
-        + " --columns 4"
-        + " --lines 12";
+      "$TERM" = lib.getExe pkgs.foot;
+      "$MENU" = lib.getExe (pkgs.writeShellApplication {
+        name = "hyprland-shortcut-menu";
+        runtimeInputs = with pkgs; [wofi];
+        text = ''
+          wofi \
+            --show drun \
+            --allow-images \
+            --allow-markup \
+            --hide-scroll \
+            --no-actions \
+            --columns 4 \
+            --lines 12
+        '';
+      });
       "$WEB" = lib.getExe (pkgs.writeShellApplication {
-        name = "hyprland-web";
+        name = "hyprland-shortcut-web";
         runtimeInputs = with pkgs; [google-chrome];
         # Force dark mode until the underlying issues are resolved.
         # Disable Wayland colour management, to work around Hyprland issue, see here:
@@ -68,19 +59,28 @@
             --force-dark-mode
         '';
       });
-      "$PRINT" =
-        "${grim}"
-        + " -g \"$(${slurp})\""
-        + " \"${screenshots}/$(${date} --iso-8601=seconds | ${tr} : -).png\"";
+      "$PRINT" = lib.getExe (let
+        screenshots = "${config.home.homeDirectory}/photos/screen";
+      in
+        pkgs.writeShellApplication {
+          name = "hyprland-shortcut-print";
+          runtimeInputs = with pkgs; [coreutils grim slurp wl-clipboard];
+          text = ''
+            mkdir --parents "${screenshots}"
+            grim -g "$(slurp)" - |
+              tee "${screenshots}/$(date --iso-8601=seconds | tr : -).png" |
+              wl-copy -t image/png
+          '';
+        });
       "$NOTIF" = lib.getExe (pkgs.writeShellApplication {
-        name = "hyprland-notifications";
+        name = "hyprland-shortcut-notifications";
         runtimeInputs = with pkgs; [swaynotificationcenter];
         text = ''
           exec swaync-client --toggle-panel
         '';
       });
       "$LOCK" = lib.getExe (pkgs.writeShellApplication {
-        name = "hyprland-lock-session";
+        name = "hyprland-shortcut-lock";
         runtimeInputs = with pkgs; [hyprlock];
         text = ''
           exec hyprlock --immediate
