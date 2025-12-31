@@ -8,10 +8,8 @@
 #
 {
   config,
-  hyprland,
   lib,
   pkgs,
-  system,
   ...
 }: {
   wayland.windowManager.hyprland = let
@@ -34,7 +32,6 @@
   in {
     enable = true;
     systemd.enable = false;
-    package = hyprland.packages.${system}.default;
     settings = {
       inherit (input) input;
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";
