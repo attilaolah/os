@@ -115,6 +115,7 @@ in {
       google-chrome
 
       # Other GUI apps:
+      darktable
       discord
       foot
       gimp
