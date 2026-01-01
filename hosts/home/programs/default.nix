@@ -8,10 +8,7 @@
     # Window manager:
     uwsm = {
       enable = true;
-      waylandCompositors.hyprland = {
-        prettyName = "Hyprland";
-        binPath = "/run/current-system/sw/bin/Hyprland";
-      };
+      waylandCompositors.hyprland.prettyName = "Hyprland";
     };
     hyprland = {
       enable = true;
