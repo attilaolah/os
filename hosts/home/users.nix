@@ -41,6 +41,7 @@ in {
               hash = "sha256-Y63CD0ZqmOhnFhRXwsp2Xb5aaoIWr7nUwHAvov38buc=";
             }))))
           ++ [
+            "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC+mtV6yrvijOAmvsstRCYsUSbc8ZI3Np7qY2rWuACNaAnLSRhu5qbL/1EzZgcRFbMKaqRYLy8Tq56PDjck2MTo=" # biometric
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBzKOTbqz9f7/ZNvt1RsmvCGccBJ96Sk3SGwOHDNldfG" # phone
           ];
       };
