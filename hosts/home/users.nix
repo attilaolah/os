@@ -5,7 +5,9 @@
   email,
   ...
 }: let
-  filterGroups = attrs: builtins.attrNames (pkgs.lib.filterAttrs (_: v: v) attrs);
+  inherit (builtins) attrNames concatStringsSep readFile;
+
+  filterGroups = attrs: attrNames (pkgs.lib.filterAttrs (_: v: v) attrs);
 in {
   users = {
     mutableUsers = false;
@@ -21,7 +23,17 @@ in {
 
       "${username}" = {
         isNormalUser = true;
-        description = "Attila O.,,,,${email}"; # GECOS
+        # GECOS user description:
+        description = let
+          phone = "+41 79 247 25 10";
+        in
+          concatStringsSep "," [
+            "Attila Oláh" # FullName
+            "Dornhaus 8" # Building / Room
+            phone # (work)
+            phone # (home)
+            email # other
+          ]; # GECOS
         initialHashedPassword =
           "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn"
           + "/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
@@ -41,7 +53,7 @@ in {
           (let
             inherit (pkgs.lib.strings) splitString removeSuffix;
           in
-            splitString "\n" (removeSuffix "\n" (builtins.readFile (pkgs.fetchurl {
+            splitString "\n" (removeSuffix "\n" (readFile (pkgs.fetchurl {
               url = "https://github.com/attilaolah.keys";
               hash = "sha256-Y63CD0ZqmOhnFhRXwsp2Xb5aaoIWr7nUwHAvov38buc=";
             }))))
