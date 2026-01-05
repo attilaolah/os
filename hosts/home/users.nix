@@ -14,12 +14,17 @@ in {
     # Generate a password using:
     # nix-shell --run "mkpasswd -m SHA-512 -s" -p mkpasswd
     users = {
-      root.initialHashedPassword = "$6$chB8XnZbQno6p5Zp$IE6xp/WGQYYwZGgAkQE9juhofD./R2ITPryZftBellWbeRKUtGBjBGOER6g9Qym.oDiMpkPc7OFOE4fxAV.fd/";
+      root.initialHashedPassword = (
+        "$6$chB8XnZbQno6p5Zp$IE6xp/WGQYYwZGgAkQE9juhofD./R2ITPryZftBellWbeRKUtGBjBGOER6g9Qym"
+        + ".oDiMpkPc7OFOE4fxAV.fd/"
+      );
 
       "${username}" = {
         isNormalUser = true;
         description = "Attila O.,,,,${email}"; # GECOS
-        initialHashedPassword = "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
+        initialHashedPassword =
+          "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn"
+          + "/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
         group = username;
         extraGroups = with config;
           filterGroups {
@@ -41,8 +46,8 @@ in {
               hash = "sha256-Y63CD0ZqmOhnFhRXwsp2Xb5aaoIWr7nUwHAvov38buc=";
             }))))
           ++ [
-            "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC+mtV6yrvijOAmvsstRCYsUSbc8ZI3Np7qY2rWuACNaAnLSRhu5qbL/1EzZgcRFbMKaqRYLy8Tq56PDjck2MTo=" # biometric
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBzKOTbqz9f7/ZNvt1RsmvCGccBJ96Sk3SGwOHDNldfG" # phone
+            ("ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC"
+              + "+mtV6yrvijOAmvsstRCYsUSbc8ZI3Np7qY2rWuACNaAnLSRhu5qbL/1EzZgcRFbMKaqRYLy8Tq56PDjck2MTo=") # biometric
           ];
       };
     };
