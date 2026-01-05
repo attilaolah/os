@@ -1,6 +1,6 @@
 {
   config,
-  username,
+  user,
   ...
 }: {
   fileSystems = {
@@ -15,7 +15,7 @@
       device = "/dev/disk/by-uuid/12CE-A600";
       fsType = "vfat";
     };
-    "/home/${username}/backups" = {
+    "/home/${user.username}/backups" = {
       device = "/dev/mapper/cryptusb";
       fsType = "ext4";
       options = ["noatime" "nodiratime"];

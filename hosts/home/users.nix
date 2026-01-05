@@ -1,8 +1,7 @@
 {
   config,
   pkgs,
-  username,
-  email,
+  user,
   ...
 }: let
   inherit (builtins) attrNames concatStringsSep readFile;
@@ -21,23 +20,20 @@ in {
         + ".oDiMpkPc7OFOE4fxAV.fd/"
       );
 
-      "${username}" = {
+      "${user.username}" = {
         isNormalUser = true;
-        # GECOS user description:
-        description = let
-          phone = "+41 79 247 25 10";
-        in
-          concatStringsSep "," [
-            "Attila Oláh" # FullName
-            "Dornhaus 8" # Building / Room
-            phone # (work)
-            phone # (home)
-            email # other
-          ]; # GECOS
+        # GECOS fields:
+        description = concatStringsSep "," [
+          user.fullname
+          user.building
+          user.phone # (work)
+          user.phone # (home)
+          user.email # other
+        ];
         initialHashedPassword =
           "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn"
           + "/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
-        group = username;
+        group = user.username;
         extraGroups = with config;
           filterGroups {
             wheel = true; # for sudo
@@ -65,7 +61,7 @@ in {
     };
 
     groups = {
-      ${username} = {};
+      ${user.username} = {};
       nfsadmin.gid = 2049;
     };
   };

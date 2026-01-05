@@ -1,13 +1,12 @@
 {
   pkgs,
-  email,
+  user,
   ...
 }: {
   programs.rbw = {
     enable = true;
     settings = {
-      # TODO: DRY!
-      email = email;
+      inherit (user) email;
       pinentry = pkgs.pinentry-tty;
     };
   };

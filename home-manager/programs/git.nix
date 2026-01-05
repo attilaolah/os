@@ -1,7 +1,7 @@
 {
   config,
-  email,
   lib,
+  user,
   ...
 }: {
   programs.git = {
@@ -13,7 +13,7 @@
     };
     settings = {
       user = {
-        inherit email;
+        inherit (user) email;
         name = "Attila Oláh";
       };
       alias = let
