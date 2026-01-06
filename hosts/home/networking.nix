@@ -16,10 +16,10 @@ in {
       ::1 ${host.fqdn}
       127.0.0.2 ${host.fqdn}
 
-      10.0.0.1 modem
       192.168.0.1 wifi
+      192.168.1.1 modem
 
-      10.10.4.43 dorn.haus
+      192.168.4.43 dorn.haus
     '';
   };
 }
