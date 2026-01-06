@@ -11,6 +11,10 @@ in {
       enable = true;
       # Disallow the ISP's DNS config.
       dns = "systemd-resolved";
+      connectionConfig = {
+        "ipv4.ignore-auto-dns" = "yes";
+        "ipv6.ignore-auto-dns" = "yes";
+      };
     };
     # Use the local resolved stub.
     nameservers = ["127.0.0.53"];
