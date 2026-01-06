@@ -9,6 +9,7 @@
     ./openssh.nix
     ./pipewire.nix
     ./printing.nix
+    ./resolved.nix
     ./rpcbind.nix
     ./tailscale.nix
     ./xserver.nix

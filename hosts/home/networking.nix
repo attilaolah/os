@@ -5,9 +5,15 @@ in {
     hostName = host.name;
     search = [host.domain];
     firewall.allowedTCPPorts = [22 8080];
-
-    networkmanager.enable = true;
     nftables.enable = true;
+
+    networkmanager = {
+      enable = true;
+      # Disallow the ISP's DNS config.
+      dns = "systemd-resolved";
+    };
+    # Use the local resolved stub.
+    nameservers = ["127.0.0.53"];
 
     # FQDN used to override public addresses. i.e. home.dorn.haus should
     # resolve to a pinholed IPv6 address, but internally it should still point
