@@ -16,8 +16,11 @@ in {
         "ipv6.ignore-auto-dns" = "yes";
       };
     };
-    # Use the local resolved stub.
-    nameservers = ["127.0.0.53"];
+    # Google DNS with the hostname for certificate verification.
+    nameservers = [
+      "8.8.4.4#dns.google"
+      "8.8.8.8#dns.google"
+    ];
 
     # FQDN used to override public addresses. i.e. home.dorn.haus should
     # resolve to a pinholed IPv6 address, but internally it should still point
