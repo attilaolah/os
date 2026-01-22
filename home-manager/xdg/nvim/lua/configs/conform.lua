@@ -7,12 +7,17 @@ local options = {
     nix = { "alejandra" },
     python = { "usort", "black" },
     rust = { "rustfmt" },
+    zig = { "zigfmt" },
     ["_"] = { "trim_whitespace" },
   },
 
   formatters = {
     ktfmt = {
       prepend_args = { "--google-style" },
+    },
+    zigfmt = {
+      command = "zig",
+      args = { "fmt", "--stdin" },
     },
   },
 

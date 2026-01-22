@@ -76,6 +76,8 @@ in {
       rustfmt
       stylua
       usort
+      zig
+      zls
 
       # Virtualisation:
       docker-compose
