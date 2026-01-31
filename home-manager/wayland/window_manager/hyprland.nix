@@ -21,6 +21,7 @@
     workspaces = [1 2 3 4 5 6 7 8];
   in {
     enable = true;
+    # https://wiki.hypr.land/Useful-Utilities/Systemd-start/
     systemd.enable = false;
     settings = {
       inherit (input) input;
