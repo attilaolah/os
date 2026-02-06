@@ -38,6 +38,7 @@ in {
       p7zip
       pciutils
       pinentry-tty
+      pv
       pwgen
       rar
       rclone
