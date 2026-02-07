@@ -55,6 +55,7 @@ in {
       unzip
       usbutils
       wget
+      xkcdpass
       yq-go
       zip
       zoxide
