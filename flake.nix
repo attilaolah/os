@@ -57,12 +57,20 @@
     };
 
     # For applying local settings with:
-    # home-manager switch --flake .#wsl
-    homeConfigurations.wsl = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [./home-manager/home.nix];
-      extraSpecialArgs = {
-        # Work laptop user config overrides.
+    # home-manager switch --flake #home (or --flake #headless)
+    homeConfigurations = nixpkgs.lib.mapAttrs (name: extraSpecialArgs:
+      home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [./home-manager/home.nix];
+        inherit extraSpecialArgs;
+      }) {
+      home =
+        inputs
+        // {
+          inherit system user;
+          desktop = true;
+        };
+      headless = {
         user = user // {username = "olaa";};
         desktop = false;
       };
