@@ -22,7 +22,6 @@ tasks:
     desc: Update Nix flakes
     cmds:
       - nix flake update
-      - task: diff
 
   format:
     desc: Format Nix files
@@ -34,18 +33,18 @@ tasks:
     cmds:
       - nix flake check
 
-  wsl:build:
+  headless:build:
     desc: Build NixOS home-manager config
     cmds:
-      - nix run nixpkgs#home-manager -- build --flake .#wsl
+      - nix run nixpkgs#home-manager -- build --flake .#headless
 
-  wsl:diff:
+  headless:diff:
     desc: Build & diff against the current home-manager config
     cmds:
-      - task: wsl:build
+      - task: headless:build
       - nvd diff ~/.local/state/home-manager/gcroots/current-home result
 
-  wsl:install:
+  headless:install:
     desc: Install (update) the current home-manager config
     cmds:
-      - nix run nixpkgs#home-manager -- switch --flake .#wsl
+      - nix run nixpkgs#home-manager -- switch --flake .#headless
