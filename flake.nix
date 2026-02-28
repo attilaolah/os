@@ -57,7 +57,7 @@
     };
 
     # For applying local settings with:
-    # home-manager switch --flake #home (or --flake #headless)
+    # home-manager switch --flake .#home (or --flake .#headless)
     homeConfigurations = nixpkgs.lib.mapAttrs (name: extraSpecialArgs:
       home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
