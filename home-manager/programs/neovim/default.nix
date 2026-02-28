@@ -13,6 +13,6 @@
         # Unmaintained, maybe pick it up.
         # ansible-language-server
       ];
-      initLua = builtins.readFile ./init.lua;
+      extraLuaConfig = builtins.readFile ./init.lua;
     };
 }
