@@ -14,7 +14,7 @@
     settings = {
       user = {
         inherit (user) email;
-        name = "Attila Oláh";
+        name = user.fullname;
       };
       alias = let
         fmtl = lib.concatStringsSep " " [
