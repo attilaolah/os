@@ -1,7 +1,7 @@
 {
   config,
-  email,
   lib,
+  user,
   ...
 }: {
   programs.git = {
@@ -13,8 +13,8 @@
     };
     settings = {
       user = {
-        inherit email;
-        name = "Attila Oláh";
+        inherit (user) email;
+        name = user.fullname;
       };
       alias = let
         fmtl = lib.concatStringsSep " " [

@@ -5,6 +5,7 @@
 }: {
   programs.waybar = {
     enable = true;
+    systemd.enable = true;
     style = ./style.css;
     # Based on:
     # https://github.com/TheFrankyDoll/win10-style-waybar

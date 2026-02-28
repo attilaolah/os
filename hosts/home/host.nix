@@ -1,5 +1,5 @@
 rec {
   name = "home";
-  domain = "dorn.haus";
+  domain = "in.dorn.haus";
   fqdn = "${name}.${domain}";
 }

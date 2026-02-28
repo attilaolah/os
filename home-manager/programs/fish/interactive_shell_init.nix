@@ -32,6 +32,8 @@
 in {
   programs.fish.interactiveShellInit = ''
     set fish_greeting
+    # TODO: Remove this line once the atuin home-manager module is fixed for fish > 4.3.0
+    set -g fish_key_bindings fish_default_key_bindings
     set --global --export GPG_AGENT_INFO (
       ${lib.getExe' pkgs.gnupg "gpgconf"} --list-dirs agent-socket
     )

@@ -14,6 +14,7 @@ local servers = {
   "rust_analyzer",
   "ts_ls",
   "yamlls",
+  "zls",
   -- "ansiblels", -- unmaintained
 }
 

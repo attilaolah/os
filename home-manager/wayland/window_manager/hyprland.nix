@@ -21,7 +21,8 @@
     workspaces = [1 2 3 4 5 6 7 8];
   in {
     enable = true;
-    systemd.enable = false;
+    # https://wiki.hypr.land/Useful-Utilities/Systemd-start/
+    systemd.enable = true;
     settings = {
       inherit (input) input;
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";

@@ -69,7 +69,7 @@ be committed eventually. For now the home-manager config can be installed as a
 flake:
 
 ```sh
-nix run nixpkgs#home-manager -- switch --flake github:attilaolah/os#wsl
+nix run nixpkgs#home-manager -- switch --flake github:attilaolah/os#headless
 ```
 
 To use the `olaa` user with Systemd (with its own slice), lingering should be enabled:

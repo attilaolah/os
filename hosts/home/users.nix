@@ -1,11 +1,12 @@
 {
   config,
   pkgs,
-  username,
-  email,
+  user,
   ...
 }: let
-  filterGroups = attrs: builtins.attrNames (pkgs.lib.filterAttrs (_: v: v) attrs);
+  inherit (builtins) attrNames concatStringsSep readFile;
+
+  filterGroups = attrs: attrNames (pkgs.lib.filterAttrs (_: v: v) attrs);
 in {
   users = {
     mutableUsers = false;
@@ -14,13 +15,25 @@ in {
     # Generate a password using:
     # nix-shell --run "mkpasswd -m SHA-512 -s" -p mkpasswd
     users = {
-      root.initialHashedPassword = "$6$chB8XnZbQno6p5Zp$IE6xp/WGQYYwZGgAkQE9juhofD./R2ITPryZftBellWbeRKUtGBjBGOER6g9Qym.oDiMpkPc7OFOE4fxAV.fd/";
+      root.initialHashedPassword = (
+        "$6$chB8XnZbQno6p5Zp$IE6xp/WGQYYwZGgAkQE9juhofD./R2ITPryZftBellWbeRKUtGBjBGOER6g9Qym"
+        + ".oDiMpkPc7OFOE4fxAV.fd/"
+      );
 
-      "${username}" = {
+      "${user.username}" = {
         isNormalUser = true;
-        description = "Attila O.,,,,${email}"; # GECOS
-        initialHashedPassword = "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
-        group = username;
+        # GECOS fields:
+        description = concatStringsSep "," [
+          user.fullname
+          user.building
+          user.phone # (work)
+          user.phone # (home)
+          user.email # other
+        ];
+        initialHashedPassword =
+          "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn"
+          + "/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
+        group = user.username;
         extraGroups = with config;
           filterGroups {
             wheel = true; # for sudo
@@ -36,18 +49,19 @@ in {
           (let
             inherit (pkgs.lib.strings) splitString removeSuffix;
           in
-            splitString "\n" (removeSuffix "\n" (builtins.readFile (pkgs.fetchurl {
+            splitString "\n" (removeSuffix "\n" (readFile (pkgs.fetchurl {
               url = "https://github.com/attilaolah.keys";
               hash = "sha256-Y63CD0ZqmOhnFhRXwsp2Xb5aaoIWr7nUwHAvov38buc=";
             }))))
           ++ [
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBzKOTbqz9f7/ZNvt1RsmvCGccBJ96Sk3SGwOHDNldfG" # phone
+            ("ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC"
+              + "+mtV6yrvijOAmvsstRCYsUSbc8ZI3Np7qY2rWuACNaAnLSRhu5qbL/1EzZgcRFbMKaqRYLy8Tq56PDjck2MTo=") # biometric
           ];
       };
     };
 
     groups = {
-      ${username} = {};
+      ${user.username} = {};
       nfsadmin.gid = 2049;
     };
   };

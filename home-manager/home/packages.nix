@@ -38,6 +38,7 @@ in {
       p7zip
       pciutils
       pinentry-tty
+      pv
       pwgen
       rar
       rclone
@@ -54,6 +55,7 @@ in {
       unzip
       usbutils
       wget
+      xkcdpass
       yq-go
       zip
       zoxide
@@ -76,6 +78,8 @@ in {
       rustfmt
       stylua
       usort
+      zig
+      zls
 
       # Virtualisation:
       docker-compose

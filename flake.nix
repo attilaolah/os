@@ -25,8 +25,14 @@
     system = "x86_64-linux";
     useGlobalPkgs = true;
     useUserPackages = true;
-    username = "ao";
-    email = "attila@dorn.haus";
+
+    user = {
+      username = "ao";
+      fullname = "Attila Oláh";
+      building = "Dornhaus 8";
+      email = "attila@dorn.haus";
+      phone = "+41 79 247 25 10";
+    };
   in {
     nixosConfigurations.home = nixpkgs.lib.nixosSystem {
       inherit system;
@@ -40,24 +46,32 @@
             extraSpecialArgs =
               inputs
               // {
-                inherit system username email;
+                inherit system user;
                 desktop = true;
               };
-            users.${username} = import ./home-manager/home.nix;
+            users.${user.username} = import ./home-manager/home.nix;
           };
         }
       ];
-      specialArgs = {inherit inputs username email;};
+      specialArgs = {inherit inputs user;};
     };
 
     # For applying local settings with:
-    # home-manager switch --flake .#wsl
-    homeConfigurations.wsl = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [./home-manager/home.nix];
-      extraSpecialArgs = {
-        inherit email;
-        username = "olaa";
+    # home-manager switch --flake .#home (or --flake .#headless)
+    homeConfigurations = nixpkgs.lib.mapAttrs (name: extraSpecialArgs:
+      home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [./home-manager/home.nix];
+        inherit extraSpecialArgs;
+      }) {
+      home =
+        inputs
+        // {
+          inherit system user;
+          desktop = true;
+        };
+      headless = {
+        user = user // {username = "olaa";};
         desktop = false;
       };
     };

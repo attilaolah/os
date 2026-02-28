@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  username,
+  user,
   ...
 }: let
   domain = "localhost";
@@ -78,7 +78,7 @@ in {
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
 
-    trusted-users = [username];
+    trusted-users = [user.username];
     extra-substituters = [
       "https://devenv.cachix.org" # devenv.sh
       "https://nixpkgs-python.cachix.org" # devenv.sh python
