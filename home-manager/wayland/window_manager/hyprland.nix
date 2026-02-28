@@ -22,7 +22,7 @@
   in {
     enable = true;
     # https://wiki.hypr.land/Useful-Utilities/Systemd-start/
-    systemd.enable = false;
+    systemd.enable = true;
     settings = {
       inherit (input) input;
       inherit (monitors) "$M1" "$M2" "$M3" "monitor" "workspace";
