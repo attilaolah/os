@@ -47,6 +47,12 @@
 
       # Re-numbber windows on close.
       set-option -g renumber-windows on
+
+      # Enable RGB (TrueColor) support for foot.
+      set-option -as terminal-features ",foot:RGB"
+
+      # Enable Synchronized Updates (to avoid flicker).
+      set-option -as terminal-features ",foot:Sync"
     '';
   };
 }
