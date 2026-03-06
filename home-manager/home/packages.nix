@@ -21,6 +21,7 @@ in {
       devenv.packages.${system}.devenv
       dig
       exiftool
+      expect
       fastfetch
       ffmpeg
       file
