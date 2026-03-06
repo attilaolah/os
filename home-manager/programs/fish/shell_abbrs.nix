@@ -16,6 +16,10 @@
 
     v = "nvim";
 
+    codex-ng = "bunx -p @openai/codex@latest codex";
+    gemini-ng = "bunx -p @google/gemini-cli@latest gemini";
+    qwen-ng = "bunx -p @qwen-code/qwen-code@latest qwen";
+
     c = "curl -D/dev/stderr -s";
     k = "kubectl";
 
