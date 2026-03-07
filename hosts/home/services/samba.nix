@@ -1,62 +1,38 @@
 {
-  config,
-  lib,
   pkgs,
   user,
   ...
 }: let
   shareUser = "smbuser";
   shareGroup = "smbusers";
+  home = "/home/${user.username}";
 in {
   services.samba = {
     enable = true;
     package = pkgs.samba;
 
-    # Global settings using the modern settings format
     settings = {
       global = {
-        # Security
         security = "user";
-
-        # Network settings - only listen on local network
         interfaces = "192.168.0.0/24";
         "bind interfaces only" = "yes";
-
-        # Logging
         "log level" = 1;
-
-        # Modern SMB protocol
         "server min protocol" = "SMB2";
         "server max protocol" = "SMB3";
-
-        # Security hardening
         "ntlm auth" = "yes";
         "lanman auth" = "no";
-        "client lanman auth" = "no";
-        "client plaintext auth" = "no";
-
-        # Disable printer sharing
         "load printers" = "no";
         printing = "bsd";
         "printcap name" = "/dev/null";
-
-        # Performance
-        "socket options" = "TCP_NODELAY IPTOS_LOWDELAY";
-        "read raw" = "yes";
-        "write raw" = "yes";
-        "use sendfile" = "yes";
       };
 
-      # Define the share
-      "${user.username}" = {
-        path = "/home/${user.username}/share";
-        comment = "${user.username}'s shared folder";
+      # Read-only photos share with writable sidecars via overlayfs
+      photos = {
+        path = "${home}/share/photos";
+        comment = "Raw photos (read-only) + sidecars (writable)";
         browseable = "yes";
         "read only" = "no";
-        "create mask" = "0644";
-        "directory mask" = "0755";
         "valid users" = shareUser;
-        "writable" = "yes";
         "guest ok" = "no";
         "force user" = user.username;
         "force group" = user.username;
@@ -64,16 +40,13 @@ in {
     };
   };
 
-  # WSD for network discovery (Windows "Network" tab)
   services.samba-wsdd = {
     enable = true;
     openFirewall = true;
   };
 
-  # Create the Samba user group
   users.groups.${shareGroup} = {};
 
-  # Create a dedicated Samba user for remote access
   users.users.${shareUser} = {
     isNormalUser = false;
     isSystemUser = true;
@@ -83,15 +56,36 @@ in {
     createHome = false;
   };
 
-  # Create the share directory
+  # Directory structure:
+  # ${home}/photos/raw/           - source raw files (your master copy)
+  # ${home}/photos/overlay/layer/ - writable layer (sidecars, edits)
+  # ${home}/photos/overlay/work/  - overlayfs work directory
+  # ${home}/share/photos/         - merged view (exported via SMB)
   systemd.tmpfiles.rules = [
-    "d /home/${user.username}/share 0755 ${user.username} ${user.username} -"
+    "d ${home}/share/photos 0755 ${user.username} ${user.username} -"
+    "d ${home}/photos/raw 0755 ${user.username} ${user.username} -"
+    "d ${home}/photos/overlay/layer 0755 ${user.username} ${user.username} -"
+    "d ${home}/photos/overlay/work 0755 ${user.username} ${user.username} -"
   ];
 
-  # Firewall: allow Samba ports
-  networking.firewall.allowedTCPPorts = [139 445];
-  networking.firewall.allowedUDPPorts = [137 138];
+  # Overlayfs: merge raw + layer into share/photos
+  fileSystems."${home}/share/photos" = {
+    device = "overlay";
+    fsType = "overlay";
+    options = [
+      "lowerdir=${home}/photos/raw"
+      "upperdir=${home}/photos/overlay/layer"
+      "workdir=${home}/photos/overlay/work"
+    ];
+    depends = [
+      "${home}/photos/raw"
+      "${home}/photos/overlay/layer"
+      "${home}/photos/overlay/work"
+    ];
+  };
 
-  # Set Samba password for the share user (run after rebuild):
-  # sudo smbpasswd -a smbuser
+  networking.firewall = {
+    allowedTCPPorts = [139 445];
+    allowedUDPPorts = [137 138];
+  };
 }
