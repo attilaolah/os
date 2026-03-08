@@ -10,6 +10,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Upstream devenv
+    # Remove after 2.0 is merged into nixpkgs.
+    devenv.url = "github:cachix/devenv";
   };
 
   outputs = {
@@ -70,10 +74,13 @@
           inherit system user;
           desktop = true;
         };
-      headless = {
-        user = user // {username = "olaa";};
-        desktop = false;
-      };
+      headless =
+        inputs
+        // {
+          inherit system;
+          user = user // {username = "olaa";};
+          desktop = false;
+        };
     };
 
     devShells.${system}.default = pkgs.mkShell {

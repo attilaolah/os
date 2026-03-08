@@ -1,7 +1,9 @@
 {
+  devenv,
   desktop,
   lib,
   pkgs,
+  system,
   ...
 }: let
   desktopList = list: lib.lists.optionals desktop list;
@@ -16,9 +18,10 @@ in {
       bun
       colordiff
       curl
-      devenv
+      devenv.packages.${system}.devenv
       dig
       exiftool
+      expect
       fastfetch
       ffmpeg
       file

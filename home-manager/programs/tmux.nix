@@ -9,7 +9,7 @@
     prefix = "M-a";
     reverseSplit = true;
     sensibleOnTop = true;
-    terminal = "screen-256color";
+    terminal = "tmux-256color";
 
     plugins = with pkgs.tmuxPlugins; [
       better-mouse-mode
@@ -47,6 +47,12 @@
 
       # Re-numbber windows on close.
       set-option -g renumber-windows on
+
+      # Enable RGB (TrueColor) support for foot.
+      set-option -as terminal-features ",foot:RGB"
+
+      # Enable Synchronized Updates (to avoid flicker).
+      set-option -as terminal-features ",foot:Sync"
     '';
   };
 }

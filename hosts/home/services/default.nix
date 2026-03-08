@@ -11,6 +11,7 @@
     ./printing.nix
     ./resolved.nix
     ./rpcbind.nix
+    ./samba.nix
     ./tailscale.nix
     ./xserver.nix
   ];
