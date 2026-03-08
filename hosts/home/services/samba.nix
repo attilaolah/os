@@ -1,7 +1,8 @@
 {user, ...}: let
+  home = "/home/${user.username}";
+  # On a fresh machine, a new passdb entry must be created with `smbpasswd -a smbuser`.
   shareUser = "smbuser";
   shareGroup = "smbusers";
-  home = "/home/${user.username}";
 in {
   services = {
     samba = {
@@ -26,23 +27,25 @@ in {
 
         # Photos share with overlayfs backend.
         # Changes are captured by OverlayFS and stored in $HOME/photos/overlay.
-        photos = {
-          path = "${home}/share/photos";
-          comment = "Raw photos (read-only) + sidecars (writable)";
-          browseable = "yes";
-          "read only" = "yes";
-          "guest ok" = "no";
-          "valid users" = shareUser;
-          "write list" = shareUser;
+        photos =
+          {
+            path = "${home}/share/photos";
+            comment = "Raw photos (read-only) + sidecars (writable)";
+            browseable = "yes";
+            "read only" = "yes";
+            "guest ok" = "no";
+            "valid users" = shareUser;
+            "write list" = shareUser;
 
-          "force user" = user.username;
-          "force group" = user.username;
-
-          "vfs objects" = "acl_xattr";
-          "inherit permissions" = "yes";
-          "store dos attributes" = "yes";
-          "acl allow execute always" = "no";
-        };
+            "vfs objects" = "acl_xattr";
+            "inherit permissions" = "yes";
+            "store dos attributes" = "yes";
+            "acl allow execute always" = "no";
+          }
+          // (with user; {
+            "force user" = username;
+            "force group" = username;
+          });
       };
     };
 
@@ -68,10 +71,10 @@ in {
   # - photos:
   #   - raw      # source raw files
   #   - overlay:
-  #     - layer  # writeable layer for sidecars
+  #     - layer  # writeable layer
   #     - work   # overlayfs work directory
   # - share:     # SMB share
-  #   - photos   # merged view: raw photos + sidecars
+  #   - photos   # merged view: raw photos + edits & sidecars
   systemd.tmpfiles.rules = map (subdir: "d ${home}/${subdir} 0755 ${user.username} ${user.username} -") [
     "photos/raw"
     "photos/overlay/layer"
@@ -80,18 +83,21 @@ in {
   ];
 
   # OverlayFS: merge raw + layer into share/photos.
-  fileSystems."${home}/share/photos" = {
+  fileSystems."${home}/share/photos" = let
+    src = "${home}/photos";
+    overlay = "${src}/overlay";
+  in {
     device = "overlay";
     fsType = "overlay";
     options = [
-      "lowerdir=${home}/photos/raw"
-      "upperdir=${home}/photos/overlay/layer"
-      "workdir=${home}/photos/overlay/work"
+      "lowerdir=${src}/raw"
+      "upperdir=${overlay}/layer"
+      "workdir=${overlay}/work"
     ];
     depends = [
-      "${home}/photos/raw"
-      "${home}/photos/overlay/layer"
-      "${home}/photos/overlay/work"
+      "${src}/raw"
+      "${overlay}/layer"
+      "${overlay}/work"
     ];
   };
 
