@@ -17,21 +17,31 @@ in {
           "server max protocol" = "SMB3";
           "ntlm auth" = "yes";
           "lanman auth" = "no";
-          "load printers" = "no";
+          "vfs objects" = "acl_xattr";
+
           printing = "bsd";
+          "load printers" = "no";
           "printcap name" = "/dev/null";
         };
 
-        # Read-only photos share with writable sidecars via overlayfs
+        # Photos share with overlayfs backend.
+        # Changes are captured by OverlayFS and stored in $HOME/photos/overlay.
         photos = {
           path = "${home}/share/photos";
           comment = "Raw photos (read-only) + sidecars (writable)";
           browseable = "yes";
-          "read only" = "no";
-          "valid users" = shareUser;
+          "read only" = "yes";
           "guest ok" = "no";
+          "valid users" = shareUser;
+          "write list" = shareUser;
+
           "force user" = user.username;
           "force group" = user.username;
+
+          "vfs objects" = "acl_xattr";
+          "inherit permissions" = "yes";
+          "store dos attributes" = "yes";
+          "acl allow execute always" = "no";
         };
       };
     };
@@ -69,7 +79,7 @@ in {
     "share/photos"
   ];
 
-  # OverlayFS: merge raw + layer into share/photos
+  # OverlayFS: merge raw + layer into share/photos.
   fileSystems."${home}/share/photos" = {
     device = "overlay";
     fsType = "overlay";
