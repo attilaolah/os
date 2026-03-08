@@ -1,4 +1,8 @@
-{user, ...}: let
+{
+  user,
+  pkgs,
+  ...
+}: let
   home = "/home/${user.username}";
   # On a fresh machine, a new passdb entry must be created with `smbpasswd -a smbuser`.
   shareUser = "smbuser";
@@ -61,7 +65,7 @@ in {
       isSystemUser = true;
       group = shareGroup;
       description = "Samba share user";
-      shell = "/bin/false";
+      shell = "${pkgs.shadow}/bin/nologin";
       createHome = false;
     };
     groups.${shareGroup} = {};
