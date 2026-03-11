@@ -10,10 +10,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Upstream devenv
-    # Remove after 2.0 is merged into nixpkgs.
-    devenv.url = "github:cachix/devenv";
   };
 
   outputs = {
