@@ -42,7 +42,8 @@ in {
             font-size-adjustment = 2;
           };
         })
-        + builtins.readFile foot-catppuccin-mocha;
+        # TODO: revert once https://github.com/catppuccin/foot/pull/24 is merged
+        + builtins.replaceStrings ["[colors]"] ["[colors-dark]"] (builtins.readFile foot-catppuccin-mocha);
 
       "davfs.conf".text = ''
         secrets ${config.home.homeDirectory}/.config/davfs.secrets
