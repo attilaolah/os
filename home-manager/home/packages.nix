@@ -1,9 +1,7 @@
 {
-  devenv,
   desktop,
   lib,
   pkgs,
-  system,
   ...
 }: let
   desktopList = list: lib.lists.optionals desktop list;
@@ -18,7 +16,7 @@ in {
       bun
       colordiff
       curl
-      devenv.packages.${system}.devenv
+      devenv
       dig
       exiftool
       expect
