@@ -14,6 +14,7 @@ in {
       bat
       bitbucket-cli
       bun
+      claude-code
       colordiff
       curl
       devenv
