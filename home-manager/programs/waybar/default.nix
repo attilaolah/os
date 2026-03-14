@@ -10,13 +10,14 @@
     # Based on:
     # https://github.com/TheFrankyDoll/win10-style-waybar
     settings.mainbar = {
-      layer = "bottom";
+      layer = "overlay";
       position = "bottom";
       mod = "dock";
-      exclusive = true;
+      exclusive = false;
       gtk-layer-shell = true;
       margin-bottom = -1;
       passthrough = false;
+      start_hidden = true;
       height = 48;
       modules-left = [
         "custom/os-button"
