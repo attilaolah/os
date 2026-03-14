@@ -1,156 +1,171 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{...}: {
   programs.waybar = {
     enable = true;
     systemd.enable = true;
+    # Based on: https://github.com/Pipshag/dotfiles_nord
     style = ./style.css;
-    # Based on:
-    # https://github.com/TheFrankyDoll/win10-style-waybar
-    settings.mainbar = {
-      layer = "overlay";
-      position = "bottom";
-      mod = "dock";
-      exclusive = false;
-      gtk-layer-shell = true;
-      margin-bottom = -1;
-      passthrough = false;
-      start_hidden = true;
-      height = 48;
-      modules-left = [
-        "custom/os-button"
-        "hyprland/workspaces"
-        "wlr/taskbar"
-      ];
-      modules-center = [];
-      modules-right = [
-        "tray"
-        "pulseaudio"
-        "cpu"
-        "temperature"
-        "memory"
-        "disk"
-        "network"
-        "battery"
-        "clock"
-      ];
-      "hyprland/workspaces" = {
-        icon-size = 24;
-        spacing = 16;
-        on-scroll-up = "hyprctl dispatch workspace r+1";
-        on-scroll-down = "hyprctl dispatch workspace r-1";
-      };
-      "custom/os-button" = let
-        menu = pkgs.writeShellApplication {
-          name = "waybar-os-button";
-          runtimeInputs = with pkgs; [wofi];
-          text = ''
-            wofi --show drun --allow-images --allow-markup --hide-scroll --no-actions --columns 4 --lines 12
-          '';
+    settings = [
+      {
+        "bluetooth" = {
+          "format" = "{icon}";
+          "format-icons" = {
+            "disabled" = "<span alpha='50%'>BT</span>";
+            "enabled" = "<span alpha='50%'>BT</span>";
+          };
+          "interval" = 30;
+          "on-click" = "blueman-manager";
         };
-      in {
-        format = "";
-        on-click = pkgs.lib.getExe menu;
-        tooltip = false;
-      };
-      cpu = {
-        interval = 5;
-        format = "{usage}%| ";
-        max-length = 10;
-        tooltip = false;
-      };
-      temperature = {
-        hwmon-path-abs = "/sys/devices/platform/coretemp.0/hwmon";
-        input-filename = "temp2_input";
-        critical-threshold = 75;
-        tooltip = false;
-        format-critical = "({temperatureC}°C)";
-        format = "({temperatureC}°C)";
-      };
-      disk = {
-        interval = 30;
-        format = "{percentage_used}%|󰋊";
-        path = "/";
-        tooltip = false;
-        unit = "GB";
-      };
-      memory = {
-        interval = 10;
-        format = "{percentage}%| ";
-        max-length = 10;
-        tooltip = false;
-      };
-      "wlr/taskbar" = {
-        format = "{icon}";
-        icon-size = 24;
-        spacing = 0;
-        on-click-middle = "close";
-        tooltip-format = "{title}";
-        ignore-list = [];
-        on-click = "activate";
-      };
-      tray = {
-        icon-size = 18;
-        spacing = 3;
-      };
-      clock = {
-        format = "      {:%R\n %d.%m.%Y}";
-        tooltip = false;
-      };
-      network = {
-        format-wifi = " {icon}";
-        format-ethernet = "  ";
-        format-disconnected = "󰌙";
-        format-icons = [
-          "󰤯 "
-          "󰤟 "
-          "󰤢 "
-          "󰤢 "
-          "󰤨 "
-        ];
-        tooltip = false;
-      };
-      battery = {
-        states = {
-          good = 80;
-          warning = 40;
-          critical = 20;
+        "clock" = {
+          "format" = "{:%H:%M %d.%m.}";
+          "format-alt" = "{:%Y-%m-%dT%H:%M:%S%z}";
+          "tooltip" = false;
         };
-        format = "{icon} {capacity}%";
-        format-charging = " {capacity}%";
-        format-plugged = " {capacity}%";
-        format-alt = "{time} {icon}";
-        format-icons = [
-          "󰂎"
-          "󰁺"
-          "󰁻"
-          "󰁼"
-          "󰁽"
-          "󰁾"
-          "󰁿"
-          "󰂀"
-          "󰂁"
-          "󰂂"
-          "󰁹"
-        ];
-      };
-      pulseaudio = {
-        max-volume = 120;
-        scroll-step = 10;
-        format = "{icon}";
-        tooltip-format = "{volume}%";
-        format-muted = " ";
-        format-icons = {
-          default = [
-            " "
-            " "
-            " "
+        "cpu" = {
+          "align" = 1;
+          "format" = "<span alpha='50%'>{usage}%</span> {avg_frequency}GHz <span alpha='50%'>CPU</span>";
+          "interval" = 2;
+          "justify" = "right";
+          "max-length" = 40;
+          "tooltip" = false;
+        };
+        "cpu#cores" = {
+          "align" = 1;
+          "format" = "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15}{icon16}{icon17}{icon18}{icon19}";
+          "format-icons" = [
+            "\u2581"
+            "\u2582"
+            "\u2583"
+            "\u2584"
+            "\u2585"
+            "\u2586"
+            "\u2587"
+            "\u2588"
           ];
+          "interval" = 2;
+          "justify" = "right";
+          "tooltip" = false;
         };
-        on-click = lib.getExe pkgs.pavucontrol;
-      };
-    };
+        "custom/gpu" = {
+          "align" = 1;
+          "escape" = false;
+          "exec" = "bash -lc 'if ! command -v nvidia-smi >/dev/null 2>&1; then echo \"GPU N/A\"; exit 0; fi; nvidia-smi --query-gpu=clocks.current.graphics,memory.used,memory.total,utilization.gpu --format=csv,noheader,nounits | head -n1 | awk -F\", \" \"{printf \\\"<span alpha=\\\\\\\"50%%\\\\\\\">%s%%</span> %.1fGHz %.1f<span alpha=\\\\\\\"50%%\\\\\\\">/</span>%.0fGi <span alpha=\\\\\\\"50%%\\\\\\\">GPU</span>\\\\n\\\", \\$4, \\$1/1000, \\$2/1024, \\$3/1024}\"'";
+          "interval" = 2;
+          "justify" = "right";
+          "max-length" = 40;
+          "tooltip" = false;
+        };
+        "disk" = {
+          "align" = 1;
+          "format" = "<span alpha='50%'>{percentage_used}%</span> {specific_used:0.1f}<span alpha='50%'>/</span>{specific_total:0.1f}Ti <span alpha='50%'>{path}</span>";
+          "interval" = 30;
+          "justify" = "right";
+          "path" = "/";
+          "tooltip" = false;
+          "unit" = "TiB";
+        };
+        "exclusive" = false;
+        "gtk-layer-shell" = true;
+        "height" = 32;
+        "spacing" = 8;
+        "hyprland/workspaces" = {
+          "icon-size" = 20;
+          "on-scroll-down" = "hyprctl dispatch workspace r-1";
+          "on-scroll-up" = "hyprctl dispatch workspace r+1";
+          "spacing" = 16;
+        };
+        "layer" = "overlay";
+        "margin-top" = 8;
+        "margin-left" = 8;
+        "margin-right" = 8;
+        "memory" = {
+          "align" = 1;
+          "format" = "<span alpha='50%'>{percentage}%</span> {used:0.1f}<span alpha='50%'>/</span>{total:0.0f}Gi <span alpha='50%'>RAM</span>";
+          "interval" = 10;
+          "justify" = "right";
+          "max-length" = 40;
+          "tooltip" = false;
+        };
+        "mod" = "dock";
+        "modules-center" = [];
+        "modules-left" = [
+          "hyprland/workspaces"
+          "wlr/taskbar"
+        ];
+        "modules-right" = [
+          "cpu#cores"
+          "temperature"
+          "cpu"
+          "memory"
+          "custom/gpu"
+          "disk"
+          "pulseaudio"
+          "bluetooth"
+          "network"
+          "clock"
+          "tray"
+        ];
+        "network" = {
+          "format-alt" = "{ifname}: {ipaddr}/{cidr}";
+          "format-disconnected" = "OFF";
+          "format-ethernet" = "{ipaddr}<span alpha='50%'>/{cidr}</span> <span alpha='50%'>ETH</span>";
+          "format-linked" = "{ifname} (No IP)";
+          "format-wifi" = "WIFI {essid}";
+          "tooltip-format-ethernet" = "{ifname} \u2191 {bandwidthUpBits} \u2193 {bandwidthDownBits}";
+          "tooltip-format-wifi" = "WIFI {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n\u2191 {bandwidthUpBits} \u2193 {bandwidthDownBits}";
+        };
+        "passthrough" = false;
+        "position" = "top";
+        "pulseaudio" = {
+          "format-bluetooth-muted" = "<span alpha='60%'>VOL</span> <span alpha='60%'>MUT</span>";
+          "format-icons" = {
+            "car" = "VOL";
+            "default" = [
+              "VOL"
+              "VOL"
+              "VOL"
+            ];
+            "hands-free" = "VOL";
+            "headphone" = "VOL";
+            "headset" = "VOL";
+            "phone" = "VOL";
+            "portable" = "VOL";
+          };
+          "format-muted" = "<span alpha='60%'>{icon}</span> <span alpha='60%'>MUT</span>";
+          "format-source" = "MIC";
+          "format-source-muted" = "<span alpha='60%'>MUT</span>";
+          "max-volume" = 120;
+          "on-click" = "pavucontrol";
+          "on-click-right" = "pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          "scroll-step" = 10;
+          "format" = "<span alpha='60%'>{volume}%</span> <span alpha='60%'>{icon}</span> {format_source}";
+          "format-bluetooth" = "<span alpha='60%'>{volume}%</span> <span alpha='60%'>{icon}</span> {format_source}";
+          "tooltip" = false;
+        };
+        "start_hidden" = true;
+        "temperature" = {
+          "align" = 1;
+          "critical-threshold" = 75;
+          "format" = "{temperatureC}\u00b0C";
+          "format-critical" = "{temperatureC}\u00b0C";
+          "hwmon-path-abs" = "/sys/devices/platform/coretemp.0/hwmon";
+          "input-filename" = "temp2_input";
+          "justify" = "right";
+          "tooltip" = false;
+        };
+        "tray" = {
+          "icon-size" = 18;
+          "spacing" = 5;
+        };
+        "wlr/taskbar" = {
+          "format" = "{icon}";
+          "icon-size" = 20;
+          "ignore-list" = [];
+          "on-click" = "activate";
+          "on-click-middle" = "close";
+          "spacing" = 0;
+          "tooltip-format" = "{title}";
+        };
+      }
+    ];
   };
 }
