@@ -1,0 +1,112 @@
+/* Based on: https://github.com/Pipshag/dotfiles_nord */
+
+@define-color light #D8DEE9;
+@define-color critical #BF616A;
+@define-color workspacesfocused #4C566A;
+@define-color primary_bg #36454F;
+@define-color accent_bg #2b3856;
+
+* {
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+}
+
+#waybar {
+    background: transparent;
+    color: @light;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#cpu,
+#temperature,
+#memory,
+#custom-gpu,
+#disk,
+#pulseaudio,
+#bluetooth,
+#network,
+#clock,
+#tray,
+#workspaces,
+#taskbar {
+    color: @light;
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+}
+
+#cpu,
+#temperature,
+#memory,
+#custom-gpu,
+#disk,
+#pulseaudio,
+#pulseaudio.muted,
+#pulseaudio.source-muted,
+#bluetooth,
+#network,
+#taskbar {
+    background: @primary_bg;
+}
+
+#workspaces,
+#clock,
+#tray {
+    background: @accent_bg;
+}
+
+#temperature.critical {
+    background: @critical;
+}
+
+#workspaces {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#workspaces button {
+    font-weight: bold;
+    font-size: 1em;
+    min-width: 32px;
+    padding: 0;
+    color: @light;
+    background: none;
+    opacity: 1;
+}
+
+#workspaces button.focused {
+    background: @workspacesfocused;
+    color: @light;
+    padding: 0 0.4em;
+}
+
+#workspaces button.urgent {
+    border-color: #c9545d;
+    color: #c9545d;
+    opacity: 1;
+}
+
+#taskbar {
+    min-width: 8px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#taskbar button {
+    background: transparent;
+    min-width: 26px;
+    padding-left: 6px;
+    padding-right: 0;
+}
+
+#workspaces button,
+#taskbar button {
+    min-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
