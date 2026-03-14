@@ -156,6 +156,10 @@
         # Move active window to a workspace with MOD + SHIFT + num
         ++ (map (n: "$MOD SHIFT, $N${toString n}, movetoworkspace, ${toString n}") workspaces);
 
+      bindr = [
+        "SUPER, Super_L, exec, pkill -SIGUSR1 waybar"
+      ];
+
       bindm = [
         # Move/resize windows with MOD + LMB/RMB and dragging
         "$MOD, mouse:272, movewindow"
