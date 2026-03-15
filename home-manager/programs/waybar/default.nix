@@ -26,7 +26,7 @@
         };
         "cpu" = {
           "align" = 1;
-          "format" = "<span alpha='50%'>{usage}%</span> {avg_frequency}GHz <span alpha='50%'>CPU</span>";
+          "format" = "<span alpha='50%'>{usage}%</span> {avg_frequency}GHz";
           "interval" = 2;
           "justify" = "right";
           "max-length" = 40;
@@ -34,7 +34,7 @@
         };
         "cpu#cores" = {
           "align" = 1;
-          "format" = "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15}{icon16}{icon17}{icon18}{icon19}";
+          "format" = "<span alpha='50%'>{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15}{icon16}{icon17}{icon18}{icon19} CPU</span>";
           "format-icons" = [
             "▁"
             "▂"
@@ -114,9 +114,9 @@
           "hyprland/window"
         ];
         "modules-right" = [
-          "cpu#cores"
-          "temperature"
           "cpu"
+          "temperature"
+          "cpu#cores"
           "memory"
           "custom/gpu"
           "disk"
@@ -156,8 +156,8 @@
           "format-source" = "MIC";
           "format-source-muted" = "<span alpha='60%'>MUT</span>";
           "max-volume" = 120;
-          "on-click" = "pavucontrol";
-          "on-click-right" = "pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          "on-click" = lib.getExe pkgs.pavucontrol;
+          "on-click-right" = "${lib.getExe' pkgs.pulseaudio "pactl"} set-source-mute @DEFAULT_SOURCE@ toggle";
           "scroll-step" = 10;
           "format" = "<span alpha='60%'>{volume}%</span> <span alpha='60%'>{icon}</span> {format_source}";
           "format-bluetooth" = "<span alpha='60%'>{volume}%</span> <span alpha='60%'>{icon}</span> {format_source}";
