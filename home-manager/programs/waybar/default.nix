@@ -32,14 +32,14 @@
           "align" = 1;
           "format" = "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15}{icon16}{icon17}{icon18}{icon19}";
           "format-icons" = [
-            "\u2581"
-            "\u2582"
-            "\u2583"
-            "\u2584"
-            "\u2585"
-            "\u2586"
-            "\u2587"
-            "\u2588"
+            "▁"
+            "▂"
+            "▃"
+            "▄"
+            "▅"
+            "▆"
+            "▇"
+            "█"
           ];
           "interval" = 2;
           "justify" = "right";
@@ -110,8 +110,8 @@
           "format-ethernet" = "{ipaddr}<span alpha='50%'>/{cidr}</span> <span alpha='50%'>ETH</span>";
           "format-linked" = "{ifname} (No IP)";
           "format-wifi" = "WIFI {essid}";
-          "tooltip-format-ethernet" = "{ifname} \u2191 {bandwidthUpBits} \u2193 {bandwidthDownBits}";
-          "tooltip-format-wifi" = "WIFI {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n\u2191 {bandwidthUpBits} \u2193 {bandwidthDownBits}";
+          "tooltip-format-ethernet" = "{ifname} ↑ {bandwidthUpBits} ↓ {bandwidthDownBits}";
+          "tooltip-format-wifi" = "WIFI {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n↑ {bandwidthUpBits} ↓ {bandwidthDownBits}";
         };
         "passthrough" = false;
         "position" = "top";
@@ -145,8 +145,8 @@
         "temperature" = {
           "align" = 1;
           "critical-threshold" = 75;
-          "format" = "{temperatureC}\u00b0C";
-          "format-critical" = "{temperatureC}\u00b0C";
+          "format" = "{temperatureC}°C";
+          "format-critical" = "{temperatureC}°C";
           "hwmon-path-abs" = "/sys/devices/platform/coretemp.0/hwmon";
           "input-filename" = "temp2_input";
           "justify" = "right";
