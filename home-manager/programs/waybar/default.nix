@@ -1,4 +1,8 @@
-{...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   programs.waybar = {
     enable = true;
     systemd.enable = true;
@@ -48,7 +52,24 @@
         "custom/gpu" = {
           "align" = 1;
           "escape" = false;
-          "exec" = "bash -lc 'if ! command -v nvidia-smi >/dev/null 2>&1; then echo \"GPU N/A\"; exit 0; fi; nvidia-smi --query-gpu=clocks.current.graphics,memory.used,memory.total,utilization.gpu --format=csv,noheader,nounits | head -n1 | awk -F\", \" \"{printf \\\"<span alpha=\\\\\\\"50%%\\\\\\\">%s%%</span> %.1fGHz %.1f<span alpha=\\\\\\\"50%%\\\\\\\">/</span>%.0fGi <span alpha=\\\\\\\"50%%\\\\\\\">GPU</span>\\\\n\\\", \\$4, \\$1/1000, \\$2/1024, \\$3/1024}\"'";
+          "exec" = lib.getExe (pkgs.writeShellApplication {
+            name = "waybar-gpu-status";
+            runtimeInputs = with pkgs; [coreutils gawk];
+            text = ''
+              if ! command -v nvidia-smi >/dev/null 2>&1; then
+                echo "GPU N/A"
+                exit 0
+              fi
+
+              nvidia-smi \
+                --query-gpu=clocks.current.graphics,memory.used,memory.total,utilization.gpu \
+                --format=csv,noheader,nounits |
+                head -n1 |
+                awk -F", " '{
+                  printf "<span alpha=\"50%%\">%s%%</span> %.1fGHz %.1f<span alpha=\"50%%\">/</span>%.0fGi <span alpha=\"50%%\">GPU</span>\n", $4, $1/1000, $2/1024, $3/1024
+                }'
+            '';
+          });
           "interval" = 2;
           "justify" = "right";
           "max-length" = 40;
@@ -63,7 +84,7 @@
           "tooltip" = false;
           "unit" = "TiB";
         };
-        "exclusive" = false;
+        "exclusive" = true;
         "gtk-layer-shell" = true;
         "height" = 32;
         "spacing" = 8;
@@ -73,10 +94,10 @@
           "on-scroll-up" = "hyprctl dispatch workspace r+1";
           "spacing" = 16;
         };
-        "layer" = "overlay";
-        "margin-top" = 8;
-        "margin-left" = 8;
-        "margin-right" = 8;
+        "layer" = "top";
+        "margin-bottom" = 0;
+        "margin-left" = 0;
+        "margin-right" = 0;
         "memory" = {
           "align" = 1;
           "format" = "<span alpha='50%'>{percentage}%</span> {used:0.1f}<span alpha='50%'>/</span>{total:0.0f}Gi <span alpha='50%'>RAM</span>";
@@ -90,6 +111,7 @@
         "modules-left" = [
           "hyprland/workspaces"
           "wlr/taskbar"
+          "hyprland/window"
         ];
         "modules-right" = [
           "cpu#cores"
@@ -114,7 +136,7 @@
           "tooltip-format-wifi" = "WIFI {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n↑ {bandwidthUpBits} ↓ {bandwidthDownBits}";
         };
         "passthrough" = false;
-        "position" = "top";
+        "position" = "bottom";
         "pulseaudio" = {
           "format-bluetooth-muted" = "<span alpha='60%'>VOL</span> <span alpha='60%'>MUT</span>";
           "format-icons" = {
@@ -141,7 +163,7 @@
           "format-bluetooth" = "<span alpha='60%'>{volume}%</span> <span alpha='60%'>{icon}</span> {format_source}";
           "tooltip" = false;
         };
-        "start_hidden" = true;
+        "start_hidden" = false;
         "temperature" = {
           "align" = 1;
           "critical-threshold" = 75;
@@ -155,6 +177,11 @@
         "tray" = {
           "icon-size" = 18;
           "spacing" = 5;
+        };
+        "hyprland/window" = {
+          "format" = "{}";
+          "max-length" = 120;
+          "tooltip" = false;
         };
         "wlr/taskbar" = {
           "format" = "{icon}";
