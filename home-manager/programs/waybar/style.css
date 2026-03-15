@@ -3,8 +3,9 @@
 @define-color light #D8DEE9;
 @define-color critical #BF616A;
 @define-color workspacesfocused #4C566A;
-@define-color primary_bg #36454F;
-@define-color accent_bg #2b3856;
+@define-color primary_bg #313244;
+@define-color accent_bg #9399b2;
+@define-color emphasized_fg #000000;
 
 * {
     border: none;
@@ -14,7 +15,7 @@
 }
 
 #waybar {
-    background: transparent;
+    background: #1e1e2e;
     color: @light;
     font-family: "JetBrainsMono Nerd Font";
     font-size: 16px;
@@ -38,6 +39,12 @@
     padding-right: 0.6em;
 }
 
+#window {
+    color: @light;
+    padding-left: 0;
+    padding-right: 0.6em;
+}
+
 #cpu,
 #temperature,
 #memory,
@@ -48,14 +55,19 @@
 #pulseaudio.source-muted,
 #bluetooth,
 #network,
-#taskbar {
+#clock {
     background: @primary_bg;
 }
 
 #workspaces,
-#clock,
-#tray {
+#tray,
+#taskbar {
     background: @accent_bg;
+    color: @emphasized_fg;
+}
+
+#window {
+    background: transparent;
 }
 
 #temperature.critical {
@@ -63,6 +75,7 @@
 }
 
 #workspaces {
+    color: @emphasized_fg;
     padding-left: 0;
     padding-right: 0;
 }
@@ -72,14 +85,14 @@
     font-size: 1em;
     min-width: 32px;
     padding: 0;
-    color: @light;
+    color: @emphasized_fg;
     background: none;
     opacity: 1;
 }
 
 #workspaces button.focused {
     background: @workspacesfocused;
-    color: @light;
+    color: @emphasized_fg;
     padding: 0 0.4em;
 }
 
