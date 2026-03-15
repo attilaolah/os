@@ -92,7 +92,7 @@
         allow_tearing = false;
         border_size = 0;
         gaps_in = 2;
-        gaps_out = 2;
+        gaps_out = 0;
         layout = "dwindle";
 
         "col.active_border" = "rgba(da70d6ff)";
