@@ -17,7 +17,7 @@
             "enabled" = "<span alpha='50%'>BT</span>";
           };
           "interval" = 30;
-          "on-click" = "blueman-manager";
+          "on-click" = lib.getExe' pkgs.blueman "blueman-manager";
         };
         "clock" = {
           "format" = "{:%H:%M %d.%m.}";
@@ -26,7 +26,7 @@
         };
         "cpu" = {
           "align" = 1;
-          "format" = "<span alpha='50%'>{usage}%</span> {avg_frequency}GHz";
+          "format" = "<span alpha='50%'>{usage}%</span>";
           "interval" = 2;
           "justify" = "right";
           "max-length" = 40;
@@ -34,7 +34,7 @@
         };
         "cpu#cores" = {
           "align" = 1;
-          "format" = "<span alpha='50%'>{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15}{icon16}{icon17}{icon18}{icon19} CPU</span>";
+          "format" = " {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15}{icon16}{icon17}{icon18}{icon19}";
           "format-icons" = [
             "▁"
             "▂"
@@ -90,8 +90,8 @@
         "spacing" = 8;
         "hyprland/workspaces" = {
           "icon-size" = 20;
-          "on-scroll-down" = "hyprctl dispatch workspace r-1";
-          "on-scroll-up" = "hyprctl dispatch workspace r+1";
+          "on-scroll-down" = "${lib.getExe' pkgs.hyprland "hyprctl"} dispatch workspace r-1";
+          "on-scroll-up" = "${lib.getExe' pkgs.hyprland "hyprctl"} dispatch workspace r+1";
           "spacing" = 16;
         };
         "layer" = "top";
@@ -106,6 +106,14 @@
           "max-length" = 40;
           "tooltip" = false;
         };
+        "group/cpu-group" = {
+          "modules" = [
+            "cpu"
+            "cpu#cores"
+            "temperature"
+          ];
+          "orientation" = "inherit";
+        };
         "mod" = "dock";
         "modules-center" = [];
         "modules-left" = [
@@ -114,9 +122,7 @@
           "hyprland/window"
         ];
         "modules-right" = [
-          "cpu"
-          "temperature"
-          "cpu#cores"
+          "group/cpu-group"
           "memory"
           "custom/gpu"
           "disk"
@@ -167,8 +173,8 @@
         "temperature" = {
           "align" = 1;
           "critical-threshold" = 75;
-          "format" = "{temperatureC}°C";
-          "format-critical" = "{temperatureC}°C";
+          "format" = " {temperatureC}°C <span alpha='50%'>CPU</span>";
+          "format-critical" = " {temperatureC}°C <span alpha='50%'>CPU</span>";
           "hwmon-path-abs" = "/sys/devices/platform/coretemp.0/hwmon";
           "input-filename" = "temp2_input";
           "justify" = "right";

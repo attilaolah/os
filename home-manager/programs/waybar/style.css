@@ -22,8 +22,6 @@
     font-weight: bold;
 }
 
-#cpu,
-#temperature,
 #memory,
 #custom-gpu,
 #disk,
@@ -45,8 +43,6 @@
     padding-right: 0.6em;
 }
 
-#cpu,
-#temperature,
 #memory,
 #custom-gpu,
 #disk,
@@ -122,4 +118,23 @@
     padding-bottom: 0;
     margin-top: 0;
     margin-bottom: 0;
+}
+
+/* CPU trio spacing is template-controlled via leading spaces in formats. */
+#cpu,
+#temperature {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#cpu.cores {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#group-cpu-group,
+#cpu-group {
+    background: @primary_bg;
+    padding-left: 0.6em;
+    padding-right: 0.6em;
 }
