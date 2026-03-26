@@ -10,6 +10,7 @@
     signing = with config.programs.gpg; {
       signByDefault = enable;
       key = settings.default-key;
+      format = "openpgp";
     };
     settings = {
       user = {
