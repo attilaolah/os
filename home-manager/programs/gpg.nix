@@ -7,7 +7,7 @@
       {
         source = pkgs.fetchurl {
           url = "https://github.com/attilaolah.gpg";
-          hash = "sha256-pkhzqQP+SNz+6RmzO8KQaNLeY/R/e+rWHsbzvC262eo=";
+          hash = "sha256-Uj1ofNJRmsauBMUwN5CTeMzfNjCx+exBFZhqbeG7tag=";
         };
         trust = "ultimate";
       }
