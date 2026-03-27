@@ -142,5 +142,8 @@ in {
       eog
       file-roller
       nautilus
+
+      # AI (GPU-heavy) tools:
+      (llama-cpp.override {cudaSupport = true;})
     ];
 }
