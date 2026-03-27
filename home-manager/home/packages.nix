@@ -96,6 +96,7 @@ in {
       # Python, the basics:
       (python314.withPackages (ps:
         with ps; [
+          huggingface-hub
           jmespath
           polars
           # TODO: add when supported:
