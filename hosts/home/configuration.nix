@@ -8,27 +8,19 @@
   sanIps = ["::1" "127.0.4.43" "127.0.0.1"];
   sanDns = [domain "home"];
 
-  certs =
-    pkgs.runCommand "mkcert"
-    {nativeBuildInputs = [pkgs.step-cli];}
-    ''
-      mkdir -p $out
-      cd $out
+  certs = pkgs.certificates.generateCertificate {
+    subjectKey = pkgs.lib.fileContents ./tls.key;
+    subjectAltNames = {
+      ips = sanIps;
+      dns = sanDns;
+    };
+    validFrom = "now";
+    validUntil = "10 years";
+  };
 
-      # Root CA
-      step certificate create "LOCAL CA" ca.crt ca.key \
-        --profile=root-ca --no-password --insecure
-
-      # Server certificate & key
-      echo step certificate create "${domain}" tls.crt tls.key \
-        --san=${lib.concatStringsSep " --san=" (sanDns ++ sanIps)} \
-        --ca=ca.crt --ca-key=ca.key --expires=10y \
-        --kty=EC --curve=P-256 --no-password --insecure
-      step certificate create "${domain}" tls.crt tls.key \
-        --san=${lib.concatStringsSep " --san=" (sanDns ++ sanIps)} \
-        --ca=ca.crt --ca-key=ca.key --not-after=${toString (10 * 365 * 24)}h \
-        --kty=EC --curve=P-256 --no-password --insecure
-    '';
+  caCert = pkgs.writeText "ca.crt" certs.ca.crt;
+  tlsCert = pkgs.writeText "tls.crt" certs.crt;
+  tlsKey = pkgs.writeText "tls.key" certs.key;
 in {
   imports = [
     ./boot.nix
@@ -63,7 +55,7 @@ in {
   security = {
     polkit.enable = true;
     sudo.execWheelOnly = true;
-    pki.certificates = [(builtins.readFile "${certs}/ca.crt")];
+    pki.certificates = [certs.ca.crt];
   };
 
   xdg.portal = {
@@ -93,9 +85,9 @@ in {
 
   environment = {
     etc = {
-      "tls/tls.crt".source = "${certs}/tls.crt";
-      "tls/tls.key".source = "${certs}/tls.key";
-      "tls/ca.crt".source = "${certs}/ca.crt";
+      "tls/tls.crt".source = tlsCert;
+      "tls/tls.key".source = tlsKey;
+      "tls/ca.crt".source = caCert;
     };
     sessionVariables = {
       XDG_CURRENT_DESKTOP = "Hyprland";
