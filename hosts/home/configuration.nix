@@ -8,6 +8,8 @@
   sanIps = ["::1" "127.0.4.43" "127.0.0.1"];
   sanDns = [domain "home"];
 
+  # Generate certificates using NixOS built-in function
+  # Public certificates stored in Nix store (read-only, acceptable)
   certs = pkgs.certificates.generateCertificate {
     subjectKey = pkgs.lib.fileContents ./tls.key;
     subjectAltNames = {
@@ -18,9 +20,11 @@
     validUntil = "10 years";
   };
 
-  caCert = pkgs.writeText "ca.crt" certs.ca.crt;
-  tlsCert = pkgs.writeText "tls.crt" certs.crt;
-  tlsKey = pkgs.writeText "tls.key" certs.key;
+  caCrt = pkgs.writeText "ca.crt" certs.ca.crt;
+  tlsCrt = pkgs.writeText "tls.crt" certs.crt;
+
+  # Private key must NOT be stored in Nix store (world-readable)
+  # Generate it at activation time with secure permissions (0600)
 in {
   imports = [
     ./boot.nix
@@ -55,7 +59,7 @@ in {
   security = {
     polkit.enable = true;
     sudo.execWheelOnly = true;
-    pki.certificates = [certs.ca.crt];
+    pki.certificates = [caCrt];
   };
 
   xdg.portal = {
@@ -85,9 +89,8 @@ in {
 
   environment = {
     etc = {
-      "tls/tls.crt".source = tlsCert;
-      "tls/tls.key".source = tlsKey;
-      "tls/ca.crt".source = caCert;
+      "tls/tls.crt".source = tlsCrt;
+      "tls/ca.crt".source = caCrt;
     };
     sessionVariables = {
       XDG_CURRENT_DESKTOP = "Hyprland";
@@ -100,4 +103,11 @@ in {
       xdg-utils
     ];
   };
+
+  # Activation script to generate TLS private key with proper permissions
+  system.activationScripts.generateTlsKey = ''
+    # Generate TLS private key with secure permissions (0600)
+    install -D -m 0600 /dev/null /etc/tls/tls.key
+    openssl genpkey -algorithm ED25519 -out /etc/tls/tls.key 2>/dev/null
+  '';
 }
