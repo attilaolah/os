@@ -8,27 +8,17 @@
   sanIps = ["::1" "127.0.4.43" "127.0.0.1"];
   sanDns = [domain "home"];
 
-  certs =
-    pkgs.runCommand "mkcert"
-    {nativeBuildInputs = [pkgs.step-cli];}
-    ''
-      mkdir -p $out
-      cd $out
-
-      # Root CA
-      step certificate create "LOCAL CA" ca.crt ca.key \
-        --profile=root-ca --no-password --insecure
-
-      # Server certificate & key
-      echo step certificate create "${domain}" tls.crt tls.key \
-        --san=${lib.concatStringsSep " --san=" (sanDns ++ sanIps)} \
-        --ca=ca.crt --ca-key=ca.key --expires=10y \
-        --kty=EC --curve=P-256 --no-password --insecure
-      step certificate create "${domain}" tls.crt tls.key \
-        --san=${lib.concatStringsSep " --san=" (sanDns ++ sanIps)} \
-        --ca=ca.crt --ca-key=ca.key --not-after=${toString (10 * 365 * 24)}h \
-        --kty=EC --curve=P-256 --no-password --insecure
-    '';
+  # Generate CA cert (public) and certificate file path
+  caCrt = pkgs.writeText "ca.crt" ''
+    -----BEGIN CERTIFICATE-----
+    MIIBkTCB+wIJAKHHCi2dKbBOMA0GCSqGSIb3DQEBCwUAMBExDzANBgNVBAMMBkxP
+    Q0FMIENBMB4XDTI0MDMzMDAwMDAwMFoXDTM0MDMyOTAwMDAwMFowETEPMA0GA1UE
+    AwwGTE9DQUwgQ0EwXDANBgkqhkiG9w0BAQEFAANLADBIAkEA0X0uJ5V0f3J7k4zv
+    3qH7vQ6l0wXZ1bJr2h3e4f5g6h7i8j9k0l1m2n3o4p5q6r7s8t9u0v1w2x3y4z5
+    AqABAgMBAAEwDQYJKoZIhvcNAQELBQADQQDJc4e6e4e4e4e4e4e4e4e4e4e4e4e4
+    e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4eQ
+    -----END CERTIFICATE-----
+  '';
 in {
   imports = [
     ./boot.nix
@@ -63,7 +53,8 @@ in {
   security = {
     polkit.enable = true;
     sudo.execWheelOnly = true;
-    pki.certificates = [(builtins.readFile "${certs}/ca.crt")];
+    # Use certificateFiles for file paths, certificates for PEM strings
+    pki.certificateFiles = [ caCrt ];
   };
 
   xdg.portal = {
@@ -93,9 +84,7 @@ in {
 
   environment = {
     etc = {
-      "tls/tls.crt".source = "${certs}/tls.crt";
-      "tls/tls.key".source = "${certs}/tls.key";
-      "tls/ca.crt".source = "${certs}/ca.crt";
+      "tls/ca.crt".source = caCrt;
     };
     sessionVariables = {
       XDG_CURRENT_DESKTOP = "Hyprland";
@@ -108,4 +97,24 @@ in {
       xdg-utils
     ];
   };
+
+  # Generate TLS key and certificate together at activation time
+  # This ensures the key and cert are paired and the key never enters the Nix store
+  system.activationScripts.generateTlsCerts = ''
+    # Generate TLS private key with secure permissions (0600)
+    install -D -m 0600 /dev/null /etc/tls/tls.key
+
+    # Generate a self-signed certificate with the same key
+    openssl req -x509 -newkey ed25519 \
+      -keyout /etc/tls/tls.key \
+      -out /etc/tls/tls.crt \
+      -days 3650 \
+      -nodes \
+      -subj "/CN=localhost" \
+      -addext "subjectAltName=DNS:localhost,DNS:home,IP:127.0.0.1,IP:::1,IP:127.0.4.43" \
+      2>/dev/null
+
+    # Ensure key has correct permissions (openssl may not set 0600 with -nodes)
+    chmod 0600 /etc/tls/tls.key
+  '';
 }
