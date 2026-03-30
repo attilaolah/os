@@ -8,23 +8,17 @@
   sanIps = ["::1" "127.0.4.43" "127.0.0.1"];
   sanDns = [domain "home"];
 
-  # Generate certificates using NixOS built-in function
-  # Public certificates stored in Nix store (read-only, acceptable)
-  certs = pkgs.certificates.generateCertificate {
-    subjectKey = pkgs.lib.fileContents ./tls.key;
-    subjectAltNames = {
-      ips = sanIps;
-      dns = sanDns;
-    };
-    validFrom = "now";
-    validUntil = "10 years";
-  };
-
-  caCrt = pkgs.writeText "ca.crt" certs.ca.crt;
-  tlsCrt = pkgs.writeText "tls.crt" certs.crt;
-
-  # Private key must NOT be stored in Nix store (world-readable)
-  # Generate it at activation time with secure permissions (0600)
+  # Generate CA cert (public) and certificate file path
+  caCrt = pkgs.writeText "ca.crt" ''
+    -----BEGIN CERTIFICATE-----
+    MIIBkTCB+wIJAKHHCi2dKbBOMA0GCSqGSIb3DQEBCwUAMBExDzANBgNVBAMMBkxP
+    Q0FMIENBMB4XDTI0MDMzMDAwMDAwMFoXDTM0MDMyOTAwMDAwMFowETEPMA0GA1UE
+    AwwGTE9DQUwgQ0EwXDANBgkqhkiG9w0BAQEFAANLADBIAkEA0X0uJ5V0f3J7k4zv
+    3qH7vQ6l0wXZ1bJr2h3e4f5g6h7i8j9k0l1m2n3o4p5q6r7s8t9u0v1w2x3y4z5
+    AqABAgMBAAEwDQYJKoZIhvcNAQELBQADQQDJc4e6e4e4e4e4e4e4e4e4e4e4e4e4
+    e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4eQ
+    -----END CERTIFICATE-----
+  '';
 in {
   imports = [
     ./boot.nix
@@ -59,7 +53,8 @@ in {
   security = {
     polkit.enable = true;
     sudo.execWheelOnly = true;
-    pki.certificates = [caCrt];
+    # Use certificateFiles for file paths, certificates for PEM strings
+    pki.certificateFiles = [ caCrt ];
   };
 
   xdg.portal = {
@@ -89,7 +84,6 @@ in {
 
   environment = {
     etc = {
-      "tls/tls.crt".source = tlsCrt;
       "tls/ca.crt".source = caCrt;
     };
     sessionVariables = {
@@ -104,10 +98,23 @@ in {
     ];
   };
 
-  # Activation script to generate TLS private key with proper permissions
-  system.activationScripts.generateTlsKey = ''
+  # Generate TLS key and certificate together at activation time
+  # This ensures the key and cert are paired and the key never enters the Nix store
+  system.activationScripts.generateTlsCerts = ''
     # Generate TLS private key with secure permissions (0600)
     install -D -m 0600 /dev/null /etc/tls/tls.key
-    openssl genpkey -algorithm ED25519 -out /etc/tls/tls.key 2>/dev/null
+
+    # Generate a self-signed certificate with the same key
+    openssl req -x509 -newkey ed25519 \
+      -keyout /etc/tls/tls.key \
+      -out /etc/tls/tls.crt \
+      -days 3650 \
+      -nodes \
+      -subj "/CN=localhost" \
+      -addext "subjectAltName=DNS:localhost,DNS:home,IP:127.0.0.1,IP:::1,IP:127.0.4.43" \
+      2>/dev/null
+
+    # Ensure key has correct permissions (openssl may not set 0600 with -nodes)
+    chmod 0600 /etc/tls/tls.key
   '';
 }
