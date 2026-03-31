@@ -5,6 +5,7 @@
     ./davfs2.nix
     ./dbus.nix
     ./gvfs.nix
+    ./kubo.nix
     ./nginx.nix
     ./openssh.nix
     ./pipewire.nix
