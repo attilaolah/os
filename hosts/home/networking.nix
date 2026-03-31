@@ -4,7 +4,10 @@ in {
   networking = {
     hostName = host.name;
     search = [host.domain];
-    firewall.allowedTCPPorts = [22 8080];
+    firewall = {
+      allowedTCPPorts = [22 4001];
+      allowedUDPPorts = [4001];
+    };
     nftables.enable = true;
 
     networkmanager = {
