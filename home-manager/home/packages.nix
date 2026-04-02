@@ -157,6 +157,9 @@ in {
           ["rm tools/server/public/index.html.gz"]
           ["rm -f tools/server/public/index.html.gz"]
           old.postPatch;
+        cmakeFlags =
+          (builtins.filter (f: !(lib.hasPrefix "-DLLAMA_BUILD_NUMBER:STRING=" f)) old.cmakeFlags)
+          ++ ["-DLLAMA_BUILD_NUMBER:STRING=8635"];
       }))
     ];
 }
