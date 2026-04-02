@@ -13,7 +13,7 @@ in {
       any-nix-shell
       bat
       bitbucket-cli
-      bun
+
       claude-code
       colordiff
       curl
@@ -102,13 +102,14 @@ in {
           # TODO: add when supported:
           # ipython
         ]))
-    ]
-    ++ (with nodePackages; [
-      # NPM packages:
+
+      # NodeJS runtimes & packages
+      bun
+      nodejs_25
       pnpm
       prettier
       typescript-language-server
-    ])
+    ]
     ++ desktopList [
       # Theming:
       vimix-gtk-themes
