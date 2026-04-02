@@ -144,6 +144,19 @@ in {
       nautilus
 
       # AI (GPU-heavy) tools:
-      (llama-cpp.override {cudaSupport = true;})
+      ((llama-cpp.override {cudaSupport = true;}).overrideAttrs (old: {
+        version = "b8635";
+        src = fetchFromGitHub {
+          owner = "ggml-org";
+          repo = "llama.cpp";
+          rev = "b8635";
+          hash = "sha256-aO3WuXcwQYHakHDOs8BvjMLPBv7BxgCZLFAAUXZpJQk=";
+        };
+        postPatch =
+          lib.replaceStrings
+          ["rm tools/server/public/index.html.gz"]
+          ["rm -f tools/server/public/index.html.gz"]
+          old.postPatch;
+      }))
     ];
 }
