@@ -144,13 +144,15 @@ in {
       nautilus
 
       # AI (GPU-heavy) tools:
-      ((llama-cpp.override {cudaSupport = true;}).overrideAttrs (old: {
-        version = "b8635";
+      ((llama-cpp.override {cudaSupport = true;}).overrideAttrs (old: let
+        version = "8638";
+      in {
+        inherit version;
         src = fetchFromGitHub {
           owner = "ggml-org";
           repo = "llama.cpp";
-          rev = "b8635";
-          hash = "sha256-aO3WuXcwQYHakHDOs8BvjMLPBv7BxgCZLFAAUXZpJQk=";
+          rev = "b${version}";
+          hash = "sha256-B3PSMUAYkw1gp3swGqY1+n/eqIQzzkwXeIXz9sOxsZM=";
         };
         postPatch =
           lib.replaceStrings
@@ -159,7 +161,7 @@ in {
           old.postPatch;
         cmakeFlags =
           (builtins.filter (f: !(lib.hasPrefix "-DLLAMA_BUILD_NUMBER:STRING=" f)) old.cmakeFlags)
-          ++ ["-DLLAMA_BUILD_NUMBER:STRING=8635"];
+          ++ ["-DLLAMA_BUILD_NUMBER:STRING=${version}"];
       }))
     ];
 }
