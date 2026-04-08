@@ -148,14 +148,14 @@ in {
 
       # AI (GPU-heavy) tools:
       ((llama-cpp.override {cudaSupport = true;}).overrideAttrs (old: let
-        version = "8703";
+        version = "8705";
       in {
         inherit version;
         src = fetchFromGitHub {
           owner = "ggml-org";
           repo = "llama.cpp";
           rev = "b${version}";
-          hash = "sha256-1zLOmZEN0Li1hO2obTfpU4Fgx4+87/fffrq75ukNFAY=";
+          hash = "sha256-fpJrztwz56ESQU4iXKbtj/bvq7Zv1ek+BqOIm8u5cU0=";
         };
         npmDepsHash = "sha256-eeftjKt0FuS0Dybez+Iz9VTVMA4/oQVh+3VoIqvhVMw=";
       }))
