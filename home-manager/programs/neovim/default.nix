@@ -14,5 +14,9 @@
         # ansible-language-server
       ];
       initLua = builtins.readFile ./init.lua;
+
+      withNodeJs = true;
+      withPython3 = true;
+      withRuby = true;
     };
 }
