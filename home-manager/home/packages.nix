@@ -13,7 +13,6 @@ in {
       any-nix-shell
       bat
       bitbucket-cli
-      bun
       claude-code
       colordiff
       curl
@@ -102,13 +101,15 @@ in {
           # TODO: add when supported:
           # ipython
         ]))
-    ]
-    ++ (with nodePackages; [
+
       # NPM packages:
+      # NodeJS runtimes & packages
+      bun
+      nodejs_25
       pnpm
       prettier
       typescript-language-server
-    ])
+    ]
     ++ desktopList [
       # Theming:
       vimix-gtk-themes
@@ -145,23 +146,16 @@ in {
 
       # AI (GPU-heavy) tools:
       ((llama-cpp.override {cudaSupport = true;}).overrideAttrs (old: let
-        version = "8638";
+        version = "8703";
       in {
         inherit version;
         src = fetchFromGitHub {
           owner = "ggml-org";
           repo = "llama.cpp";
           rev = "b${version}";
-          hash = "sha256-B3PSMUAYkw1gp3swGqY1+n/eqIQzzkwXeIXz9sOxsZM=";
+          hash = "sha256-1zLOmZEN0Li1hO2obTfpU4Fgx4+87/fffrq75ukNFAY=";
         };
-        postPatch =
-          lib.replaceStrings
-          ["rm tools/server/public/index.html.gz"]
-          ["rm -f tools/server/public/index.html.gz"]
-          old.postPatch;
-        cmakeFlags =
-          (builtins.filter (f: !(lib.hasPrefix "-DLLAMA_BUILD_NUMBER:STRING=" f)) old.cmakeFlags)
-          ++ ["-DLLAMA_BUILD_NUMBER:STRING=${version}"];
+        npmDepsHash = "sha256-eeftjKt0FuS0Dybez+Iz9VTVMA4/oQVh+3VoIqvhVMw=";
       }))
     ];
 }
