@@ -13,6 +13,7 @@ in {
       any-nix-shell
       bat
       bitbucket-cli
+      bubblewrap
       claude-code
       colordiff
       curl
@@ -90,6 +91,7 @@ in {
       # AI stuff:
       codex
       gemini-cli
+      opencode
       qwen-code
 
       # Python, the basics:
