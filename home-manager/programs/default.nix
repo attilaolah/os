@@ -1,10 +1,8 @@
 {
-  desktop,
   lib,
+  platform,
   ...
-}: let
-  desktopList = list: lib.lists.optionals desktop list;
-in {
+}: {
   imports =
     [
       ./atuin.nix
@@ -22,7 +20,7 @@ in {
       ./tmux.nix
       ./uv.nix
     ]
-    ++ desktopList [
+    ++ lib.lists.optionals (platform == "linux") [
       ./hyprlock
       ./waybar
     ];

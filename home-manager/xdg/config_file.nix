@@ -1,11 +1,10 @@
 {
   config,
-  desktop,
   lib,
   pkgs,
+  platform,
   ...
 }: let
-  desktopAttrs = attrs: lib.attrsets.optionalAttrs desktop attrs;
   foot-catppuccin-mocha = pkgs.stdenv.mkDerivation {
     name = "foot-catppuccin-mocha";
     # TODO: renovate
@@ -33,7 +32,7 @@ in {
       "nvim/lua/options.lua".source = ./nvim/lua/options.lua;
       "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     }
-    // desktopAttrs {
+    // lib.attrsets.optionalAttrs (platform == "linux") {
       # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.foot.settings
       "foot/foot.ini".text =
         (toINI {
