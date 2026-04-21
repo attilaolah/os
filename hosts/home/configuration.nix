@@ -39,7 +39,7 @@ in {
     ./programs
     ./services
     ./systemd.nix
-    ./users.nix
+    ./users
     ./virtualisation/docker.nix
     ./virtualisation/podman.nix
   ];

@@ -4,11 +4,14 @@
   user,
   ...
 }: let
-  inherit (builtins) attrNames concatStringsSep readFile;
-  inherit (pkgs) lib;
+  inherit (builtins) attrNames concatStringsSep;
 
   filterGroups = attrs: attrNames (pkgs.lib.filterAttrs (_: v: v) attrs);
 in {
+  imports = [
+    ./authorized_keys.nix
+  ];
+
   users = {
     mutableUsers = false;
     defaultUserShell = pkgs.fish;
@@ -47,10 +50,6 @@ in {
             wireshark = programs.wireshark.enable;
             ${services.kubo.group} = services.kubo.enable;
           };
-        openssh.authorizedKeys.keys = lib.splitString "\n" (lib.removeSuffix "\n" (readFile (pkgs.fetchurl {
-          url = "https://github.com/attilaolah.keys";
-          hash = "sha256-Nw/XiCnJ+KmHK1YFO3x9MF+GPfCWWyPmy//go4UKg/M=";
-        })));
       };
     };
 

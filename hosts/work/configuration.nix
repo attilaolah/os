@@ -8,6 +8,7 @@
   imports = [
     ../home/nix.nix
     ../home/programs/fish.nix
+    ../home/users/authorized_keys.nix
     ./homebrew.nix
   ];
 
