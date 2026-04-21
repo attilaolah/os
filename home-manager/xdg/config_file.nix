@@ -32,6 +32,11 @@ in {
       "nvim/lua/options.lua".source = ./nvim/lua/options.lua;
       "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     }
+    // lib.attrsets.optionalAttrs (platform == "darwin") {
+      "ghostty/config".text = ''
+        keybind = cmd+a=esc:a
+      '';
+    }
     // lib.attrsets.optionalAttrs (platform == "linux") {
       # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.foot.settings
       "foot/foot.ini".text =
