@@ -174,7 +174,6 @@
           align = 1;
           critical-threshold = 75;
           format = " {temperatureC}°C <span alpha='50%'>CPU</span>";
-          format-critical = " {temperatureC}°C <span alpha='50%'>CPU</span>";
           hwmon-path-abs = "/sys/devices/platform/coretemp.0/hwmon";
           input-filename = "temp2_input";
           justify = "right";
