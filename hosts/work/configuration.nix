@@ -20,6 +20,8 @@
     primaryUser = user.username;
 
     defaults.NSGlobalDomain = {
+      # Show the menu bar (disable auto-hide).
+      _HIHideMenuBar = false;
       # Keep key-repeat behavior consistent with Hyprland defaults.
       ApplePressAndHoldEnabled = false;
       # MacOS units: 40 -> ~600ms initial delay.
