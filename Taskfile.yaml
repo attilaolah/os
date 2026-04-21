@@ -32,19 +32,3 @@ tasks:
     desc: Check Nix flakes
     cmds:
       - nix flake check
-
-  headless:build:
-    desc: Build NixOS home-manager config
-    cmds:
-      - nix run nixpkgs#home-manager -- build --flake .#headless
-
-  headless:diff:
-    desc: Build & diff against the current home-manager config
-    cmds:
-      - task: headless:build
-      - nvd diff ~/.local/state/home-manager/gcroots/current-home result
-
-  headless:install:
-    desc: Install (update) the current home-manager config
-    cmds:
-      - nix run nixpkgs#home-manager -- switch --flake .#headless
