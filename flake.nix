@@ -48,6 +48,7 @@
               // {
                 inherit system user;
                 desktop = true;
+                aiTools = true;
               };
             users.${user.username} = import ./home-manager/home.nix;
           };
@@ -69,6 +70,7 @@
         // {
           inherit system user;
           desktop = true;
+          aiTools = true;
         };
       headless =
         inputs
@@ -76,6 +78,7 @@
           inherit system;
           user = user // {username = "olaa";};
           desktop = false;
+          aiTools = false;
         };
     };
 

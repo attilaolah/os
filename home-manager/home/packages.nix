@@ -1,9 +1,11 @@
 {
+  aiTools,
   desktop,
   lib,
   pkgs,
   ...
 }: let
+  aiToolsList = list: lib.lists.optionals aiTools list;
   desktopList = list: lib.lists.optionals desktop list;
 in {
   home.packages = with pkgs;
@@ -145,7 +147,8 @@ in {
       eog
       file-roller
       nautilus
-
+    ]
+    ++ aiToolsList [
       # AI (GPU-heavy) tools:
       ((llama-cpp.override {cudaSupport = true;}).overrideAttrs (old: let
         version = "8848";
