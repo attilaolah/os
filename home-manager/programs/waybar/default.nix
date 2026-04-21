@@ -14,7 +14,7 @@
           format = "{icon}";
           format-icons = {
             disabled = "<span alpha='50%'>BT</span>";
-            enabled = "<span alpha='50%'>BT</span>";
+            enabled = "BT";
           };
           interval = 30;
           on-click = lib.getExe' pkgs.blueman "blueman-manager";
