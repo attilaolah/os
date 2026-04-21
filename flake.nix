@@ -134,7 +134,6 @@
             go-task
             pkgs.home-manager
             nvd
-            sops
           ];
         };
       };
