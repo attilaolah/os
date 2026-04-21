@@ -20,6 +20,7 @@
       "font-jetbrains-mono-nerd-font"
       "ghostty"
       "programmer-dvorak"
+      "secretive"
     ];
 
     # Mac App Store apps:
