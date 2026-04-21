@@ -1,6 +1,5 @@
 {
   self,
-  pkgs,
   system,
   user,
   ...
@@ -26,8 +25,4 @@
     hostPlatform = system;
     config.allowUnfree = true;
   };
-
-  environment.systemPackages = with pkgs; [
-    secretive
-  ];
 }
