@@ -29,10 +29,6 @@
     flake-parts,
     ...
   } @ inputs: let
-    # pkgs = import nixpkgs {
-    #   inherit system;
-    #   config.allowUnfree = true;
-    # };
     userinfo = {
       fullname = "Attila Oláh";
       building = "Dornhaus 8";
@@ -145,52 +141,3 @@
       };
     });
 }
-#
-#   {
-#     nixosConfigurations."${hosts.home.hostname}" = nixpkgs.lib.nixosSystem {
-#       inherit (hosts.home) system;
-#       modules = [
-#         ./hosts/home/configuration.nix
-#         home-manager.nixosModules.home-manager
-#         {
-#           home-manager = {
-#             inherit useGlobalPkgs useUserPackages;
-#             backupFileExtension = "bkp";
-#             extraSpecialArgs = specialArgs hosts.home;
-#             users.${hosts.home.username} = import ./home-manager/home.nix;
-#           };
-#         }
-#       ];
-#       specialArgs = specialArgs hosts.home;
-#     };
-#
-#     darwinConfigurations."${hosts.work.hostname}" = nix-darwin.lib.darwinSystem {
-#       modules = [./work/configuration.nix];
-#       specialArgs = specialArgs hosts.work;
-#     };
-#
-#     # For applying local settings with:
-#     # home-manager switch --flake .#home (or --flake .#nb1609)
-#     homeConfigurations = nixpkgs.lib.mapAttrs (name: extraSpecialArgs:
-#       home-manager.lib.homeManagerConfiguration {
-#         inherit pkgs extraSpecialArgs;
-#         modules = [./home-manager/home.nix];
-#       }) {
-#       # TODO: map further.
-#       "${hosts.home.hostname}" = specialArgs hosts.home;
-#       "${hosts.work.hostname}" = specialArgs hosts.work;
-#     };
-#
-#     # TODO: flake-parts per system!
-#     devShells."x86_64-linux".default = pkgs.mkShell {
-#       buildInputs = with pkgs; [
-#         alejandra
-#         go-task
-#         pkgs.home-manager
-#         nvd
-#         sops
-#       ];
-#     };
-#   };
-# }
-
