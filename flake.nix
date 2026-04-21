@@ -53,17 +53,19 @@
       };
     };
 
-    # Common home-manager configuration for all platforms:
-    hmconfig = config: {
-      home-manager = {
-        backupFileExtension = "bkp";
-        extraSpecialArgs = specialArgs config;
-        users.${config.user.username} = import ./home-manager/home.nix;
-        useGlobalPkgs = true;
-        useUserPackages = true;
-      };
-    };
-
+    modules = config: name: kind: [
+      ./hosts/${name}/configuration.nix
+      home-manager."${kind}Modules".home-manager
+      {
+        home-manager = {
+          backupFileExtension = "bkp";
+          extraSpecialArgs = specialArgs config;
+          users.${config.user.username} = import ./home-manager/home.nix;
+          useGlobalPkgs = true;
+          useUserPackages = true;
+        };
+      }
+    ];
     platform = system: builtins.elemAt (nixpkgs.lib.splitString "-" system) 1;
     platformHosts = p: (nixpkgs.lib.filterAttrs (_: value: (platform value.system) == p) hosts);
     specialArgs = {
@@ -95,11 +97,7 @@
             name = value.hostname or name;
             value = nixpkgs.lib.nixosSystem {
               inherit (value) system;
-              modules = [
-                ./hosts/${name}/configuration.nix
-                home-manager.nixosModules.home-manager
-                (hmconfig value)
-              ];
+              modules = modules value name "nixos";
               specialArgs = specialArgs value;
             };
           }
@@ -109,11 +107,7 @@
           name: value: {
             name = value.hostname or name;
             value = nix-darwin.lib.darwinSystem {
-              modules = [
-                ./hosts/${name}/configuration.nix
-                home-manager.darwinModules.home-manager
-                (hmconfig value)
-              ];
+              modules = modules value name "darwin";
               specialArgs = specialArgs value;
             };
           }
