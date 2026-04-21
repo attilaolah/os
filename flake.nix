@@ -2,10 +2,16 @@
   description = "NixOS flakes for attilaolah's personal computers.";
 
   inputs = {
-    # NixOS
+    # Nix packages
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
-    # Home Manager
+    # Nix-Darwin
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Home-Manager
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,6 +21,7 @@
   outputs = {
     self,
     nixpkgs,
+    nix-darwin,
     home-manager,
     ...
   } @ inputs: let
