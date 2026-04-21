@@ -36,6 +36,7 @@ in {
       "ghostty/config".text = ''
         font-size = 16
         keybind = cmd+a=esc:a
+        theme = Catppuccin Mocha
       '';
     }
     // lib.attrsets.optionalAttrs (platform == "linux") {
