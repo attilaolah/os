@@ -5,7 +5,7 @@ tasks:
   build:
     desc: Build NixOS flakes
     cmds:
-      - nixos-rebuild build --flake .#home
+      - nixos-rebuild build --flake .#$(hostname -s)
 
   diff:
     desc: Build & diff against the current system
@@ -16,7 +16,7 @@ tasks:
   install:
     desc: Install (update) the current system
     cmds:
-      - sudo nixos-rebuild switch --flake .#home
+      - sudo nixos-rebuild switch --flake .#$(hostname -s)
 
   update:
     desc: Update Nix flakes
