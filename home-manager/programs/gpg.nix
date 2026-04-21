@@ -3,6 +3,8 @@
     enable = true;
     mutableKeys = false;
     mutableTrust = false;
+    # NOTE: Rotating any of these keys requires a hash update.
+    # This is fine as these keys are not expected to change that often.
     publicKeys = [
       {
         source = pkgs.fetchurl {
