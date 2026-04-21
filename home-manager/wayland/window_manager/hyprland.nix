@@ -161,6 +161,7 @@
         ++ (map (n: "$MOD SHIFT, $N${toString n}, movetoworkspace, ${toString n}") workspaces);
 
       bindr = [
+        # Send SIGUSR1 to toggle Waybar visibility.
         "SUPER, Super_L, exec, systemctl --user kill -s SIGUSR1 waybar.service"
       ];
 
