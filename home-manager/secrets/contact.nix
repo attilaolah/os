@@ -1,4 +1,9 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   sops = {
     defaultSopsFile = ../../secrets/contact.yaml;
     gnupg.home = "${config.home.homeDirectory}/.gnupg";
@@ -8,9 +13,16 @@
     #   email: you@example.com
     secrets."contact/email" = {};
 
-    templates.git.content = ''
-      [user]
-        email = ${config.sops.placeholder."contact/email"}
-    '';
+    templates = {
+      git.content = ''
+        [user]
+          email = ${config.sops.placeholder."contact/email"}
+      '';
+
+      rbw.content = builtins.toJSON {
+        email = config.sops.placeholder."contact/email";
+        pinentry = lib.getExe pkgs.pinentry-tty;
+      };
+    };
   };
 }
