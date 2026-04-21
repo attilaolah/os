@@ -86,27 +86,19 @@
             };
             platform = platform system;
           };
-      in {
-        nixosConfigurations = nixpkgs.lib.mapAttrs' (
-          name: value: {
-            name = value.hostname or name;
-            value = nixpkgs.lib.nixosSystem {
-              inherit (value) system;
-              modules = modules value name "nixos";
-              specialArgs = specialArgs value;
-            };
-          }
-        ) (platformHosts "linux");
 
-        darwinConfigurations = nixpkgs.lib.mapAttrs' (
-          name: value: {
-            name = value.hostname or name;
-            value = nix-darwin.lib.darwinSystem {
-              modules = modules value name "darwin";
-              specialArgs = specialArgs value;
-            };
-          }
-        ) (platformHosts "darwin");
+        mkSystem = generator: kind: name: value: {
+          name = value.hostname or name;
+          value = generator.lib."${kind}System" {
+            inherit (value) system;
+            modules = modules value name kind;
+            specialArgs = specialArgs value;
+          };
+        };
+        mkConfigs = generator: os: platform: nixpkgs.lib.mapAttrs' (mkSystem generator os) (platformHosts platform);
+      in {
+        nixosConfigurations = mkConfigs nixpkgs "nixos" "linux";
+        darwinConfigurations = mkConfigs nix-darwin "darwin" "darwin";
 
         # Expose the home-manager configurations directly.
         # This allows one to apply only the home-manager config without switching the system config by running:
