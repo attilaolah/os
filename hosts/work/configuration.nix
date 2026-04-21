@@ -2,6 +2,7 @@
   self,
   pkgs,
   system,
+  user,
   ...
 }: {
   imports = [
@@ -14,6 +15,8 @@
     # $ darwin-rebuild changelog
     stateVersion = 6;
   };
+
+  users.users."${user.username}".home = "/Users/${user.username}";
 
   nixpkgs = {
     hostPlatform = system;
