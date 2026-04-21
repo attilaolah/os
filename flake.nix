@@ -52,6 +52,7 @@
             hostname = "nb1609";
             system = "aarch64-darwin";
             username = "olaa";
+            ncores = 10;
           };
         };
 
