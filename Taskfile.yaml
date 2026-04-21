@@ -1,11 +1,22 @@
 ---
 version: 3
 
+vars:
+  HOSTNAME_SHORT:
+    sh: hostname -s
+  REBUILD_CMD:
+    sh: |
+      case "$(uname -s)" in
+        Darwin) echo darwin-rebuild ;;
+        Linux) echo nixos-rebuild ;;
+        *) echo "Unsupported OS: $(uname -s)" >&2; exit 1 ;;
+      esac
+
 tasks:
   build:
     desc: Build NixOS flakes
     cmds:
-      - nixos-rebuild build --flake .#$(hostname -s)
+      - '{{.REBUILD_CMD}} build --flake ".#{{.HOSTNAME_SHORT}}"'
 
   diff:
     desc: Build & diff against the current system
@@ -16,7 +27,7 @@ tasks:
   install:
     desc: Install (update) the current system
     cmds:
-      - sudo nixos-rebuild switch --flake .#$(hostname -s)
+      - 'sudo {{.REBUILD_CMD}} switch --flake ".#{{.HOSTNAME_SHORT}}"'
 
   update:
     desc: Update Nix flakes
