@@ -4,10 +4,14 @@
   user,
   ...
 }: let
-  inherit (builtins) attrNames concatStringsSep readFile;
+  inherit (builtins) attrNames;
 
   filterGroups = attrs: attrNames (pkgs.lib.filterAttrs (_: v: v) attrs);
 in {
+  imports = [
+    ./authorized_keys.nix
+  ];
+
   users = {
     mutableUsers = false;
     defaultUserShell = pkgs.fish;
@@ -22,14 +26,7 @@ in {
 
       "${user.username}" = {
         isNormalUser = true;
-        # GECOS fields:
-        description = concatStringsSep "," [
-          user.fullname
-          user.building
-          user.phone # (work)
-          user.phone # (home)
-          user.email # other
-        ];
+        description = user.fullname;
         initialHashedPassword =
           "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn"
           + "/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";
@@ -46,18 +43,6 @@ in {
             wireshark = programs.wireshark.enable;
             ${services.kubo.group} = services.kubo.enable;
           };
-        openssh.authorizedKeys.keys =
-          (let
-            inherit (pkgs.lib.strings) splitString removeSuffix;
-          in
-            splitString "\n" (removeSuffix "\n" (readFile (pkgs.fetchurl {
-              url = "https://github.com/attilaolah.keys";
-              hash = "sha256-Y63CD0ZqmOhnFhRXwsp2Xb5aaoIWr7nUwHAvov38buc=";
-            }))))
-          ++ [
-            ("ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC"
-              + "+mtV6yrvijOAmvsstRCYsUSbc8ZI3Np7qY2rWuACNaAnLSRhu5qbL/1EzZgcRFbMKaqRYLy8Tq56PDjck2MTo=") # biometric
-          ];
       };
     };
 

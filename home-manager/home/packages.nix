@@ -1,21 +1,22 @@
 {
-  aiTools,
-  desktop,
   lib,
+  platform,
   pkgs,
   ...
-}: let
-  aiToolsList = list: lib.lists.optionals aiTools list;
-  desktopList = list: lib.lists.optionals desktop list;
-in {
+}: {
   home.packages = with pkgs;
     [
+      # GNU tools
+      coreutils
+      findutils
+      gawk
+      gnused
+
       # CLI utilities:
       age
       any-nix-shell
       bat
       bitbucket-cli
-      bubblewrap
       claude-code
       colordiff
       curl
@@ -53,7 +54,6 @@ in {
       subversion
       termshark
       tmux
-      traceroute
       tree
       ty
       unzip
@@ -114,7 +114,11 @@ in {
       prettier
       typescript-language-server
     ]
-    ++ desktopList [
+    ++ lib.lists.optionals (platform == "linux") [
+      # Not supported on darwin:
+      bubblewrap
+      traceroute
+
       # Theming:
       vimix-gtk-themes
       vimix-icon-theme
@@ -147,8 +151,7 @@ in {
       eog
       file-roller
       nautilus
-    ]
-    ++ aiToolsList [
+
       # AI (GPU-heavy) tools:
       ((llama-cpp.override {cudaSupport = true;}).overrideAttrs (old: let
         version = "8848";

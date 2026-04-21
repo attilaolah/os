@@ -1,11 +1,22 @@
 ---
 version: 3
 
+vars:
+  HOSTNAME_SHORT:
+    sh: hostname -s | tr '[:upper:]' '[:lower:]'
+  REBUILD_CMD:
+    sh: |
+      case "$(uname -s)" in
+        Darwin) echo darwin-rebuild ;;
+        Linux) echo nixos-rebuild ;;
+        *) echo "Unsupported OS: $(uname -s)" >&2; exit 1 ;;
+      esac
+
 tasks:
   build:
     desc: Build NixOS flakes
     cmds:
-      - nixos-rebuild build --flake .#home
+      - '{{.REBUILD_CMD}} build --flake ".#{{.HOSTNAME_SHORT}}"'
 
   diff:
     desc: Build & diff against the current system
@@ -16,7 +27,8 @@ tasks:
   install:
     desc: Install (update) the current system
     cmds:
-      - sudo nixos-rebuild switch --flake .#home
+      - sops -d secrets/contact.yaml > /dev/null
+      - 'sudo {{.REBUILD_CMD}} switch --flake ".#{{.HOSTNAME_SHORT}}"'
 
   update:
     desc: Update Nix flakes
@@ -31,20 +43,4 @@ tasks:
   check:
     desc: Check Nix flakes
     cmds:
-      - nix flake check
-
-  headless:build:
-    desc: Build NixOS home-manager config
-    cmds:
-      - nix run nixpkgs#home-manager -- build --flake .#headless
-
-  headless:diff:
-    desc: Build & diff against the current home-manager config
-    cmds:
-      - task: headless:build
-      - nvd diff ~/.local/state/home-manager/gcroots/current-home result
-
-  headless:install:
-    desc: Install (update) the current home-manager config
-    cmds:
-      - nix run nixpkgs#home-manager -- switch --flake .#headless
+      - nix flake check --all-systems

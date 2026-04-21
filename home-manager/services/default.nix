@@ -1,15 +1,13 @@
 {
-  desktop,
   lib,
+  platform,
   ...
-}: let
-  desktopList = list: lib.lists.optionals desktop list;
-in {
+}: {
   imports =
     [
       ./gpg_agent.nix
     ]
-    ++ desktopList [
+    ++ lib.lists.optionals (platform == "linux") [
       ./hypridle.nix
       ./hyprpaper
       ./swaync.nix

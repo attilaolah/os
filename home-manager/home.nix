@@ -1,23 +1,21 @@
 {
   config,
-  desktop,
   lib,
   pkgs,
+  platform,
   user,
   ...
-}: let
-  desktopAttrs = attrs: lib.attrsets.optionalAttrs desktop attrs;
-  desktopList = list: lib.lists.optionals desktop list;
-in {
+}: {
   imports =
     [
       ./file.nix
       ./home/packages.nix
       ./programs
+      ./secrets/contact.nix
       ./services
       ./xdg/config_file.nix
     ]
-    ++ desktopList [
+    ++ lib.lists.optionals (platform == "linux") [
       ./gtk.nix
       ./qt.nix
       ./wayland/window_manager/hyprland.nix
@@ -26,18 +24,19 @@ in {
   home =
     {
       inherit (user) username;
-      homeDirectory = "/home/${user.username}";
+      homeDirectory = "/${
+        if (platform == "darwin")
+        then "Users"
+        else "home"
+      }/${user.username}";
       stateVersion = "23.11";
 
       sessionVariables = with config.home;
         {
-          SHELL = lib.getExe pkgs.fish;
-
           # Development environment:
           GOPATH = "${homeDirectory}/dev/go";
         }
-        // desktopAttrs
-        {
+        // lib.attrsets.optionalAttrs (platform == "linux") {
           # XDG dirs:
           XDG_DESKTOP_DIR = homeDirectory;
           XDG_DOWNLOAD_DIR = "${homeDirectory}/dl";
@@ -49,7 +48,7 @@ in {
           # XDG_TEMPLATES_DIR not set
         };
     }
-    // desktopAttrs {
+    // lib.attrsets.optionalAttrs (platform == "linux") {
       pointerCursor = {
         name = "Adwaita";
         size = 24;

@@ -2,95 +2,149 @@
   description = "NixOS flakes for attilaolah's personal computers.";
 
   inputs = {
-    # NixOS
+    # Nix packages
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
-    # Home Manager
+    # Nix-Darwin
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Home-Manager
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # SOPS integration
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Flake-Parts
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
   outputs = {
     self,
     nixpkgs,
+    nix-darwin,
     home-manager,
+    flake-parts,
     ...
-  } @ inputs: let
-    pkgs = import nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
-    system = "x86_64-linux";
-    useGlobalPkgs = true;
-    useUserPackages = true;
+  } @ inputs:
+    flake-parts.lib.mkFlake {inherit inputs;} ({...}: let
+      inherit (nixpkgs) lib;
+    in {
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
 
-    user = {
-      username = "ao";
-      fullname = "Attila Oláh";
-      building = "Dornhaus 8";
-      email = "attila@dorn.haus";
-      phone = "+41 79 247 25 10";
-    };
-  in {
-    nixosConfigurations.home = nixpkgs.lib.nixosSystem {
-      inherit system;
-      modules = [
-        ./hosts/home/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            inherit useGlobalPkgs useUserPackages;
-            backupFileExtension = "bkp";
-            extraSpecialArgs =
-              inputs
-              // {
-                inherit system user;
-                desktop = true;
-                aiTools = true;
-                ncores = 20;
-              };
-            users.${user.username} = import ./home-manager/home.nix;
+      imports = [
+        inputs.home-manager.flakeModules.home-manager
+      ];
+
+      flake = let
+        hosts = {
+          home = {
+            system = "x86_64-linux";
+            username = "ao";
+            ncores = 20;
           };
-        }
-      ];
-      specialArgs = {inherit inputs user;};
-    };
-
-    # For applying local settings with:
-    # home-manager switch --flake .#home (or --flake .#headless)
-    homeConfigurations = nixpkgs.lib.mapAttrs (name: extraSpecialArgs:
-      home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [./home-manager/home.nix];
-        inherit extraSpecialArgs;
-      }) {
-      home =
-        inputs
-        // {
-          inherit system user;
-          desktop = true;
-          aiTools = true;
-          ncores = 20;
+          work = {
+            hostname = "nb1609";
+            system = "aarch64-darwin";
+            username = "olaa";
+            ncores = 10;
+          };
         };
-      headless =
-        inputs
-        // {
-          inherit system;
-          user = user // {username = "olaa";};
-          desktop = false;
-          aiTools = false;
-        };
-    };
 
-    devShells.${system}.default = pkgs.mkShell {
-      buildInputs = with pkgs; [
-        alejandra
-        go-task
-        nvd
-        sops
-      ];
-    };
-  };
+        platform = system: builtins.elemAt (lib.splitString "-" system) 1;
+        platformHosts = p: (lib.filterAttrs (_: value: (platform value.system) == p) hosts);
+        specialArgs = {
+          ncores,
+          system,
+          username,
+          ...
+        }:
+          inputs
+          // {
+            inherit ncores system;
+            user = {
+              inherit username;
+              fullname = "Attila Oláh";
+            };
+            platform = platform system;
+          };
+
+        mkConfigs = generator: os: platform:
+          lib.mapAttrs' (
+            name: value: {
+              name = value.hostname or name;
+              value = generator.lib."${os}System" {
+                inherit (value) system;
+                modules = [
+                  ./hosts/${name}/configuration.nix
+                  home-manager."${os}Modules".home-manager
+                  {
+                    home-manager = {
+                      backupFileExtension = "bkp";
+                      extraSpecialArgs = specialArgs value;
+                      sharedModules = [
+                        inputs."sops-nix".homeManagerModules.sops
+                      ];
+                      users.${value.username} = import ./home-manager/home.nix;
+                      useGlobalPkgs = true;
+                      useUserPackages = true;
+                    };
+                  }
+                ];
+                specialArgs = specialArgs value;
+              };
+            }
+          ) (platformHosts platform);
+      in {
+        nixosConfigurations = mkConfigs nixpkgs "nixos" "linux";
+        darwinConfigurations = mkConfigs nix-darwin "darwin" "darwin";
+
+        # Expose the home-manager configurations directly.
+        # This allows one to apply only the home-manager config without switching the system config by running:
+        # home-manager switch --flake .#hostname (e.g. --flake .#home)
+        homeConfigurations =
+          lib.mapAttrs' (name: config: {
+            name = config.hostName or config.hostname or name;
+            value = home-manager.lib.homeManagerConfiguration {
+              pkgs = import nixpkgs {
+                inherit (config) system;
+                config.allowUnfree = true;
+              };
+              modules = [
+                inputs."sops-nix".homeManagerModules.sops
+                ./home-manager/home.nix
+              ];
+              extraSpecialArgs = specialArgs config;
+            };
+          })
+          hosts;
+      };
+
+      perSystem = {
+        config,
+        pkgs,
+        ...
+      }: {
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            alejandra
+            go-task
+            pkgs.home-manager
+            nvd
+            sops
+          ];
+        };
+      };
+    });
 }

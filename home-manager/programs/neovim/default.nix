@@ -1,23 +1,24 @@
 {pkgs, ...}: {
-  programs.neovim =
-    (import ../../../hosts/home/programs/neovim.nix)
-    // {
-      vimdiffAlias = true;
-      extraPackages = with pkgs; [
-        # Language servers:
-        kotlin-language-server
-        lua-language-server
-        vscode-langservers-extracted
-        yaml-language-server
+  imports = [
+    ../../../hosts/home/programs/neovim.nix
+  ];
+  programs.neovim = {
+    vimdiffAlias = true;
+    extraPackages = with pkgs; [
+      # Language servers:
+      kotlin-language-server
+      lua-language-server
+      vscode-langservers-extracted
+      yaml-language-server
 
-        # Unmaintained, maybe pick it up.
-        # ansible-language-server
-      ];
-      initLua = builtins.readFile ./init.lua;
+      # Unmaintained, maybe pick it up.
+      # ansible-language-server
+    ];
+    initLua = builtins.readFile ./init.lua;
 
-      # Enable additional language support in the version installed by home-manager.
-      withNodeJs = true;
-      withPython3 = true;
-      withRuby = true;
-    };
+    # Enable additional language support in the version installed by home-manager.
+    withNodeJs = true;
+    withPython3 = true;
+    withRuby = true;
+  };
 }
