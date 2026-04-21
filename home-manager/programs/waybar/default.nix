@@ -90,6 +90,7 @@
         spacing = 8;
         "hyprland/workspaces" = {
           icon-size = 20;
+          # NOTE: Using r±1 instead of e±1 to allow switching to a new empty workspace.
           on-scroll-down = "${lib.getExe' pkgs.hyprland "hyprctl"} dispatch workspace r-1";
           on-scroll-up = "${lib.getExe' pkgs.hyprland "hyprctl"} dispatch workspace r+1";
           spacing = 16;
