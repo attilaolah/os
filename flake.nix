@@ -86,7 +86,7 @@
             value = nixpkgs.lib.nixosSystem {
               inherit (value) system;
               modules = [
-                ./hosts/home/configuration.nix
+                ./hosts/${name}/configuration.nix
                 home-manager.nixosModules.home-manager
                 {
                   home-manager = {
@@ -107,7 +107,7 @@
           name: value: {
             name = value.hostname;
             value = nix-darwin.lib.darwinSystem {
-              modules = [./work/configuration.nix];
+              modules = [./${name}/configuration.nix];
               specialArgs = specialArgs value;
             };
           }
