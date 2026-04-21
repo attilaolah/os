@@ -66,9 +66,6 @@
         user = userinfo // user;
         platform = builtins.elemAt (nixpkgs.lib.splitString "-" system) 1;
       };
-
-    useGlobalPkgs = true;
-    useUserPackages = true;
   in
     flake-parts.lib.mkFlake {inherit inputs;} (top @ {
       config,
@@ -85,19 +82,39 @@
         inputs.home-manager.flakeModules.home-manager
       ];
 
-      # Expose the home-manager configurations directly.
-      # This allows one to apply only the home-manager config without switching the system config by running:
-      # home-manager switch --flake .#home (or --flake .#nb1609)
-      flake.homeConfigurations = nixpkgs.lib.mapAttrs (name: config:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            inherit (config) system;
-            config.allowUnfree = true;
-          };
-          modules = [./home-manager/home.nix];
-          extraSpecialArgs = specialArgs config;
-        })
-      hosts;
+      flake = {
+        nixosConfigurations."${hosts.home.hostname}" = nixpkgs.lib.nixosSystem {
+          inherit (hosts.home) system;
+          modules = [
+            ./hosts/home/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                backupFileExtension = "bkp";
+                extraSpecialArgs = specialArgs hosts.home;
+                users.${hosts.home.user.username} = import ./home-manager/home.nix;
+                useGlobalPkgs = true;
+                useUserPackages = true;
+              };
+            }
+          ];
+          specialArgs = specialArgs hosts.home;
+        };
+
+        # Expose the home-manager configurations directly.
+        # This allows one to apply only the home-manager config without switching the system config by running:
+        # home-manager switch --flake .#home (or --flake .#nb1609)
+        homeConfigurations = nixpkgs.lib.mapAttrs (name: config:
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = import nixpkgs {
+              inherit (config) system;
+              config.allowUnfree = true;
+            };
+            modules = [./home-manager/home.nix];
+            extraSpecialArgs = specialArgs config;
+          })
+        hosts;
+      };
 
       perSystem = {
         config,
