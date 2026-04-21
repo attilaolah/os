@@ -54,6 +54,8 @@
       };
     };
 
+    platform = system: builtins.elemAt (nixpkgs.lib.splitString "-" system) 1;
+    platformHosts = p: (nixpkgs.lib.filterAttrs (_: value: (platform value.system) == p) hosts);
     specialArgs = {
       ncores,
       system,
@@ -64,15 +66,10 @@
       // {
         inherit ncores system;
         user = userinfo // user;
-        platform = builtins.elemAt (nixpkgs.lib.splitString "-" system) 1;
+        platform = platform system;
       };
   in
-    flake-parts.lib.mkFlake {inherit inputs;} (top @ {
-      config,
-      withSystem,
-      moduleWithSystem,
-      ...
-    }: {
+    flake-parts.lib.mkFlake {inherit inputs;} ({...}: {
       systems = [
         "x86_64-linux"
         "aarch64-darwin"
@@ -83,23 +80,28 @@
       ];
 
       flake = {
-        nixosConfigurations."${hosts.home.hostname}" = nixpkgs.lib.nixosSystem {
-          inherit (hosts.home) system;
-          modules = [
-            ./hosts/home/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                backupFileExtension = "bkp";
-                extraSpecialArgs = specialArgs hosts.home;
-                users.${hosts.home.user.username} = import ./home-manager/home.nix;
-                useGlobalPkgs = true;
-                useUserPackages = true;
-              };
-            }
-          ];
-          specialArgs = specialArgs hosts.home;
-        };
+        nixosConfigurations = nixpkgs.lib.mapAttrs' (
+          name: value: {
+            name = value.hostname;
+            value = nixpkgs.lib.nixosSystem {
+              inherit (value) system;
+              modules = [
+                ./hosts/home/configuration.nix
+                home-manager.nixosModules.home-manager
+                {
+                  home-manager = {
+                    backupFileExtension = "bkp";
+                    extraSpecialArgs = specialArgs value;
+                    users.${value.user.username} = import ./home-manager/home.nix;
+                    useGlobalPkgs = true;
+                    useUserPackages = true;
+                  };
+                }
+              ];
+              specialArgs = specialArgs hosts.home;
+            };
+          }
+        ) (platformHosts "linux");
 
         # Expose the home-manager configurations directly.
         # This allows one to apply only the home-manager config without switching the system config by running:
