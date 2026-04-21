@@ -3,7 +3,7 @@ version: 3
 
 vars:
   HOSTNAME_SHORT:
-    sh: hostname -s
+    sh: hostname -s | tr '[:upper:]' '[:lower:]'
   REBUILD_CMD:
     sh: |
       case "$(uname -s)" in

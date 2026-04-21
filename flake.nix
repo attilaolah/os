@@ -105,7 +105,7 @@
 
         # Expose the home-manager configurations directly.
         # This allows one to apply only the home-manager config without switching the system config by running:
-        # home-manager switch --flake .#home (or --flake .#nb1609)
+        # home-manager switch --flake .#hostname (e.g. --flake .#home)
         homeConfigurations = lib.mapAttrs (name: config:
           home-manager.lib.homeManagerConfiguration {
             pkgs = import nixpkgs {
