@@ -32,8 +32,6 @@
 
       sessionVariables = with config.home;
         {
-          SHELL = lib.getExe pkgs.fish;
-
           # Development environment:
           GOPATH = "${homeDirectory}/dev/go";
         }
