@@ -55,19 +55,6 @@
 
         platform = system: builtins.elemAt (nixpkgs.lib.splitString "-" system) 1;
         platformHosts = p: (nixpkgs.lib.filterAttrs (_: value: (platform value.system) == p) hosts);
-        modules = config: name: kind: [
-          ./hosts/${name}/configuration.nix
-          home-manager."${kind}Modules".home-manager
-          {
-            home-manager = {
-              backupFileExtension = "bkp";
-              extraSpecialArgs = specialArgs config;
-              users.${config.username} = import ./home-manager/home.nix;
-              useGlobalPkgs = true;
-              useUserPackages = true;
-            };
-          }
-        ];
         specialArgs = {
           ncores,
           system,
@@ -87,15 +74,29 @@
             platform = platform system;
           };
 
-        mkSystem = generator: kind: name: value: {
-          name = value.hostname or name;
-          value = generator.lib."${kind}System" {
-            inherit (value) system;
-            modules = modules value name kind;
-            specialArgs = specialArgs value;
-          };
-        };
-        mkConfigs = generator: os: platform: nixpkgs.lib.mapAttrs' (mkSystem generator os) (platformHosts platform);
+        mkConfigs = generator: os: platform:
+          nixpkgs.lib.mapAttrs' (
+            name: value: {
+              name = value.hostname or name;
+              value = generator.lib."${os}System" {
+                inherit (value) system;
+                modules = [
+                  ./hosts/${name}/configuration.nix
+                  home-manager."${os}Modules".home-manager
+                  {
+                    home-manager = {
+                      backupFileExtension = "bkp";
+                      extraSpecialArgs = specialArgs value;
+                      users.${value.username} = import ./home-manager/home.nix;
+                      useGlobalPkgs = true;
+                      useUserPackages = true;
+                    };
+                  }
+                ];
+                specialArgs = specialArgs value;
+              };
+            }
+          ) (platformHosts platform);
       in {
         nixosConfigurations = mkConfigs nixpkgs "nixos" "linux";
         darwinConfigurations = mkConfigs nix-darwin "darwin" "darwin";
