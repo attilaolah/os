@@ -6,6 +6,12 @@
 }: {
   home.packages = with pkgs;
     [
+      # GNU tools
+      coreutils
+      findutils
+      gawk
+      gnused
+
       # CLI utilities:
       age
       any-nix-shell
