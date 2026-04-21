@@ -7,7 +7,6 @@
   imports = [
     ../home/nix.nix
     ../home/programs/fish.nix
-    ../home/programs/neovim.nix
   ];
 
   system = {
