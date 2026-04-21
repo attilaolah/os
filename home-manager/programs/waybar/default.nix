@@ -62,13 +62,24 @@
                 exit 0
               fi
 
-              nvidia-smi \
-                --query-gpu=clocks.current.graphics,memory.used,memory.total,utilization.gpu \
-                --format=csv,noheader,nounits |
-                head -n1 |
-                awk -F", " '{
-                  printf "<span alpha=\"50%%\">%s%%</span> %.1fGHz %.1f<span alpha=\"50%%\">/</span>%.0fGi <span alpha=\"50%%\">GPU</span>\n", $4, $1/1000, $2/1024, $3/1024
-                }'
+              if ! gpu_status="$(
+                nvidia-smi \
+                  --query-gpu=clocks.current.graphics,memory.used,memory.total,utilization.gpu \
+                  --format=csv,noheader,nounits |
+                  head -n1 |
+                  awk -F", " '{
+                    printf "<span alpha=\"50%%\">%s%%</span> %.1fGHz %.1f<span alpha=\"50%%\">/</span>%.0fGi <span alpha=\"50%%\">GPU</span>\n", $4, $1/1000, $2/1024, $3/1024
+                  }'
+              )"; then
+                gpu_status=""
+              fi
+
+              if [ -z "$gpu_status" ]; then
+                echo "GPU N/A"
+                exit 0
+              fi
+
+              printf "%s\n" "$gpu_status"
             '';
           });
           interval = 2;
