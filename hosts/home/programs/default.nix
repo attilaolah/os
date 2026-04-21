@@ -1,14 +1,11 @@
 {
+  imports = [
+    ./fish.nix
+    ./neovim.nix
+  ];
   programs = {
-    neovim = import ./neovim.nix;
-
-    # Terminal:
-    fish.enable = true;
-
     # Window manager:
-    hyprland = {
-      enable = true;
-    };
+    hyprland.enable = true;
     hyprlock.enable = true;
 
     # Misc. utilities:

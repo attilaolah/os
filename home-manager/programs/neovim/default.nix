@@ -1,6 +1,8 @@
 {pkgs, ...}: {
   programs.neovim =
-    (import ../../../hosts/home/programs/neovim.nix)
+    # Defaults defined in the hosts file:
+    (import ../../../hosts/home/programs/neovim.nix).programs.neovim
+    # Overrides:
     // {
       vimdiffAlias = true;
       extraPackages = with pkgs; [
