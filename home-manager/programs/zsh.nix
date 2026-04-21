@@ -1,7 +1,7 @@
 {
   programs.zsh = {
     enable = true;
-    initExtra = ''
+    initContent = ''
       if [[ $- == *i* ]] && command -v fish >/dev/null; then
         exec fish
       fi
