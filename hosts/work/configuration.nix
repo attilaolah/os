@@ -28,6 +28,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    karabiner-elements
     secretive
   ];
 }
