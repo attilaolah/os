@@ -10,11 +10,6 @@
       upgrade = true;
     };
 
-    taps = [
-      "homebrew/cask-fonts"
-      "homebrew/services"
-    ];
-
     # CLI tools:
     brews = [
       "mas" # Mac App Store CLI
