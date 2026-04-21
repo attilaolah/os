@@ -103,6 +103,16 @@
           }
         ) (platformHosts "linux");
 
+        darwinConfigurations = nixpkgs.lib.mapAttrs' (
+          name: value: {
+            name = value.hostname;
+            value = nix-darwin.lib.darwinSystem {
+              modules = [./work/configuration.nix];
+              specialArgs = specialArgs hosts.work;
+            };
+          }
+        ) (platformHosts "darwin");
+
         # Expose the home-manager configurations directly.
         # This allows one to apply only the home-manager config without switching the system config by running:
         # home-manager switch --flake .#home (or --flake .#nb1609)
