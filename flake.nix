@@ -29,7 +29,9 @@
     flake-parts,
     ...
   } @ inputs:
-    flake-parts.lib.mkFlake {inherit inputs;} ({...}: {
+    flake-parts.lib.mkFlake {inherit inputs;} ({...}: let
+      inherit (nixpkgs) lib;
+    in {
       systems = [
         "x86_64-linux"
         "aarch64-darwin"
@@ -53,8 +55,8 @@
           };
         };
 
-        platform = system: builtins.elemAt (nixpkgs.lib.splitString "-" system) 1;
-        platformHosts = p: (nixpkgs.lib.filterAttrs (_: value: (platform value.system) == p) hosts);
+        platform = system: builtins.elemAt (lib.splitString "-" system) 1;
+        platformHosts = p: (lib.filterAttrs (_: value: (platform value.system) == p) hosts);
         specialArgs = {
           ncores,
           system,
@@ -75,7 +77,7 @@
           };
 
         mkConfigs = generator: os: platform:
-          nixpkgs.lib.mapAttrs' (
+          lib.mapAttrs' (
             name: value: {
               name = value.hostname or name;
               value = generator.lib."${os}System" {
@@ -104,7 +106,7 @@
         # Expose the home-manager configurations directly.
         # This allows one to apply only the home-manager config without switching the system config by running:
         # home-manager switch --flake .#home (or --flake .#nb1609)
-        homeConfigurations = nixpkgs.lib.mapAttrs (name: config:
+        homeConfigurations = lib.mapAttrs (name: config:
           home-manager.lib.homeManagerConfiguration {
             pkgs = import nixpkgs {
               inherit (config) system;
