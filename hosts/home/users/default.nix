@@ -4,7 +4,7 @@
   user,
   ...
 }: let
-  inherit (builtins) attrNames concatStringsSep;
+  inherit (builtins) attrNames;
 
   filterGroups = attrs: attrNames (pkgs.lib.filterAttrs (_: v: v) attrs);
 in {
@@ -26,14 +26,7 @@ in {
 
       "${user.username}" = {
         isNormalUser = true;
-        # GECOS fields:
-        description = concatStringsSep "," [
-          user.fullname
-          user.building
-          user.phone # (work)
-          user.phone # (home)
-          user.email # other
-        ];
+        description = user.fullname;
         initialHashedPassword =
           "$6$SI1H.i.JWUuxp0fV$isfHYRqlDVGmtxPA/wmz7aTSA9Ifs7HSRcAiwxBwoCZmDOx7hgn"
           + "/NlvucF33NqNZp0tABWv3HUHlZxYJSh7NH.";

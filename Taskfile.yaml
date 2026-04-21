@@ -27,6 +27,7 @@ tasks:
   install:
     desc: Install (update) the current system
     cmds:
+      - sops -d secrets/contact.yaml > /dev/null
       - 'sudo {{.REBUILD_CMD}} switch --flake ".#{{.HOSTNAME_SHORT}}"'
 
   update:

@@ -17,6 +17,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # SOPS integration
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Flake-Parts
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
@@ -70,9 +76,6 @@
             user = {
               inherit username;
               fullname = "Attila Oláh";
-              building = "Dornhaus 8";
-              email = "attila@dorn.haus";
-              phone = "+41 79 247 25 10";
             };
             platform = platform system;
           };
@@ -90,6 +93,9 @@
                     home-manager = {
                       backupFileExtension = "bkp";
                       extraSpecialArgs = specialArgs value;
+                      sharedModules = [
+                        inputs."sops-nix".homeManagerModules.sops
+                      ];
                       users.${value.username} = import ./home-manager/home.nix;
                       useGlobalPkgs = true;
                       useUserPackages = true;
@@ -115,7 +121,10 @@
                 inherit (config) system;
                 config.allowUnfree = true;
               };
-              modules = [./home-manager/home.nix];
+              modules = [
+                inputs."sops-nix".homeManagerModules.sops
+                ./home-manager/home.nix
+              ];
               extraSpecialArgs = specialArgs config;
             };
           })
@@ -133,6 +142,7 @@
             go-task
             pkgs.home-manager
             nvd
+            sops
           ];
         };
       };

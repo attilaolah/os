@@ -11,6 +11,7 @@
       ./file.nix
       ./home/packages.nix
       ./programs
+      ./secrets/contact.nix
       ./services
       ./xdg/config_file.nix
     ]

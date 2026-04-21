@@ -14,7 +14,6 @@
     };
     settings = {
       user = {
-        inherit (user) email;
         name = user.fullname;
       };
       alias = let
@@ -62,5 +61,9 @@
       };
       credential.helper = "cache --timeout=${toString (60 * 60 * 8)}";
     };
+
+    includes = [
+      {path = config.sops.templates.git.path;}
+    ];
   };
 }
