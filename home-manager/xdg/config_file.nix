@@ -34,6 +34,7 @@ in {
     }
     // lib.attrsets.optionalAttrs (platform == "darwin") {
       "ghostty/config".text = ''
+        font-size = 16
         keybind = cmd+a=esc:a
       '';
     }
