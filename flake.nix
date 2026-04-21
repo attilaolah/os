@@ -42,7 +42,6 @@
 
     hosts = {
       home = {
-        hostname = "home";
         system = "x86_64-linux";
         user.username = "ao";
         ncores = 20;
@@ -82,7 +81,7 @@
       flake = {
         nixosConfigurations = nixpkgs.lib.mapAttrs' (
           name: value: {
-            name = value.hostname;
+            name = value.hostname or name;
             value = nixpkgs.lib.nixosSystem {
               inherit (value) system;
               modules = [
@@ -105,7 +104,7 @@
 
         darwinConfigurations = nixpkgs.lib.mapAttrs' (
           name: value: {
-            name = value.hostname;
+            name = value.hostname or name;
             value = nix-darwin.lib.darwinSystem {
               modules = [./${name}/configuration.nix];
               specialArgs = specialArgs value;
