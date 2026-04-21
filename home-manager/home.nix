@@ -23,7 +23,11 @@
   home =
     {
       inherit (user) username;
-      homeDirectory = "/home/${user.username}";
+      homeDirectory = "/${
+        if (platform == "darwin")
+        then "Users"
+        else "home"
+      }/${user.username}";
       stateVersion = "23.11";
 
       sessionVariables = with config.home;
