@@ -5,6 +5,7 @@
   ...
 }: let
   inherit (builtins) attrNames concatStringsSep readFile;
+  inherit (pkgs) lib;
 
   filterGroups = attrs: attrNames (pkgs.lib.filterAttrs (_: v: v) attrs);
 in {
@@ -46,18 +47,10 @@ in {
             wireshark = programs.wireshark.enable;
             ${services.kubo.group} = services.kubo.enable;
           };
-        openssh.authorizedKeys.keys =
-          (let
-            inherit (pkgs.lib.strings) splitString removeSuffix;
-          in
-            splitString "\n" (removeSuffix "\n" (readFile (pkgs.fetchurl {
-              url = "https://github.com/attilaolah.keys";
-              hash = "sha256-Y63CD0ZqmOhnFhRXwsp2Xb5aaoIWr7nUwHAvov38buc=";
-            }))))
-          ++ [
-            ("ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC"
-              + "+mtV6yrvijOAmvsstRCYsUSbc8ZI3Np7qY2rWuACNaAnLSRhu5qbL/1EzZgcRFbMKaqRYLy8Tq56PDjck2MTo=") # biometric
-          ];
+        openssh.authorizedKeys.keys = lib.splitString "\n" (lib.removeSuffix "\n" (readFile (pkgs.fetchurl {
+          url = "https://github.com/attilaolah.keys";
+          hash = "sha256-Nw/XiCnJ+KmHK1YFO3x9MF+GPfCWWyPmy//go4UKg/M=";
+        })));
       };
     };
 
