@@ -98,7 +98,7 @@
                   };
                 }
               ];
-              specialArgs = specialArgs hosts.home;
+              specialArgs = specialArgs value;
             };
           }
         ) (platformHosts "linux");
@@ -108,7 +108,7 @@
             name = value.hostname;
             value = nix-darwin.lib.darwinSystem {
               modules = [./work/configuration.nix];
-              specialArgs = specialArgs hosts.work;
+              specialArgs = specialArgs value;
             };
           }
         ) (platformHosts "darwin");
