@@ -161,7 +161,7 @@
         ++ (map (n: "$MOD SHIFT, $N${toString n}, movetoworkspace, ${toString n}") workspaces);
 
       bindr = [
-        "SUPER, Super_L, exec, pkill -SIGUSR1 waybar"
+        "SUPER, Super_L, exec, systemctl --user kill -s SIGUSR1 waybar.service"
       ];
 
       bindm = [
