@@ -31,4 +31,4 @@ tasks:
   check:
     desc: Check Nix flakes
     cmds:
-      - nix flake check
+      - nix flake check --all-systems
