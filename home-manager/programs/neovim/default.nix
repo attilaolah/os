@@ -15,6 +15,7 @@
       ];
       initLua = builtins.readFile ./init.lua;
 
+      # Enable additional language support in the version installed by home-manager.
       withNodeJs = true;
       withPython3 = true;
       withRuby = true;
