@@ -20,6 +20,9 @@
       ./tmux.nix
       ./uv.nix
     ]
+    ++ lib.lists.optionals (platform == "darwin") [
+      ./zsh.nix
+    ]
     ++ lib.lists.optionals (platform == "linux") [
       ./hyprlock
       ./waybar
