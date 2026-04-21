@@ -18,6 +18,15 @@
 
     # Required for Homebrew integration.
     primaryUser = user.username;
+
+    defaults.NSGlobalDomain = {
+      # Keep key-repeat behavior consistent with Hyprland defaults.
+      ApplePressAndHoldEnabled = false;
+      # MacOS units: 40 -> ~600ms initial delay.
+      InitialKeyRepeat = 40;
+      # MacOS units are discrete; 3 is a closer default-feel match for 25/s.
+      KeyRepeat = 3;
+    };
   };
 
   users.users."${user.username}".home = "/Users/${user.username}";
