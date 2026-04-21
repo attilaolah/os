@@ -90,13 +90,13 @@
 
       general = {
         allow_tearing = false;
-        border_size = 8;
-        gaps_in = 0;
+        border_size = 0;
+        gaps_in = 2;
         gaps_out = 0;
         layout = "dwindle";
 
-        "col.active_border" = "rgba(181825ff)";
-        "col.inactive_border" = "rgba(11111bff)";
+        "col.active_border" = "rgba(da70d6ff)";
+        "col.inactive_border" = "rgba(2b3856ff)";
       };
       dwindle.preserve_split = true;
 
@@ -106,6 +106,10 @@
         shadow.enabled = false;
         rounding = 0;
       };
+
+      windowrule = [
+        "match:float true, border_size 1"
+      ];
 
       "$MOD" = "SUPER";
 
@@ -155,6 +159,11 @@
         ++ (map (n: "$MOD, $N${toString n}, workspace, ${toString n}") workspaces)
         # Move active window to a workspace with MOD + SHIFT + num
         ++ (map (n: "$MOD SHIFT, $N${toString n}, movetoworkspace, ${toString n}") workspaces);
+
+      bindr = [
+        # Send SIGUSR1 to toggle Waybar visibility.
+        "SUPER, Super_L, exec, systemctl --user kill -s SIGUSR1 waybar.service"
+      ];
 
       bindm = [
         # Move/resize windows with MOD + LMB/RMB and dragging

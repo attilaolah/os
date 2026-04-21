@@ -53,6 +53,9 @@ in {
       LC_PAPER = "en_GB.UTF-8";
       LC_TIME = "en_GB.UTF-8";
     };
+    extraLocales = [
+      "de_DE.UTF-8/UTF-8"
+    ];
   };
 
   console = {

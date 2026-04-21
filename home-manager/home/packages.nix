@@ -1,11 +1,11 @@
 {
-  devenv,
+  aiTools,
   desktop,
   lib,
   pkgs,
-  system,
   ...
 }: let
+  aiToolsList = list: lib.lists.optionals aiTools list;
   desktopList = list: lib.lists.optionals desktop list;
 in {
   home.packages = with pkgs;
@@ -15,10 +15,11 @@ in {
       any-nix-shell
       bat
       bitbucket-cli
-      bun
+      bubblewrap
+      claude-code
       colordiff
       curl
-      devenv.packages.${system}.devenv
+      devenv
       dig
       exiftool
       expect
@@ -92,23 +93,27 @@ in {
       # AI stuff:
       codex
       gemini-cli
+      opencode
       qwen-code
 
       # Python, the basics:
       (python314.withPackages (ps:
         with ps; [
+          huggingface-hub
           jmespath
           polars
           # TODO: add when supported:
           # ipython
         ]))
-    ]
-    ++ (with nodePackages; [
+
       # NPM packages:
+      # NodeJS runtimes & packages
+      bun
+      nodejs_25
       pnpm
       prettier
       typescript-language-server
-    ])
+    ]
     ++ desktopList [
       # Theming:
       vimix-gtk-themes
@@ -142,5 +147,20 @@ in {
       eog
       file-roller
       nautilus
+    ]
+    ++ aiToolsList [
+      # AI (GPU-heavy) tools:
+      ((llama-cpp.override {cudaSupport = true;}).overrideAttrs (old: let
+        version = "8848";
+      in {
+        inherit version;
+        src = fetchFromGitHub {
+          owner = "ggml-org";
+          repo = "llama.cpp";
+          rev = "b${version}";
+          hash = "sha256-QuQW9y8bm43wvBI5lRde08zL5F2nC+aP6Pbm2y8PHUM=";
+        };
+        npmDepsHash = "sha256-RAFtsbBGBjteCt5yXhrmHL39rIDJMCFBETgzId2eRRk=";
+      }))
     ];
 }

@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "scss/at-rule-no-unknown": [true, { "ignoreAtRules": ["define-color"] }],
+    "at-rule-no-unknown": [true, { "ignoreAtRules": ["define-color"] }]
+  }
+}

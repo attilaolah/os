@@ -44,6 +44,7 @@ in {
             docker = virtualisation.docker.enable;
             podman = virtualisation.podman.enable;
             wireshark = programs.wireshark.enable;
+            ${services.kubo.group} = services.kubo.enable;
           };
         openssh.authorizedKeys.keys =
           (let

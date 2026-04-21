@@ -10,10 +10,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Upstream devenv
-    # Remove after 2.0 is merged into nixpkgs.
-    devenv.url = "github:cachix/devenv";
   };
 
   outputs = {
@@ -52,6 +48,8 @@
               // {
                 inherit system user;
                 desktop = true;
+                aiTools = true;
+                ncores = 20;
               };
             users.${user.username} = import ./home-manager/home.nix;
           };
@@ -73,6 +71,8 @@
         // {
           inherit system user;
           desktop = true;
+          aiTools = true;
+          ncores = 20;
         };
       headless =
         inputs
@@ -80,6 +80,7 @@
           inherit system;
           user = user // {username = "olaa";};
           desktop = false;
+          aiTools = false;
         };
     };
 
