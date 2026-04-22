@@ -43,7 +43,7 @@ in {
         font-family = "${fontFamily}"
         font-feature = -liga,-calt
         font-size = ${toString fontSize}
-        keybind = alt+a=esc:a
+        macos-option-as-alt = true
         keybind = cmd+a=esc:a
         theme = Catppuccin Mocha
       '';
