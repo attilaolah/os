@@ -1,4 +1,5 @@
 {
+  gpu,
   lib,
   platform,
   pkgs,
@@ -113,6 +114,19 @@
       pnpm
       prettier
       typescript-language-server
+
+      ((llama-cpp.override gpu).overrideAttrs (old: let
+        version = "8884";
+      in {
+        inherit version;
+        src = fetchFromGitHub {
+          owner = "ggml-org";
+          repo = "llama.cpp";
+          rev = "b${version}";
+          hash = "sha256-pQvoAIcoYkCI2z93YQP737Zuj3PzpgPGlR5HezRneSE=";
+        };
+        npmDepsHash = "sha256-RAFtsbBGBjteCt5yXhrmHL39rIDJMCFBETgzId2eRRk=";
+      }))
     ]
     ++ lib.lists.optionals (platform == "linux") [
       # Not supported on darwin:
@@ -151,19 +165,5 @@
       eog
       file-roller
       nautilus
-
-      # AI (GPU-heavy) tools:
-      ((llama-cpp.override {cudaSupport = true;}).overrideAttrs (old: let
-        version = "8848";
-      in {
-        inherit version;
-        src = fetchFromGitHub {
-          owner = "ggml-org";
-          repo = "llama.cpp";
-          rev = "b${version}";
-          hash = "sha256-QuQW9y8bm43wvBI5lRde08zL5F2nC+aP6Pbm2y8PHUM=";
-        };
-        npmDepsHash = "sha256-RAFtsbBGBjteCt5yXhrmHL39rIDJMCFBETgzId2eRRk=";
-      }))
     ];
 }

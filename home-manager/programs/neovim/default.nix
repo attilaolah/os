@@ -8,6 +8,7 @@
       # Language servers:
       kotlin-language-server
       lua-language-server
+      tree-sitter
       vscode-langservers-extracted
       yaml-language-server
 

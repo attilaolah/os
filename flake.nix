@@ -53,26 +53,29 @@
             system = "x86_64-linux";
             username = "ao";
             ncores = 20;
+            gpu.cudaSupport = true;
           };
           work = {
             hostname = "nb1609";
             system = "aarch64-darwin";
             username = "olaa";
             ncores = 10;
+            gpu.metalSupport = true;
           };
         };
 
         platform = system: builtins.elemAt (lib.splitString "-" system) 1;
         platformHosts = p: (lib.filterAttrs (_: value: (platform value.system) == p) hosts);
         specialArgs = {
-          ncores,
           system,
           username,
+          ncores,
+          gpu,
           ...
         }:
           inputs
           // {
-            inherit ncores system;
+            inherit system ncores gpu;
             user = {
               inherit username;
               fullname = "Attila Oláh";

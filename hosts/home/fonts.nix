@@ -8,7 +8,7 @@
       defaultFonts = {
         sansSerif = ["Inter"];
         serif = ["Roboto Serif"];
-        monospace = ["JetbrainsMono Nerd Font"];
+        monospace = ["JetBrainsMono Nerd Font"];
       };
     };
 
