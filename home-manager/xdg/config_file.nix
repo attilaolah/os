@@ -37,6 +37,7 @@ in {
         font-family = "JetBrainsMono Nerd Font"
         font-feature = -liga,-calt
         font-size = 16
+        keybind = alt+a=esc:a
         keybind = cmd+a=esc:a
         theme = Catppuccin Mocha
       '';
