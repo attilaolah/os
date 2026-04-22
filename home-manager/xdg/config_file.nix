@@ -21,7 +21,13 @@
 
   toINI = lib.generators.toINI {};
 in {
-  xdg.configFile =
+  xdg.configFile = let
+    inherit (builtins) readFile replaceStrings;
+    inherit (import ../../hosts/home/fonts.nix {inherit pkgs;}) fonts;
+
+    fontSize = 16;
+    fontFamily = builtins.elemAt fonts.fontconfig.defaultFonts.monospace 0;
+  in
     {
       "nvim/lua/autocmds.lua".source = ./nvim/lua/autocmds.lua;
       "nvim/lua/chadrc.lua".source = ./nvim/lua/chadrc.lua;
@@ -34,9 +40,9 @@ in {
     }
     // lib.attrsets.optionalAttrs (platform == "darwin") {
       "ghostty/config".text = ''
-        font-family = "JetBrainsMono Nerd Font"
+        font-family = "${fontFamily}"
         font-feature = -liga,-calt
-        font-size = 16
+        font-size = ${toString fontSize}
         keybind = alt+a=esc:a
         keybind = cmd+a=esc:a
         theme = Catppuccin Mocha
@@ -47,18 +53,30 @@ in {
       "foot/foot.ini".text =
         (toINI {
           main = {
-            font = "monospace:size=16";
+            font = "monospace:size=${toString fontSize}";
             font-size-adjustment = 2;
           };
         })
         # TODO: revert once https://github.com/catppuccin/foot/pull/24 is merged
-        + builtins.replaceStrings ["[colors]"] ["[colors-dark]"] (builtins.readFile foot-catppuccin-mocha);
+        + replaceStrings [
+          "[colors]"
+        ] [
+          "[colors-dark]"
+        ] (readFile foot-catppuccin-mocha);
 
       "davfs.conf".text = ''
         secrets ${config.home.homeDirectory}/.config/davfs.secrets
       '';
 
       # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.wofi.style
-      "wofi/style.css".source = ./wofi/style.css;
+      "wofi/style.css".text =
+        replaceStrings [
+          "/* DYNAMIC STYLE */"
+        ] [
+          ''
+            font-size: ${toString fontSize}px;
+            font-family: "${fontFamily}";
+          ''
+        ] (readFile ./wofi/style.css);
     };
 }
