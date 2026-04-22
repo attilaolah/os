@@ -34,6 +34,8 @@ in {
     }
     // lib.attrsets.optionalAttrs (platform == "darwin") {
       "ghostty/config".text = ''
+        font-family = "JetBrainsMono Nerd Font"
+        font-feature = -liga,-calt
         font-size = 16
         keybind = cmd+a=esc:a
         theme = Catppuccin Mocha
