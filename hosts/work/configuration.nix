@@ -20,15 +20,23 @@
     # Required for Homebrew integration.
     primaryUser = user.username;
 
-    defaults.NSGlobalDomain = {
-      # Show the menu bar (disable auto-hide).
-      _HIHideMenuBar = false;
-      # Keep key-repeat behavior consistent with Hyprland defaults.
-      ApplePressAndHoldEnabled = false;
-      # MacOS units: 40 -> ~600ms initial delay.
-      InitialKeyRepeat = 40;
-      # MacOS units are discrete; 3 is a closer default-feel match for 25/s.
-      KeyRepeat = 3;
+    defaults = {
+      NSGlobalDomain = {
+        # Show the menu bar (disable auto-hide).
+        _HIHideMenuBar = false;
+        # Keep key-repeat behavior consistent with Hyprland defaults.
+        ApplePressAndHoldEnabled = false;
+        # MacOS units: 40 -> ~600ms initial delay.
+        InitialKeyRepeat = 40;
+        # MacOS units are discrete; 3 is a closer default-feel match for 25/s.
+        KeyRepeat = 3;
+      };
+
+      CustomUserPreferences = {
+        "com.apple.keyboard" = {
+          fnState = true;
+        };
+      };
     };
   };
 
