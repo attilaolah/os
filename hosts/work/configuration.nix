@@ -30,9 +30,23 @@
         InitialKeyRepeat = 40;
         # MacOS units are discrete; 3 is a closer default-feel match for 25/s.
         KeyRepeat = 3;
+
+        AppleWindowTabbingMode = "always";
+
+        NSAutomaticCapitalizationEnabled = true;
+        NSAutomaticDashSubstitutionEnabled = false;
+        NSAutomaticPeriodSubstitutionEnabled = true;
+        NSAutomaticQuoteSubstitutionEnabled = false;
       };
 
       CustomUserPreferences = {
+        NSGlobalDomain = {
+          AppleLocale = "en_CH";
+          AppleMenuBarVisibleInFullscreen = true;
+          AppleMiniaturizeOnDoubleClick = false;
+          AppleActionOnDoubleClick = "Maximize";
+        };
+
         "com.apple.keyboard" = {
           fnState = true;
         };
