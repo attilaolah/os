@@ -8,10 +8,11 @@
   home.packages = with pkgs;
     [
       # GNU tools
-      coreutils
-      findutils
-      gawk
-      gnused
+      coreutils # cp, mv, rm, etc.
+      findutils # find
+      gawk # awk
+      gnused # sed
+      procps # watch
 
       # CLI utilities:
       age
