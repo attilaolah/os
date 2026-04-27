@@ -11,10 +11,6 @@
 in {
   programs.fish.functions = {
     nixpkg-run = "${nix} run nixpkgs#$argv[1] -- $argv[2..]";
-    restart-sops =
-      if pkgs.stdenv.hostPlatform.isDarwin
-      then "launchctl kickstart -k gui/(id -u)/org.nix-community.home.sops-nix"
-      else "systemctl --user restart sops-nix.service";
 
     __pad_from_left = ''
       if test "$__minimal_prompt" -eq 0
