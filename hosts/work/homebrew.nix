@@ -20,7 +20,6 @@
     # GUI applications:
     casks = [
       "alt-tab"
-      "darktable"
       "font-jetbrains-mono-nerd-font"
       "ghostty"
       "programmer-dvorak"
