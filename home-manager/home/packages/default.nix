@@ -53,32 +53,6 @@
       rsync
       silver-searcher
       sops
-      (writeShellApplication {
-        name = "restart-sops";
-        runtimeInputs =
-          [coreutils gnupg gnused]
-          ++ lib.optionals (!stdenv.hostPlatform.isDarwin) [systemd];
-        text = ''
-          gpg-connect-agent UPDATESTARTUPTTY /bye >/dev/null 2>/dev/null
-
-          key="$(
-            gpg --list-secret-keys --with-colons 2>/dev/null |
-            sed -n 's/^sec:[^:]*:[^:]*:[^:]*:\([^:]*\):.*/\1/p' |
-            head -n1
-          )"
-
-          if [ -n "$key" ]; then
-            printf '%s\n' restart-sops |
-              gpg --local-user "$key" --armor --sign --output /dev/null >/dev/null 2>/dev/null
-          fi
-
-          ${
-            if stdenv.hostPlatform.isDarwin
-            then ''launchctl kickstart -k "gui/$(id -u)/org.nix-community.home.sops-nix"''
-            else "systemctl --user restart sops-nix.service"
-          }
-        '';
-      })
       subversion
       termshark
       tmux
@@ -154,6 +128,8 @@
         };
         npmDepsHash = "sha256-RAFtsbBGBjteCt5yXhrmHL39rIDJMCFBETgzId2eRRk=";
       }))
+
+      (import ./restart_sops.nix {inherit lib pkgs;})
     ]
     ++ lib.lists.optionals (platform == "linux") [
       # Not supported on darwin:

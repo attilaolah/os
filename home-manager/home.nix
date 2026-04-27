@@ -9,7 +9,7 @@
   imports =
     [
       ./file.nix
-      ./home/packages.nix
+      ./home/packages
       ./programs
       ./secrets/contact.nix
       ./services
