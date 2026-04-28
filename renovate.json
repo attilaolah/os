@@ -16,6 +16,26 @@
       "currentValueTemplate": "{{major}}.{{minor}}"
     },
     {
+      "customType": "regex",
+      "fileMatch": [".*\\.nix$"],
+      "matchStrings": [
+        "\\bnodejs_(?<major>\\d+)"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "nodejs/node",
+      "currentValueTemplate": "{{major}}"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [".*\\.nix$"],
+      "matchStrings": [
+        "\\bclang_(?<major>\\d+)"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "llvm/llvm-project",
+      "currentValueTemplate": "{{major}}"
+    },
+    {
       "description": "Update tuple-style GitHub dependencies under overlays/",
       "customType": "regex",
       "fileMatch": ["^overlays/.*\\.nix$"],
@@ -34,7 +54,7 @@
     },
     {
       "description": "Major only",
-      "matchDepNames": ["llvm/llvm-project"],
+      "matchDepNames": ["llvm/llvm-project", "nodejs/node"],
       "matchUpdateTypes": ["minor", "patch", "pin"],
       "enabled": false
     }
