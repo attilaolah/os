@@ -18,10 +18,11 @@ in
   assert (
     isString (elemAt github-tags 0)
     && elemAt github-tags 0 != ""
+    && length (lib.splitString "/" (elemAt github-tags 0)) == 2
     && isString (elemAt github-tags 1)
     && elemAt github-tags 1 != ""
   )
-  || throw "github-tags must contain non-empty string values for the first two elements";
+  || throw "github-tags must contain a non-empty owner/repo slug and version";
     fetchFromGitHub {
       inherit hash;
       rev = resolvedRev;
