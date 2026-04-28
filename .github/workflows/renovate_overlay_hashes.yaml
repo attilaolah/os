@@ -1,0 +1,95 @@
+name: Renovate overlay hash refresh
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-overlay-hashes:
+    if: >-
+      github.actor == 'renovate[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout PR branch
+      uses: actions/checkout@v6
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+        fetch-depth: 0
+
+    - name: Install Nix
+      uses: cachix/install-nix-action@v31
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+        extra_nix_config: |
+          auto-optimise-store = true
+          experimental-features = nix-command flakes
+
+    - name: Refresh hashes for changed overlays
+      run: |
+        set -euo pipefail
+
+        base_ref='${{ github.event.pull_request.base.ref }}'
+        git fetch --no-tags --depth=1 origin "${base_ref}"
+
+        changed_overlays="$(git diff --name-only "origin/${base_ref}...HEAD" -- overlays/*.nix || true)"
+        if [[ -z "${changed_overlays}" ]]; then
+          echo 'No overlay file changes detected.'
+          exit 0
+        fi
+
+        updated_any='false'
+        while IFS= read -r overlay; do
+          [[ -z "${overlay}" ]] && continue
+
+          package_name="$(basename "${overlay}" .nix | tr '_' '-')"
+          mappings=()
+
+          if [[ "${overlay}" == 'overlays/catppuccin.nix' ]]; then
+            mappings=(
+              'hash@1=catppuccin-atuin-src'
+              'hash@2=catppuccin-fzf-src'
+              'hash@3=catppuccin-foot-src'
+            )
+          else
+            if grep -qE '^[[:space:]]*hash[[:space:]]*=' "${overlay}"; then
+              mappings+=("hash=${package_name}-src")
+            fi
+            if grep -qE '^[[:space:]]*npmDepsHash[[:space:]]*=' "${overlay}"; then
+              mappings+=("npmDepsHash=${package_name}-npm-deps")
+            fi
+            if grep -qE '^[[:space:]]*cargoHash[[:space:]]*=' "${overlay}"; then
+              mappings+=("cargoHash=${package_name}-cargo-deps")
+            fi
+          fi
+
+          if [[ "${#mappings[@]}" -eq 0 ]]; then
+            echo "No hash keys detected in ${overlay}; skipping."
+            continue
+          fi
+
+          ./.github/scripts/update_overlay_hashes.sh "${overlay}" "${mappings[@]}"
+          updated_any='true'
+        done <<< "${changed_overlays}"
+
+        if [[ "${updated_any}" != 'true' ]]; then
+          echo 'No mapped overlay hash updates required.'
+        fi
+
+    - name: Commit and push hash updates
+      run: |
+        set -euo pipefail
+
+        if git diff --quiet -- overlays; then
+          echo 'No hash updates needed.'
+          exit 0
+        fi
+
+        git config user.name 'github-actions[bot]'
+        git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        git add overlays
+        git commit -m 'chore(renovate): refresh overlay hashes'
+        git push
