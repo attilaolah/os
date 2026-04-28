@@ -43,6 +43,13 @@
   } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} ({...}: let
       inherit (nixpkgs) lib;
+      overlays =
+        lib.mapAttrsToList
+        (name: _: import (./overlays + "/${name}"))
+        (lib.filterAttrs
+          (name: type: type == "regular" && lib.hasSuffix ".nix" name)
+          (builtins.readDir ./overlays));
+      unfree.allowUnfree = true;
     in {
       systems = [
         "x86_64-linux"
@@ -140,7 +147,7 @@
               pkgs = import nixpkgs {
                 inherit overlays;
                 inherit (config) system;
-                config.allowUnfree = true;
+                config = unfree;
               };
               modules = [
                 inputs.sops-nix.homeManagerModules.sops
@@ -155,8 +162,27 @@
       perSystem = {
         config,
         pkgs,
+        system,
         ...
       }: {
+        packages = let
+          pkgs = import nixpkgs {
+            inherit system overlays;
+            config = unfree;
+          };
+        in {
+          inherit
+            (pkgs)
+            catppuccin-atuin
+            catppuccin-foot
+            catppuccin-fzf
+            codex
+            gemini-cli
+            llama-cpp
+            qwen-code
+            ;
+        };
+
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             alejandra
