@@ -50,7 +50,10 @@
       flake = let
         overlays = [
           (import ./overlays/catppuccin.nix)
+          (import ./overlays/codex.nix)
+          (import ./overlays/gemini_cli.nix)
           (import ./overlays/llama_cpp.nix)
+          (import ./overlays/qwen_code.nix)
         ];
         hosts = {
           home = {
