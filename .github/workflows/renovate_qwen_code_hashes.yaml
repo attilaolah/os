@@ -36,7 +36,8 @@ jobs:
         base_ref='${{ github.event.pull_request.base.ref }}'
         git fetch --no-tags --depth=1 origin "${base_ref}"
 
-        if git diff --unified=0 "origin/${base_ref}...HEAD" -- overlays/qwen_code.nix | grep -qE '^[+-][[:space:]]*github-tags = \["QwenLM/qwen-code"'; then
+        if git diff --unified=0 "origin/${base_ref}...HEAD" -- overlays/qwen_code.nix |
+          grep -qE '^[+-][[:space:]]*github-tags = \["QwenLM/qwen-code"'; then
           echo 'changed=true' >> "$GITHUB_OUTPUT"
         else
           echo 'changed=false' >> "$GITHUB_OUTPUT"
