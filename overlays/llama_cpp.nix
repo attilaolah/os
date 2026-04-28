@@ -1,4 +1,5 @@
 final: prev: let
+  # renovate: datasource=github-tags depName=ggml-org/llama.cpp extractVersion=^b(?<version>.*)$
   version = "8884";
   hash = "sha256-pQvoAIcoYkCI2z93YQP737Zuj3PzpgPGlR5HezRneSE=";
   npmDepsHash = "sha256-RAFtsbBGBjteCt5yXhrmHL39rIDJMCFBETgzId2eRRk=";
