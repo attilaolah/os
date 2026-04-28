@@ -48,13 +48,10 @@
       ];
 
       flake = let
-        overlays = [
-          (import ./overlays/catppuccin.nix)
-          (import ./overlays/codex.nix)
-          (import ./overlays/gemini_cli.nix)
-          (import ./overlays/llama_cpp.nix)
-          (import ./overlays/qwen_code.nix)
-        ];
+        overlays =
+          lib.mapAttrsToList
+          (name: _: import (./overlays + "/${name}"))
+          (lib.filterAttrs (_: type: type == "regular") (builtins.readDir ./overlays));
         hosts = {
           home = {
             system = "x86_64-linux";
