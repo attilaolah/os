@@ -19,6 +19,8 @@ in
     isString (elemAt github-tags 0)
     && elemAt github-tags 0 != ""
     && length (lib.splitString "/" (elemAt github-tags 0)) == 2
+    && elemAt (lib.splitString "/" (elemAt github-tags 0)) 0 != ""
+    && elemAt (lib.splitString "/" (elemAt github-tags 0)) 1 != ""
     && isString (elemAt github-tags 1)
     && elemAt github-tags 1 != ""
   )
