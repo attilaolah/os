@@ -6,7 +6,7 @@ final: prev: let
   npmDepsHash = "sha256-RAFtsbBGBjteCt5yXhrmHL39rIDJMCFBETgzId2eRRk=";
 
   version = elemAt github-tags 1;
-  githubRepo = prev.lib.splitString (elemAt github-tags 0) "/";
+  githubRepo = prev.lib.splitString "/" (elemAt github-tags 0);
 in {
   llama-cpp = prev.llama-cpp.overrideAttrs (_old: {
     inherit version npmDepsHash;
