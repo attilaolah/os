@@ -9,7 +9,7 @@
   imports =
     [
       ./file.nix
-      ./home/packages.nix
+      ./home/packages
       ./programs
       ./secrets/contact.nix
       ./services
@@ -25,7 +25,7 @@
     {
       inherit (user) username;
       homeDirectory = "/${
-        if (platform == "darwin")
+        if pkgs.stdenv.isDarwin
         then "Users"
         else "home"
       }/${user.username}";
@@ -36,7 +36,7 @@
           # Development environment:
           GOPATH = "${homeDirectory}/dev/go";
         }
-        // lib.attrsets.optionalAttrs (platform == "linux") {
+        // lib.attrsets.optionalAttrs pkgs.stdenv.isLinux {
           # XDG dirs:
           XDG_DESKTOP_DIR = homeDirectory;
           XDG_DOWNLOAD_DIR = "${homeDirectory}/dl";
@@ -48,7 +48,7 @@
           # XDG_TEMPLATES_DIR not set
         };
     }
-    // lib.attrsets.optionalAttrs (platform == "linux") {
+    // lib.attrsets.optionalAttrs pkgs.stdenv.isLinux {
       pointerCursor = {
         name = "Adwaita";
         size = 24;

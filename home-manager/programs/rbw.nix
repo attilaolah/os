@@ -4,7 +4,9 @@
   ...
 }: let
   configDir =
-    if pkgs.stdenv.hostPlatform.isDarwin then "Library/Application Support" else config.xdg.configHome;
+    if pkgs.stdenv.hostPlatform.isDarwin
+    then "Library/Application Support"
+    else config.xdg.configHome;
 in {
   programs.rbw = {
     enable = true;

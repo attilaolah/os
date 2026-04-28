@@ -1,17 +1,17 @@
 {
   gpu,
   lib,
-  platform,
   pkgs,
   ...
 }: {
   home.packages = with pkgs;
     [
       # GNU tools
-      coreutils
-      findutils
-      gawk
-      gnused
+      coreutils # cp, mv, rm, etc.
+      findutils # find
+      gawk # awk
+      gnused # sed
+      procps # watch
 
       # CLI utilities:
       age
@@ -69,7 +69,7 @@
       alejandra
       black
       cargo
-      clang
+      clang_22
       cue
       go
       gofumpt
@@ -87,7 +87,6 @@
       zls
 
       # Virtualisation:
-      docker-compose
       podman-compose
       podman-tui
 
@@ -115,23 +114,16 @@
       prettier
       typescript-language-server
 
-      ((llama-cpp.override gpu).overrideAttrs (old: let
-        version = "8884";
-      in {
-        inherit version;
-        src = fetchFromGitHub {
-          owner = "ggml-org";
-          repo = "llama.cpp";
-          rev = "b${version}";
-          hash = "sha256-pQvoAIcoYkCI2z93YQP737Zuj3PzpgPGlR5HezRneSE=";
-        };
-        npmDepsHash = "sha256-RAFtsbBGBjteCt5yXhrmHL39rIDJMCFBETgzId2eRRk=";
-      }))
+      (llama-cpp.override gpu)
+      (import ./restart_sops.nix {inherit lib pkgs;})
     ]
-    ++ lib.lists.optionals (platform == "linux") [
+    ++ lib.lists.optionals pkgs.stdenv.isLinux [
       # Not supported on darwin:
       bubblewrap
       traceroute
+
+      # Using podman-compose on darwin instead.
+      docker-compose
 
       # Theming:
       vimix-gtk-themes

@@ -54,15 +54,27 @@
     };
   };
 
-  users.users."${user.username}".home = "/Users/${user.username}";
+  users.users."${user.username}" = {
+    home = "/Users/${user.username}";
+    # NOTE: This doesn't seem to take effect, however, the shell can still be set manually.
+    # This requires the shell to be registered in /etc/shells (see environment.shells below).
+    # $ chsh -s /run/current-system/sw/bin/fish
+    shell = pkgs.fish;
+  };
 
   nixpkgs = {
     hostPlatform = system;
     config.allowUnfree = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    karabiner-elements
-    secretive
-  ];
+  environment = {
+    # Keep fish in /etc/shells so login-shell changes don't get blocked.
+    shells = with pkgs; [fish zsh];
+
+    systemPackages = with pkgs; [
+      darktable
+      karabiner-elements
+      secretive
+    ];
+  };
 }

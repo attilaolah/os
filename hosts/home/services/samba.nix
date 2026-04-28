@@ -4,6 +4,7 @@
   ...
 }: let
   home = "/home/${user.username}";
+  # The current password is stored in the password manager for user `smbuser`.
   # On a fresh machine, a new passdb entry must be created with `smbpasswd -a smbuser`.
   shareUser = "smbuser";
   shareGroup = "smbusers";

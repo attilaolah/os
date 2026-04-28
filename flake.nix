@@ -48,6 +48,12 @@
       ];
 
       flake = let
+        overlays =
+          lib.mapAttrsToList
+          (name: _: import (./overlays + "/${name}"))
+          (lib.filterAttrs
+            (name: type: type == "regular" && lib.hasSuffix ".nix" name)
+            (builtins.readDir ./overlays));
         hosts = {
           home = {
             system = "x86_64-linux";
@@ -65,7 +71,10 @@
         };
 
         platform = system: builtins.elemAt (lib.splitString "-" system) 1;
-        platformHosts = p: (lib.filterAttrs (_: value: (platform value.system) == p) hosts);
+        platformHosts = p:
+          lib.filterAttrs
+          (_: value: (platform value.system) == p)
+          hosts;
         specialArgs = {
           system,
           username,
@@ -90,6 +99,7 @@
               value = generator.lib."${os}System" {
                 inherit (value) system;
                 modules = [
+                  {nixpkgs = {inherit overlays;};}
                   ./hosts/${name}/configuration.nix
                   home-manager."${os}Modules".home-manager
                   {
@@ -97,7 +107,7 @@
                       backupFileExtension = "bkp";
                       extraSpecialArgs = specialArgs value;
                       sharedModules = [
-                        inputs."sops-nix".homeManagerModules.sops
+                        inputs.sops-nix.homeManagerModules.sops
                       ];
                       users.${value.username} = import ./home-manager/home.nix;
                       useGlobalPkgs = true;
@@ -121,11 +131,12 @@
             name = config.hostName or config.hostname or name;
             value = home-manager.lib.homeManagerConfiguration {
               pkgs = import nixpkgs {
+                inherit overlays;
                 inherit (config) system;
                 config.allowUnfree = true;
               };
               modules = [
-                inputs."sops-nix".homeManagerModules.sops
+                inputs.sops-nix.homeManagerModules.sops
                 ./home-manager/home.nix
               ];
               extraSpecialArgs = specialArgs config;

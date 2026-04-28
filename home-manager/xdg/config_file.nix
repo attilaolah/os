@@ -2,23 +2,8 @@
   config,
   lib,
   pkgs,
-  platform,
   ...
 }: let
-  foot-catppuccin-mocha = pkgs.stdenv.mkDerivation {
-    name = "foot-catppuccin-mocha";
-    # TODO: renovate
-    src = pkgs.fetchFromGitHub {
-      owner = "catppuccin";
-      repo = "foot";
-      rev = "8d263e0e6b58a6b9ea507f71e4dbf6870aaf8507";
-      sha256 = "sha256-bpGVDESE6Pr7kaFgfAWJ/5KC9mRPlv2ciYwRr6jcIKs=";
-    };
-    installPhase = ''
-      cp --recursive themes/catppuccin-mocha.ini $out
-    '';
-  };
-
   toINI = lib.generators.toINI {};
 in {
   xdg.configFile = let
@@ -38,7 +23,7 @@ in {
       "nvim/lua/options.lua".source = ./nvim/lua/options.lua;
       "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     }
-    // lib.attrsets.optionalAttrs (platform == "darwin") {
+    // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
       "ghostty/config".text = ''
         font-family = "${fontFamily}"
         font-feature = -liga,-calt
@@ -48,7 +33,7 @@ in {
         theme = Catppuccin Mocha
       '';
     }
-    // lib.attrsets.optionalAttrs (platform == "linux") {
+    // lib.attrsets.optionalAttrs pkgs.stdenv.isLinux {
       # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.foot.settings
       "foot/foot.ini".text =
         (toINI {
@@ -62,7 +47,7 @@ in {
           "[colors]"
         ] [
           "[colors-dark]"
-        ] (readFile foot-catppuccin-mocha);
+        ] (readFile pkgs.catppuccin-foot);
 
       "davfs.conf".text = ''
         secrets ${config.home.homeDirectory}/.config/davfs.secrets
