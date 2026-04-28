@@ -70,7 +70,7 @@
       alejandra
       black
       cargo
-      clang
+      clang_22
       cue
       go
       gofumpt
