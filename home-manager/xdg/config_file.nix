@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  platform,
   ...
 }: let
   toINI = lib.generators.toINI {};
@@ -24,7 +23,7 @@ in {
       "nvim/lua/options.lua".source = ./nvim/lua/options.lua;
       "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     }
-    // lib.attrsets.optionalAttrs (platform == "darwin") {
+    // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
       "ghostty/config".text = ''
         font-family = "${fontFamily}"
         font-feature = -liga,-calt
@@ -34,7 +33,7 @@ in {
         theme = Catppuccin Mocha
       '';
     }
-    // lib.attrsets.optionalAttrs (platform == "linux") {
+    // lib.attrsets.optionalAttrs pkgs.stdenv.isLinux {
       # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.foot.settings
       "foot/foot.ini".text =
         (toINI {

@@ -1,7 +1,6 @@
 {
   gpu,
   lib,
-  platform,
   pkgs,
   ...
 }: {
@@ -119,7 +118,7 @@
       (llama-cpp.override gpu)
       (import ./restart_sops.nix {inherit lib pkgs;})
     ]
-    ++ lib.lists.optionals (platform == "linux") [
+    ++ lib.lists.optionals pkgs.stdenv.isLinux [
       # Not supported on darwin:
       bubblewrap
       traceroute
