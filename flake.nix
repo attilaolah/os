@@ -51,7 +51,7 @@
         overlays =
           lib.mapAttrsToList
           (name: _: import (./overlays + "/${name}"))
-          (lib.filterAttrs (_: type: type == "regular") (builtins.readDir ./overlays));
+          (lib.filterAttrs (name: type: type == "regular" && lib.hasSuffix ".nix" name) (builtins.readDir ./overlays));
         hosts = {
           home = {
             system = "x86_64-linux";
