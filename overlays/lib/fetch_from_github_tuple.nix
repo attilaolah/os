@@ -13,8 +13,8 @@
     then elemAt github-tags 1
     else rev;
 in
-  assert (isList github-tags && length github-tags >= 2)
-  || throw "github-tags must be a list of at least two strings: owner and repo";
+  assert (isList github-tags && length github-tags == 2)
+  || throw ''github-tags must be a 2-item list: ["owner/repo" "version-or-rev"]'';
   assert (
     isString (elemAt github-tags 0)
     && elemAt github-tags 0 != ""
