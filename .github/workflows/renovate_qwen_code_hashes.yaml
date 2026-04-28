@@ -44,7 +44,7 @@ jobs:
 
     - name: Update qwen-code hashes
       if: steps.detect.outputs.changed == 'true'
-      run: ./.github/scripts/update-qwen-code-hashes.sh
+      run: ./.github/scripts/update_qwen_code_hashes.sh
 
     - name: Commit and push hash updates
       if: steps.detect.outputs.changed == 'true'
