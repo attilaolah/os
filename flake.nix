@@ -102,7 +102,7 @@
                       backupFileExtension = "bkp";
                       extraSpecialArgs = specialArgs value;
                       sharedModules = [
-                        inputs."sops-nix".homeManagerModules.sops
+                        inputs.sops-nix.homeManagerModules.sops
                       ];
                       users.${value.username} = import ./home-manager/home.nix;
                       useGlobalPkgs = true;
@@ -131,7 +131,7 @@
                 config.allowUnfree = true;
               };
               modules = [
-                inputs."sops-nix".homeManagerModules.sops
+                inputs.sops-nix.homeManagerModules.sops
                 ./home-manager/home.nix
               ];
               extraSpecialArgs = specialArgs config;
