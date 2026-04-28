@@ -49,6 +49,7 @@
 
       flake = let
         overlays = [
+          (import ./overlays/catppuccin.nix)
           (import ./overlays/llama_cpp.nix)
         ];
         hosts = {

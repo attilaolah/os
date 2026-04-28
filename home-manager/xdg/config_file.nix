@@ -5,20 +5,6 @@
   platform,
   ...
 }: let
-  foot-catppuccin-mocha = pkgs.stdenv.mkDerivation {
-    name = "foot-catppuccin-mocha";
-    # TODO: renovate
-    src = pkgs.fetchFromGitHub {
-      owner = "catppuccin";
-      repo = "foot";
-      rev = "8d263e0e6b58a6b9ea507f71e4dbf6870aaf8507";
-      sha256 = "sha256-bpGVDESE6Pr7kaFgfAWJ/5KC9mRPlv2ciYwRr6jcIKs=";
-    };
-    installPhase = ''
-      cp --recursive themes/catppuccin-mocha.ini $out
-    '';
-  };
-
   toINI = lib.generators.toINI {};
 in {
   xdg.configFile = let
@@ -62,7 +48,7 @@ in {
           "[colors]"
         ] [
           "[colors-dark]"
-        ] (readFile foot-catppuccin-mocha);
+        ] (readFile pkgs."catppuccin-foot");
 
       "davfs.conf".text = ''
         secrets ${config.home.homeDirectory}/.config/davfs.secrets
