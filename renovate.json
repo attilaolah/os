@@ -16,20 +16,13 @@
       "currentValueTemplate": "{{major}}.{{minor}}"
     },
     {
-      "description": "Update fetchFromGitHub rev fields under overlays/",
+      "description": "Update tuple-style GitHub dependencies under overlays/",
       "customType": "regex",
       "fileMatch": ["^overlays/.*\\.nix$"],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+rev = \\\"(?<currentValue>[^\\\"]+)\\\";"
-      ]
-    },
-    {
-      "description": "Update derived version variables used by fetchFromGitHub rev fields under overlays/",
-      "customType": "regex",
-      "fileMatch": ["^overlays/.*\\.nix$"],
-      "matchStrings": [
-        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) extractVersion=(?<extractVersion>\\S+)\\s+version = \\\"(?<currentValue>[^\\\"]+)\\\";"
-      ]
+        "github-tags = \\[\\\"(?<depName>[^\\\"]+)\\\" \\\"(?<currentValue>[^\\\"]+)\\\"\\];(?:\\s+# extractVersion=(?<extractVersion>\\S+))?"
+      ],
+      "datasourceTemplate": "github-tags"
     }
   ],
   "packageRules": [
