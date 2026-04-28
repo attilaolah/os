@@ -4,17 +4,22 @@ final: prev: let
     inherit (prev) lib fetchFromGitHub;
   };
 
-  github-tags = ["google-gemini/gemini-cli" "0.38.1"]; # extractVersion=^v(?<version>.*)$
-  hash = "sha256-Iq/KxQ8rbLtXDbGzcZxspfFwar189H3mBWwOD4hO7HU=";
-  npmDepsHash = "sha256-T3fxNFvkLR7f49GQjzzTnl3VM+VUUgJfFF5d2GGe7L4=";
+  github-tags = ["google-gemini/gemini-cli" "0.39.1"]; # extractVersion=^v(?<version>.*)$
+  hash = "sha256-O0TBrT3WDCBZ3ZyFyJPBBtPfnDzdFQ7b8pOJOD7bj2g=";
+  npmDepsHash = "sha256-y0LafX1+ukW8HRYBqQ3QfZGHo1cVk00bNygdwsBR/7g=";
 
   version = elemAt github-tags 1;
 in {
-  gemini-cli = prev.gemini-cli.overrideAttrs (_old: {
-    inherit version npmDepsHash;
+  gemini-cli = prev.gemini-cli.overrideAttrs (old: let
     src = fetchFromGithubTuple {
       inherit github-tags hash;
       rev = "v${version}";
     };
+  in {
+    inherit version npmDepsHash src;
+    npmDeps = old.npmDeps.overrideAttrs (_: {
+      inherit src;
+      outputHash = npmDepsHash;
+    });
   });
 }
