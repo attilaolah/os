@@ -40,7 +40,7 @@
       "customType": "regex",
       "fileMatch": ["^overlays/.*\\.nix$"],
       "matchStrings": [
-        "github-tags = \\[\\\"(?<depName>[^\\\"]+)\\\" \\\"(?<currentValue>[^\\\"]+)\\\"\\];(?:\\s+# extractVersion=(?<extractVersion>\\S+))?"
+        "github-tags\\s*=\\s*\\[\\s*\\\"(?<depName>[^\\\"]+)\\\"\\s+\\\"(?<currentValue>[^\\\"]+)\\\"\\s*\\]\\s*;(?:\\s*#\\s*extractVersion=(?<extractVersion>\\S+))?"
       ],
       "datasourceTemplate": "github-tags"
     }
