@@ -87,7 +87,6 @@
       zls
 
       # Virtualisation:
-      docker-compose
       podman-compose
       podman-tui
 
@@ -122,6 +121,9 @@
       # Not supported on darwin:
       bubblewrap
       traceroute
+
+      # Using podman-compose on darwin instead.
+      docker-compose
 
       # Theming:
       vimix-gtk-themes
