@@ -116,19 +116,7 @@
       prettier
       typescript-language-server
 
-      ((llama-cpp.override gpu).overrideAttrs (old: let
-        version = "8884";
-      in {
-        inherit version;
-        src = fetchFromGitHub {
-          owner = "ggml-org";
-          repo = "llama.cpp";
-          rev = "b${version}";
-          hash = "sha256-pQvoAIcoYkCI2z93YQP737Zuj3PzpgPGlR5HezRneSE=";
-        };
-        npmDepsHash = "sha256-RAFtsbBGBjteCt5yXhrmHL39rIDJMCFBETgzId2eRRk=";
-      }))
-
+      (import ./llama_cpp.nix {inherit pkgs gpu;})
       (import ./restart_sops.nix {inherit lib pkgs;})
     ]
     ++ lib.lists.optionals (platform == "linux") [
