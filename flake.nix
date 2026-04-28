@@ -51,7 +51,9 @@
         overlays =
           lib.mapAttrsToList
           (name: _: import (./overlays + "/${name}"))
-          (lib.filterAttrs (name: type: type == "regular" && lib.hasSuffix ".nix" name) (builtins.readDir ./overlays));
+          (lib.filterAttrs
+            (name: type: type == "regular" && lib.hasSuffix ".nix" name)
+            (builtins.readDir ./overlays));
         hosts = {
           home = {
             system = "x86_64-linux";
@@ -69,7 +71,10 @@
         };
 
         platform = system: builtins.elemAt (lib.splitString "-" system) 1;
-        platformHosts = p: (lib.filterAttrs (_: value: (platform value.system) == p) hosts);
+        platformHosts = p:
+          lib.filterAttrs
+          (_: value: (platform value.system) == p)
+          hosts;
         specialArgs = {
           system,
           username,
