@@ -48,7 +48,7 @@ in {
           "[colors]"
         ] [
           "[colors-dark]"
-        ] (readFile pkgs."catppuccin-foot");
+        ] (readFile pkgs.catppuccin-foot);
 
       "davfs.conf".text = ''
         secrets ${config.home.homeDirectory}/.config/davfs.secrets

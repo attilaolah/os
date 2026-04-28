@@ -11,9 +11,9 @@
       ${lib.getExe' pkgs.gnupg "gpgconf"} --list-dirs agent-socket
     )
 
-    source ${pkgs."catppuccin-fzf"}
+    source ${pkgs.catppuccin-fzf}
     set --export FZF_DEFAULT_OPTS "--style=full $FZF_DEFAULT_OPTS"
-    set --export ATUIN_THEME_DIR "${pkgs."catppuccin-atuin"}"
+    set --export ATUIN_THEME_DIR "${pkgs.catppuccin-atuin}"
 
     ${lib.getExe pkgs.direnv} hook fish | source
     ${lib.getExe pkgs.zoxide} init --cmd cd fish | source
