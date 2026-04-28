@@ -116,7 +116,7 @@
       prettier
       typescript-language-server
 
-      (import ./llama_cpp.nix {inherit pkgs gpu;})
+      (llama-cpp.override gpu)
       (import ./restart_sops.nix {inherit lib pkgs;})
     ]
     ++ lib.lists.optionals (platform == "linux") [

@@ -48,6 +48,9 @@
       ];
 
       flake = let
+        overlays = [
+          (import ./overlays/llama_cpp.nix)
+        ];
         hosts = {
           home = {
             system = "x86_64-linux";
@@ -90,6 +93,7 @@
               value = generator.lib."${os}System" {
                 inherit (value) system;
                 modules = [
+                  {nixpkgs = {inherit overlays;};}
                   ./hosts/${name}/configuration.nix
                   home-manager."${os}Modules".home-manager
                   {
@@ -121,6 +125,7 @@
             name = config.hostName or config.hostname or name;
             value = home-manager.lib.homeManagerConfiguration {
               pkgs = import nixpkgs {
+                inherit overlays;
                 inherit (config) system;
                 config.allowUnfree = true;
               };
