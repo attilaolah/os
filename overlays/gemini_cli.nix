@@ -5,8 +5,8 @@ final: prev: let
   };
 
   github-tags = ["google-gemini/gemini-cli" "0.40.0"]; # extractVersion=^v(?<version>.*)$
-  hash = "sha256-O0TBrT3WDCBZ3ZyFyJPBBtPfnDzdFQ7b8pOJOD7bj2g=";
-  npmDepsHash = "sha256-y0LafX1+ukW8HRYBqQ3QfZGHo1cVk00bNygdwsBR/7g=";
+  hash = "sha256-d9CtwQQmblQs9BqdWPY9z9Q1fC41830Xqa1L2SFgEpI=";
+  npmDepsHash = "sha256-mLldQUB8mFoeyXF90y1pPzM87LETCmJAAP/JlnTzgFc=";
 
   version = elemAt github-tags 1;
 in {
