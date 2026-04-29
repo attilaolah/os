@@ -12,6 +12,7 @@
       gawk # awk
       gnused # sed
       procps # watch
+      util-linux # cal, etc.
 
       # CLI utilities:
       age
