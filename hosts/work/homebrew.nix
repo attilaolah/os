@@ -23,6 +23,7 @@
       "font-jetbrains-mono-nerd-font"
       "ghostty"
       "programmer-dvorak"
+      "tigervnc"
     ];
 
     # Mac App Store apps:
