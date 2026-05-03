@@ -53,6 +53,14 @@
       "enabled": false
     },
     {
+      "description": "Keep llama.cpp updates in one rolling PR",
+      "matchDepNames": ["ggml-org/llama.cpp"],
+      "separateMajorMinor": false,
+      "separateMultipleMajor": false,
+      "groupName": "llama.cpp",
+      "branchTopic": "llama-cpp"
+    },
+    {
       "description": "Major only",
       "matchDepNames": ["llvm/llvm-project", "nodejs/node"],
       "matchUpdateTypes": ["minor", "patch", "pin"],
