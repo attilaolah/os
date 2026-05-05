@@ -4,7 +4,7 @@ final: prev: let
     inherit (prev) lib fetchFromGitHub;
   };
 
-  github-tags = ["google-gemini/gemini-cli" "0.40.1"]; # extractVersion=^v(?<version>.*)$
+  github-tags = ["google-gemini/gemini-cli" "0.41.1"]; # extractVersion=^v(?<version>.*)$
   hash = "sha256-oWznf9xleb9bpW2dnMIUehkMqKCb6AecZjcVwZgBrdo=";
   npmDepsHash = "sha256-sscqcey+hPsfajrTspy6FScjfFmtvJMP1w56cFuu3DI=";
 
