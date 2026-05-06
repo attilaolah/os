@@ -4,8 +4,8 @@ final: prev: let
     inherit (prev) lib fetchFromGitHub;
   };
 
-  github-tags = ["ggml-org/llama.cpp" "9010"]; # extractVersion=^b(?<version>.*)$
-  hash = "sha256-TeE296MTX8jTNMnagr9UvwrHLSBC5TbB/sgVZOF13ok=";
+  github-tags = ["ggml-org/llama.cpp" "9045"]; # extractVersion=^b(?<version>.*)$
+  hash = "sha256-SnNuUQQ+Mc2cVw22F7nZQH3HVawMuUK+YKJZjIYpuHE=";
   npmDepsHash = "sha256-k62LIbyY2DXvs7XXbX0lNPiYxuYzeJUyQtS4eA+68f8=";
 
   version = elemAt github-tags 1;
