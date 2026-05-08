@@ -4,7 +4,7 @@ final: prev: let
     inherit (prev) lib fetchFromGitHub;
   };
 
-  github-tags = ["QwenLM/qwen-code" "0.15.7"]; # extractVersion=^v(?<version>.*)$
+  github-tags = ["QwenLM/qwen-code" "0.15.8"]; # extractVersion=^v(?<version>.*)$
   hash = "sha256-gSUSgBVTB6UKq/0qaDJpZcKRxD7H3eCEK5vOPMo0cvE=";
   npmDepsHash = "sha256-nI8gQSLr1HSHGOulPcoZroOJAn901RwVWJMIZN422KQ=";
 
