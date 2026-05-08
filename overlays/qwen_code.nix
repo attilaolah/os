@@ -6,7 +6,7 @@ final: prev: let
 
   github-tags = ["QwenLM/qwen-code" "0.15.8"]; # extractVersion=^v(?<version>.*)$
   hash = "sha256-47cwb55LpXK6Sj9v5KHfjeLUsGjoGQ6zwDmnR5iVyvo=";
-  npmDepsHash = "sha256-BqTTa6YSW1NnVhoJ9p2XsRTbf2/gLjAY+EzV+ThMtfg=";
+  npmDepsHash = "sha256-z7jLjAFENEwirARFtYkK1rvx2UeZI5CaCzt7YyEvi4I=";
 
   version = elemAt github-tags 1;
 in {
