@@ -73,8 +73,6 @@
 
     systemPackages = with pkgs; [
       darktable
-      karabiner-elements
-      secretive
     ];
   };
 }
