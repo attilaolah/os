@@ -2,7 +2,8 @@
 {pkgs, ...}: {
   services.gpg-agent = {
     enable = true;
-    enableSshSupport = true;
+    # On MacOS, Secretive is used instead.
+    enableSshSupport = !pkgs.stdEnv.isDarwin;
     defaultCacheTtl = 8 * 60 * 60; # 8h in secs
     pinentry.package = with pkgs; lib.mkForce pinentry-tty;
     sshKeys = [
