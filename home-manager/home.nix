@@ -36,6 +36,10 @@
           # Development environment:
           GOPATH = "${homeDirectory}/dev/go";
         }
+        // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+          # Use Secretive as the SSH agent on MacOS. It is installed via Homebrew or environment.systemPackages.
+          SSH_AUTH_SOCK = "${homeDirectory}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
+        }
         // lib.attrsets.optionalAttrs pkgs.stdenv.isLinux {
           # XDG dirs:
           XDG_DESKTOP_DIR = homeDirectory;
