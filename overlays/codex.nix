@@ -4,7 +4,7 @@ final: prev: let
     inherit (prev) lib fetchFromGitHub;
   };
 
-  github-tags = ["openai/codex" "0.129.0"]; # extractVersion=^rust-v(?<version>.*)$
+  github-tags = ["openai/codex" "0.130.0"]; # extractVersion=^rust-v(?<version>.*)$
   hash = "sha256-IvBeuDiP1vMzCGVxi4CWKcYajP+IkNIyHmREO5gz2dU=";
   cargoHash = "sha256-H4iqXfcT9mvU6O4j5TybfyKEpx522iaggS68AC1jbU8=";
 
