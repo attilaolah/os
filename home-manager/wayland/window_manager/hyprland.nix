@@ -82,9 +82,9 @@
       });
       "$LOCK" = lib.getExe (pkgs.writeShellApplication {
         name = "hyprland-shortcut-lock";
-        runtimeInputs = with pkgs; [hyprlock];
+        runtimeInputs = with pkgs; [systemd];
         text = ''
-          exec hyprlock --immediate
+          exec loginctl lock-session
         '';
       });
 
