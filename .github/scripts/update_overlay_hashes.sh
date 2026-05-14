@@ -10,7 +10,8 @@ readonly OVERLAY_FILE="$1"
 shift
 readonly MAPPINGS=("$@")
 readonly FAKE_HASH='sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
-readonly LOG_DIR="$(mktemp -d)"
+LOG_DIR="$(mktemp -d)"
+readonly LOG_DIR
 
 cleanup() {
   rm -rf "${LOG_DIR}"
