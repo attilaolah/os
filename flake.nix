@@ -178,11 +178,6 @@
               (map (name: lib.replaceStrings ["_"] ["-"] name))
               (lib.filter (name: builtins.hasAttr name pkgs))
             ])
-            ++ (map (n: "catppuccin-${n}") [
-              "atuin"
-              "foot"
-              "fzf"
-            ])
           );
           exportedPackages = lib.genAttrs packageNames (name: builtins.getAttr name pkgs);
           hashOutputsFor = name: let
