@@ -1,0 +1,104 @@
+name: Renovate overlay hash refresh
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-overlay-hashes:
+    if: >-
+      github.actor == 'renovate[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout PR branch
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+        fetch-depth: 0
+
+    - name: Install Nix
+      uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+        extra_nix_config: |
+          auto-optimise-store = true
+          experimental-features = nix-command flakes
+
+    - name: Refresh hashes for changed overlays
+      run: |
+        set -euo pipefail
+
+        base_ref='${{ github.event.pull_request.base.ref }}'
+        git fetch --no-tags --depth=1 origin "${base_ref}"
+
+        changed_overlays="$(git diff --name-only "origin/${base_ref}...HEAD" -- overlays/*.nix || true)"
+        if [[ -z "${changed_overlays}" ]]; then
+          echo 'No overlay file changes detected.'
+          exit 0
+        fi
+
+        updated_any='false'
+        while IFS= read -r overlay; do
+          [[ -z "${overlay}" ]] && continue
+
+          package_name="$(basename "${overlay}" .nix | tr '_' '-')"
+          mappings=()
+
+          hash_count="$(grep -cE '^[[:space:]]*hash[[:space:]]*=' "${overlay}" || true)"
+          if [[ "${hash_count}" -gt 1 ]]; then
+            echo "Ambiguous key 'hash' in ${overlay}: found ${hash_count} matches; please disambiguate with explicit occurrences." >&2
+            exit 1
+          fi
+          if [[ "${hash_count}" -eq 1 ]]; then
+            mappings+=("hash=${package_name}-src")
+          fi
+
+          npm_deps_hash_count="$(grep -cE '^[[:space:]]*npmDepsHash[[:space:]]*=' "${overlay}" || true)"
+          if [[ "${npm_deps_hash_count}" -gt 1 ]]; then
+            echo "Ambiguous key 'npmDepsHash' in ${overlay}: found ${npm_deps_hash_count} matches; please disambiguate with explicit occurrences." >&2
+            exit 1
+          fi
+          if [[ "${npm_deps_hash_count}" -eq 1 ]]; then
+            mappings+=("npmDepsHash=${package_name}-npm-deps")
+          fi
+
+          cargo_hash_count="$(grep -cE '^[[:space:]]*cargoHash[[:space:]]*=' "${overlay}" || true)"
+          if [[ "${cargo_hash_count}" -gt 1 ]]; then
+            echo "Ambiguous key 'cargoHash' in ${overlay}: found ${cargo_hash_count} matches; please disambiguate with explicit occurrences." >&2
+            exit 1
+          fi
+          if [[ "${cargo_hash_count}" -eq 1 ]]; then
+            mappings+=("cargoHash=${package_name}-cargo-deps")
+          fi
+
+          if [[ "${#mappings[@]}" -eq 0 ]]; then
+            echo "No hash keys detected in ${overlay}; skipping."
+            continue
+          fi
+
+          ./.github/scripts/update_overlay_hashes.sh "${overlay}" "${mappings[@]}"
+          updated_any='true'
+        done <<< "${changed_overlays}"
+
+        if [[ "${updated_any}" != 'true' ]]; then
+          echo 'No mapped overlay hash updates required.'
+        fi
+
+    - name: Commit and push hash updates
+      run: |
+        set -euo pipefail
+
+        if git diff --quiet -- overlays; then
+          echo 'No hash updates needed.'
+          exit 0
+        fi
+
+        git config user.name 'github-actions[bot]'
+        git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        git add overlays
+        git commit -m 'chore(renovate): refresh overlay hashes'
+        git push

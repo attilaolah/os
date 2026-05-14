@@ -1,6 +1,7 @@
 {
   lib,
   fetchFromGitHub,
+  ...
 }: {
   github-tags,
   hash,

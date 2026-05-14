@@ -43,6 +43,15 @@
   } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} ({...}: let
       inherit (nixpkgs) lib;
+      overlays =
+        lib.mapAttrsToList
+        (name: _: import (./overlays + "/${name}"))
+        overlayFileNames;
+      overlayFileNames =
+        lib.filterAttrs
+        (name: type: type == "regular" && lib.hasSuffix ".nix" name)
+        (builtins.readDir ./overlays);
+      unfree.allowUnfree = true;
     in {
       systems = [
         "x86_64-linux"
@@ -140,7 +149,7 @@
               pkgs = import nixpkgs {
                 inherit overlays;
                 inherit (config) system;
-                config.allowUnfree = true;
+                config = unfree;
               };
               modules = [
                 inputs.sops-nix.homeManagerModules.sops
@@ -155,8 +164,33 @@
       perSystem = {
         config,
         pkgs,
+        system,
         ...
       }: {
+        packages = let
+          pkgs = import nixpkgs {
+            inherit system overlays;
+            config = unfree;
+          };
+          packageNames = lib.unique (
+            (lib.pipe (lib.attrNames overlayFileNames) [
+              (map (name: lib.removeSuffix ".nix" name))
+              (map (name: lib.replaceStrings ["_"] ["-"] name))
+              (lib.filter (name: builtins.hasAttr name pkgs))
+            ])
+          );
+          exportedPackages = lib.genAttrs packageNames (name: builtins.getAttr name pkgs);
+          hashOutputsFor = name: let
+            pkg = builtins.getAttr name pkgs;
+          in
+            (lib.optionalAttrs (pkg ? src) {"${name}-src" = pkg.src;})
+            // (lib.optionalAttrs (pkg ? npmDeps) {"${name}-npm-deps" = pkg.npmDeps;})
+            // (lib.optionalAttrs (pkg ? cargoDeps) {"${name}-cargo-deps" = pkg.cargoDeps;});
+          exportedHashOutputs = lib.foldl' lib.recursiveUpdate {} (map hashOutputsFor packageNames);
+        in
+          exportedPackages
+          // exportedHashOutputs;
+
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             alejandra
