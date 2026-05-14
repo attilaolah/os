@@ -43,6 +43,15 @@
         "github-tags\\s*=\\s*\\[\\s*\\\"(?<depName>[^\\\"]+)\\\"\\s+\\\"(?<currentValue>[^\\\"]+)\\\"\\s*\\]\\s*;(?:\\s*#\\s*extractVersion=(?<extractVersion>\\S+))?"
       ],
       "datasourceTemplate": "github-tags"
+    },
+    {
+      "description": "Update GitHub flake inputs pinned to tags",
+      "customType": "regex",
+      "fileMatch": ["^flake\\.nix$"],
+      "matchStrings": [
+        "url\\s*=\\s*\\\"github:(?<depName>[^\\\"\\/]+\\/[^\\\"\\/]+)\\/(?<currentValue>v?\\d[^\\\"]*)\\\";"
+      ],
+      "datasourceTemplate": "github-tags"
     }
   ],
   "packageRules": [
