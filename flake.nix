@@ -25,6 +25,12 @@
 
     # Flake-Parts
     flake-parts.url = "github:hercules-ci/flake-parts";
+
+    # OpenCode upstream overlay
+    opencode = {
+      url = "github:anomalyco/opencode/v1.14.50";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -49,11 +55,12 @@
 
       flake = let
         overlays =
-          lib.mapAttrsToList
-          (name: _: import (./overlays + "/${name}"))
-          (lib.filterAttrs
-            (name: type: type == "regular" && lib.hasSuffix ".nix" name)
-            (builtins.readDir ./overlays));
+          (lib.mapAttrsToList
+            (name: _: import (./overlays + "/${name}"))
+            (lib.filterAttrs
+              (name: type: type == "regular" && lib.hasSuffix ".nix" name)
+              (builtins.readDir ./overlays)))
+          ++ [inputs.opencode.overlays.default];
         hosts = {
           home = {
             system = "x86_64-linux";
