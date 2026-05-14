@@ -109,7 +109,8 @@ jobs:
           git diff --name-only -- overlays \
             | while IFS= read -r path; do
                 [[ -z "${path}" ]] && continue
-                jq -n --arg path "${path}" --rawfile contents "${path}" \
+                contents="$(base64 < "${path}" | tr -d '\n')"
+                jq -n --arg path "${path}" --arg contents "${contents}" \
                   '{path: $path, contents: $contents}'
               done \
             | jq -s .
@@ -139,7 +140,7 @@ jobs:
                 input: {
                   branch: {
                     repositoryNameWithOwner: $repo,
-                    branchName: ("refs/heads/" + $branch)
+                    branchName: $branch
                   },
                   expectedHeadOid: $expected_head_oid,
                   message: {
