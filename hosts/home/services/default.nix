@@ -6,7 +6,6 @@
     ./dbus.nix
     ./gvfs.nix
     ./kubo.nix
-    ./nginx.nix
     ./openssh.nix
     ./pipewire.nix
     ./printing.nix
