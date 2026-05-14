@@ -10,7 +10,17 @@ readonly OVERLAY_FILE="$1"
 shift
 readonly MAPPINGS=("$@")
 readonly FAKE_HASH='sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
+
+if [[ ! -f "${OVERLAY_FILE}" || ! -r "${OVERLAY_FILE}" ]]; then
+  echo "Overlay file '${OVERLAY_FILE}' does not exist or is not readable." >&2
+  exit 1
+fi
+
 LOG_DIR="$(mktemp -d)"
+if [[ "$?" -ne 0 || -z "${LOG_DIR}" ]]; then
+  echo "Failed to create temporary log directory with mktemp -d." >&2
+  exit 1
+fi
 readonly LOG_DIR
 
 cleanup() {
@@ -34,7 +44,7 @@ set_hash_value() {
       if ($0 ~ "^[[:space:]]*" key "[[:space:]]*=[[:space:]]*\"") {
         count++;
         if (count == occurrence) {
-          sub(/"[^"]*";[[:space:]]*$/, "\"" value "\";");
+          sub(/"[^"]*"/, "\"" value "\"");
           found = 1;
         }
       }

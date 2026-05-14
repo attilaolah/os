@@ -48,13 +48,30 @@ jobs:
           package_name="$(basename "${overlay}" .nix | tr '_' '-')"
           mappings=()
 
-          if grep -qE '^[[:space:]]*hash[[:space:]]*=' "${overlay}"; then
+          hash_count="$(grep -cE '^[[:space:]]*hash[[:space:]]*=' "${overlay}" || true)"
+          if [[ "${hash_count}" -gt 1 ]]; then
+            echo "Ambiguous key 'hash' in ${overlay}: found ${hash_count} matches; please disambiguate with explicit occurrences." >&2
+            exit 1
+          fi
+          if [[ "${hash_count}" -eq 1 ]]; then
             mappings+=("hash=${package_name}-src")
           fi
-          if grep -qE '^[[:space:]]*npmDepsHash[[:space:]]*=' "${overlay}"; then
+
+          npm_deps_hash_count="$(grep -cE '^[[:space:]]*npmDepsHash[[:space:]]*=' "${overlay}" || true)"
+          if [[ "${npm_deps_hash_count}" -gt 1 ]]; then
+            echo "Ambiguous key 'npmDepsHash' in ${overlay}: found ${npm_deps_hash_count} matches; please disambiguate with explicit occurrences." >&2
+            exit 1
+          fi
+          if [[ "${npm_deps_hash_count}" -eq 1 ]]; then
             mappings+=("npmDepsHash=${package_name}-npm-deps")
           fi
-          if grep -qE '^[[:space:]]*cargoHash[[:space:]]*=' "${overlay}"; then
+
+          cargo_hash_count="$(grep -cE '^[[:space:]]*cargoHash[[:space:]]*=' "${overlay}" || true)"
+          if [[ "${cargo_hash_count}" -gt 1 ]]; then
+            echo "Ambiguous key 'cargoHash' in ${overlay}: found ${cargo_hash_count} matches; please disambiguate with explicit occurrences." >&2
+            exit 1
+          fi
+          if [[ "${cargo_hash_count}" -eq 1 ]]; then
             mappings+=("cargoHash=${package_name}-cargo-deps")
           fi
 
