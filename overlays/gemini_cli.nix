@@ -1,8 +1,6 @@
 final: prev: let
   inherit (builtins) elemAt;
-  fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix {
-    inherit (prev) lib fetchFromGitHub;
-  };
+  fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["google-gemini/gemini-cli" "0.42.0"]; # extractVersion=^v(?<version>.*)$
   hash = "sha256-QYSzJdyjJ5SvPkI/uf/wu8MdM76W+djai6zD38IJpos=";
