@@ -38,153 +38,151 @@
     }
   ];
 
-  complex_modifications = {
-    rules = [
-      {
-        description = "Windows/Linux-style text navigation shortcuts";
-        manipulators = [
-          {
-            from = {
+  complex_modifications.rules = [
+    {
+      description = "Windows/Linux-style text navigation shortcuts";
+      manipulators = [
+        {
+          from = {
+            key_code = "left_arrow";
+            modifiers = {
+              mandatory = [
+                "control"
+                "shift"
+              ];
+              optional = ["any"];
+            };
+          };
+          to = [
+            {
               key_code = "left_arrow";
-              modifiers = {
-                mandatory = [
-                  "control"
-                  "shift"
-                ];
-                optional = ["any"];
-              };
+              modifiers = [
+                "option"
+                "shift"
+              ];
+            }
+          ];
+          type = "basic";
+        }
+        {
+          from = {
+            key_code = "right_arrow";
+            modifiers = {
+              mandatory = [
+                "control"
+                "shift"
+              ];
+              optional = ["any"];
             };
-            to = [
-              {
-                key_code = "left_arrow";
-                modifiers = [
-                  "option"
-                  "shift"
-                ];
-              }
-            ];
-            type = "basic";
-          }
-          {
-            from = {
+          };
+          to = [
+            {
               key_code = "right_arrow";
-              modifiers = {
-                mandatory = [
-                  "control"
-                  "shift"
-                ];
-                optional = ["any"];
-              };
+              modifiers = [
+                "option"
+                "shift"
+              ];
+            }
+          ];
+          type = "basic";
+        }
+        {
+          from = {
+            key_code = "left_arrow";
+            modifiers = {
+              mandatory = ["control"];
+              optional = ["any"];
             };
-            to = [
-              {
-                key_code = "right_arrow";
-                modifiers = [
-                  "option"
-                  "shift"
-                ];
-              }
-            ];
-            type = "basic";
-          }
-          {
-            from = {
+          };
+          to = [
+            {
               key_code = "left_arrow";
-              modifiers = {
-                mandatory = ["control"];
-                optional = ["any"];
-              };
+              modifiers = ["option"];
+            }
+          ];
+          type = "basic";
+        }
+        {
+          from = {
+            key_code = "right_arrow";
+            modifiers = {
+              mandatory = ["control"];
+              optional = ["any"];
             };
-            to = [
-              {
-                key_code = "left_arrow";
-                modifiers = ["option"];
-              }
-            ];
-            type = "basic";
-          }
-          {
-            from = {
+          };
+          to = [
+            {
               key_code = "right_arrow";
-              modifiers = {
-                mandatory = ["control"];
-                optional = ["any"];
-              };
+              modifiers = ["option"];
+            }
+          ];
+          type = "basic";
+        }
+        {
+          from = {
+            key_code = "home";
+            modifiers = {
+              mandatory = ["shift"];
+              optional = ["any"];
             };
-            to = [
-              {
-                key_code = "right_arrow";
-                modifiers = ["option"];
-              }
-            ];
-            type = "basic";
-          }
-          {
-            from = {
-              key_code = "home";
-              modifiers = {
-                mandatory = ["shift"];
-                optional = ["any"];
-              };
+          };
+          to = [
+            {
+              key_code = "left_arrow";
+              modifiers = [
+                "command"
+                "shift"
+              ];
+            }
+          ];
+          type = "basic";
+        }
+        {
+          from = {
+            key_code = "end";
+            modifiers = {
+              mandatory = ["shift"];
+              optional = ["any"];
             };
-            to = [
-              {
-                key_code = "left_arrow";
-                modifiers = [
-                  "command"
-                  "shift"
-                ];
-              }
-            ];
-            type = "basic";
-          }
-          {
-            from = {
-              key_code = "end";
-              modifiers = {
-                mandatory = ["shift"];
-                optional = ["any"];
-              };
-            };
-            to = [
-              {
-                key_code = "right_arrow";
-                modifiers = [
-                  "command"
-                  "shift"
-                ];
-              }
-            ];
-            type = "basic";
-          }
-          {
-            from = {
-              key_code = "home";
-              modifiers.optional = ["any"];
-            };
-            to = [
-              {
-                key_code = "left_arrow";
-                modifiers = ["command"];
-              }
-            ];
-            type = "basic";
-          }
-          {
-            from = {
-              key_code = "end";
-              modifiers.optional = ["any"];
-            };
-            to = [
-              {
-                key_code = "right_arrow";
-                modifiers = ["command"];
-              }
-            ];
-            type = "basic";
-          }
-        ];
-      }
-    ];
-  };
+          };
+          to = [
+            {
+              key_code = "right_arrow";
+              modifiers = [
+                "command"
+                "shift"
+              ];
+            }
+          ];
+          type = "basic";
+        }
+        {
+          from = {
+            key_code = "home";
+            modifiers.optional = ["any"];
+          };
+          to = [
+            {
+              key_code = "left_arrow";
+              modifiers = ["command"];
+            }
+          ];
+          type = "basic";
+        }
+        {
+          from = {
+            key_code = "end";
+            modifiers.optional = ["any"];
+          };
+          to = [
+            {
+              key_code = "right_arrow";
+              modifiers = ["command"];
+            }
+          ];
+          type = "basic";
+        }
+      ];
+    }
+  ];
 }
