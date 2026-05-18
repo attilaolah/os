@@ -61,10 +61,6 @@
           ((any "right_arrow" ["control" "shift"]) // (to "right_arrow" ["option" "shift"]))
           ((any "left_arrow" ["control"]) // (to "left_arrow" ["option"]))
           ((any "right_arrow" ["control"]) // (to "right_arrow" ["option"]))
-          ((any "home" ["shift"]) // (to "left_arrow" ["command" "shift"]))
-          ((any "end" ["shift"]) // (to "right_arrow" ["command" "shift"]))
-          ((any "home" []) // (to "left_arrow" ["command"]))
-          ((any "end" []) // (to "right_arrow" ["command"]))
         ]
       );
     }

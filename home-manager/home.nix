@@ -8,7 +8,7 @@
 }: {
   imports =
     [
-      ./file.nix
+      ./file
       ./home/packages
       ./programs
       ./secrets/contact.nix
