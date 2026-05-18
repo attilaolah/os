@@ -37,32 +37,31 @@
     }
   );
 
-  complex_modifications.rules = [
+  complex_modifications.rules = let
+    any = key_code: mandatory: from key_code mandatory ["any"];
+    from = key_code: mandatory: optional: {
+      from = {
+        inherit key_code;
+        modifiers =
+          (
+            if mandatory == []
+            then {}
+            else {inherit mandatory;}
+          )
+          // {inherit optional;};
+      };
+    };
+    to = key_code: modifiers: {to = [{inherit key_code modifiers;}];};
+    basic = manipulators: map (mod: mod // {type = "basic";}) manipulators;
+  in [
     {
       description = "Windows/Linux-style text navigation shortcuts";
-      manipulators = map (mod: mod // {type = "basic";}) (
-        let
-          any = key_code: mandatory: from key_code mandatory ["any"];
-          from = key_code: mandatory: optional: {
-            from = {
-              inherit key_code;
-              modifiers =
-                (
-                  if mandatory == []
-                  then {}
-                  else {inherit mandatory;}
-                )
-                // {inherit optional;};
-            };
-          };
-          to = key_code: modifiers: {to = [{inherit key_code modifiers;}];};
-        in [
-          ((any "left_arrow" ["control" "shift"]) // (to "left_arrow" ["option" "shift"]))
-          ((any "right_arrow" ["control" "shift"]) // (to "right_arrow" ["option" "shift"]))
-          ((any "left_arrow" ["control"]) // (to "left_arrow" ["option"]))
-          ((any "right_arrow" ["control"]) // (to "right_arrow" ["option"]))
-        ]
-      );
+      manipulators = basic [
+        ((any "left_arrow" ["control" "shift"]) // (to "left_arrow" ["option" "shift"]))
+        ((any "right_arrow" ["control" "shift"]) // (to "right_arrow" ["option" "shift"]))
+        ((any "left_arrow" ["control"]) // (to "left_arrow" ["option"]))
+        ((any "right_arrow" ["control"]) // (to "right_arrow" ["option"]))
+      ];
     }
   ];
 }
