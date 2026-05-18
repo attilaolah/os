@@ -1176,6 +1176,7 @@
 	<action id="O">
 	  <when state="none" 		output="O" />
 	  <when state="compose"		next="ring" />
+	  <when state="doubleacute" output="&#x0150;" />
 	  <when state="grave" 		output="&#xD2;" />
 	  <when state="acute" 		output="&#xD3;" />
 	  <when state="circum" 		output="&#xD4;" />
@@ -1227,6 +1228,7 @@
 	<action id="o">
 	  <when state="none" 		output="o" />
 	  <when state="compose"		next="ring" />
+	  <when state="doubleacute" output="&#x0151;" />
 	  <when state="grave" 		output="&#xF2;" />
 	  <when state="acute" 		output="&#xF3;" />
 	  <when state="circum" 		output="&#xF4;" />
