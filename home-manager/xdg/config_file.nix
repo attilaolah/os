@@ -24,7 +24,7 @@ in {
       "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     }
     // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
-      "karabiner/karabiner.json".text = toJSON (import ./karabiner.nix);
+      "karabiner/karabiner.json".text = toJSON (import ./karabiner);
       "ghostty/config".text = ''
         font-family = "${fontFamily}"
         font-feature = -liga,-calt
