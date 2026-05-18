@@ -91,7 +91,7 @@
 	  <key code="50"  output="&#x24;"/>	<!-- left pinky 3	-->
 	  <key code="18"  output="&#x26;"/>	<!-- left pinky 2 	-->
 	  <key code="19"  output="["/>			<!-- left pinky 1 	-->
-	  <key code="20"  output="{"/>			<!-- left ring 		-->	  
+	  <key code="20"  output="{"/>			<!-- left ring 		-->
 	  <key code="21"  output="}"/>			<!-- left middle 	-->
 	  <key code="23"  action="lparen"/>		<!-- left index 1 	-->
 	  <key code="22"  action="doubleacute"/>			<!-- left index 2 	-->
@@ -106,7 +106,7 @@
 	  <!-- top row -->
 	  <key code="48"  output="&#x09;"/>		<!-- Tab 			-->
 	  <key code="12"  action="semi"/>		<!-- left pinky 	-->
-	  <key code="13"  action="comma"/>		<!-- left ring 		-->	  
+	  <key code="13"  action="comma"/>		<!-- left ring 		-->
 	  <key code="14"  action="period"/>		<!-- left middle 	-->
 	  <key code="15"  output="p"/>			<!-- left index 1 	-->
 	  <key code="17"  action="y"/>			<!-- left index 2 	-->
@@ -117,10 +117,10 @@
 	  <key code="35"  action="l"/>			<!-- right pinky 1 	-->
 	  <key code="33"  action="slash"/>		<!-- right pinky 2 	-->
 	  <key code="30"  action="at"/>			<!-- right pinky 3 	-->
-	  
+
 	  <!-- home row -->
 	  <key code="0"   action="a"/>			<!-- left pinky 	-->
-	  <key code="1"   action="o"/>			<!-- left ring 		-->	  
+	  <key code="1"   action="o"/>			<!-- left ring 		-->
 	  <key code="2"   action="e"/>			<!-- left middle 	-->
 	  <key code="3"   action="u"/>			<!-- left index 1 	-->
 	  <key code="5"   action="i"/>			<!-- left index 2 	-->
@@ -171,7 +171,7 @@
 
 	  <!-- modifiers -->
 	  <key code="49"  action="space"/>		<!-- Spacebar 		-->
-	  
+
 	  <!-- function row -->
 	  <key code="53"  output="&#x1B;"/>		<!-- Esc 			-->
 	  <key code="122" output="&#x10;"/>		<!-- F1 			-->
@@ -197,7 +197,7 @@
 	  <key code="117" output="&#x7F;"/>		<!-- Del 			-->
 	  <key code="119" output="&#x04;"/>		<!-- End 			-->
 	  <key code="121" output="&#x0C;"/>		<!-- PgDn 			-->
-	  
+
 	  <!-- arrow keys -->
 	  <key code="126" output="&#x1E;"/>		<!-- Up 			-->
 	  <key code="123" output="&#x1C;"/>		<!-- Left 			-->
@@ -210,7 +210,7 @@
 	  <key code="50"  action="tilde"/>		<!-- left pinky 3 	-->
 	  <key code="18"  output="%"/>			<!-- left pinky 2 	-->
 	  <key code="19"  output="7"/>			<!-- left pinky 1 	-->
-	  <key code="20"  output="5"/>			<!-- left ring 		-->	  
+	  <key code="20"  output="5"/>			<!-- left ring 		-->
 	  <key code="21"  output="3"/>			<!-- left middle 	-->
 	  <key code="23"  output="1"/>			<!-- left index 1	-->
 	  <key code="22"  output="9"/>			<!-- left index 2 	-->
@@ -223,7 +223,7 @@
 	  <key code="51"  output="&#x08;"/>		<!-- Backspace 		--><!--*-->
 
 	  <!-- top row -->
-	  <key code="48"  output="&#x09;"/>		<!-- Tab 			--><!--*-->	  
+	  <key code="48"  output="&#x09;"/>		<!-- Tab 			--><!--*-->
 	  <key code="12"  action="colon"/>		<!-- left pinky 	-->
 	  <key code="13"  action="less"/>		<!-- left ring 		-->
 	  <key code="14"  action="greater"/>	<!-- left middle 	-->
@@ -236,10 +236,10 @@
 	  <key code="35"  action="L"/>			<!-- right pinky 1 	-->
 	  <key code="33"  output="?"/>			<!-- right pinky 2 	-->
 	  <key code="30"  action="caret"/>		<!-- right pinky 3 	-->
-	  
+
 	  <!-- home row -->
 	  <key code="0"   action="A"/>			<!-- left pinky 	-->
-	  <key code="1"   action="O"/>			<!-- left ring 		-->	  
+	  <key code="1"   action="O"/>			<!-- left ring 		-->
 	  <key code="2"   action="E"/>			<!-- left middle 	-->
 	  <key code="3"   action="U"/>			<!-- left index 1 	-->
 	  <key code="5"   action="I"/>			<!-- left index 2 	-->
@@ -250,7 +250,7 @@
 	  <key code="41"  action="S"/>			<!-- right pinky 1 	-->
 	  <key code="39"  output="_"/>			<!-- right pinky 2 	-->
 	  <key code="42"  output="|"/>			<!-- right pinky 3 	-->
-	  <key code="36"  output="&#x0D;"/>		<!-- Return 		--><!--*-->	  
+	  <key code="36"  output="&#x0D;"/>		<!-- Return 		--><!--*-->
 
 	  <!-- bottom row -->
 	  <!-- compose action is not affected by Shift; allows us to
@@ -259,7 +259,7 @@
 	  -->
 	  <key code="10"  action="compose"/>
 	  <key code="6"   action="quote"/>		<!-- left pinky 	-->
-	  <key code="7"   output="Q"/>			<!-- left ring 		-->	  
+	  <key code="7"   output="Q"/>			<!-- left ring 		-->
 	  <key code="8"   action="J"/>			<!-- left middle 	-->
 	  <key code="9"   action="K"/>			<!-- left index 1 	-->
 	  <key code="11"  output="X"/>			<!-- left index 2 	-->
@@ -284,7 +284,7 @@
 	  <key code="83"  output="="/>			<!-- Num 1 			-->
 	  <key code="84"  output="x"/>			<!-- Num 2 			-->
 	  <key code="85"  output=":"/>			<!-- Num 3 			-->
-	  <key code="76"  output="&#x03;"/>		<!-- Enter 			--><!--*-->	  
+	  <key code="76"  output="&#x03;"/>		<!-- Enter 			--><!--*-->
 	  <key code="82"  output="\"/>			<!-- Num 0 			-->
 	  <key code="65"  output=";"/>			<!-- Decimal Sep. 	-->
 
@@ -316,12 +316,12 @@
 	  <key code="117" output="&#x7F;"/>		<!-- Del 			-->
 	  <key code="119" output="&#x04;"/>		<!-- End 			-->
 	  <key code="121" output="&#x0C;"/>		<!-- PgDn 			-->
-	  
+
 	  <!-- arrow keys --><!--*-->
 	  <key code="126" output="&#x1E;"/>		<!-- Up 			-->
 	  <key code="123" output="&#x1C;"/>		<!-- Left 			-->
 	  <key code="125" output="&#x1F;"/>		<!-- Down 			-->
-	  <key code="124" output="&#x1D;"/>		<!-- Right 			-->	  
+	  <key code="124" output="&#x1D;"/>		<!-- Right 			-->
 	</keyMap>
 	<!-- keys that are not affected by Caps Lock are marked with + -->
 	<keyMap index="2">
@@ -329,7 +329,7 @@
 	  <key code="50"  output="&#x24;"/>	<!-- left pinky 3 	--><!--+-->
 	  <key code="18"  output="&#x26;"/>	<!-- left pinky 2 	--><!--+-->
 	  <key code="19"  output="7"/>			<!-- left pinky 1 	-->
-	  <key code="20"  output="5"/>			<!-- left ring 		-->	  
+	  <key code="20"  output="5"/>			<!-- left ring 		-->
 	  <key code="21"  output="3"/>			<!-- left middle 	-->
 	  <key code="23"  output="1"/>			<!-- left index 1	-->
 	  <key code="22"  output="9"/>			<!-- left index 2 	-->
@@ -355,10 +355,10 @@
 	  <key code="35"  action="L"/>			<!-- right pinky 1 	-->
 	  <key code="33"  action="slash"/>		<!-- right pinky 2 	--><!--+-->
 	  <key code="30"  action="at"/>			<!-- right pinky 3 	--><!--+-->
-	  
+
 	  <!-- home row -->
 	  <key code="0"   action="A"/>			<!-- left pinky 	-->
-	  <key code="1"   action="O"/>			<!-- left ring 		-->	  
+	  <key code="1"   action="O"/>			<!-- left ring 		-->
 	  <key code="2"   action="E"/>			<!-- left middle 	-->
 	  <key code="3"   action="U"/>			<!-- left index 1 	-->
 	  <key code="5"   action="I"/>			<!-- left index 2 	-->
@@ -374,7 +374,7 @@
 	  <!-- bottom row -->
 	  <key code="10"  action="compose"/>
 	  <key code="6"   action="apostrophe"/>	<!-- left pinky 	--><!--+-->
-	  <key code="7"   output="Q"/>			<!-- left ring 		-->	  
+	  <key code="7"   output="Q"/>			<!-- left ring 		-->
 	  <key code="8"   action="J"/>			<!-- left middle 	-->
 	  <key code="9"   action="K"/>			<!-- left index 1 	-->
 	  <key code="11"  output="X"/>			<!-- left index 2 	-->
@@ -405,7 +405,7 @@
 
 	  <!-- modifiers -->
 	  <key code="49"  action="space"/>		<!-- Spacebar 		-->
-	  
+
 	  <!-- function row -->
 	  <key code="53"  output="&#x1B;"/>		<!-- Esc 			-->
 	  <key code="122" output="&#x10;"/>		<!-- F1 			-->
@@ -431,12 +431,12 @@
 	  <key code="117" output="&#x7F;"/>		<!-- Del 			-->
 	  <key code="119" output="&#x04;"/>		<!-- End 			-->
 	  <key code="121" output="&#x0C;"/>		<!-- PgDn 			-->
-	  
+
 	  <!-- arrow keys -->
 	  <key code="126" output="&#x1E;"/>		<!-- Up 			-->
 	  <key code="123" output="&#x1C;"/>		<!-- Left 			-->
 	  <key code="125" output="&#x1F;"/>		<!-- Down 			-->
-	  <key code="124" output="&#x1D;"/>		<!-- Right 			-->	  
+	  <key code="124" output="&#x1D;"/>		<!-- Right 			-->
 	</keyMap>
 	<!-- those keys that are unaffected by Caps Lock (marked with at) should
 	     behave as in the regular shift map; the others are cancelled by the
@@ -497,7 +497,7 @@
 	  -->
 	  <key code="10"  action="compose"/>
 	  <key code="6"   action="quote"/>		<!-- left pinky 	--><!--@-->
-	  <key code="7"   output="q"/>			<!-- left ring 		-->	  
+	  <key code="7"   output="q"/>			<!-- left ring 		-->
 	  <key code="8"   action="j"/>			<!-- left middle 	-->
 	  <key code="9"   action="k"/>			<!-- left index 1 	-->
 	  <key code="11"  output="x"/>			<!-- left index 2 	-->
@@ -1380,7 +1380,7 @@
 	</action>
 	<!-- dead key actions; go straight to a state and wait for key -->
 	<action id="acute">
-	  <when state="none"		next="acute" />	  
+	  <when state="none"		next="acute" />
 	</action>
 	<action id="breve">
 	  <when state="none"		next="breve" />
