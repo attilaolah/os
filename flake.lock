@@ -110,6 +110,26 @@
         "type": "github"
       }
     },
+    "programmer-dvorak-compose": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779141935,
+        "narHash": "sha256-isDwZZhpYU8ro/ato1LlJpH5GFbY/fFOcDPoERZdnRM=",
+        "owner": "attilaolah",
+        "repo": "programmer-dvorak-compose",
+        "rev": "deec86f8fd2ac2bee4a61884dafd9c9e5e48cb04",
+        "type": "github"
+      },
+      "original": {
+        "owner": "attilaolah",
+        "repo": "programmer-dvorak-compose",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -117,6 +137,7 @@
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
         "opencode": "opencode",
+        "programmer-dvorak-compose": "programmer-dvorak-compose",
         "sops-nix": "sops-nix"
       }
     },

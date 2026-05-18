@@ -31,6 +31,11 @@
       url = "github:anomalyco/opencode/v1.15.4";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    programmer-dvorak-compose = {
+      url = "github:attilaolah/programmer-dvorak-compose";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -123,6 +128,7 @@
                       backupFileExtension = "bkp";
                       extraSpecialArgs = specialArgs value;
                       sharedModules = [
+                        inputs.programmer-dvorak-compose.homeManagerModules.default
                         inputs.sops-nix.homeManagerModules.sops
                       ];
                       users.${value.username} = import ./home-manager/home.nix;
@@ -152,6 +158,7 @@
                 config = unfree;
               };
               modules = [
+                inputs.programmer-dvorak-compose.homeManagerModules.default
                 inputs.sops-nix.homeManagerModules.sops
                 ./home-manager/home.nix
               ];

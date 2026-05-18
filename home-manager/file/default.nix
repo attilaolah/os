@@ -29,9 +29,5 @@
     }
     // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
       "Library/KeyBindings/DefaultKeyBinding.dict".text = builtins.readFile ./default_key_binding.dict;
-      "Library/Keyboard Layouts/Programmer Dvorak Compose.bundle/Contents/Info.plist".source = ./library/keyboard_layout/programmer_dvorak_compose.bundle/contents/info.plist;
-      "Library/Keyboard Layouts/Programmer Dvorak Compose.bundle/Contents/version.plist".source = ./library/keyboard_layout/programmer_dvorak_compose.bundle/contents/version.plist;
-      "Library/Keyboard Layouts/Programmer Dvorak Compose.bundle/Contents/Resources/English.lproj/InfoPlist.strings".source = ./library/keyboard_layout/programmer_dvorak_compose.bundle/contents/resources/english.lproj/info_plist.strings;
-      "Library/Keyboard Layouts/Programmer Dvorak Compose.bundle/Contents/Resources/Programmer Dvorak Compose.keylayout".source = ./library/keyboard_layout/programmer_dvorak_compose.bundle/contents/resources/programmer_dvorak_compose.keylayout;
     };
 }
