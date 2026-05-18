@@ -172,13 +172,11 @@
             inherit system overlays;
             config = unfree;
           };
-          packageNames = lib.unique (
-            (lib.pipe (lib.attrNames overlayFileNames) [
-              (map (name: lib.removeSuffix ".nix" name))
-              (map (name: lib.replaceStrings ["_"] ["-"] name))
-              (lib.filter (name: builtins.hasAttr name pkgs))
-            ])
-          );
+          packageNames = lib.unique (lib.pipe (lib.attrNames overlayFileNames) [
+            (map (name: lib.removeSuffix ".nix" name))
+            (map (name: lib.replaceStrings ["_"] ["-"] name))
+            (lib.filter (name: builtins.hasAttr name pkgs))
+          ]);
           exportedPackages = lib.genAttrs packageNames (name: builtins.getAttr name pkgs);
           hashOutputsFor = name: let
             pkg = builtins.getAttr name pkgs;

@@ -7,7 +7,7 @@
   toINI = lib.generators.toINI {};
 in {
   xdg.configFile = let
-    inherit (builtins) readFile replaceStrings;
+    inherit (builtins) readFile replaceStrings toJSON;
     inherit (import ../../hosts/home/fonts.nix {inherit pkgs;}) fonts;
 
     fontSize = 16;
@@ -24,6 +24,7 @@ in {
       "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     }
     // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+      "karabiner/karabiner.json".text = toJSON (import ./karabiner);
       "ghostty/config".text = ''
         font-family = "${fontFamily}"
         font-feature = -liga,-calt
