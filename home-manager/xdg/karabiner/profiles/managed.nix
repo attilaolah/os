@@ -27,16 +27,15 @@
     ({identifiers = keyboard // das_keyboard;} // (remap "right_option"))
   ];
 
-  simple_modifications = [
-    {
-      from.key_code = "caps_lock";
-      to = [{key_code = "escape";}];
+  simple_modifications = builtins.attrValues (
+    builtins.mapAttrs (from: to: {
+      from.key_code = from;
+      to = [{key_code = to;}];
+    }) {
+      caps_lock = "escape";
+      non_us_backslash = "grave_accent_and_tilde";
     }
-    {
-      from.key_code = "non_us_backslash";
-      to = [{key_code = "grave_accent_and_tilde";}];
-    }
-  ];
+  );
 
   complex_modifications.rules = [
     {
