@@ -40,7 +40,7 @@
   complex_modifications.rules = [
     {
       description = "Windows/Linux-style text navigation shortcuts";
-      manipulators = [
+      manipulators = map (mod: mod // {type = "basic";}) [
         {
           from = {
             key_code = "left_arrow";
@@ -61,7 +61,6 @@
               ];
             }
           ];
-          type = "basic";
         }
         {
           from = {
@@ -83,7 +82,6 @@
               ];
             }
           ];
-          type = "basic";
         }
         {
           from = {
@@ -99,7 +97,6 @@
               modifiers = ["option"];
             }
           ];
-          type = "basic";
         }
         {
           from = {
@@ -115,7 +112,6 @@
               modifiers = ["option"];
             }
           ];
-          type = "basic";
         }
         {
           from = {
@@ -134,7 +130,6 @@
               ];
             }
           ];
-          type = "basic";
         }
         {
           from = {
@@ -153,7 +148,6 @@
               ];
             }
           ];
-          type = "basic";
         }
         {
           from = {
@@ -166,7 +160,6 @@
               modifiers = ["command"];
             }
           ];
-          type = "basic";
         }
         {
           from = {
@@ -179,7 +172,6 @@
               modifiers = ["command"];
             }
           ];
-          type = "basic";
         }
       ];
     }
