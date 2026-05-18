@@ -29,5 +29,6 @@
     }
     // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
       "Library/KeyBindings/DefaultKeyBinding.dict".text = builtins.readFile ./default_key_binding.dict;
+      "Library/Keyboard Layouts/programmer-dvorak-compose.bundle".source = ./keyboard-layouts/programmer-dvorak-compose.bundle;
     };
 }
