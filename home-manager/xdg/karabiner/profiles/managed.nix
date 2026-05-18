@@ -3,29 +3,28 @@
   selected = true;
   virtual_hid_keyboard.keyboard_type_v2 = "iso";
 
-  devices = [
-    {
-      identifiers.is_keyboard = true;
+  devices = let
+    # Keyboard identifiers.
+    # Any keyboard (in practice, this applies to the built-in keyboard).
+    keyboard.is_keyboard = true;
+    # Das Keyboard:
+    das_keyboard = {
+      product_id = 320;
+      vendor_id = 9456;
+    };
+    # Keyboard-specific remapping.
+    remap = key_code: {
       simple_modifications = [
         {
-          from.key_code = "right_command";
+          from = {inherit key_code;};
+          # Remap the key right of the space bar as the built-in compose key.
           to = [{key_code = "non_us_backslash";}];
         }
       ];
-    }
-    {
-      identifiers = {
-        is_keyboard = true;
-        product_id = 320;
-        vendor_id = 9456;
-      };
-      simple_modifications = [
-        {
-          from.key_code = "right_option";
-          to = [{key_code = "non_us_backslash";}];
-        }
-      ];
-    }
+    };
+  in [
+    ({identifiers = keyboard;} // (remap "right_command"))
+    ({identifiers = keyboard // das_keyboard;} // (remap "right_option"))
   ];
 
   simple_modifications = [
