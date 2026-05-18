@@ -40,140 +40,33 @@
   complex_modifications.rules = [
     {
       description = "Windows/Linux-style text navigation shortcuts";
-      manipulators = map (mod: mod // {type = "basic";}) [
-        {
-          from = {
-            key_code = "left_arrow";
-            modifiers = {
-              mandatory = [
-                "control"
-                "shift"
-              ];
-              optional = ["any"];
+      manipulators = map (mod: mod // {type = "basic";}) (
+        let
+          any = key_code: mandatory: from key_code mandatory ["any"];
+          from = key_code: mandatory: optional: {
+            from = {
+              inherit key_code;
+              modifiers =
+                (
+                  if mandatory == []
+                  then {}
+                  else {inherit mandatory;}
+                )
+                // {inherit optional;};
             };
           };
-          to = [
-            {
-              key_code = "left_arrow";
-              modifiers = [
-                "option"
-                "shift"
-              ];
-            }
-          ];
-        }
-        {
-          from = {
-            key_code = "right_arrow";
-            modifiers = {
-              mandatory = [
-                "control"
-                "shift"
-              ];
-              optional = ["any"];
-            };
-          };
-          to = [
-            {
-              key_code = "right_arrow";
-              modifiers = [
-                "option"
-                "shift"
-              ];
-            }
-          ];
-        }
-        {
-          from = {
-            key_code = "left_arrow";
-            modifiers = {
-              mandatory = ["control"];
-              optional = ["any"];
-            };
-          };
-          to = [
-            {
-              key_code = "left_arrow";
-              modifiers = ["option"];
-            }
-          ];
-        }
-        {
-          from = {
-            key_code = "right_arrow";
-            modifiers = {
-              mandatory = ["control"];
-              optional = ["any"];
-            };
-          };
-          to = [
-            {
-              key_code = "right_arrow";
-              modifiers = ["option"];
-            }
-          ];
-        }
-        {
-          from = {
-            key_code = "home";
-            modifiers = {
-              mandatory = ["shift"];
-              optional = ["any"];
-            };
-          };
-          to = [
-            {
-              key_code = "left_arrow";
-              modifiers = [
-                "command"
-                "shift"
-              ];
-            }
-          ];
-        }
-        {
-          from = {
-            key_code = "end";
-            modifiers = {
-              mandatory = ["shift"];
-              optional = ["any"];
-            };
-          };
-          to = [
-            {
-              key_code = "right_arrow";
-              modifiers = [
-                "command"
-                "shift"
-              ];
-            }
-          ];
-        }
-        {
-          from = {
-            key_code = "home";
-            modifiers.optional = ["any"];
-          };
-          to = [
-            {
-              key_code = "left_arrow";
-              modifiers = ["command"];
-            }
-          ];
-        }
-        {
-          from = {
-            key_code = "end";
-            modifiers.optional = ["any"];
-          };
-          to = [
-            {
-              key_code = "right_arrow";
-              modifiers = ["command"];
-            }
-          ];
-        }
-      ];
+          to = key_code: modifiers: {to = [{inherit key_code modifiers;}];};
+        in [
+          ((any "left_arrow" ["control" "shift"]) // (to "left_arrow" ["option" "shift"]))
+          ((any "right_arrow" ["control" "shift"]) // (to "right_arrow" ["option" "shift"]))
+          ((any "left_arrow" ["control"]) // (to "left_arrow" ["option"]))
+          ((any "right_arrow" ["control"]) // (to "right_arrow" ["option"]))
+          ((any "home" ["shift"]) // (to "left_arrow" ["command" "shift"]))
+          ((any "end" ["shift"]) // (to "right_arrow" ["command" "shift"]))
+          ((any "home" []) // (to "left_arrow" ["command"]))
+          ((any "end" []) // (to "right_arrow" ["command"]))
+        ]
+      );
     }
   ];
 }
