@@ -32,8 +32,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # DVP layout with compose key
     programmer-dvorak-compose = {
-      url = "github:attilaolah/programmer-dvorak-compose";
+      url = "github:attilaolah/programmer-dvorak-compose/v1.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -122,13 +123,17 @@
                 modules = [
                   {nixpkgs = {inherit overlays;};}
                   ./hosts/${name}/configuration.nix
+                  (lib.optionalAttrs (os == "darwin") {
+                    imports = [
+                      inputs.programmer-dvorak-compose.darwinModules.default
+                    ];
+                  })
                   home-manager."${os}Modules".home-manager
                   {
                     home-manager = {
                       backupFileExtension = "bkp";
                       extraSpecialArgs = specialArgs value;
                       sharedModules = [
-                        inputs.programmer-dvorak-compose.homeManagerModules.default
                         inputs.sops-nix.homeManagerModules.sops
                       ];
                       users.${value.username} = import ./home-manager/home.nix;
@@ -158,7 +163,6 @@
                 config = unfree;
               };
               modules = [
-                inputs.programmer-dvorak-compose.homeManagerModules.default
                 inputs.sops-nix.homeManagerModules.sops
                 ./home-manager/home.nix
               ];

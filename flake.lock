@@ -117,15 +117,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1779141935,
-        "narHash": "sha256-isDwZZhpYU8ro/ato1LlJpH5GFbY/fFOcDPoERZdnRM=",
+        "lastModified": 1779226986,
+        "narHash": "sha256-ZCMjYE3g2076yD+jaEonXNWW2AC+hfzMLew8x7XfWUY=",
         "owner": "attilaolah",
         "repo": "programmer-dvorak-compose",
-        "rev": "deec86f8fd2ac2bee4a61884dafd9c9e5e48cb04",
+        "rev": "d4fe8e8b559edb0b94b81db44d73a9b9940a1b40",
         "type": "github"
       },
       "original": {
         "owner": "attilaolah",
+        "ref": "v1.4.2",
         "repo": "programmer-dvorak-compose",
         "type": "github"
       }
