@@ -31,6 +31,12 @@
       url = "github:anomalyco/opencode/v1.15.4";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # DVP layout with compose key
+    programmer-dvorak-compose = {
+      url = "github:attilaolah/programmer-dvorak-compose/v1.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -117,6 +123,11 @@
                 modules = [
                   {nixpkgs = {inherit overlays;};}
                   ./hosts/${name}/configuration.nix
+                  (lib.optionalAttrs (os == "darwin") {
+                    imports = [
+                      inputs.programmer-dvorak-compose.darwinModules.default
+                    ];
+                  })
                   home-manager."${os}Modules".home-manager
                   {
                     home-manager = {
