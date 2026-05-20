@@ -41,6 +41,12 @@ jobs:
           exit 0
         fi
 
+        count_hash_literals() {
+          local key="$1"
+          local overlay="$2"
+          grep -cE "^[[:space:]]*${key}[[:space:]]*=[[:space:]]*\"sha256-[A-Za-z0-9+/=]+\"" "${overlay}" || true
+        }
+
         updated_any='false'
         while IFS= read -r overlay; do
           [[ -z "${overlay}" ]] && continue
@@ -48,7 +54,7 @@ jobs:
           package_name="$(basename "${overlay}" .nix | tr '_' '-')"
           mappings=()
 
-          hash_count="$(grep -cE '^[[:space:]]*hash[[:space:]]*=' "${overlay}" || true)"
+          hash_count="$(count_hash_literals 'hash' "${overlay}")"
           if [[ "${hash_count}" -gt 1 ]]; then
             echo "Ambiguous key 'hash' in ${overlay}: found ${hash_count} matches; please disambiguate with explicit occurrences." >&2
             exit 1
@@ -57,7 +63,7 @@ jobs:
             mappings+=("hash=${package_name}-src")
           fi
 
-          npm_deps_hash_count="$(grep -cE '^[[:space:]]*npmDepsHash[[:space:]]*=' "${overlay}" || true)"
+          npm_deps_hash_count="$(count_hash_literals 'npmDepsHash' "${overlay}")"
           if [[ "${npm_deps_hash_count}" -gt 1 ]]; then
             echo "Ambiguous key 'npmDepsHash' in ${overlay}: found ${npm_deps_hash_count} matches; please disambiguate with explicit occurrences." >&2
             exit 1
@@ -66,7 +72,7 @@ jobs:
             mappings+=("npmDepsHash=${package_name}-npm-deps")
           fi
 
-          cargo_hash_count="$(grep -cE '^[[:space:]]*cargoHash[[:space:]]*=' "${overlay}" || true)"
+          cargo_hash_count="$(count_hash_literals 'cargoHash' "${overlay}")"
           if [[ "${cargo_hash_count}" -gt 1 ]]; then
             echo "Ambiguous key 'cargoHash' in ${overlay}: found ${cargo_hash_count} matches; please disambiguate with explicit occurrences." >&2
             exit 1
