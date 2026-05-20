@@ -41,10 +41,10 @@ set_hash_value() {
       found = 0;
     }
     {
-      if ($0 ~ "^[[:space:]]*" key "[[:space:]]*=[[:space:]]*\"sha256-[A-Za-z0-9+/=]+\"") {
+      if ($0 ~ "^[[:space:]]*" key "[[:space:]]*=[[:space:]]*\"sha256-[A-Za-z0-9+/]{43}=\"") {
         count++;
         if (count == occurrence) {
-          sub(/"sha256-[A-Za-z0-9+/=]+"/, "\"" value "\"");
+          sub(/"sha256-[A-Za-z0-9+/]{43}="/, "\"" value "\"");
           found = 1;
         }
       }

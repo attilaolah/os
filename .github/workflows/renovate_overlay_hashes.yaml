@@ -44,7 +44,7 @@ jobs:
         count_hash_literals() {
           local key="$1"
           local overlay="$2"
-          grep -cE "^[[:space:]]*${key}[[:space:]]*=[[:space:]]*\"sha256-[A-Za-z0-9+/=]+\"" "${overlay}" || true
+          grep -cE "^[[:space:]]*${key}[[:space:]]*=[[:space:]]*\"sha256-[A-Za-z0-9+/]{43}=\"" "${overlay}" || true
         }
 
         updated_any='false'
