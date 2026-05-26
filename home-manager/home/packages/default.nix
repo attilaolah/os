@@ -110,7 +110,7 @@
       # NPM packages:
       # NodeJS runtimes & packages
       bun
-      nodejs_25
+      nodejs_26
       pnpm
       prettier
       typescript-language-server
