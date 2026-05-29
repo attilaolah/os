@@ -7,7 +7,9 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [".*\\.nix$"],
+      "managerFilePatterns": [
+        "/.*\\.nix$/"
+      ],
       "matchStrings": [
         "\\bpython(?<major>\\d)(?<minor>\\d+)"
       ],
@@ -17,7 +19,9 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [".*\\.nix$"],
+      "managerFilePatterns": [
+        "/.*\\.nix$/"
+      ],
       "matchStrings": [
         "\\bnodejs_(?<major>\\d+)"
       ],
@@ -27,7 +31,9 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [".*\\.nix$"],
+      "managerFilePatterns": [
+        "/.*\\.nix$/"
+      ],
       "matchStrings": [
         "\\bclang_(?<major>\\d+)"
       ],
@@ -38,7 +44,9 @@
     {
       "description": "Update tuple-style GitHub dependencies under overlays/",
       "customType": "regex",
-      "fileMatch": ["^overlays/.*\\.nix$"],
+      "managerFilePatterns": [
+        "/^overlays/.*\\.nix$/"
+      ],
       "matchStrings": [
         "github-tags\\s*=\\s*\\[\\s*\\\"(?<depName>[^\\\"]+)\\\"\\s+\\\"(?<currentValue>[^\\\"]+)\\\"\\s*\\]\\s*;(?:\\s*#\\s*extractVersion=(?<extractVersion>\\S+))?"
       ],
@@ -47,7 +55,9 @@
     {
       "description": "Update GitHub flake inputs pinned to tags",
       "customType": "regex",
-      "fileMatch": ["^flake\\.nix$"],
+      "managerFilePatterns": [
+        "/^flake\\.nix$/"
+      ],
       "matchStrings": [
         "url\\s*=\\s*\\\"github:(?<depName>[^\\\"\\/]+\\/[^\\\"\\/]+)\\/(?<currentValue>v?\\d[^\\\"]*)\\\";"
       ],
