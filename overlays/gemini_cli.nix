@@ -2,9 +2,9 @@ final: prev: let
   inherit (builtins) elemAt;
   fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
-  github-tags = ["google-gemini/gemini-cli" "0.42.0"]; # extractVersion=^v(?<version>.*)$
-  hash = "sha256-QYSzJdyjJ5SvPkI/uf/wu8MdM76W+djai6zD38IJpos=";
-  npmDepsHash = "sha256-hKNEJ/MAseYs8WLr36h40pYv+5nef8EPhZIfmPKYJPY=";
+  github-tags = ["google-gemini/gemini-cli" "0.44.1"]; # extractVersion=^v(?<version>.*)$
+  hash = "sha256-FizxmHWOomlnWZoCK2lOLc94RjNTQM33vN16nLXsJI0=";
+  npmDepsHash = "sha256-yn17dwHIpL3T2Z9nSOyBMehggrj4y6so7WMhnk2VwoA=";
 
   version = elemAt github-tags 1;
 in {
