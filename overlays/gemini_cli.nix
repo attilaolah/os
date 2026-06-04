@@ -3,8 +3,8 @@ final: prev: let
   fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["google-gemini/gemini-cli" "0.45.1"]; # extractVersion=^v(?<version>.*)$
-  hash = "sha256-qab0cfc47C33enSmoV1t3GIkTSGFdC3tmY/ZCEAeF5Y=";
-  npmDepsHash = "sha256-Xge7umt6zjs9Gb527n65u9TW/dGpmPRHylATGlx+5Rc=";
+  hash = "sha256-XZGqZMylKQi7Cc74qvvz50UY4EIJ19bjOYOwD39L2yo=";
+  npmDepsHash = "sha256-uD6635fzjGwiD0dUY0aCUonsO0zLFw00eidb87bXNh4=";
 
   version = elemAt github-tags 1;
 in {
