@@ -128,14 +128,14 @@
           "$MOD, Return, exec, $TERM"
           "$MOD, Space, togglefloating,"
           "$MOD, Escape, killactive,"
-          "$MOD, D, pseudo," #           [D]windle
-          "$MOD, F, fullscreen," #       [F]ullscrean
-          "$MOD, L, exec, $LOCK" #       [L]ock
-          "$MOD, N, exec, $NOTIF" #      [N]otification Centre
-          "$MOD, P, exec, $PRINT" #      [P]rint Screen
-          "$MOD, R, exec, $MENU" #       [R]un
-          "$MOD, T, togglesplit," #      [T]ile (Dwindle)
-          "$MOD, W, exec, $WEB" #        [W]eb
+          "$MOD, D, pseudo," #               [D]windle
+          "$MOD, F, fullscreen," #           [F]ullscrean
+          "$MOD, L, exec, $LOCK" #           [L]ock
+          "$MOD, N, exec, $NOTIF" #          [N]otification Centre
+          "$MOD, P, exec, $PRINT" #          [P]rint Screen
+          "$MOD, R, exec, $MENU" #           [R]un
+          "$MOD, T, layoutmsg, togglesplit" # [T]ile (Dwindle)
+          "$MOD, W, exec, $WEB" #             [W]eb
 
           # Move focus with MOD + arrow keys
           "$MOD, left, movefocus, l"
