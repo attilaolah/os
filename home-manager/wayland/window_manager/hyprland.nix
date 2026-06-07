@@ -188,9 +188,10 @@
 
       opengl.nvidia_anti_flicker = true;
 
-      misc.vfr = 0;
-
-      debug.damage_tracking = 0;
+      debug = {
+        vfr = false;
+        damage_tracking = 0;
+      };
     };
   };
 }
