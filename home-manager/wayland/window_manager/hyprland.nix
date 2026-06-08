@@ -129,7 +129,7 @@
           "$MOD, Space, togglefloating,"
           "$MOD, Escape, killactive,"
           "$MOD, D, pseudo," #               [D]windle
-          "$MOD, F, fullscreen," #           [F]ullscrean
+          "$MOD, F, fullscreen," #           [F]ullscreen
           "$MOD, L, exec, $LOCK" #           [L]ock
           "$MOD, N, exec, $NOTIF" #          [N]otification Centre
           "$MOD, P, exec, $PRINT" #          [P]rint Screen
