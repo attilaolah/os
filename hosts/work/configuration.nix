@@ -73,6 +73,8 @@
 
     systemPackages = with pkgs; [
       darktable
+      firefox
+      google-chrome
     ];
   };
 }
