@@ -59,7 +59,7 @@ jobs:
           local published_build
           local tmp_file
 
-          version="$(sed -nE 's/^[[:space:]]*github-tags[[:space:]]*=[[:space:]]*\\[[[:space:]]*"google-antigravity\\/antigravity-cli"[[:space:]]+"([^"]+)"[[:space:]]*\\][[:space:]]*;.*/\\1/p' "${overlay}" | head -n1)"
+          version="$(sed -nE 's/^[[:space:]]*github-tags[[:space:]]*=[[:space:]]*\[[[:space:]]*"google-antigravity\/antigravity-cli"[[:space:]]+"([^"]+)"[[:space:]]*\][[:space:]]*;.*/\1/p' "${overlay}" | head -n1)"
           if [[ -z "${version}" ]]; then
             echo "Failed to extract antigravity version from ${overlay}." >&2
             exit 1
