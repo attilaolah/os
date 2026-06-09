@@ -92,8 +92,8 @@
       podman-tui
 
       # AI stuff:
+      antigravity-cli
       codex
-      gemini-cli
       opencode
       qwen-code
 
