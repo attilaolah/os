@@ -48,15 +48,14 @@ jobs:
             | sort -u || true
         }
 
-        refresh_antigravity_build() {
+        refresh_antigravity_source_urls() {
           local overlay="$1"
           local version
-          local manifest_url='https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/linux_amd64.json'
-          local manifest_json
-          local manifest_version
-          local published_url
-          local published_version_build
-          local published_build
+          local release_json
+          local url_linux_x64
+          local url_linux_arm64
+          local url_mac_arm64
+          local url_mac_x64
           local tmp_file
 
           version="$(sed -nE 's/^[[:space:]]*github-tags[[:space:]]*=[[:space:]]*\[[[:space:]]*"google-antigravity\/antigravity-cli"[[:space:]]+"([^"]+)"[[:space:]]*\][[:space:]]*;.*/\1/p' "${overlay}" | head -n1)"
@@ -65,44 +64,48 @@ jobs:
             exit 1
           fi
 
-          manifest_json="$(curl -fsSL "${manifest_url}")"
-          manifest_version="$(jq -r '.version // empty' <<< "${manifest_json}")"
-          published_url="$(jq -r '.url // empty' <<< "${manifest_json}")"
-          if [[ -z "${manifest_version}" || -z "${published_url}" ]]; then
-            echo "Failed to parse antigravity manifest from ${manifest_url}." >&2
-            exit 1
-          fi
+          release_json="$(curl -fsSL "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/tags/${version}")"
+          url_linux_x64="$(jq -r '.assets[] | select(.name == "agy_cli_linux_x64.tar.gz") | .browser_download_url' <<< "${release_json}")"
+          url_linux_arm64="$(jq -r '.assets[] | select(.name == "agy_cli_linux_arm64.tar.gz") | .browser_download_url' <<< "${release_json}")"
+          url_mac_arm64="$(jq -r '.assets[] | select(.name == "agy_cli_mac_arm64.tar.gz") | .browser_download_url' <<< "${release_json}")"
+          url_mac_x64="$(jq -r '.assets[] | select(.name == "agy_cli_mac_x64.tar.gz") | .browser_download_url' <<< "${release_json}")"
 
-          if [[ "${manifest_version}" != "${version}" ]]; then
-            echo "Antigravity manifest is for ${manifest_version} but overlay targets ${version}; cannot safely derive build." >&2
+          if [[ -z "${url_linux_x64}" || -z "${url_linux_arm64}" || -z "${url_mac_arm64}" || -z "${url_mac_x64}" ]]; then
+            echo "Release ${version} is missing one or more expected antigravity assets." >&2
             exit 1
           fi
-
-          published_version_build="$(sed -nE 's@.*/antigravity-cli/([0-9]+\\.[0-9]+\\.[0-9]+-[0-9]+)/.*@\\1@p' <<< "${published_url}")"
-          if [[ -z "${published_version_build}" || "${published_version_build}" != "${version}-"* ]]; then
-            echo "Failed to extract version-build token from antigravity URL: ${published_url}" >&2
-            exit 1
-          fi
-          published_build="${published_version_build#${version}-}"
 
           tmp_file="$(mktemp)"
-          if ! awk -v build="${published_build}" '
+          if ! awk \
+            -v url_linux_x64="${url_linux_x64}" \
+            -v url_linux_arm64="${url_linux_arm64}" \
+            -v url_mac_arm64="${url_mac_arm64}" \
+            -v url_mac_x64="${url_mac_x64}" '
             BEGIN { found = 0; }
             {
-              if ($0 ~ "^[[:space:]]*build[[:space:]]*=[[:space:]]*\"[0-9]+\";") {
-                sub(/"[0-9]+"/, "\"" build "\"");
+              if ($0 ~ "^[[:space:]]*source-url-x86_64-linux[[:space:]]*=") {
+                $0 = "  source-url-x86_64-linux = \"" url_linux_x64 "\";";
+                found++;
+              } else if ($0 ~ "^[[:space:]]*source-url-aarch64-linux[[:space:]]*=") {
+                $0 = "  source-url-aarch64-linux = \"" url_linux_arm64 "\";";
+                found++;
+              } else if ($0 ~ "^[[:space:]]*source-url-aarch64-darwin[[:space:]]*=") {
+                $0 = "  source-url-aarch64-darwin = \"" url_mac_arm64 "\";";
+                found++;
+              } else if ($0 ~ "^[[:space:]]*source-url-x86_64-darwin[[:space:]]*=") {
+                $0 = "  source-url-x86_64-darwin = \"" url_mac_x64 "\";";
                 found++;
               }
               print;
             }
             END {
-              if (found != 1) {
+              if (found != 4) {
                 exit 42;
               }
             }
           ' "${overlay}" > "${tmp_file}"; then
             rm -f "${tmp_file}"
-            echo "Failed to update build variable in ${overlay}." >&2
+            echo "Failed to update source URL variables in ${overlay}." >&2
             exit 1
           fi
           mv "${tmp_file}" "${overlay}"
@@ -130,7 +133,7 @@ jobs:
           mappings=()
 
           if [[ "${overlay}" == 'overlays/antigravity_cli.nix' ]]; then
-            refresh_antigravity_build "${overlay}"
+            refresh_antigravity_source_urls "${overlay}"
           fi
 
           while IFS= read -r key; do
