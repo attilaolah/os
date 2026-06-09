@@ -10,13 +10,16 @@ final: prev: let
   source-url-x86_64-darwin = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_mac_x64.tar.gz";
   source-url-x86_64-linux = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_linux_x64.tar.gz";
 
-  hash-src-aarch64-darwin = "sha256-fbP4FF1n3gNhbem45p8O/8GYdl85NcGvOJ2WF1UUoDo=";
-  hash-src-aarch64-linux = "sha256-UuLN1xygJSMvIjw+nYW0+NrCdXkh1xCkAT6BjdB9hEA=";
-  hash-src-x86_64-darwin = "sha256-3daHp4baEA+PU4bqeLlse8I/CoqRVJ2hYbETevPGnBw=";
-  hash-src-x86_64-linux = "sha256-TpwTZuGoZSCw7SNIE7M/WPczPcmR/XdDw/I5n88ouWQ=";
+  # Keep these as top-level `hash-*` variables (not inlined in `sources`):
+  # `.github/workflows/renovate_overlay_hashes.yaml` parses and rewrites them.
+  hash-src-aarch64-darwin = "sha256-ddI62EUaarL8Sbe6phW7Uy8Ve0FS2He6dqLucqY+x9A=";
+  hash-src-aarch64-linux = "sha256-vmMD1LiRp5RXym7Raa/y79POtpQ1RjToXvWMiDuuZzk=";
+  hash-src-x86_64-darwin = "sha256-YZgXCGlQwL038vy3eW6C+Q3B//kg7y9f7U4RFwwEqz4=";
+  hash-src-x86_64-linux = "sha256-Pq5VJ4HTBUt4IULjz+e+c+O9BoxzakMspvGtqkDxngc=";
+
 in {
   antigravity-cli = prev.antigravity-cli.overrideAttrs (old: let
-    sources = prev.lib.mapAttrs (_: source: prev.fetchzip source) {
+    sources = prev.lib.mapAttrs (_: source: prev.fetchurl source) {
       x86_64-linux = {
         url = source-url-x86_64-linux;
         hash = hash-src-x86_64-linux;
