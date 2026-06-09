@@ -51,7 +51,6 @@
       rclone
       ripgrep
       rsync
-      silver-searcher
       sops
       subversion
       termshark
