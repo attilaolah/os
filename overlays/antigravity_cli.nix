@@ -39,6 +39,6 @@ in {
     src =
       sources.${prev.stdenv.hostPlatform.system}
       or (throw "Unsupported system: ${prev.stdenv.hostPlatform.system}");
-    passthru = old.passthru // {inherit sources;};
+    passthru = (old.passthru or {}) // {inherit sources;};
   });
 }
