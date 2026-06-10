@@ -45,9 +45,24 @@ jobs:
 
         collect_hash_keys() {
           local overlay="$1"
+          # Dependency hashes are derived from the fetched source tree.
           grep -E "^[[:space:]]*hash(-[A-Za-z0-9._-]+)?[[:space:]]*=[[:space:]]*\"sha256-[A-Za-z0-9+/]{43}=\"" "${overlay}" \
             | sed -E "s/^[[:space:]]*(hash(-[A-Za-z0-9._-]+)?)[[:space:]]*=.*/\\1/" \
-            | sort -u || true
+            | awk '
+              !seen[$0]++ {
+                keys[++n] = $0;
+                source_first[$0] = ($0 == "hash" || $0 ~ /^hash-src($|-)/);
+              }
+              END {
+                for (pass = 1; pass >= 0; pass--) {
+                  for (i = 1; i <= n; i++) {
+                    if (source_first[keys[i]] == pass) {
+                      print keys[i];
+                    }
+                  }
+                }
+              }
+            ' || true
         }
 
         refresh_antigravity_source_urls() {
