@@ -86,6 +86,9 @@
       zig
       zls
 
+      # Used by MCP servers currently
+      yaml-language-server
+
       # Virtualisation:
       podman-compose
       podman-tui
