@@ -3,12 +3,15 @@
     ./fish.nix
     ./neovim.nix
   ];
-  programs = {
+  programs = let
+    on.enable = true;
+  in {
     # Window manager:
-    hyprland.enable = true;
-    hyprlock.enable = true;
+    hyprland = on;
+    hyprlock = on;
 
     # Misc. utilities:
-    wireshark.enable = true;
+    openvpn3 = on;
+    wireshark = on;
   };
 }
