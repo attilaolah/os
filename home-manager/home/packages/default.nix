@@ -30,6 +30,7 @@
       ffmpeg
       file
       gh
+      gitleaks
       gnumake
       gnupg
       gotop
