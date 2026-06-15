@@ -97,6 +97,7 @@
       podman-tui
 
       # AI stuff:
+      agent-deck
       antigravity-cli
       codex
       opencode
