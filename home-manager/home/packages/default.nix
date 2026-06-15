@@ -30,6 +30,7 @@
       ffmpeg
       file
       gh
+      gitleaks
       gnumake
       gnupg
       gotop
@@ -51,6 +52,7 @@
       rclone
       ripgrep
       rsync
+      shellcheck
       sops
       subversion
       termshark
@@ -61,6 +63,7 @@
       usbutils
       wget
       xkcdpass
+      yamllint
       yq-go
       zip
       zoxide
