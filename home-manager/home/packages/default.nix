@@ -51,6 +51,7 @@
       rclone
       ripgrep
       rsync
+      shellcheck
       sops
       subversion
       termshark
