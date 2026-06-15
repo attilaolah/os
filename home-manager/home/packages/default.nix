@@ -63,6 +63,7 @@
       usbutils
       wget
       xkcdpass
+      yamllint
       yq-go
       zip
       zoxide
