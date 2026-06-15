@@ -16,7 +16,6 @@ final: prev: let
   hash-src-aarch64-linux = "sha256-zbxR/82KK5SZH9Nshm+whVz67R4u8Ksfzzvntko/n3E=";
   hash-src-x86_64-darwin = "sha256-VIJsUjWNwBQG2vTdtzvWIK5rkeN2vqWrwQtuCLR/jN8=";
   hash-src-x86_64-linux = "sha256-24yp08jM4GUecrb/+oN04nmcVVTZTfKx+eQrtRV0W/8=";
-
 in {
   antigravity-cli = prev.antigravity-cli.overrideAttrs (old: let
     sources = prev.lib.mapAttrs (_: source: prev.fetchurl source) {
