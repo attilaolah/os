@@ -4,16 +4,18 @@
   pkgs,
   ...
 }: let
+  tomlFormat = pkgs.formats.toml {};
   toINI = lib.generators.toINI {};
 in {
   xdg.configFile = let
     inherit (builtins) readFile replaceStrings toJSON;
-    inherit (import ../../hosts/home/fonts.nix {inherit pkgs;}) fonts;
+    inherit (import ../../../hosts/home/fonts.nix {inherit pkgs;}) fonts;
 
     fontSize = 16;
     fontFamily = builtins.elemAt fonts.fontconfig.defaultFonts.monospace 0;
   in
     {
+      "agent-deck/config.toml".source = tomlFormat.generate "agent-deck-config.toml" (import ./agent_deck/config.toml.nix {inherit lib pkgs;});
       "nvim/lua/autocmds.lua".source = ./nvim/lua/autocmds.lua;
       "nvim/lua/chadrc.lua".source = ./nvim/lua/chadrc.lua;
       "nvim/lua/configs/conform.lua".source = ./nvim/lua/configs/conform.lua;
@@ -24,15 +26,8 @@ in {
       "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     }
     // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+      "ghostty/config".text = import ./ghostty {inherit fontFamily fontSize;};
       "karabiner/karabiner.json".text = toJSON (import ./karabiner);
-      "ghostty/config".text = ''
-        font-family = "${fontFamily}"
-        font-feature = -liga,-calt
-        font-size = ${toString fontSize}
-        macos-option-as-alt = true
-        keybind = cmd+a=esc:a
-        theme = Catppuccin Mocha
-      '';
     }
     // lib.attrsets.optionalAttrs pkgs.stdenv.isLinux {
       # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.foot.settings
@@ -55,14 +50,6 @@ in {
       '';
 
       # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.wofi.style
-      "wofi/style.css".text =
-        replaceStrings [
-          "/* DYNAMIC STYLE */"
-        ] [
-          ''
-            font-size: ${toString fontSize}px;
-            font-family: "${fontFamily}";
-          ''
-        ] (readFile ./wofi/style.css);
+      "wofi/style.css".text = import ./wofi {inherit fontFamily fontSize;};
     };
 }

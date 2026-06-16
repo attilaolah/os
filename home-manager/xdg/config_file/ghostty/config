@@ -1,0 +1,5 @@
+# DYNAMIC STYLE
+font-feature = -liga,-calt
+macos-option-as-alt = true
+keybind = cmd+a=esc:a
+theme = Catppuccin Mocha
