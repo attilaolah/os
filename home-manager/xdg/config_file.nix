@@ -4,6 +4,7 @@
   pkgs,
   ...
 }: let
+  tomlFormat = pkgs.formats.toml {};
   toINI = lib.generators.toINI {};
 in {
   xdg.configFile = let
@@ -22,6 +23,79 @@ in {
       "nvim/lua/mappings.lua".source = ./nvim/lua/mappings.lua;
       "nvim/lua/options.lua".source = ./nvim/lua/options.lua;
       "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
+
+      "agent-deck/config.toml".source = tomlFormat.generate "agent-deck-config.toml" {
+        default_tool = "opencode";
+
+        global_search = {
+          enabled = true;
+          tier = "auto";
+          recent_days = 90;
+        };
+
+        logs = {
+          max_size_mb = 10;
+          max_lines = 10000;
+          remove_orphans = true;
+        };
+
+        hotkeys = {
+          # [G]umpe: jump to session.
+          switch_session = "ctrl+g";
+        };
+
+        updates.check_enabled = true;
+
+        preview = {
+          show_output = true;
+          show_analytics = false;
+          show_notes = false;
+          notes_output_split = 0.33;
+        };
+
+        maintenance.enabled = true;
+
+        system_stats = {
+          enabled = true;
+          refresh_seconds = 5;
+          format = "compact";
+          show = [
+            "cpu"
+            "disk"
+            "gpu"
+            "network"
+            "ram"
+          ];
+        };
+
+        ui = {
+          footer = "curated";
+          show_only_installed_tools = true;
+        };
+
+        selfheal = {
+          enabled = false;
+          per_session_per_window = 0;
+          global_per_hour = 0;
+        };
+
+        mcp_pool = {
+          enabled = true;
+          auto_start = true;
+          pool_all = true;
+          fallback_to_sdio = true;
+          show_protocol_status = true;
+        };
+
+        mcps = {
+          kubernetes = {
+            description = "Kubernetes MCP server";
+            command = "npx";
+            # TODO: write a derivation for this.
+            args = ["-y" "kubernetes-mcp-server@latest"];
+          };
+        };
+      };
     }
     // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
       "karabiner/karabiner.json".text = toJSON (import ./karabiner);
