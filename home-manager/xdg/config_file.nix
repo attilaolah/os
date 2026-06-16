@@ -39,10 +39,8 @@ in {
           remove_orphans = true;
         };
 
-        hotkeys = {
-          # [G]umpe: jump to session.
-          switch_session = "ctrl+g";
-        };
+        # [G]umpe: jump to session.
+        hotkeys.switch_session = "ctrl+g";
 
         updates.check_enabled = true;
 
