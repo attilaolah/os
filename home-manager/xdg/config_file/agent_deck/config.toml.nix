@@ -63,6 +63,11 @@
   };
 
   mcps = {
+    bitbucket = {
+      description = "Bitbucket MCP server";
+      command = lib.getExe pkgs.bitbucket-mcp;
+    };
+
     flux-operator = {
       description = "Flux Operator MCP server";
       command = lib.getExe pkgs.fluxcd-operator-mcp;
