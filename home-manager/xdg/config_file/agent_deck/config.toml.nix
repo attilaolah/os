@@ -68,32 +68,9 @@
       command = lib.getExe pkgs.bitbucket-mcp;
     };
 
-    # TODO: extract the binary and get rid of the Podman wrapper.
     atlassian = {
       description = "Atlassian MCP server";
-      command = lib.getExe pkgs.podman;
-      args = [
-        "run"
-        "-i"
-        "--rm"
-        "-e"
-        "CONFLUENCE_API_TOKEN"
-        "-e"
-        "CONFLUENCE_SPACES_FILTER"
-        "-e"
-        "CONFLUENCE_URL"
-        "-e"
-        "CONFLUENCE_USERNAME"
-        "-e"
-        "JIRA_API_TOKEN"
-        "-e"
-        "JIRA_PROJECTS_FILTER"
-        "-e"
-        "JIRA_URL"
-        "-e"
-        "JIRA_USERNAME"
-        "ghcr.io/sooperset/mcp-atlassian"
-      ];
+      command = lib.getExe pkgs.mcp-atlassian;
     };
 
     flux-operator = {
