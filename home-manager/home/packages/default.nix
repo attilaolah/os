@@ -100,7 +100,6 @@
       agent-deck
       antigravity-cli
       codex
-      opencode
       qwen-code
 
       # Python, the basics:

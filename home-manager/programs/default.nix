@@ -15,6 +15,7 @@
       ./gpg.nix
       ./neovim
       ./nix-index.nix
+      ./opencode.nix
       ./rbw.nix
       ./tealdeer.nix
       ./tmux.nix
