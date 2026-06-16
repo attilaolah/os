@@ -6,6 +6,11 @@
     settings = {
       autoshare = false;
       autoupdate = false;
+      disabled_providers = [
+        "anthropic"
+        "gemini"
+        "openai"
+      ];
     };
   };
 }
