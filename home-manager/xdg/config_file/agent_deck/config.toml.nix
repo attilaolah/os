@@ -78,5 +78,10 @@
       description = "Kubernetes MCP server";
       command = lib.getExe pkgs.kubernetes-mcp-server;
     };
+
+    teamcity = {
+      description = "TeamCity MCP server";
+      command = lib.getExe pkgs.teamcity-mcp;
+    };
   };
 }
