@@ -58,8 +58,8 @@
     enabled = true;
     auto_start = true;
     pool_all = true;
-    fallback_to_sdio = true;
-    show_protocol_status = true;
+    fallback_to_stdio = true;
+    show_pool_status = true;
   };
 
   mcps = {
