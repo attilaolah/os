@@ -1,0 +1,55 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  tomlFormat = pkgs.formats.toml {};
+  toINI = lib.generators.toINI {};
+in {
+  xdg.configFile = let
+    inherit (builtins) readFile replaceStrings toJSON;
+    inherit (import ../../../hosts/home/fonts.nix {inherit pkgs;}) fonts;
+
+    fontSize = 16;
+    fontFamily = builtins.elemAt fonts.fontconfig.defaultFonts.monospace 0;
+  in
+    {
+      "agent-deck/config.toml".source = tomlFormat.generate "agent-deck-config.toml" (import ./agent_deck/config.toml.nix);
+      "nvim/lua/autocmds.lua".source = ./nvim/lua/autocmds.lua;
+      "nvim/lua/chadrc.lua".source = ./nvim/lua/chadrc.lua;
+      "nvim/lua/configs/conform.lua".source = ./nvim/lua/configs/conform.lua;
+      "nvim/lua/configs/lazy.lua".source = ./nvim/lua/configs/lazy.lua;
+      "nvim/lua/configs/lspconfig.lua".source = ./nvim/lua/configs/lspconfig.lua;
+      "nvim/lua/mappings.lua".source = ./nvim/lua/mappings.lua;
+      "nvim/lua/options.lua".source = ./nvim/lua/options.lua;
+      "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
+    }
+    // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+      "ghostty/config".text = import ./ghostty {inherit fontFamily fontSize;};
+      "karabiner/karabiner.json".text = toJSON (import ./karabiner);
+    }
+    // lib.attrsets.optionalAttrs pkgs.stdenv.isLinux {
+      # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.foot.settings
+      "foot/foot.ini".text =
+        (toINI {
+          main = {
+            font = "monospace:size=${toString fontSize}";
+            font-size-adjustment = 2;
+          };
+        })
+        # TODO: revert once https://github.com/catppuccin/foot/pull/24 is merged
+        + replaceStrings [
+          "[colors]"
+        ] [
+          "[colors-dark]"
+        ] (readFile pkgs.catppuccin-foot);
+
+      "davfs.conf".text = ''
+        secrets ${config.home.homeDirectory}/.config/davfs.secrets
+      '';
+
+      # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.wofi.style
+      "wofi/style.css".text = import ./wofi {inherit fontFamily fontSize;};
+    };
+}

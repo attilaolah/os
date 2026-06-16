@@ -13,7 +13,7 @@
       ./programs
       ./secrets/contact.nix
       ./services
-      ./xdg/config_file.nix
+      ./xdg/config_file
     ]
     ++ lib.lists.optionals (platform == "linux") [
       ./gtk.nix
