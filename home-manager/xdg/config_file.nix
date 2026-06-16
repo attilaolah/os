@@ -29,13 +29,13 @@ in {
 
         global_search = {
           enabled = true;
+          recent_days = 120;
           tier = "auto";
-          recent_days = 90;
         };
 
         logs = {
-          max_size_mb = 10;
-          max_lines = 10000;
+          max_lines = 200000;
+          max_size_mb = 256;
           remove_orphans = true;
         };
 
