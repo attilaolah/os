@@ -107,20 +107,9 @@
       command = lib.getExe pkgs.kubernetes-mcp-server;
     };
 
-    # TODO: extract the binary and get rid of the Podman wrapper.
     sonarqube = {
       description = "SonarQube MCP server";
-      command = lib.getExe pkgs.podman;
-      args = [
-        "run"
-        "-i"
-        "--rm"
-        "-e"
-        "SONARQUBE_URL"
-        "-e"
-        "SONARQUBE_TOKEN"
-        "docker.io/mcp/sonarqube"
-      ];
+      command = lib.getExe pkgs.sonarqube-mcp-server;
     };
 
     teamcity = {
