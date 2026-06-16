@@ -1,4 +1,7 @@
 {
+  lib,
+  pkgs,
+}: {
   default_tool = "opencode";
 
   global_search = {
@@ -62,9 +65,7 @@
   mcps = {
     kubernetes = {
       description = "Kubernetes MCP server";
-      command = "npx";
-      # TODO: write a derivation for this.
-      args = ["-y" "kubernetes-mcp-server@latest"];
+      command = lib.getExe pkgs.kubernetes-mcp-server;
     };
   };
 }

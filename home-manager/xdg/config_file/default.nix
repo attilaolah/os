@@ -15,7 +15,7 @@ in {
     fontFamily = builtins.elemAt fonts.fontconfig.defaultFonts.monospace 0;
   in
     {
-      "agent-deck/config.toml".source = tomlFormat.generate "agent-deck-config.toml" (import ./agent_deck/config.toml.nix);
+      "agent-deck/config.toml".source = tomlFormat.generate "agent-deck-config.toml" (import ./agent_deck/config.toml.nix {inherit lib pkgs;});
       "nvim/lua/autocmds.lua".source = ./nvim/lua/autocmds.lua;
       "nvim/lua/chadrc.lua".source = ./nvim/lua/chadrc.lua;
       "nvim/lua/configs/conform.lua".source = ./nvim/lua/configs/conform.lua;
