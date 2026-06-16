@@ -68,6 +68,34 @@
       command = lib.getExe pkgs.bitbucket-mcp;
     };
 
+    # TODO: extract the binary and get rid of the Podman wrapper.
+    atlassian = {
+      description = "Atlassian MCP server";
+      command = lib.getExe pkgs.podman;
+      args = [
+        "run"
+        "-i"
+        "--rm"
+        "-e"
+        "CONFLUENCE_API_TOKEN"
+        "-e"
+        "CONFLUENCE_SPACES_FILTER"
+        "-e"
+        "CONFLUENCE_URL"
+        "-e"
+        "CONFLUENCE_USERNAME"
+        "-e"
+        "JIRA_API_TOKEN"
+        "-e"
+        "JIRA_PROJECTS_FILTER"
+        "-e"
+        "JIRA_URL"
+        "-e"
+        "JIRA_USERNAME"
+        "ghcr.io/sooperset/mcp-atlassian"
+      ];
+    };
+
     flux-operator = {
       description = "Flux Operator MCP server";
       command = lib.getExe pkgs.fluxcd-operator-mcp;
@@ -77,6 +105,22 @@
     kubernetes = {
       description = "Kubernetes MCP server";
       command = lib.getExe pkgs.kubernetes-mcp-server;
+    };
+
+    # TODO: extract the binary and get rid of the Podman wrapper.
+    sonarqube = {
+      description = "SonarQube MCP server";
+      command = lib.getExe pkgs.podman;
+      args = [
+        "run"
+        "-i"
+        "--rm"
+        "-e"
+        "SONARQUBE_URL"
+        "-e"
+        "SONARQUBE_TOKEN"
+        "docker.io/mcp/sonarqube"
+      ];
     };
 
     teamcity = {
