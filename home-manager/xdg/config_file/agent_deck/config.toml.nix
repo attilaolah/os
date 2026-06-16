@@ -63,6 +63,12 @@
   };
 
   mcps = {
+    flux-operator = {
+      description = "Flux Operator MCP server";
+      command = lib.getExe pkgs.fluxcd-operator-mcp;
+      args = ["serve"];
+    };
+
     kubernetes = {
       description = "Kubernetes MCP server";
       command = lib.getExe pkgs.kubernetes-mcp-server;
