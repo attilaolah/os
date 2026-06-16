@@ -28,7 +28,7 @@
 
     # OpenCode upstream overlay
     opencode = {
-      url = "github:anomalyco/opencode/v1.15.4";
+      url = "github:anomalyco/opencode/v1.17.7";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -50,7 +50,8 @@
     flake-parts.lib.mkFlake {inherit inputs;} ({...}: let
       inherit (nixpkgs) lib;
       overlays =
-        lib.mapAttrsToList
+        [inputs.opencode.overlays.default]
+        ++ lib.mapAttrsToList
         (name: _: import (./overlays + "/${name}"))
         overlayFileNames;
       overlayFileNames =
@@ -69,13 +70,6 @@
       ];
 
       flake = let
-        overlays =
-          (lib.mapAttrsToList
-            (name: _: import (./overlays + "/${name}"))
-            (lib.filterAttrs
-              (name: type: type == "regular" && lib.hasSuffix ".nix" name)
-              (builtins.readDir ./overlays)))
-          ++ [inputs.opencode.overlays.default];
         hosts = {
           home = {
             system = "x86_64-linux";
@@ -183,7 +177,7 @@
             inherit system overlays;
             config = unfree;
           };
-          packageNames = lib.unique (lib.pipe (lib.attrNames overlayFileNames) [
+          packageNames = lib.unique (["opencode"] ++ lib.pipe (lib.attrNames overlayFileNames) [
             (map (name: lib.removeSuffix ".nix" name))
             (map (name: lib.replaceStrings ["_"] ["-"] name))
             (lib.filter (name: builtins.hasAttr name pkgs))
@@ -197,7 +191,7 @@
               pkg.passthru.sources
             );
           in
-            (lib.optionalAttrs (pkg ? src) {"${name}-src" = pkg.src;})
+            (lib.optionalAttrs (pkg ? src && lib.isDerivation pkg.src) {"${name}-src" = pkg.src;})
             // extraSrcOutputs
             // (lib.optionalAttrs (pkg ? npmDeps) {"${name}-npm-deps" = pkg.npmDeps;})
             // (lib.optionalAttrs (pkg ? cargoDeps) {"${name}-cargo-deps" = pkg.cargoDeps;})
