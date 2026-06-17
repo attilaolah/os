@@ -68,6 +68,11 @@
       command = lib.getExe pkgs.bitbucket-mcp;
     };
 
+    atlassian = {
+      description = "Atlassian MCP server";
+      command = lib.getExe pkgs.mcp-atlassian;
+    };
+
     flux-operator = {
       description = "Flux Operator MCP server";
       command = lib.getExe pkgs.fluxcd-operator-mcp;
@@ -77,6 +82,11 @@
     kubernetes = {
       description = "Kubernetes MCP server";
       command = lib.getExe pkgs.kubernetes-mcp-server;
+    };
+
+    sonarqube = {
+      description = "SonarQube MCP server";
+      command = lib.getExe pkgs.sonarqube-mcp-server;
     };
 
     teamcity = {
