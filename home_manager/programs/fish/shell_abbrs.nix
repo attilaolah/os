@@ -15,6 +15,7 @@
     tm = "tmx";
 
     v = "nvim";
+    oc = "opencode";
 
     c = "curl -D/dev/stderr -s";
     k = "kubectl";
