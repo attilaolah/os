@@ -2,7 +2,7 @@ final: prev: let
   inherit (builtins) elemAt;
   fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
-  github-tags = ["asheshgoplani/agent-deck" "v1.9.70"];
+  github-tags = ["asheshgoplani/agent-deck" "1.9.70"]; # extractVersion=^v(?<version>.*)$
   hash-src = "sha256-VKpl9PgzpZhDRoSwG0/LH5pJC9HuVbMBBp6Tpa+DRls=";
   hash-vendor = "sha256-teB9HxMGOe5YGW0RGxVOhkDPyczCDdjATRV9Mn9ixDU=";
 
@@ -15,6 +15,7 @@ in {
     src = fetchFromGithubTuple {
       inherit github-tags;
       hash = hash-src;
+      rev = "v${version}";
     };
 
     vendorHash = hash-vendor;
