@@ -1,5 +1,41 @@
-_: {
+{
+  lib,
+  pkgs,
+}: let
+  direnvCommand = {
+    name,
+    package,
+    executable ? name,
+  }: let
+    app = pkgs.writeShellApplication {
+      name = "direnv-${name}";
+      runtimeInputs = with pkgs; [
+        coreutils
+        direnv
+        package
+      ];
+      text = ''
+        exec direnv exec "$(pwd)" ${executable} "$@"
+      '';
+    };
+  in "exec ${lib.getExe app}";
+in {
   default_tool = "opencode";
+
+  claude.command = direnvCommand {
+    name = "claude";
+    package = pkgs.claude-code;
+  };
+
+  codex.command = direnvCommand {
+    name = "codex";
+    package = pkgs.codex;
+  };
+
+  opencode.command = direnvCommand {
+    name = "opencode";
+    package = pkgs.opencode;
+  };
 
   global_search = {
     enabled = true;
