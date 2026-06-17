@@ -5,37 +5,8 @@ final: prev: let
 
   github-tags = ["sooperset/mcp-atlassian" "0.21.1"]; # extractVersion=^v(?<version>.*)$
   hash-src = "sha256-KSkKiseEaDjF0ROPqLf/kO9yA7n8GV9eK96b0VMbDg4=";
-  markdownToConfluenceHash = "sha256-4fnu6z/sQGKVbml/E426wA1HN7Y7qqZptA79bbxlMFw=";
 
   version = elemAt github-tags 1;
-  markdown-to-confluence = py.buildPythonPackage rec {
-    pname = "markdown_to_confluence";
-    version = "0.3.4";
-    pyproject = true;
-
-    src = py.fetchPypi {
-      inherit pname version;
-      hash = markdownToConfluenceHash;
-    };
-
-    build-system = [py.setuptools];
-    dependencies = with py; [
-      lxml
-      markdown
-      pymdown-extensions
-      pyyaml
-      requests
-    ];
-
-    pythonRemoveDeps = [
-      "types-lxml"
-      "types-markdown"
-      "types-PyYAML"
-      "types-requests"
-    ];
-
-    doCheck = false;
-  };
 in {
   mcp-atlassian = py.buildPythonApplication {
     pname = "mcp-atlassian";
@@ -63,7 +34,7 @@ in {
       httpx
       keyring
       markdown
-      markdown-to-confluence
+      prev.markdown-to-confluence
       markdownify
       mcp
       pydantic
