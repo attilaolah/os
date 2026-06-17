@@ -18,7 +18,7 @@
       ./gpg.nix
       ./mcp.nix
       ./neovim
-      ./nix-index.nix
+      ./nix_index.nix
       ./opencode.nix
       ./rbw.nix
       ./tealdeer.nix
