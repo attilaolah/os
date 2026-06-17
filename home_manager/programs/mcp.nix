@@ -2,11 +2,13 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  disabledByDefault = lib.mapAttrs (_: server: server // {enabled = lib.mkDefault false;});
+in {
   programs.mcp = {
     enable = true;
 
-    servers = {
+    servers = disabledByDefault {
       bitbucket = {
         description = "Bitbucket MCP server";
         command = lib.getExe pkgs.bitbucket-mcp;
