@@ -28,6 +28,16 @@
         command = lib.getExe pkgs.kubernetes-mcp-server;
       };
 
+      playwright = {
+        description = "Playwright MCP server";
+        command = lib.getExe pkgs.playwright-mcp;
+        env = {
+          PLAYWRIGHT_MCP_CAPS = "devtools,vision";
+          PLAYWRIGHT_MCP_ISOLATED = "1";
+          PLAYWRIGHT_MCP_EXECUTABLE_PATH = lib.getExe pkgs.google-chrome;
+        };
+      };
+
       sonarqube = {
         description = "SonarQube MCP server";
         command = lib.getExe pkgs.sonarqube-mcp-server;
