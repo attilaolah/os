@@ -130,7 +130,7 @@
                       sharedModules = [
                         inputs.sops-nix.homeManagerModules.sops
                       ];
-                      users.${value.username} = import ./home-manager/home.nix;
+                      users.${value.username} = import ./home_manager/home.nix;
                       useGlobalPkgs = true;
                       useUserPackages = true;
                     };
@@ -158,7 +158,7 @@
               };
               modules = [
                 inputs.sops-nix.homeManagerModules.sops
-                ./home-manager/home.nix
+                ./home_manager/home.nix
               ];
               extraSpecialArgs = specialArgs config;
             };
