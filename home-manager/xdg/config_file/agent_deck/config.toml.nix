@@ -1,7 +1,4 @@
-{
-  lib,
-  pkgs,
-}: {
+_: {
   default_tool = "opencode";
 
   global_search = {
@@ -52,46 +49,5 @@
     enabled = false;
     per_session_per_window = 0;
     global_per_hour = 0;
-  };
-
-  mcp_pool = {
-    enabled = true;
-    auto_start = true;
-    pool_all = true;
-    fallback_to_stdio = true;
-    show_pool_status = true;
-  };
-
-  mcps = {
-    bitbucket = {
-      description = "Bitbucket MCP server";
-      command = lib.getExe pkgs.bitbucket-mcp;
-    };
-
-    atlassian = {
-      description = "Atlassian MCP server";
-      command = lib.getExe pkgs.mcp-atlassian;
-    };
-
-    flux-operator = {
-      description = "Flux Operator MCP server";
-      command = lib.getExe pkgs.fluxcd-operator-mcp;
-      args = ["serve"];
-    };
-
-    kubernetes = {
-      description = "Kubernetes MCP server";
-      command = lib.getExe pkgs.kubernetes-mcp-server;
-    };
-
-    sonarqube = {
-      description = "SonarQube MCP server";
-      command = lib.getExe pkgs.sonarqube-mcp-server;
-    };
-
-    teamcity = {
-      description = "TeamCity MCP server";
-      command = lib.getExe pkgs.teamcity-mcp;
-    };
   };
 }
