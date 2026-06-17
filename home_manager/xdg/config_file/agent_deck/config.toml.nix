@@ -15,8 +15,10 @@
         package
       ];
       text = ''
-        unset GIT_EXTERNAL_DIFF
-        exec direnv exec "$(pwd)" ${executable} "$@"
+        exec direnv exec "$(pwd)" \
+          env \
+          -u GIT_EXTERNAL_DIFF \
+          ${executable} "$@"
       '';
     };
   in "exec ${lib.getExe app}";
