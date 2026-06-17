@@ -15,6 +15,7 @@
         package
       ];
       text = ''
+        unset GIT_EXTERNAL_DIFF
         exec direnv exec "$(pwd)" ${executable} "$@"
       '';
     };
