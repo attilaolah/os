@@ -10,6 +10,7 @@
 in {
   programs.opencode = {
     enable = true;
+    enableMcpIntegration = true;
     package = pkgs.opencode;
     tui.theme = "catppuccin";
     settings = {

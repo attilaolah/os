@@ -5,7 +5,10 @@
 }: {
   imports =
     [
+      ./antigravity_cli.nix
       ./atuin.nix
+      ./claude_code.nix
+      ./codex.nix
       ./dircolors.nix
       ./direnv.nix
       ./fd.nix
@@ -13,8 +16,9 @@
       ./fzf.nix
       ./git.nix
       ./gpg.nix
+      ./mcp.nix
       ./neovim
-      ./nix-index.nix
+      ./nix_index.nix
       ./opencode.nix
       ./rbw.nix
       ./tealdeer.nix

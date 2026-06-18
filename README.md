@@ -7,7 +7,7 @@ NixOS configuration for personal hosts, along with dotfiles and other home
 configuration in [home-manarer][3]. K8s cluster configs live
 [in the ops repo][4].
 
-[3]: https://github.com/attilaolah/os/tree/main/home-manager
+[3]: https://github.com/attilaolah/os/tree/main/home_manager
 [4]: https://gitlab.com/dornhaus/ops
 
 ## 💡 Inspiration

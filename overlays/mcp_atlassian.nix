@@ -19,6 +19,13 @@ in {
       rev = "v${version}";
     };
 
+    patches = [
+      (prev.fetchpatch {
+        url = "https://github.com/sooperset/mcp-atlassian/commit/b089ed8b3b7ccdde207ce3ab2b7ef88e412a6f53.patch";
+        hash = "sha256-Y1Qb/F2nba/aITS3C3JweB7Hcj2bJrfnpWkqqNXLoGg=";
+      })
+    ];
+
     build-system = with py; [
       hatchling
       uv-dynamic-versioning
@@ -52,7 +59,6 @@ in {
 
     pythonRelaxDeps = [
       "fakeredis"
-      "fastmcp"
     ];
     pythonRemoveDeps = [
       "types-cachetools"

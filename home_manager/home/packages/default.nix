@@ -19,7 +19,6 @@
       any-nix-shell
       bat
       bitbucket-cli
-      claude-code
       colordiff
       curl
       devenv
@@ -98,8 +97,6 @@
 
       # AI stuff:
       agent-deck
-      antigravity-cli
-      codex
       qwen-code
 
       # Python, the basics:
