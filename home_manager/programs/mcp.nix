@@ -4,6 +4,7 @@
   ...
 }: let
   disabledByDefault = lib.mapAttrs (_: server: server // {enabled = lib.mkDefault false;});
+  googleChromeSupported = lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.google-chrome;
 in {
   programs.mcp = {
     enable = true;
@@ -33,11 +34,14 @@ in {
       playwright = {
         description = "Playwright MCP server";
         command = lib.getExe pkgs.playwright-mcp;
-        env = {
-          PLAYWRIGHT_MCP_CAPS = "devtools,vision";
-          PLAYWRIGHT_MCP_ISOLATED = "1";
-          PLAYWRIGHT_MCP_EXECUTABLE_PATH = lib.getExe pkgs.google-chrome;
-        };
+        env =
+          {
+            PLAYWRIGHT_MCP_CAPS = "devtools,vision";
+            PLAYWRIGHT_MCP_ISOLATED = "1";
+          }
+          // lib.optionalAttrs googleChromeSupported {
+            PLAYWRIGHT_MCP_EXECUTABLE_PATH = lib.getExe pkgs.google-chrome;
+          };
       };
 
       sonarqube = {
