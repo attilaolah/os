@@ -2,9 +2,9 @@ final: prev: let
   inherit (builtins) elemAt;
   fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
-  github-tags = ["MatanYemini/bitbucket-mcp" "5.0.6"]; # extractVersion=^v(?<version>.*)$
-  hash-src = "sha256-eBykQN/R38ajAvVFC+lgGC5/WdbKfC5hjmBRgxcz6OM=";
-  hash-npm-deps = "sha256-rrjV7AV7MiDmVP4BfPKJ8I4bLEkdBFLSgyL67nUO89Q=";
+  github-tags = ["MatanYemini/bitbucket-mcp" "6.0.0"]; # extractVersion=^v(?<version>.*)$
+  hash-src = "sha256-vzMVxAX+5Pn/CdgRVgCHAsB7b63Rv+BXctEyXV9UX8c=";
+  hash-npm-deps = "sha256-7hq+Jtrx1iK6ut3Iaim9fbL7w4/bBpDKpCsMx5aGWZQ=";
 
   version = elemAt github-tags 1;
 in {
