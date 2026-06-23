@@ -20,11 +20,14 @@ in {
 
     build-system = [py.setuptools];
     dependencies = with py; [
+      cattrs
       lxml
       markdown
+      orjson
       pymdown-extensions
       pyyaml
       requests
+      truststore
     ];
 
     pythonRemoveDeps = [
