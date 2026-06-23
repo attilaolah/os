@@ -3,8 +3,8 @@ final: prev: let
   fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["containers/kubernetes-mcp-server" "0.0.63"]; # extractVersion=^v(?<version>.*)$
-  hash-src = "sha256-m4oM8KMcDmXwIGaFw+VdnW22kLjt2SaD7qZV4kgTiu8=";
-  hash-vendor = "sha256-JNeYn/IfzQ2VLDbHgrkserh3wrXYOWXBczBn2DUO6NM=";
+  hash-src = "sha256-38hr1u1fVgiJ5AkhBhmQj/+CVfbjnHhb0k0lP9bKo4M=";
+  hash-vendor = "sha256-ClcG+aGtj6Ey99ErT5OCGGusDR7aXwESLyXHWrxG8Lk=";
 
   version = elemAt github-tags 1;
 in {
