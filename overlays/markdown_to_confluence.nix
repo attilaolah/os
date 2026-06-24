@@ -3,8 +3,8 @@ final: prev: let
   fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
   py = prev.python3Packages;
 
-  github-tags = ["hunyadi/md2conf" "0.3.4"];
-  hash-src = "sha256-iUkLbsu/KTzPwBX9+bSwdXsxV6NDe7iTHF+fKHZH7R0=";
+  github-tags = ["hunyadi/md2conf" "0.6.1"];
+  hash-src = "sha256-DFGFDJYpadcRZ6gJ4yjYHS7d+oJtu4L/fwKIyJDNneA=";
 
   version = elemAt github-tags 1;
 in {
@@ -20,11 +20,14 @@ in {
 
     build-system = [py.setuptools];
     dependencies = with py; [
+      cattrs
       lxml
       markdown
+      orjson
       pymdown-extensions
       pyyaml
       requests
+      truststore
     ];
 
     pythonRemoveDeps = [
