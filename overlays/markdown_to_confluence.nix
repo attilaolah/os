@@ -34,13 +34,6 @@ in {
       "cattrs" # https://github.com/NixOS/nixpkgs/pull/534685
       "lxml"
     ];
-    pythonRemoveDeps = [
-      "types-lxml"
-      "types-markdown"
-      "types-PyYAML"
-      "types-requests"
-    ];
-
     doCheck = false;
 
     meta = {
