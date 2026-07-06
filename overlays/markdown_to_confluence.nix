@@ -3,7 +3,7 @@ final: prev: let
   fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
   py = prev.python3Packages;
 
-  github-tags = ["hunyadi/md2conf" "0.3.4"];
+  github-tags = ["hunyadi/md2conf" "0.6.1"];
   hash-src = "sha256-iUkLbsu/KTzPwBX9+bSwdXsxV6NDe7iTHF+fKHZH7R0=";
 
   version = elemAt github-tags 1;
