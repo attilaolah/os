@@ -20,13 +20,20 @@ in {
 
     build-system = [py.setuptools];
     dependencies = with py; [
+      cattrs
       lxml
       markdown
+      orjson
       pymdown-extensions
       pyyaml
       requests
+      truststore
     ];
 
+    pythonRelaxDeps = [
+      "cattrs" # https://github.com/NixOS/nixpkgs/pull/534685
+      "lxml"
+    ];
     pythonRemoveDeps = [
       "types-lxml"
       "types-markdown"
