@@ -21,7 +21,6 @@
       "font-jetbrains-mono-nerd-font"
       "ghostty"
       "karabiner-elements"
-      "programmer-dvorak"
       "secretive"
       "tigervnc"
     ];
