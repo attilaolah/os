@@ -52,14 +52,26 @@
       };
     };
     to = key_code: modifiers: {to = [{inherit key_code modifiers;}];};
-    chrome.conditions = [
-      {
-        type = "frontmost_application_if";
-        bundle_identifiers = ["^com\\.google\\.Chrome$"];
-      }
-    ];
     basic = manipulators: map (mod: mod // {type = "basic";}) manipulators;
+    frontmost = bundle_identifier: manipulators:
+      map (mod:
+        mod
+        // {
+          conditions = [
+            {
+              type = "frontmost_application_if";
+              bundle_identifiers = ["^${builtins.replaceStrings ["."] ["\\."] bundle_identifier}$"];
+            }
+          ];
+        })
+      manipulators;
   in [
+    {
+      description = "Option+Tab switches apps";
+      manipulators = basic [
+        ((any "tab" ["option"]) // (to "tab" ["command"]))
+      ];
+    }
     {
       description = "Linux-style text navigation shortcuts";
       manipulators = basic [
@@ -70,18 +82,12 @@
       ];
     }
     {
-      description = "Option+Tab switches apps";
-      manipulators = basic [
-        ((any "tab" ["option"]) // (to "tab" ["command"]))
-      ];
-    }
-    {
-      description = "Chrome tab shortcuts";
-      manipulators = basic [
-        ((any "k" ["control" "shift"]) // (to "k" ["command" "shift"]) // chrome)
-        ((any "k" ["control"]) // (to "k" ["command"]) // chrome)
-        ((any "comma" ["control"]) // (to "comma" ["command"]) // chrome)
-      ];
+      description = "Chrome shortcuts";
+      manipulators = basic (frontmost "com.google.Chrome" [
+        ((any "k" ["control"]) // (to "k" ["command"])) # T
+        ((any "k" ["control" "shift"]) // (to "k" ["command" "shift"])) # T
+        ((any "comma" ["control"]) // (to "comma" ["command"])) # W
+      ]);
     }
   ];
 }
