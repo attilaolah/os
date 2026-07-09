@@ -67,10 +67,10 @@
       manipulators;
     dvp = {
       h = "j";
-      f = "u";
+      f = "y";
       j = "c";
       l = "p";
-      n = "b";
+      n = "l";
       s = "semicolon";
       t = "k";
       w = "comma";
@@ -97,6 +97,7 @@
       manipulators = basic (frontmost "com.google.Chrome" [
         ((any dvp.j ["control" "shift"]) // (to dvp.j ["command" "option"]))
         ((any dvp.t ["control" "shift"]) // (to dvp.t ["command" "shift"]))
+        ((any dvp.n ["control" "shift"]) // (to dvp.n ["command" "shift"]))
         ((any dvp.f ["control"]) // (to dvp.f ["command"]))
         ((any dvp.h ["control"]) // (to dvp.y ["command"]))
         ((any dvp.t ["control"]) // (to dvp.t ["command"]))
