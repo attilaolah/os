@@ -52,6 +52,12 @@
       };
     };
     to = key_code: modifiers: {to = [{inherit key_code modifiers;}];};
+    chrome.conditions = [
+      {
+        type = "frontmost_application_if";
+        bundle_identifiers = ["^com\\.google\\.Chrome$"];
+      }
+    ];
     basic = manipulators: map (mod: mod // {type = "basic";}) manipulators;
   in [
     {
@@ -67,6 +73,14 @@
       description = "Option+Tab switches apps";
       manipulators = basic [
         ((any "tab" ["option"]) // (to "tab" ["command"]))
+      ];
+    }
+    {
+      description = "Chrome tab shortcuts";
+      manipulators = basic [
+        ((any "k" ["control" "shift"]) // (to "k" ["command" "shift"]) // chrome)
+        ((any "k" ["control"]) // (to "k" ["command"]) // chrome)
+        ((any "comma" ["control"]) // (to "comma" ["command"]) // chrome)
       ];
     }
   ];
