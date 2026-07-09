@@ -65,6 +65,15 @@
           ];
         })
       manipulators;
+    dvp = {
+      h = "j";
+      j = "c";
+      l = "p";
+      s = "semicolon";
+      t = "k";
+      w = "comma";
+      y = "t";
+    };
   in [
     {
       description = "Option+Tab switches apps";
@@ -84,13 +93,13 @@
     {
       description = "Chrome shortcuts";
       manipulators = basic (frontmost "com.google.Chrome" [
-        ((any "c" ["control" "shift"]) // (to "c" ["command" "option"])) # J
-        ((any "k" ["control" "shift"]) // (to "k" ["command" "shift"])) # T
-        ((any "j" ["control"]) // (to "t" ["command"])) # H -> Y
-        ((any "k" ["control"]) // (to "k" ["command"])) # T
-        ((any "p" ["control"]) // (to "p" ["command"])) # L
-        ((any "semicolon" ["control"]) // (to "semicolon" ["command"])) # S
-        ((any "comma" ["control"]) // (to "comma" ["command"])) # W
+        ((any dvp.j ["control" "shift"]) // (to dvp.j ["command" "option"]))
+        ((any dvp.t ["control" "shift"]) // (to dvp.t ["command" "shift"]))
+        ((any dvp.h ["control"]) // (to dvp.y ["command"]))
+        ((any dvp.t ["control"]) // (to dvp.t ["command"]))
+        ((any dvp.l ["control"]) // (to dvp.l ["command"]))
+        ((any dvp.s ["control"]) // (to dvp.s ["command"]))
+        ((any dvp.w ["control"]) // (to dvp.w ["command"]))
       ]);
     }
   ];
