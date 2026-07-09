@@ -55,7 +55,7 @@
     basic = manipulators: map (mod: mod // {type = "basic";}) manipulators;
   in [
     {
-      description = "Windows/Linux-style text navigation shortcuts";
+      description = "Linux-style text navigation shortcuts";
       manipulators = basic [
         ((any "left_arrow" ["control" "shift"]) // (to "left_arrow" ["option" "shift"]))
         ((any "right_arrow" ["control" "shift"]) // (to "right_arrow" ["option" "shift"]))
