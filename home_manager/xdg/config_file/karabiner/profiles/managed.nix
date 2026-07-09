@@ -1,17 +1,18 @@
-{
+let
+  # Keyboard identifiers.
+  # Any keyboard (in practice, this applies to the built-in keyboard).
+  keyboard.is_keyboard = true;
+  # Das Keyboard:
+  das_keyboard = {
+    product_id = 320;
+    vendor_id = 9456;
+  };
+in {
   name = "Managed";
   selected = true;
   virtual_hid_keyboard.keyboard_type_v2 = "iso";
 
   devices = let
-    # Keyboard identifiers.
-    # Any keyboard (in practice, this applies to the built-in keyboard).
-    keyboard.is_keyboard = true;
-    # Das Keyboard:
-    das_keyboard = {
-      product_id = 320;
-      vendor_id = 9456;
-    };
     # Keyboard-specific remapping.
     remap = key_code: {
       simple_modifications = [
@@ -38,6 +39,24 @@
   );
 
   complex_modifications.rules = let
+    dvp = {
+      h = "j";
+      f = "y";
+      j = "c";
+      l = "p";
+      n = "l";
+      s = "semicolon";
+      t = "k";
+      w = "comma";
+      y = "t";
+    };
+    das_keyboard_only.conditions = [
+      {
+        type = "device_if";
+        identifiers = [das_keyboard];
+      }
+    ];
+
     any = key_code: mandatory: from key_code mandatory ["any"];
     from = key_code: mandatory: optional: {
       from = {
@@ -65,26 +84,19 @@
           ];
         })
       manipulators;
-    dvp = {
-      h = "j";
-      f = "y";
-      j = "c";
-      l = "p";
-      n = "l";
-      s = "semicolon";
-      t = "k";
-      w = "comma";
-      y = "t";
-    };
   in [
     {
-      description = "Option+Tab switches apps";
+      description = "App and window switching shortcuts";
       manipulators = basic [
+        ((any "tab" ["option" "shift"]) // (to "tab" ["command" "shift"]))
         ((any "tab" ["option"]) // (to "tab" ["command"]))
+        ((any "grave_accent_and_tilde" ["command" "shift"]) // (to "equal_sign" ["command" "option" "shift"]))
+        ((any "grave_accent_and_tilde" ["command"]) // (to "equal_sign" ["command" "option"]))
+        ((any "grave_accent_and_tilde" ["left_option"]) // (to "equal_sign" ["command" "option"]) // das_keyboard_only)
       ];
     }
     {
-      description = "Linux-style text navigation shortcuts";
+      description = "Text navigation shortcuts";
       manipulators = basic [
         ((any "left_arrow" ["control" "shift"]) // (to "left_arrow" ["option" "shift"]))
         ((any "right_arrow" ["control" "shift"]) // (to "right_arrow" ["option" "shift"]))
