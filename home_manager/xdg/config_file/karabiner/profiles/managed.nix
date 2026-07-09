@@ -63,5 +63,11 @@
         ((any "right_arrow" ["control"]) // (to "right_arrow" ["option"]))
       ];
     }
+    {
+      description = "Option+Tab switches apps";
+      manipulators = basic [
+        ((any "tab" ["option"]) // (to "tab" ["command"]))
+      ];
+    }
   ];
 }
