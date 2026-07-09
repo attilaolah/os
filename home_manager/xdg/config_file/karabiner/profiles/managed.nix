@@ -44,6 +44,8 @@ in {
     inherit (builtins) attrNames concatMap elemAt head isAttrs replaceStrings;
 
     dvp = {
+      a = "a";
+      c = "i";
       f = "y";
       h = "j";
       j = "c";
@@ -53,7 +55,9 @@ in {
       s = "semicolon";
       t = "k";
       u = "f";
+      v = "period";
       w = "comma";
+      x = "b";
       y = "t";
     };
     das_keyboard_only.conditions = [
@@ -136,7 +140,7 @@ in {
         [["control" "shift"] ["command" "option"] ["j"]]
         [["control"] ["command" "shift"] ["j"]]
         [["control"] ["command" "option"] ["u"]]
-        [["control"] ["command"] ["f" "l" "n" "p" "s" "t" "w" {h = "y";}]]
+        [["control"] ["command"] ["a" "c" "f" "l" "n" "p" "s" "t" "v" "w" "x" {h = "y";}]]
       ]));
     }
   ];
