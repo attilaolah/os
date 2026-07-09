@@ -1,4 +1,6 @@
 let
+  inherit (builtins) attrValues mapAttrs;
+
   # Keyboard identifiers.
   # Any keyboard (in practice, this applies to the built-in keyboard).
   keyboard.is_keyboard = true;
@@ -28,8 +30,8 @@ in {
     ({identifiers = keyboard // das_keyboard;} // (remap "right_option"))
   ];
 
-  simple_modifications = builtins.attrValues (
-    builtins.mapAttrs (from: to: {
+  simple_modifications = attrValues (
+    mapAttrs (from: to: {
       from.key_code = from;
       to = [{key_code = to;}];
     }) {
@@ -39,6 +41,8 @@ in {
   );
 
   complex_modifications.rules = let
+    inherit (builtins) attrNames concatMap elemAt head isAttrs replaceStrings;
+
     dvp = {
       f = "y";
       h = "j";
@@ -74,6 +78,25 @@ in {
     };
     to = key_code: modifiers: {to = [{inherit key_code modifiers;}];};
     basic = manipulators: map (mod: mod // {type = "basic";}) manipulators;
+    shortcuts = concatMap (
+      spec: let
+        from_modifiers = elemAt spec 0;
+        to_modifiers = elemAt spec 1;
+        keys = elemAt spec 2;
+      in
+        map (
+          key: let
+            mapping =
+              if isAttrs key
+              then key
+              else {${key} = key;};
+            from_key = head (attrNames mapping);
+            to_key = mapping.${from_key};
+          in
+            (any dvp.${from_key} from_modifiers) // (to dvp.${to_key} to_modifiers)
+        )
+        keys
+    );
     frontmost = bundle_identifier: manipulators:
       map (mod:
         mod
@@ -81,7 +104,7 @@ in {
           conditions = [
             {
               type = "frontmost_application_if";
-              bundle_identifiers = ["^${builtins.replaceStrings ["."] ["\\."] bundle_identifier}$"];
+              bundle_identifiers = ["^${replaceStrings ["."] ["\\."] bundle_identifier}$"];
             }
           ];
         })
@@ -108,48 +131,13 @@ in {
     }
     {
       description = "Chrome shortcuts";
-      manipulators = basic (frontmost "com.google.Chrome" (
-        (map
-          # Remap Ctrl+Shift+Key to Cmd+Option+Key:
-          (key: ((any dvp.${key} ["control" "shift"]) // (to dvp.${key} ["command" "option"])))
-          [
-            "j" # developer tools
-          ])
-        ++ (map
-          # Remap Ctrl+Shift+Key to Cmd+Shift+Key:
-          (key: ((any dvp.${key} ["control" "shift"]) // (to dvp.${key} ["command" "shift"])))
-          [
-            "t" # most recent tab
-            "n" # new incognito window
-          ])
-        ++ (map
-          # Remap Ctrl+Key to Cmd+Option+Key:
-          (key: ((any dvp.${key} ["control"]) // (to dvp.${key} ["command" "option"])))
-          [
-            "u" # view page source
-          ])
-        ++ (map
-          # Remap Ctrl+Key to Cmd+Shift+Key:
-          (key: ((any dvp.${key} ["control"]) // (to dvp.${key} ["command" "shift"])))
-          [
-            "j" # downloads
-          ])
-        ++ (map
-          # Remap Ctrl+Key to Cmd+Key:
-          (key: ((any dvp.${key} ["control"]) // (to dvp.${key} ["command"])))
-          [
-            "f" # find
-            "l" # jump to the address bar
-            "n" # new window
-            "p" # print
-            "s" # save page as
-            "t" # new tab
-            "w" # close tab
-          ])
-        ++ [
-          ((any dvp.h ["control"]) // (to dvp.y ["command"]))
-        ]
-      ));
+      manipulators = basic (frontmost "com.google.Chrome" (shortcuts [
+        [["control" "shift"] ["command" "shift"] ["t" "n"]]
+        [["control" "shift"] ["command" "option"] ["j"]]
+        [["control"] ["command" "shift"] ["j"]]
+        [["control"] ["command" "option"] ["u"]]
+        [["control"] ["command"] ["f" "l" "n" "p" "s" "t" "w" {h = "y";}]]
+      ]));
     }
   ];
 }
