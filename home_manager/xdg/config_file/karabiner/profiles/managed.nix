@@ -84,8 +84,8 @@
     {
       description = "Chrome shortcuts";
       manipulators = basic (frontmost "com.google.Chrome" [
-        ((any "k" ["control"]) // (to "k" ["command"])) # T
         ((any "k" ["control" "shift"]) // (to "k" ["command" "shift"])) # T
+        ((any "k" ["control"]) // (to "k" ["command"])) # T
         ((any "comma" ["control"]) // (to "comma" ["command"])) # W
       ]);
     }
