@@ -40,13 +40,15 @@ in {
 
   complex_modifications.rules = let
     dvp = {
-      h = "j";
       f = "y";
+      h = "j";
       j = "c";
       l = "p";
       n = "l";
+      p = "r";
       s = "semicolon";
       t = "k";
+      u = "f";
       w = "comma";
       y = "t";
     };
@@ -106,18 +108,48 @@ in {
     }
     {
       description = "Chrome shortcuts";
-      manipulators = basic (frontmost "com.google.Chrome" [
-        ((any dvp.j ["control" "shift"]) // (to dvp.j ["command" "option"]))
-        ((any dvp.t ["control" "shift"]) // (to dvp.t ["command" "shift"]))
-        ((any dvp.n ["control" "shift"]) // (to dvp.n ["command" "shift"]))
-        ((any dvp.f ["control"]) // (to dvp.f ["command"]))
-        ((any dvp.h ["control"]) // (to dvp.y ["command"]))
-        ((any dvp.t ["control"]) // (to dvp.t ["command"]))
-        ((any dvp.l ["control"]) // (to dvp.l ["command"]))
-        ((any dvp.n ["control"]) // (to dvp.n ["command"]))
-        ((any dvp.s ["control"]) // (to dvp.s ["command"]))
-        ((any dvp.w ["control"]) // (to dvp.w ["command"]))
-      ]);
+      manipulators = basic (frontmost "com.google.Chrome" (
+        (map
+          # Remap Ctrl+Shift+Key to Cmd+Option+Key:
+          (key: ((any dvp.${key} ["control" "shift"]) // (to dvp.${key} ["command" "option"])))
+          [
+            "j" # developer tools
+          ])
+        ++ (map
+          # Remap Ctrl+Shift+Key to Cmd+Shift+Key:
+          (key: ((any dvp.${key} ["control" "shift"]) // (to dvp.${key} ["command" "shift"])))
+          [
+            "t" # most recent tab
+            "n" # new incognito window
+          ])
+        ++ (map
+          # Remap Ctrl+Key to Cmd+Option+Key:
+          (key: ((any dvp.${key} ["control"]) // (to dvp.${key} ["command" "option"])))
+          [
+            "u" # view page source
+          ])
+        ++ (map
+          # Remap Ctrl+Key to Cmd+Shift+Key:
+          (key: ((any dvp.${key} ["control"]) // (to dvp.${key} ["command" "shift"])))
+          [
+            "j" # downloads
+          ])
+        ++ (map
+          # Remap Ctrl+Key to Cmd+Key:
+          (key: ((any dvp.${key} ["control"]) // (to dvp.${key} ["command"])))
+          [
+            "f" # find
+            "l" # jump to the address bar
+            "n" # new window
+            "p" # print
+            "s" # save page as
+            "t" # new tab
+            "w" # close tab
+          ])
+        ++ [
+          ((any dvp.h ["control"]) // (to dvp.y ["command"]))
+        ]
+      ));
     }
   ];
 }
