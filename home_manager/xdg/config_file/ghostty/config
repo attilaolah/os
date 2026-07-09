@@ -2,4 +2,6 @@
 font-feature = -liga,-calt
 macos-option-as-alt = true
 keybind = cmd+a=esc:a
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
 theme = Catppuccin Mocha
