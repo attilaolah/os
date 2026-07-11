@@ -107,6 +107,7 @@
             };
             platform = platform system;
           };
+        nixpkgsConfig = host: unfree // (host.gpu or {});
 
         mkConfigs = generator: os: platform:
           lib.mapAttrs' (
@@ -115,7 +116,12 @@
               value = generator.lib."${os}System" {
                 inherit (value) system;
                 modules = [
-                  {nixpkgs = {inherit overlays;};}
+                  {
+                    nixpkgs = {
+                      inherit overlays;
+                      config = nixpkgsConfig value;
+                    };
+                  }
                   ./hosts/${name}/configuration.nix
                   (lib.optionalAttrs (os == "darwin") {
                     imports = [
@@ -148,19 +154,19 @@
         # This allows one to apply only the home-manager config without switching the system config by running:
         # home-manager switch --flake .#hostname (e.g. --flake .#home)
         homeConfigurations =
-          lib.mapAttrs' (name: config: {
-            name = config.hostName or config.hostname or name;
+          lib.mapAttrs' (name: host: {
+            name = host.hostName or host.hostname or name;
             value = home-manager.lib.homeManagerConfiguration {
               pkgs = import nixpkgs {
                 inherit overlays;
-                inherit (config) system;
-                config = unfree;
+                inherit (host) system;
+                config = nixpkgsConfig host;
               };
               modules = [
                 inputs.sops-nix.homeManagerModules.sops
                 ./home_manager/home.nix
               ];
-              extraSpecialArgs = specialArgs config;
+              extraSpecialArgs = specialArgs host;
             };
           })
           hosts;
