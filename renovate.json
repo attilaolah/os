@@ -53,6 +53,17 @@
       "datasourceTemplate": "github-tags"
     },
     {
+      "description": "Update branch-pinned GitHub dependencies under overlays/",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^overlays/.*\\.nix$/"
+      ],
+      "matchStrings": [
+        "github-commits\\s*=\\s*\\[\\s*\\\"(?<depName>[^\\\"]+)\\\"\\s+\\\"(?<currentValue>[^\\\"]+)\\\"\\s+\\\"(?<currentDigest>[a-f0-9]{40})\\\"\\s*\\]\\s*;"
+      ],
+      "datasourceTemplate": "github-commits"
+    },
+    {
       "description": "Update GitHub flake inputs pinned to tags",
       "customType": "regex",
       "managerFilePatterns": [

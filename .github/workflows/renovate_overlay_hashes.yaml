@@ -65,6 +65,49 @@ jobs:
             ' || true
         }
 
+        refresh_github_commit_metadata() {
+          local overlay="$1"
+          local tuple
+          local repo_slug
+          local branch
+          local rev
+          local tmp_dir
+          local tmp_file
+          local rev_count
+
+          tuple="$(sed -nE 's/^[[:space:]]*github-commits[[:space:]]*=[[:space:]]*\[[[:space:]]*"([^"]+)"[[:space:]]+"([^"]+)"[[:space:]]+"([0-9a-f]{40})"[[:space:]]*\][[:space:]]*;.*/\1 \2 \3/p' "${overlay}" | head -n1)"
+          if [[ -z "${tuple}" ]]; then
+            return 0
+          fi
+
+          read -r repo_slug branch rev <<< "${tuple}"
+          tmp_dir="$(mktemp -d)"
+          git clone --filter=blob:none --no-checkout --quiet "https://github.com/${repo_slug}.git" "${tmp_dir}"
+          if ! git -C "${tmp_dir}" merge-base --is-ancestor "${rev}" "origin/${branch}"; then
+            rm -rf "${tmp_dir}"
+            echo "Revision ${rev} is not reachable from ${repo_slug}/${branch}." >&2
+            exit 1
+          fi
+          rev_count="$(git -C "${tmp_dir}" rev-list --count "${rev}")"
+          rm -rf "${tmp_dir}"
+
+          tmp_file="$(mktemp)"
+          if ! awk -v rev_count="${rev_count}" '
+            BEGIN { found = 0; }
+            /^[[:space:]]*revCount[[:space:]]*=/ {
+              sub(/revCount[[:space:]]*=[[:space:]]*[0-9]+;/, "revCount = " rev_count ";");
+              found = 1;
+            }
+            { print; }
+            END { if (!found) exit 42; }
+          ' "${overlay}" > "${tmp_file}"; then
+            rm -f "${tmp_file}"
+            echo "Failed to update revCount in ${overlay}." >&2
+            exit 1
+          fi
+          mv "${tmp_file}" "${overlay}"
+        }
+
         refresh_antigravity_source_urls() {
           local overlay="$1"
           local version
@@ -153,6 +196,8 @@ jobs:
 
           package_name="$(basename "${overlay}" .nix | tr '_' '-')"
           mappings=()
+
+          refresh_github_commit_metadata "${overlay}"
 
           if [[ "${overlay}" == 'overlays/antigravity_cli.nix' ]]; then
             refresh_antigravity_source_urls "${overlay}"
