@@ -62,8 +62,27 @@
         "url\\s*=\\s*\\\"github:(?<depName>[^\\\"\\/]+\\/[^\\\"\\/]+)\\/(?<currentValue>v?\\d[^\\\"]*)\\\";"
       ],
       "datasourceTemplate": "github-tags"
+    },
+    {
+      "description": "Update pinned nixpkgs CUDA package set",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^hosts/home/configuration\\.nix$/"
+      ],
+      "matchStrings": [
+        "cudaPackages\\s*=\\s*prev\\.lib\\.recurseIntoAttrs\\s+prev\\.cudaPackages_(?<currentValue>\\d+_\\d+);"
+      ],
+      "datasourceTemplate": "custom.nixpkgs-cuda-packages",
+      "depNameTemplate": "nixpkgs CUDA package set",
+      "versioningTemplate": "regex:^(?<major>\\d+)_(?<minor>\\d+)$"
     }
   ],
+  "customDatasources": {
+    "nixpkgs-cuda-packages": {
+      "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/NixOS/nixpkgs/nixos-unstable/pkgs/top-level/all-packages.nix",
+      "format": "plain"
+    }
+  },
   "packageRules": [
     {
       "description": "Major & minor only",
@@ -78,6 +97,14 @@
       "separateMultipleMajor": false,
       "groupName": "llama.cpp",
       "branchTopic": "llama-cpp"
+    },
+    {
+      "description": "Extract nixpkgs CUDA package set versions",
+      "matchDepNames": ["nixpkgs CUDA package set"],
+      "matchDatasources": ["custom.nixpkgs-cuda-packages"],
+      "extractVersion": "^cudaPackages_(?<version>\\d+_\\d+)$",
+      "groupName": "CUDA package set",
+      "branchTopic": "cuda-package-set"
     },
     {
       "description": "Major only",
