@@ -6,6 +6,6 @@
       name = "Adwaita-Dark";
       package = pkgs.adwaita-qt;
     };
-    platformTheme.name = "gtk";
+    platformTheme.name = "gtk3";
   };
 }
