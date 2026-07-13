@@ -47,6 +47,13 @@
     ];
   };
 
+  assertions = [
+    {
+      assertion = pkgs.suitesparse.version == "5.13.0";
+      message = "SuiteSparse changed from 5.13.0 to ${pkgs.suitesparse.version}; check whether the CUDA workaround in hosts/home/configuration.nix is still needed.";
+    }
+  ];
+
   nixpkgs = {
     config = {
       allowUnfree = true;
@@ -58,6 +65,8 @@
         suitesparse = prev.suitesparse.override {
           # SuiteSparse 5.13.0 is not compatible with the CUDA 13 stdenv, but
           # it is pulled into the desktop closure through GEGL/GIMP.
+          # Drop this when nixpkgs updates SuiteSparse, likely via:
+          # https://github.com/NixOS/nixpkgs/pull/486083
           enableCuda = false;
         };
       })
