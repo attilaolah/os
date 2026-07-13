@@ -55,6 +55,7 @@
     }
     // lib.attrsets.optionalAttrs pkgs.stdenv.isLinux {
       pointerCursor = {
+        enable = true;
         name = "Adwaita";
         size = 24;
         package = pkgs.adwaita-icon-theme;
