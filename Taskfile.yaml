@@ -17,6 +17,7 @@ tasks:
     desc: Build NixOS flakes
     cmds:
       - >-
+        set -o pipefail;
         {{.REBUILD_CMD}} build --flake ".#{{.HOSTNAME_SHORT}}" --log-format internal-json |&
         nom --json
 
@@ -32,6 +33,7 @@ tasks:
       - sops -d secrets/contact.yaml > /dev/null
       - sudo -v
       - >-
+        set -o pipefail;
         sudo {{.REBUILD_CMD}} switch --flake ".#{{.HOSTNAME_SHORT}}" --log-format internal-json |&
         nom --json
 
