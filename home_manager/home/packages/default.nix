@@ -40,6 +40,7 @@
       kubectl
       kubernetes-helm
       mktemp
+      nix-output-monitor
       nixpkgs-review
       openssl
       p7zip
