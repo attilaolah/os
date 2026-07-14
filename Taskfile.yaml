@@ -16,7 +16,9 @@ tasks:
   build:
     desc: Build NixOS flakes
     cmds:
-      - '{{.REBUILD_CMD}} build --flake ".#{{.HOSTNAME_SHORT}}"'
+      - >-
+        {{.REBUILD_CMD}} build --flake ".#{{.HOSTNAME_SHORT}}" --log-format internal-json |&
+        nom --json
 
   diff:
     desc: Build & diff against the current system
@@ -28,7 +30,10 @@ tasks:
     desc: Install (update) the current system
     cmds:
       - sops -d secrets/contact.yaml > /dev/null
-      - 'sudo {{.REBUILD_CMD}} switch --flake ".#{{.HOSTNAME_SHORT}}"'
+      - sudo -v
+      - >-
+        sudo {{.REBUILD_CMD}} switch --flake ".#{{.HOSTNAME_SHORT}}" --log-format internal-json |&
+        nom --json
 
   update:
     desc: Update Nix flakes

@@ -213,6 +213,7 @@
             alejandra
             go-task
             pkgs.home-manager
+            nix-output-monitor
             nvd
             sops
           ];
