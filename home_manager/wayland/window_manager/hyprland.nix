@@ -44,6 +44,8 @@
     };
     dispatch = command: ''hl.dsp.exec_raw(${builtins.toJSON command})'';
     exec = command: ''hl.dsp.exec_cmd(${builtins.toJSON command})'';
+    focusWorkspace = workspace: ''hl.dsp.focus({ workspace = ${builtins.toJSON workspace} })'';
+    moveToWorkspace = workspace: ''hl.dsp.window.move({ workspace = ${builtins.toJSON workspace} })'';
   in {
     enable = true;
     configType = "lua";
@@ -253,9 +255,9 @@
           (bindWithOptions "SUPER + mouse:273" "hl.dsp.window.resize()" {mouse = true;})
         ]
         # Switch workspaces with SUPER + num.
-        ++ (map (n: bind "SUPER + ${workspaceKeys.${toString n}}" (dispatch "workspace ${toString n}")) workspaces)
+        ++ (map (n: bind "SUPER + ${workspaceKeys.${toString n}}" (focusWorkspace n)) workspaces)
         # Move active window to a workspace with SUPER + SHIFT + num.
-        ++ (map (n: bind "SUPER + SHIFT + ${workspaceKeys.${toString n}}" (dispatch "movetoworkspace ${toString n}")) workspaces);
+        ++ (map (n: bind "SUPER + SHIFT + ${workspaceKeys.${toString n}}" (moveToWorkspace n)) workspaces);
     };
   };
 }
