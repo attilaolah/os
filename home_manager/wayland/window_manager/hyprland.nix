@@ -155,17 +155,6 @@
         };
       };
 
-      on = {
-        _args = [
-          "hyprland.start"
-          (mkLuaInline ''
-            function()
-              hl.dispatch(hl.dsp.focus({ monitor = ${builtins.toJSON m2} }))
-            end
-          '')
-        ];
-      };
-
       monitor = [
         {
           output = m1;
