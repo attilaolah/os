@@ -28,7 +28,7 @@
 
     # OpenCode upstream overlay
     opencode = {
-      url = "github:anomalyco/opencode/v1.18.1";
+      url = "github:anomalyco/opencode/v1.18.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
