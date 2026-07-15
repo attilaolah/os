@@ -160,7 +160,7 @@
           "hyprland.start"
           (mkLuaInline ''
             function()
-              hl.exec_cmd(${builtins.toJSON "hyprctl dispatch focusmonitor ${lib.escapeShellArg m2}"})
+              hl.dispatch(hl.dsp.focus({ monitor = ${builtins.toJSON m2} }))
               hl.exec_cmd(${builtins.toJSON (lib.getExe' pkgs.swaynotificationcenter "swaync")})
             end
           '')
