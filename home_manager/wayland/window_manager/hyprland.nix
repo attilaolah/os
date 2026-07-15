@@ -42,8 +42,8 @@
     bindWithOptions = keys: dispatcher: options: {
       _args = [keys (mkLuaInline dispatcher) options];
     };
-    dispatch = command: ''hl.dsp.exec_raw(${builtins.toJSON command})'';
     exec = command: ''hl.dsp.exec_cmd(${builtins.toJSON command})'';
+    focusDirection = direction: ''hl.dsp.focus({ direction = ${builtins.toJSON direction} })'';
     focusWorkspace = workspace: ''hl.dsp.focus({ workspace = ${builtins.toJSON workspace} })'';
     moveToWorkspace = workspace: ''hl.dsp.window.move({ workspace = ${builtins.toJSON workspace} })'';
   in {
@@ -194,34 +194,34 @@
       bind =
         [
           (bind "SUPER + Return" (exec term))
-          (bind "SUPER + Space" (dispatch "togglefloating"))
-          (bind "SUPER + Escape" (dispatch "killactive"))
-          (bind "SUPER + D" (dispatch "pseudo")) #                [D]windle
-          (bind "SUPER + F" (dispatch "fullscreen")) #            [F]ullscreen
+          (bind "SUPER + Space" ''hl.dsp.window.float({ action = "toggle" })'')
+          (bind "SUPER + Escape" "hl.dsp.window.close()")
+          (bind "SUPER + D" "hl.dsp.window.pseudo()") #            [D]windle
+          (bind "SUPER + F" "hl.dsp.window.fullscreen()") #        [F]ullscreen
           (bind "SUPER + L" (exec lock)) #                         [L]ock
           (bind "SUPER + N" (exec notif)) #                        [N]otification Centre
           (bind "SUPER + P" (exec print)) #                        [P]rint Screen
           (bind "SUPER + R" (exec menu)) #                         [R]un
-          (bind "SUPER + T" (dispatch "layoutmsg togglesplit")) #  [T]ile (Dwindle)
+          (bind "SUPER + T" ''hl.dsp.layout("togglesplit")'') #    [T]ile (Dwindle)
           (bind "SUPER + W" (exec web)) #                          [W]eb
 
           # Move focus with SUPER + arrow keys
-          (bind "SUPER + left" (dispatch "movefocus l"))
-          (bind "SUPER + right" (dispatch "movefocus r"))
-          (bind "SUPER + up" (dispatch "movefocus u"))
-          (bind "SUPER + down" (dispatch "movefocus d"))
-          (bind "ALT + Tab" (dispatch "cyclenext prev"))
-          (bind "ALT + Tab" (dispatch "bringactivetotop"))
-          (bind "ALT + SHIFT + Tab" (dispatch "cyclenext next"))
-          (bind "ALT + SHIFT + Tab" (dispatch "bringactivetotop"))
+          (bind "SUPER + left" (focusDirection "left"))
+          (bind "SUPER + right" (focusDirection "right"))
+          (bind "SUPER + up" (focusDirection "up"))
+          (bind "SUPER + down" (focusDirection "down"))
+          (bind "ALT + Tab" ''hl.dsp.window.cycle_next("prev")'')
+          (bind "ALT + Tab" "hl.dsp.window.bring_to_top()")
+          (bind "ALT + SHIFT + Tab" ''hl.dsp.window.cycle_next("next")'')
+          (bind "ALT + SHIFT + Tab" "hl.dsp.window.bring_to_top()")
 
           # Special workspace (scratchpad)
-          (bind "SUPER + S" (dispatch "togglespecialworkspace magic"))
-          (bind "SUPER + SHIFT + S" (dispatch "movetoworkspace special:magic"))
+          (bind "SUPER + S" ''hl.dsp.workspace.toggle_special("magic")'')
+          (bind "SUPER + SHIFT + S" (moveToWorkspace "special:magic"))
 
           # Scroll through existing workspaces with SUPER + scroll
-          (bind "SUPER + mouse_down" (dispatch "workspace e+1"))
-          (bind "SUPER + mouse_up" (dispatch "workspace e-1"))
+          (bind "SUPER + mouse_down" (focusWorkspace "e+1"))
+          (bind "SUPER + mouse_up" (focusWorkspace "e-1"))
 
           # Send SIGUSR1 to toggle Waybar visibility.
           (bindWithOptions "SUPER + Super_L" (exec "systemctl --user kill -s SIGUSR1 waybar.service") {release = true;})
