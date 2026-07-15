@@ -20,9 +20,9 @@
 
     inherit (lib.generators) mkLuaInline;
 
-    m1 = monitors."$M1";
-    m2 = monitors."$M2";
-    m3 = monitors."$M3";
+    mon_1 = monitors."$M1";
+    mon_2 = monitors."$M2";
+    mon_3 = monitors."$M3";
 
     workspaces = [1 2 3 4 5 6 7 8];
     workspaceKeys = {
@@ -157,20 +157,20 @@
 
       monitor = [
         {
-          output = m1;
+          output = mon_1;
           mode = "2560x1440@60";
           position = "0x0";
           scale = 1;
           transform = 3;
         }
         {
-          output = m2;
+          output = mon_2;
           mode = "3840x2160@60";
           position = "1440x200";
           scale = 1;
         }
         {
-          output = m3;
+          output = mon_3;
           mode = "2560x1440@60";
           position = "5280x0";
           scale = 1;
@@ -181,17 +181,17 @@
       workspace_rule = [
         {
           workspace = "1";
-          monitor = m1;
+          monitor = mon_1;
           default = true;
         }
         {
           workspace = "2";
-          monitor = m2;
+          monitor = mon_2;
           default = true;
         }
         {
           workspace = "3";
-          monitor = m3;
+          monitor = mon_3;
           default = true;
         }
       ];
