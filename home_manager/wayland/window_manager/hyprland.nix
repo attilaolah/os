@@ -161,7 +161,6 @@
           (mkLuaInline ''
             function()
               hl.dispatch(hl.dsp.focus({ monitor = ${builtins.toJSON m2} }))
-              hl.exec_cmd(${builtins.toJSON (lib.getExe' pkgs.swaynotificationcenter "swaync")})
             end
           '')
         ];
