@@ -178,23 +178,11 @@
         }
       ];
 
-      workspace_rule = [
-        {
-          workspace = "1";
-          monitor = mon_1;
-          default = true;
-        }
-        {
-          workspace = "2";
-          monitor = mon_2;
-          default = true;
-        }
-        {
-          workspace = "3";
-          monitor = mon_3;
-          default = true;
-        }
-      ];
+      workspace_rule = lib.imap1 (i: monitor: {
+        inherit monitor;
+        workspace = toString i;
+        default = true;
+      }) [mon_1 mon_2 mon_3];
 
       window_rule = [
         {
