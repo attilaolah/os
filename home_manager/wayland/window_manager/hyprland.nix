@@ -116,8 +116,10 @@
           gaps_out = 0;
           layout = "dwindle";
 
-          "col.active_border" = "rgba(da70d6ff)";
-          "col.inactive_border" = "rgba(2b3856ff)";
+          col = {
+            active_border = "rgba(da70d6ff)";
+            inactive_border = "rgba(2b3856ff)";
+          };
         };
         dwindle.preserve_split = true;
 
