@@ -4,7 +4,7 @@ final: prev: let
 
   github-tags = ["marco-jardim/opencode-model-router" "1.3.0"]; # extractVersion=^v(?<version>.*)$
   hash-src = "sha256-nqdVWDzBD8zv/OsvAVrxA71ox8l0uacQqt4pf1PSJ1U=";
-  hash-npm-deps = "sha256-Zis/VkDr26azZqaWf3bEJEg8Ei9MfxbTftycbnsyStQ=";
+  hash-npm-deps = "sha256-b2hq/uhb7FBiA4X1rkq5mPs8XMtGtjq5q5tasZ4kh14=";
 
   version = elemAt github-tags 1;
 in {
@@ -22,7 +22,18 @@ in {
     dontNpmBuild = true;
 
     postPatch = ''
+      cp ${./opencode_model_router/package.json} package.json
       cp ${./opencode_model_router/package-lock.json} package-lock.json
+    '';
+
+    installPhase = ''
+      runHook preInstall
+
+      packageRoot=$out/lib/node_modules/opencode-model-router
+      mkdir -p "$packageRoot"
+      cp -R . "$packageRoot"
+
+      runHook postInstall
     '';
 
     passthru.pluginPath = "${final.opencode-model-router}/lib/node_modules/opencode-model-router/src/index.ts";

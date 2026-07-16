@@ -1,0 +1,9 @@
+{
+  "name": "opencode-model-router",
+  "type": "module",
+  "main": "./src/index.ts",
+  "packageManager": "npm@11.17.0",
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.0.0"
+  }
+}
