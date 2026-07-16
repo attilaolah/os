@@ -78,7 +78,7 @@
             gpu.cudaSupport = true;
           };
           work = {
-            hostname = "nb1609";
+            hostname = "nb1635";
             system = "aarch64-darwin";
             username = "olaa";
             ncores = 10;
