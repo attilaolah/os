@@ -20,7 +20,6 @@ in {
 
     npmDepsHash = hash-npm-deps;
     dontNpmBuild = true;
-    npmInstallFlags = ["--omit=dev"];
 
     postPatch = ''
       cp ${./opencode_model_router/package-lock.json} package-lock.json
