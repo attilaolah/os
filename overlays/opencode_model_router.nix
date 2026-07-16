@@ -19,6 +19,10 @@ in {
     };
 
     postPatch = ''
+      substituteInPlace src/router/config.ts \
+        --replace-fail \
+          'return join(getPluginRoot(), "tiers.json");' \
+          'return process.env.OPENCODE_MODEL_ROUTER_TIERS || join(getPluginRoot(), "tiers.json");'
       cp ${./opencode_model_router/package-lock.json} package-lock.json
       ${prev.jq.bin}/bin/jq 'del(.devDependencies)' package.json > package.json.stripped
       mv package.json.stripped package.json
