@@ -76,6 +76,9 @@ in {
         "gemini"
         "openai"
       ];
+      plugin = [
+        pkgs.opencode-model-router.pluginPath
+      ];
     };
   };
 }
