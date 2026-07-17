@@ -192,17 +192,17 @@
           exportedPackages = lib.genAttrs packageNames (name: builtins.getAttr name pkgs);
           hashOutputsFor = name: let
             pkg = builtins.getAttr name pkgs;
-            extraSrcOutputs = lib.optionalAttrs (pkg ? passthru && pkg.passthru ? sources) (
+            srcOutputs = lib.optionalAttrs (pkg ? passthru && pkg.passthru ? sources) (
               lib.mapAttrs'
               (system: source: lib.nameValuePair "${name}-src-${system}" source)
               pkg.passthru.sources
             );
           in
-            (lib.optionalAttrs (pkg ? src && lib.isDerivation pkg.src) {"${name}-src" = pkg.src;})
-            // extraSrcOutputs
-            // (lib.optionalAttrs (pkg ? npmDeps) {"${name}-npm-deps" = pkg.npmDeps;})
+            srcOutputs
+            // (lib.optionalAttrs (pkg ? src && lib.isDerivation pkg.src) {"${name}-src" = pkg.src;})
             // (lib.optionalAttrs (pkg ? cargoDeps) {"${name}-cargo-deps" = pkg.cargoDeps;})
-            // (lib.optionalAttrs (pkg ? goModules) {"${name}-vendor" = pkg.goModules;});
+            // (lib.optionalAttrs (pkg ? goModules) {"${name}-vendor" = pkg.goModules;})
+            // (lib.optionalAttrs (pkg ? npmDeps) {"${name}-npm-deps" = pkg.npmDeps;});
           exportedHashOutputs = lib.foldl' lib.recursiveUpdate {} (map hashOutputsFor packageNames);
         in
           exportedPackages
