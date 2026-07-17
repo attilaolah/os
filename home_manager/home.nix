@@ -32,11 +32,7 @@
       stateVersion = "23.11";
 
       sessionVariables = with config.home;
-        {
-          # Development environment:
-          GOPATH = "${homeDirectory}/dev/go";
-        }
-        // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+        lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
           # Use Secretive as the SSH agent on MacOS. It is installed via Homebrew or environment.systemPackages.
           # The GPG-agent based socket can still be used by pointing SSH_AUTH_SOCK to GPG_AGENT_INFO.ssh temporarily.
           SSH_AUTH_SOCK = "${homeDirectory}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
