@@ -93,8 +93,10 @@
       yaml-language-server
 
       # Virtualisation:
+      crane
       podman-compose
       podman-tui
+      skopeo
 
       # AI stuff:
       agent-deck
