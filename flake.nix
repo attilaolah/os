@@ -210,7 +210,6 @@
 
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            alejandra
             go-task
             pkgs.home-manager
             nix-output-monitor
