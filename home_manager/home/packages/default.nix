@@ -32,6 +32,7 @@
       gitleaks
       gnumake
       gnupg
+      go-task
       gotop
       htop
       jira-cli-go
@@ -93,8 +94,10 @@
       yaml-language-server
 
       # Virtualisation:
+      crane
       podman-compose
       podman-tui
+      skopeo
 
       # AI stuff:
       agent-deck
