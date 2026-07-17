@@ -32,6 +32,7 @@
       gitleaks
       gnumake
       gnupg
+      go-task
       gotop
       htop
       jira-cli-go
