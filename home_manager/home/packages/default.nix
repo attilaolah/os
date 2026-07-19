@@ -108,10 +108,9 @@
       (python314.withPackages (ps:
         with ps; [
           huggingface-hub
+          ipython
           jmespath
           polars
-          # TODO: add when supported:
-          # ipython
         ]))
 
       # NPM packages:
