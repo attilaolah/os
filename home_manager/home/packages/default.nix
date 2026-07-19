@@ -95,6 +95,7 @@
 
       # Virtualisation:
       crane
+      podman
       podman-compose
       podman-tui
       skopeo
