@@ -1,6 +1,6 @@
 final: prev: let
   inherit (builtins) elemAt;
-  fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
+  fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
   py = prev.python3Packages;
 
   github-tags = ["sooperset/mcp-atlassian" "0.21.1"]; # extractVersion=^v(?<version>.*)$
@@ -13,9 +13,8 @@ in {
     inherit version;
     pyproject = true;
 
-    src = fetchFromGithubTuple {
-      inherit github-tags;
-      hash = hash-src;
+    src = fetchFromGitHubTuple {
+      inherit github-tags hash-src;
       rev = "v${version}";
     };
 

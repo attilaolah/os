@@ -1,6 +1,6 @@
 {
   github-tags,
-  hash,
+  hash-src,
   extract ? (theme: theme),
 }: let
   inherit (builtins) head;
@@ -13,11 +13,11 @@
     else throw "Expected github-tags to start with '<owner>/<repo>', got '${repo}'";
 in
   final: prev: let
-    fetchFromGithubTuple = import ./fetch_from_github_tuple.nix prev;
+    fetchFromGitHubTuple = import ./fetch_from_github_tuple.nix prev;
   in {
     "catppuccin-${name}" = prev.stdenv.mkDerivation {
       name = "catppuccin-${name}";
-      src = fetchFromGithubTuple {inherit github-tags hash;};
+      src = fetchFromGitHubTuple {inherit github-tags hash-src;};
       installPhase = ''
         cp --recursive themes/${extract "mocha"} $out
       '';

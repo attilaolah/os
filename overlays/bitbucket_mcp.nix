@@ -1,6 +1,6 @@
 final: prev: let
   inherit (builtins) elemAt;
-  fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
+  fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["MatanYemini/bitbucket-mcp" "6.0.0"]; # extractVersion=^v(?<version>.*)$
   hash-src = "sha256-vzMVxAX+5Pn/CdgRVgCHAsB7b63Rv+BXctEyXV9UX8c=";
@@ -12,9 +12,8 @@ in {
     pname = "bitbucket-mcp";
     inherit version;
 
-    src = fetchFromGithubTuple {
-      inherit github-tags;
-      hash = hash-src;
+    src = fetchFromGitHubTuple {
+      inherit github-tags hash-src;
       rev = "v${version}";
     };
 

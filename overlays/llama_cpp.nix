@@ -1,6 +1,6 @@
 final: prev: let
   inherit (builtins) elemAt;
-  fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
+  fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["ggml-org/llama.cpp" "10066"]; # extractVersion=^b(?<version>.*)$
   hash-src = "sha256-R5oiaZcuDsw64xLhUHosO89Nlz8J/IqMX1bHEMHebuk=";
@@ -11,9 +11,8 @@ in {
   llama-cpp = prev.llama-cpp.overrideAttrs (_: {
     inherit version;
     npmDepsHash = hash-npm-deps;
-    src = fetchFromGithubTuple {
-      inherit github-tags;
-      hash = hash-src;
+    src = fetchFromGitHubTuple {
+      inherit github-tags hash-src;
       rev = "b${version}";
     };
   });
