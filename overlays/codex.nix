@@ -1,6 +1,6 @@
 final: prev: let
   inherit (builtins) elemAt;
-  fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
+  fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["openai/codex" "0.144.6"]; # extractVersion=^rust-v(?<version>.*)$
   hash-src = "sha256-S25nhnF4lEJQdiyKDV38ORbjm+BNsswLoE5ivF0SE2U=";
@@ -9,9 +9,8 @@ final: prev: let
   version = elemAt github-tags 1;
 in {
   codex = prev.codex.overrideAttrs (_: let
-    src = fetchFromGithubTuple {
-      inherit github-tags;
-      hash = hash-src;
+    src = fetchFromGitHubTuple {
+      inherit github-tags hash-src;
       rev = "rust-v${version}";
     };
   in {

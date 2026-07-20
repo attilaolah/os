@@ -4,7 +4,7 @@
   ...
 }: {
   github-tags,
-  hash,
+  hash-src,
   rev ? null,
 }: let
   inherit (builtins) elemAt isList isString length throw;
@@ -27,7 +27,7 @@ in
   )
   || throw "github-tags must contain a non-empty owner/repo slug and version";
     fetchFromGitHub {
-      inherit hash;
+      hash = hash-src;
       rev = resolvedRev;
       owner = elemAt githubRepo 0;
       repo = elemAt githubRepo 1;

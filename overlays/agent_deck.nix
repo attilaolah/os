@@ -1,6 +1,6 @@
 final: prev: let
   inherit (builtins) elemAt;
-  fetchFromGithubTuple = import ./lib/fetch_from_github_tuple.nix prev;
+  fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["asheshgoplani/agent-deck" "1.10.10"]; # extractVersion=^v(?<version>.*)$
   hash-src = "sha256-7JDWo/FKZdlr88ZCetWOWnPRgNzLbB4f1hOPIddA6Pg=";
@@ -12,9 +12,8 @@ in {
     pname = "agent-deck";
     inherit version;
 
-    src = fetchFromGithubTuple {
-      inherit github-tags;
-      hash = hash-src;
+    src = fetchFromGitHubTuple {
+      inherit github-tags hash-src;
       rev = "v${version}";
     };
 
