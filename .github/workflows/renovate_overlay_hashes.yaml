@@ -138,11 +138,7 @@ jobs:
           local key="$2"
           local suffix
 
-          if [[ "${key}" == 'hash' ]]; then
-            suffix='src'
-          else
-            suffix="${key#hash-}"
-          fi
+          suffix="${key#hash-}"
 
           echo "${key}=${package_name}-${suffix}"
         }
