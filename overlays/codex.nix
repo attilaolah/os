@@ -8,19 +8,23 @@ final: prev: let
 
   version = elemAt github-tags 1;
 in {
-  codex = prev.codex.overrideAttrs (_: let
+  codex = prev.codex.overrideAttrs (oldAttrs: let
     src = fetchFromGitHubTuple {
       inherit github-tags hash-src;
       rev = "rust-v${version}";
     };
-  in {
+    obsoleteWebrtcPatch = ''
+      substituteInPlace $cargoDepsCopy/*/webrtc-sys-*/build.rs \
+        --replace-fail "cargo:rustc-link-lib=static=webrtc" "cargo:rustc-link-lib=dylib=webrtc"
+    '';
+  in
+    assert prev.lib.assertMsg
+    (prev.lib.hasInfix obsoleteWebrtcPatch oldAttrs.postPatch)
+    "The obsolete Codex WebRTC postPatch override can be removed.";
+    {
     inherit version src;
     cargoHash = hash-cargo-deps;
-    postPatch = ''
-      substituteInPlace Cargo.toml \
-        --replace-fail 'lto = "thin"' "" \
-        --replace-fail 'codegen-units = 4' ""
-    '';
+    postPatch = prev.lib.replaceStrings [obsoleteWebrtcPatch] [""] oldAttrs.postPatch;
     cargoDeps = prev.rustPlatform.fetchCargoVendor {
       inherit src;
       cargoRoot = "codex-rs";
