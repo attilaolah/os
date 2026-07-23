@@ -16,6 +16,11 @@ in {
   in {
     inherit version src;
     cargoHash = hash-cargo-deps;
+    postPatch = ''
+      substituteInPlace Cargo.toml \
+        --replace-fail 'lto = "thin"' "" \
+        --replace-fail 'codegen-units = 4' ""
+    '';
     cargoDeps = prev.rustPlatform.fetchCargoVendor {
       inherit src;
       cargoRoot = "codex-rs";
