@@ -24,6 +24,7 @@
       "karabiner-elements"
       "secretive"
       "tigervnc"
+      "whatsapp"
     ];
 
     # Mac App Store apps:
