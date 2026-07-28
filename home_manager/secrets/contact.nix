@@ -6,6 +6,8 @@
 }: {
   sops = {
     defaultSopsFile = ../../secrets/contact.yaml;
+    # These contact details are intentionally available without unlocking SOPS.
+    defaultSecretsMountPoint = "${config.xdg.stateHome}/sops-nix/secrets.d";
     gnupg.home = "${config.home.homeDirectory}/.gnupg";
 
     # Expected key in secrets/contact.yaml:
