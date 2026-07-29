@@ -14,6 +14,10 @@
       "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMjI/Lp8ALvsfObaKI5cYPtL5U1ig/YzPUcmxzjy/AVck1+DzPGjK1NzTxO2Ts3+2dNg/BOMsvgCuYuPxTFPJ+Q="
       "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPZecANWHBovFEHm5hX0PfflzrJsc83bv9Rm5PNHOsX0hCJAQpoN0n4n5Yd6Q5ywM11hRXn/JGOdTGrWDaQtMEg="
     ])
-    # Portable fallback key:
-    ++ (ssh-ed25519 ["AAAAC3NzaC1lZDI1NTE5AAAAIIiR17IcWh8l3OxxKSt+ODrUMLU98ZoJ+XvcR17iX9/P"]);
+    ++ (ssh-ed25519 [
+      # Portable failsafe key:
+      "AAAAC3NzaC1lZDI1NTE5AAAAIIiR17IcWh8l3OxxKSt+ODrUMLU98ZoJ+XvcR17iX9/P"
+      # SSH ID fallback phone key
+      "AAAAC3NzaC1lZDI1NTE5AAAAIJ6+MufkzopcYLzGOmCUxeV8HtbLuyk9f5GySeYFtXAy"
+    ]);
 }
