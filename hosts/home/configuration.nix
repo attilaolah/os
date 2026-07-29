@@ -69,6 +69,12 @@
           # https://github.com/NixOS/nixpkgs/pull/486083
           enableCuda = false;
         };
+        onnxruntime = prev.onnxruntime.override {
+          # Upstream removed this header but left its inclusion in the NCCL-only
+          # ShardedMoE implementation: https://github.com/microsoft/onnxruntime/pull/28467#issuecomment-5085143156
+          # Remove once the upstream bug is fixed and the nixpkgs workaround lands.
+          ncclSupport = false;
+        };
       })
     ];
   };
