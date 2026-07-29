@@ -3,7 +3,7 @@ final: prev: let
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["ggml-org/llama.cpp" "10174"]; # extractVersion=^b(?<version>.*)$
-  hash-src = "sha256-MVxH5UcTNar64qsHsb6ERqaw0cghivTO5dZVTokoExE=";
+  hash-src = "sha256-Iz/3FAz4wRyTE4OCU7CpMRC6jsQzyda2rs9mLcYBzg0=";
   hash-npm-deps = "sha256-B7uEynAG70a3xauBKc20RuFa9cnWaWzVBCh+LPLBnIM=";
 
   version = elemAt github-tags 1;
