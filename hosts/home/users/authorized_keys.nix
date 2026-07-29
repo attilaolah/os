@@ -15,7 +15,7 @@
       "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPZecANWHBovFEHm5hX0PfflzrJsc83bv9Rm5PNHOsX0hCJAQpoN0n4n5Yd6Q5ywM11hRXn/JGOdTGrWDaQtMEg="
     ])
     ++ (ssh-ed25519 [
-      # Portable failsafe key:
+      # Portable failsafe key
       "AAAAC3NzaC1lZDI1NTE5AAAAIIiR17IcWh8l3OxxKSt+ODrUMLU98ZoJ+XvcR17iX9/P"
       # SSH ID fallback phone key
       "AAAAC3NzaC1lZDI1NTE5AAAAIJ6+MufkzopcYLzGOmCUxeV8HtbLuyk9f5GySeYFtXAy"
