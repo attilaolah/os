@@ -2,7 +2,7 @@
   users.users."${user.username}".openssh.authorizedKeys.keys = let
     ssh-ed25519 = prefix "ssh-ed25519";
     ecdsa-sha2-nistp256 = prefix "ecdsa-sha2-nistp256";
-    prefix = alg: keys: map (builtins.concatStringsSep [""]) keys;
+    prefix = alg: keys: map (key: builtins.concatStringsSep " " [alg key]) keys;
   in
     (ecdsa-sha2-nistp256 [
       # Secretive
