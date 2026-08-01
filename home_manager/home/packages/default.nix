@@ -133,8 +133,6 @@
       docker-compose
 
       # Theming:
-      whitesur-gtk-theme
-      whitesur-icon-theme
       gsettings-desktop-schemas
       dconf-editor
       glib
