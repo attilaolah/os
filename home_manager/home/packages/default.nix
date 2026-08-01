@@ -133,8 +133,6 @@
       docker-compose
 
       # Theming:
-      vimix-gtk-themes
-      vimix-icon-theme
       gsettings-desktop-schemas
       dconf-editor
       glib
