@@ -4,8 +4,8 @@
   ...
 }: let
   theme = {
-    name = "Vimix-dark-grey";
-    package = pkgs.vimix-gtk-themes.override {
+    name = "WhiteSur";
+    package = pkgs.whitesur-gtk-theme.override {
       themeVariants = ["grey"];
       colorVariants = ["dark"];
     };
@@ -18,8 +18,8 @@ in {
     enable = true;
 
     iconTheme = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
+      name = "WhiteSur";
+      package = pkgs.whitesur-icon-theme;
     };
     cursorTheme = with config.home.pointerCursor; {
       inherit name size;
