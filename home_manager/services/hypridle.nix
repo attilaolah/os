@@ -7,44 +7,38 @@
   services.hypridle = {
     enable = true;
     settings = let
-      prefix = "hyipridle";
-      lockSession = lib.getExe (pkgs.writeShellApplication {
-        name = "${prefix}-lock-session";
+      dpms = action:
+        lib.getExe (pkgs.writeShellApplication {
+          name = "hypridle-dpms-${action}";
+          runtimeInputs = with pkgs; [hyprland];
+          text = ''
+            exec hyprctl dispatch 'hl.dsp.dpms({ action = "${action}" })'
+          '';
+        });
+      disable = dpms "disable";
+      lock = lib.getExe (pkgs.writeShellApplication {
+        name = "hypridle-lock-session";
         runtimeInputs = with pkgs; [systemd];
         text = ''
           exec loginctl lock-session
         '';
       });
-      dpmsOff = lib.getExe (pkgs.writeShellApplication {
-        name = "${prefix}-dpms-off";
-        runtimeInputs = with pkgs; [hyprland];
-        text = ''
-          exec hyprctl dispatch dpms off
-        '';
-      });
-      dpmsOn = lib.getExe (pkgs.writeShellApplication {
-        name = "${prefix}-dpms-on";
-        runtimeInputs = with pkgs; [hyprland];
-        text = ''
-          exec hyprctl dispatch dpms on
-        '';
-      });
     in {
       general = {
         lock_cmd = lib.getExe pkgs.hyprlock;
-        before_sleep_cmd = lockSession;
-        after_sleep_cmd = dpmsOff;
+        before_sleep_cmd = lock;
+        after_sleep_cmd = disable;
       };
 
       listener = [
         {
           timeout = 20 * 60;
-          on-timeout = dpmsOff;
-          on-resume = dpmsOn;
+          on-timeout = disable;
+          on-resume = dpms "enable";
         }
         {
           timeout = 12 * 60;
-          on-timeout = lockSession;
+          on-timeout = lock;
         }
       ];
     };
