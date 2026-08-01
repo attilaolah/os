@@ -4,7 +4,7 @@
   ...
 }: let
   theme = {
-    name = "WhiteSur";
+    name = "WhiteSur-Dark-grey";
     package = pkgs.whitesur-gtk-theme.override {
       themeVariants = ["grey"];
       colorVariants = ["dark"];
