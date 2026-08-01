@@ -19,14 +19,14 @@
         name = "${prefix}-dpms-off";
         runtimeInputs = with pkgs; [hyprland];
         text = ''
-          exec hyprctl dispatch 'hl.dsp.dpms(false)'
+          exec hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })'
         '';
       });
       dpmsOn = lib.getExe (pkgs.writeShellApplication {
         name = "${prefix}-dpms-on";
         runtimeInputs = with pkgs; [hyprland];
         text = ''
-          exec hyprctl dispatch 'hl.dsp.dpms(true)'
+          exec hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })'
         '';
       });
     in {
