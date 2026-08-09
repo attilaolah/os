@@ -40,6 +40,7 @@
       killall
       kubectl
       kubernetes-helm
+      libnotify
       mktemp
       nix-output-monitor
       nixpkgs-review
@@ -152,10 +153,6 @@
       slack
       teams-for-linux
       wireshark
-
-      # Utilities:
-      libnotify
-      nufraw-thumbnailer
 
       # Gnome apps:
       cheese
