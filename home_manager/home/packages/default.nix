@@ -103,6 +103,7 @@
 
       # AI stuff:
       agent-deck
+      bosun
       qwen-code
 
       # Python, the basics:
