@@ -1,6 +1,17 @@
 return {
   defaults = { lazy = true },
-  install = { colorscheme = { "nvchad" } },
+  install = {
+    colorscheme = { "nvchad" },
+    missing = false,
+  },
+
+  dev = {
+    path = function(plugin)
+      return require("nix-plugins")[plugin.name]
+    end,
+    patterns = { "github.com", "codeberg.org" },
+    fallback = false,
+  },
 
   ui = {
     icons = {
