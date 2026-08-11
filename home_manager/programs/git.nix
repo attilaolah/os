@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   user,
   ...
 }: {
@@ -17,23 +18,28 @@
         name = user.fullname;
       };
       alias = let
+        difft = lib.getExe pkgs.difftastic;
+        col = colour: content: "%C(${colour})${content}%C(reset)";
         fmtl = lib.concatStringsSep " " [
-          "%C(yellow)%h%C(reset)"
-          "%C(bold cyan)%ad%C(reset)"
-          "%C(blue)%aL%C(reset)"
-          "%s%C(auto)%d%C(reset)"
+          (col "yellow" "%h")
+          (col "bold cyan" "%ad")
+          (col "blue" "%aL")
+          "%s${col "auto" "%d"}"
         ];
         fmtll = lib.concatStringsSep " " [
-          "%C(yellow)%h%C(reset)"
-          "%C(bold cyan)%aD%C(reset)"
-          "%C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n"
-          "      " # pad to abbrev-commit length
-          "%C(white)%s%C(reset)"
-          "%C(dim white)- %an [%aL]%C(reset)"
+          (col "yellow" "%h")
+          (col "bold cyan" "%aD")
+          "${col "bold green" "(%ar)"}${col "auto" "%d"}%n"
+          "      " # pad to abbrev-commit minimum length
+          (col "white" "%s")
+          (col "dim white" "- %an [%aL]")
         ];
       in {
         ci = "commit";
         co = "checkout";
+        d = "-c diff.external=${difft} diff";
+        ds = "-c diff.external=${difft} diff --staged";
+        dl = "-c diff.external=${difft} log -p --ext-diff";
         l = lib.concatStringsSep " " [
           "!git log"
           "--pretty=format:\"${fmtl}\""
