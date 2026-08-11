@@ -27,6 +27,7 @@
     gg = "git commit -m";
     gp = "git push";
     gr = "git remote -v";
+    gd = "git d";
     gl = "git l";
     gll = "git ll";
 

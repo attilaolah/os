@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   user,
   ...
 }: {
@@ -17,6 +18,7 @@
         name = user.fullname;
       };
       alias = let
+        difft = lib.getExe pkgs.difftastic;
         fmtl = lib.concatStringsSep " " [
           "%C(yellow)%h%C(reset)"
           "%C(bold cyan)%ad%C(reset)"
@@ -34,6 +36,9 @@
       in {
         ci = "commit";
         co = "checkout";
+        d = "-c diff.external=${difft} diff";
+        ds = "-c diff.external=${difft} diff --staged";
+        dl = "-c diff.external=${difft} log -p";
         l = lib.concatStringsSep " " [
           "!git log"
           "--pretty=format:\"${fmtl}\""
