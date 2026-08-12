@@ -39,17 +39,16 @@
         co = "checkout";
         d = "-c diff.external=${difft} diff";
         ds = "-c diff.external=${difft} diff --staged";
-        dl = "-c diff.external=${difft} log -p --ext-diff";
         l = lib.concatStringsSep " " [
-          "!git log"
+          "log"
           "--pretty=format:\"${fmtl}\""
           "--date=short"
           "--decorate"
           "--graph"
-          "\"$@\""
         ];
+        ld = "-c diff.external=${difft} log -p --ext-diff";
         ll = lib.concatStringsSep " " [
-          "!git log"
+          "log"
           "--format=format:\"${fmtll}\""
           "--abbrev-commit"
           "--decorate"
