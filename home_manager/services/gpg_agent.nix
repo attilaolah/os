@@ -3,7 +3,7 @@
   services.gpg-agent = {
     enable = true;
     # On MacOS, Secretive is used as the primary SSH agent.
-    enableSshSupport = !pkgs.stdenv.isDarwin;
+    enableSshSupport = !pkgs.stdenv.hostPlatform.isDarwin;
     defaultCacheTtl = 8 * 60 * 60; # 8h in secs
     pinentry.package = with pkgs; lib.mkForce pinentry-tty;
     sshKeys = [

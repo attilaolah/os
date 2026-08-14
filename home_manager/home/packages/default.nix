@@ -126,7 +126,7 @@
       (llama-cpp.override gpu)
       (import ./restart_sops.nix {inherit lib pkgs;})
     ]
-    ++ lib.lists.optionals pkgs.stdenv.isLinux [
+    ++ lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux [
       # Not supported on darwin:
       bubblewrap
       traceroute
