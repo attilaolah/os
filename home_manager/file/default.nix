@@ -27,7 +27,7 @@
         global.store-passwords = "yes";
       };
     }
-    // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+    // lib.attrsets.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
       "Library/KeyBindings/DefaultKeyBinding.dict".text = builtins.readFile ./default_key_binding.dict;
     };
 }

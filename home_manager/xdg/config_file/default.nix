@@ -25,11 +25,11 @@ in {
       "nvim/lua/options.lua".source = ./nvim/lua/options.lua;
       "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     }
-    // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+    // lib.attrsets.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
       "ghostty/config".text = import ./ghostty {inherit fontFamily fontSize;};
       "karabiner/karabiner.json".text = toJSON (import ./karabiner);
     }
-    // lib.attrsets.optionalAttrs pkgs.stdenv.isLinux {
+    // lib.attrsets.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
       # https://nix-community.github.io/home-manager/options.xhtml#opt-programs.foot.settings
       "foot/foot.ini".text =
         (toINI {
