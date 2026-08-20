@@ -104,6 +104,7 @@
       # AI stuff:
       agent-deck
       bosun
+      headroom-ai
       qwen-code
 
       # Python, the basics:
