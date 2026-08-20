@@ -22,6 +22,7 @@ in {
         fastapi
         fastembed
         httpx
+        h2
         jinja2
         magika
         mcp
