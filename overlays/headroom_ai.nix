@@ -14,22 +14,7 @@ final: prev: let
   };
 in {
   python3Packages = py.overrideScope (_pyFinal: pyPrev: {
-    headroom-ai = pyPrev.buildPythonPackage {
-      inherit pname version src;
-      pyproject = true;
-
-      cargoDeps = final.rustPlatform.fetchCargoVendor {
-        inherit pname version src;
-        hash = hash-cargo-deps;
-      };
-      build-system = [
-        final.cargo
-        final.rustPlatform.cargoSetupHook
-        final.rustPlatform.maturinBuildHook
-        final.rustc
-      ];
-
-      # The upstream [all] extra covers every supported runtime feature.
+    headroom-ai = pyPrev.buildPythonPackage (let
       dependencies = with pyPrev; [
         ast-grep-cli
         click
@@ -70,6 +55,32 @@ in {
         xlrd
         zstandard
       ];
+    in {
+      inherit pname version src;
+      pyproject = true;
+
+      cargoDeps = final.rustPlatform.fetchCargoVendor {
+        inherit pname version src;
+        hash = hash-cargo-deps;
+      };
+      build-system = [
+        final.cargo
+        final.rustPlatform.cargoSetupHook
+        final.rustPlatform.maturinBuildHook
+        final.rustc
+      ];
+
+      # The upstream [all] extra covers every supported runtime feature.
+      inherit dependencies;
+
+      # macOS proxy startup re-execs `python -m headroom.cli`; preserve its
+      # package closure for that child interpreter.
+      makeWrapperArgs = [
+        "--prefix"
+        "PYTHONPATH"
+        ":"
+        "$out/${py.python.sitePackages}:${py.makePythonPath dependencies}"
+      ];
 
       doCheck = false;
 
@@ -79,7 +90,7 @@ in {
         license = final.lib.licenses.asl20;
         mainProgram = "headroom";
       };
-    };
+    });
   });
 
   headroom-ai = final.python3Packages.headroom-ai;
