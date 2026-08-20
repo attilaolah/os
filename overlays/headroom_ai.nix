@@ -73,8 +73,7 @@ in {
       # The upstream [all] extra covers every supported runtime feature.
       inherit dependencies;
 
-      # macOS proxy startup re-execs `python -m headroom.cli`; preserve its
-      # package closure for that child interpreter.
+      # Proxy startup re-execs `python -m headroom.cli`; preserve its package closure for that child interpreter.
       makeWrapperArgs = [
         "--prefix"
         "PYTHONPATH"
