@@ -13,8 +13,7 @@ in {
     inherit version;
 
     src = fetchFromGithubTuple {
-      inherit github-tags;
-      hash = hash-src;
+      inherit github-tags hash-src;
       rev = "v${version}";
     };
 
