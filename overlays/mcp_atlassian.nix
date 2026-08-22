@@ -3,8 +3,8 @@ final: prev: let
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
   py = prev.python3Packages;
 
-  github-tags = ["sooperset/mcp-atlassian" "0.23.0"]; # extractVersion=^v(?<version>.*)$
-  hash-src = "sha256-aTiPYMhZwWCjS/S9pZgdb4oFbXyNO7Q/aMUt0bKfSjM=";
+  github-tags = ["sooperset/mcp-atlassian" "0.23.1"]; # extractVersion=^v(?<version>.*)$
+  hash-src = "sha256-zbBsEBEfSvsS7dTbbvx2HG2GQhxGtvwVpYf4JPZVCKw=";
 
   version = elemAt github-tags 1;
 in {
