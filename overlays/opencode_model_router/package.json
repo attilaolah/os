@@ -1,6 +1,0 @@
-{
-  "name": "opencode-model-router",
-  "peerDependencies": {
-    "@opencode-ai/plugin": ">=1.0.0"
-  }
-}
