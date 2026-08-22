@@ -26,6 +26,12 @@ in {
         args = ["serve"];
       };
 
+      headroom = {
+        description = "Headroom MCP server";
+        command = lib.getExe pkgs.headroom-ai;
+        args = ["mcp" "serve"];
+      };
+
       kubernetes = {
         description = "Kubernetes MCP server";
         command = lib.getExe pkgs.kubernetes-mcp-server;
