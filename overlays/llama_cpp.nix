@@ -2,7 +2,7 @@ final: prev: let
   inherit (builtins) elemAt;
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
-  github-tags = ["ggml-org/llama.cpp" "10428"]; # extractVersion=^b(?<version>.*)$
+  github-tags = ["ggml-org/llama.cpp" "10549"]; # extractVersion=^b(?<version>.*)$
   hash-src = "sha256-eGhSrXzt9rkZ6J2y7WKjglx2hZMNKmTANxkvylhusgw=";
   hash-npm-deps = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
 
