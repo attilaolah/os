@@ -11,6 +11,12 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+-- Lazy may execute NvChad's Tree-sitter config before it loads the matching declarative plugin spec.
+-- Nix packages Tree-sitter's Lua module at the package root and its queries below `runtime`; both are runtime roots.
+local treesitter = require("nix-plugins")["nvim-treesitter"]
+vim.opt.rtp:prepend(treesitter .. "/runtime")
+vim.opt.rtp:prepend(treesitter)
+
 local lazy_config = require "configs.lazy"
 
 -- Load plugins.
@@ -25,17 +31,16 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
--- Lazy rebuilds the runtime path. Add the declarative Tree-sitter package and
--- grammar roots afterwards so parsers and queries remain discoverable.
-local treesitter = require("nix-plugins")["nvim-treesitter"]
+-- Lazy rebuilds the runtime path.
+-- Add the declarative Tree-sitter package and grammar roots afterwards so parsers and queries remain discoverable.
 vim.opt.rtp:append(treesitter)
 vim.opt.rtp:append(treesitter .. "/runtime")
 for _, grammar in ipairs(require "nix-treesitter-grammars") do
   vim.opt.rtp:append(grammar)
 end
 
--- Base46 owns its complete cache lifecycle. This is needed when Neovim's data
--- directory has been cleared even though NvChad itself is installed.
+-- Base46 owns its complete cache lifecycle.
+-- This is needed when Neovim's data directory has been cleared even though NvChad itself is installed.
 local function load_base46_highlights()
   local mappings = vim.g.base46_cache .. "mappings"
 
