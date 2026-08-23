@@ -23,7 +23,7 @@
     nvim-cmp = nvim-cmp;
     nvim-lspconfig = nvim-lspconfig;
     "nvim-tree.lua" = nvim-tree-lua;
-    nvim-treesitter = nvim-treesitter.withPlugins (parsers:
+    nvim-treesitter = nvim-treesitter-legacy.withPlugins (parsers:
       with parsers; [
         bash
         c
