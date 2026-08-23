@@ -1,23 +1,24 @@
 diff --git a/lua/nvchad/plugins/init.lua b/lua/nvchad/plugins/init.lua
-index c1089c0..6ef529c 100644
+index c1089c0..51abb02 100644
 --- a/lua/nvchad/plugins/init.lua
 +++ b/lua/nvchad/plugins/init.lua
-@@ -158,9 +158,15 @@ return {
-     "nvim-treesitter/nvim-treesitter",
-     event = { "BufReadPost", "BufNewFile" },
-     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
--    build = ":TSUpdate | TSInstallAll",
--    opts = function()
--      return require "nvchad.configs.treesitter"
-+    config = function()
+@@ -162,5 +162,19 @@ return {
+     opts = function()
+       return require "nvchad.configs.treesitter"
+     end,
++    config = function(_, opts)
++      require("nvim-treesitter.configs").setup(opts)
++
 +      local function start_treesitter(event)
 +        pcall(vim.treesitter.start, event.buf)
 +      end
 +
 +      start_treesitter { buf = vim.api.nvim_get_current_buf() }
++      local group = vim.api.nvim_create_augroup("NvChadTreesitterAutostart", { clear = true })
 +      vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
++        group = group,
 +        callback = start_treesitter,
 +      })
-     end,
++    end,
    },
  }
