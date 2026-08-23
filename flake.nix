@@ -178,6 +178,8 @@
         system,
         ...
       }: {
+        formatter = pkgs.alejandra;
+
         packages = let
           pkgs = import nixpkgs {
             inherit system overlays;

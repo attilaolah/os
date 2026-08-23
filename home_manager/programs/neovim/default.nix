@@ -3,6 +3,59 @@
   pkgs,
   ...
 }: let
+  nvim-treesitter = pkgs.vimPlugins.nvim-treesitter.withPlugins (
+    parsers:
+      with parsers; [
+        bash
+        c
+        cpp
+        css
+        cue
+        diff
+        dockerfile
+        dot
+        fish
+        git_config
+        git_rebase
+        gitcommit
+        gitignore
+        go
+        gomod
+        gosum
+        gotmpl
+        gpg
+        helm
+        html
+        http
+        ini
+        javascript
+        json
+        jsonnet
+        kotlin
+        lua
+        markdown
+        markdown_inline
+        nix
+        printf
+        promql
+        proto
+        pug
+        python
+        ruby
+        rust
+        sql
+        ssh_config
+        starlark
+        terraform
+        textproto
+        typescript
+        vim
+        vimdoc
+        xml
+        yaml
+        zig
+      ]
+  );
   plugins = with pkgs.vimPlugins; {
     NvChad = nvchad;
     LuaSnip = luasnip;
