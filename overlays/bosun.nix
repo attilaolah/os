@@ -3,8 +3,8 @@ final: prev: let
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["yetidevworks/bosun" "2.1.7"]; # extractVersion=^v(?<version>.*)$
-  hash-src = "sha256-d7Hv1NqT0nT3kOErNYaMZTsTs3NrGNqDE7qPJtqEhtQ=";
-  hash-cargo-deps = "sha256-mW/yCS/peEkVxX7E/GW68rOhbSmEHTCpZaWu8oO8DFo=";
+  hash-src = "sha256-gZSbmFIzPUMObtKTDf8cK2Xrgwrbbr+nBq6L5CdnUUY=";
+  hash-cargo-deps = "sha256-WgjrkzFD7tJcGJEYIDy6aKGmuzPNse1D5LjPL1E0m/4=";
 
   version = elemAt github-tags 1;
 in {
