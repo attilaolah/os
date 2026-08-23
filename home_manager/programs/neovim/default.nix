@@ -103,7 +103,7 @@ in {
       # ansible-language-server
     ];
     initLua = builtins.readFile ./init.lua;
-    plugins = builtins.attrValues plugins;
+    plugins = lib.unique (builtins.attrValues plugins ++ (nvim-treesitter.dependencies or []));
 
     # Enable additional language support in the version installed by home-manager.
     withNodeJs = true;
