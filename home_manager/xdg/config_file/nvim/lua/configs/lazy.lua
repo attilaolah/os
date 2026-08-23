@@ -1,3 +1,5 @@
+local nix_plugins = require("nix-plugins")
+
 return {
   defaults = { lazy = true },
   install = {
@@ -7,10 +9,10 @@ return {
 
   dev = {
     path = function(plugin)
-      return require("nix-plugins")[plugin.name]
+      return nix_plugins[plugin.name] or "/nonexistent/nix-plugins/" .. plugin.name
     end,
     patterns = { "github.com", "codeberg.org" },
-    fallback = false,
+    fallback = true,
   },
 
   ui = {
