@@ -29,6 +29,32 @@ final: prev: let
       nvim-treesitter
       nvchad-ui
     ];
+    postPatch = ''
+      patch -p1 <<'PATCH'
+      --- a/lua/nvchad/plugins/init.lua
+      +++ b/lua/nvchad/plugins/init.lua
+      @@ -143,10 +143,16 @@
+         {
+           "nvim-treesitter/nvim-treesitter",
+           event = { "BufReadPost", "BufNewFile" },
+           cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
+      -    build = ":TSUpdate | TSInstallAll",
+      -    opts = function()
+      -      return require "nvchad.configs.treesitter"
+      +    config = function()
+      +      local function start_treesitter(event)
+      +        pcall(vim.treesitter.start, event.buf)
+      +      end
+      +
+      +      start_treesitter { buf = vim.api.nvim_get_current_buf() }
+      +      vim.api.nvim_create_autocmd("FileType", {
+      +        callback = start_treesitter,
+      +      })
+           end,
+         },
+       }
+      PATCH
+    '';
   };
 in {
   vimPlugins =
