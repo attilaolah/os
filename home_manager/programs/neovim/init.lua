@@ -11,6 +11,13 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+-- Lazy may execute NvChad's Tree-sitter config before it loads the matching
+-- declarative plugin spec. Nix packages Tree-sitter's Lua module at the
+-- package root and its queries below `runtime`; both are runtime roots.
+local treesitter = require("nix-plugins")["nvim-treesitter"]
+vim.opt.rtp:prepend(treesitter .. "/runtime")
+vim.opt.rtp:prepend(treesitter)
+
 local lazy_config = require "configs.lazy"
 
 -- Load plugins.
