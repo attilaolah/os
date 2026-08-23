@@ -23,7 +23,6 @@ in {
       "nvim/lua/configs/lspconfig.lua".source = ./nvim/lua/configs/lspconfig.lua;
       "nvim/lua/mappings.lua".source = ./nvim/lua/mappings.lua;
       "nvim/lua/options.lua".source = ./nvim/lua/options.lua;
-      "nvim/lua/plugins/init.lua".source = ./nvim/lua/plugins/init.lua;
     }
     // lib.attrsets.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
       "ghostty/config".text = import ./ghostty {inherit fontFamily fontSize;};

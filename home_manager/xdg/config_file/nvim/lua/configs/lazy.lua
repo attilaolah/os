@@ -1,6 +1,19 @@
+local nix_plugins = require("nix-plugins")
+
 return {
   defaults = { lazy = true },
-  install = { colorscheme = { "nvchad" } },
+  install = {
+    colorscheme = { "nvchad" },
+    missing = false,
+  },
+
+  dev = {
+    path = function(plugin)
+      return nix_plugins[plugin.name] or "/nonexistent/nix-plugins/" .. plugin.name
+    end,
+    patterns = { "github.com", "codeberg.org" },
+    fallback = true,
+  },
 
   ui = {
     icons = {

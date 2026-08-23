@@ -48,9 +48,10 @@
         "/^overlays/.*\\.nix$/"
       ],
       "matchStrings": [
-        "github-tags\\s*=\\s*\\[\\s*\\\"(?<depName>[^\\\"]+)\\\"\\s+\\\"(?<currentValue>[^\\\"]+)\\\"\\s*\\]\\s*;(?:\\s*#\\s*extractVersion=(?<extractVersion>\\S+))?"
+        "(?<datasource>github-tags)\\s*=\\s*\\[\\s*\\\"(?<depName>[^\\\"]+)\\\"\\s+\\\"(?<currentValue>[^\\\"]+)\\\"\\s*\\]\\s*;(?:\\s*#\\s*extractVersion=(?<extractVersion>\\S+))?",
+        "(?<datasource>github-commits)\\s*=\\s*\\[\\s*\\\"(?<depName>[^\\\"]+)\\\"\\s+\\\"(?<currentValue>[^\\\"]+)\\\"\\s+\\\"(?<currentDigest>[0-9a-f]{40})\\\"\\s*\\];"
       ],
-      "datasourceTemplate": "github-tags"
+      "versioningTemplate": "{{#if (equals datasource 'github-commits')}}git{{else}}semver-coerced{{/if}}"
     },
     {
       "description": "Update GitHub flake inputs pinned to tags",

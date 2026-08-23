@@ -11,6 +11,12 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+-- Lazy may execute NvChad's Tree-sitter config before it loads the matching declarative plugin spec.
+-- Nix packages Tree-sitter's Lua module at the package root and its queries below `runtime`; both are runtime roots.
+local treesitter = require("nix-plugins")["nvim-treesitter"]
+vim.opt.rtp:prepend(treesitter .. "/runtime")
+vim.opt.rtp:prepend(treesitter)
+
 local lazy_config = require "configs.lazy"
 
 -- Load plugins.
@@ -25,9 +31,41 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
--- Load theme.
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
+-- Lazy rebuilds the runtime path.
+-- Add the declarative Tree-sitter package and grammar roots afterwards so parsers and queries remain discoverable.
+vim.opt.rtp:append(treesitter)
+vim.opt.rtp:append(treesitter .. "/runtime")
+for _, grammar in ipairs(require "nix-treesitter-grammars") do
+  vim.opt.rtp:append(grammar)
+end
+
+-- Base46 owns its complete cache lifecycle.
+-- This is needed when Neovim's data directory has been cleared even though NvChad itself is installed.
+local function load_base46_highlights()
+  local mappings = vim.g.base46_cache .. "mappings"
+
+  local ok, base46 = pcall(require, "base46")
+  if not ok then
+    vim.notify("Base46 could not be loaded: " .. base46, vim.log.levels.ERROR)
+    return
+  end
+
+  if vim.fn.filereadable(mappings) == 0 then
+    vim.fn.mkdir(vim.g.base46_cache, "p")
+    local mappings_ok, mappings_err = pcall(base46.str_to_cache, "mappings", "")
+    if not mappings_ok then
+      vim.notify("Base46 mappings cache failed: " .. mappings_err, vim.log.levels.ERROR)
+      return
+    end
+  end
+
+  local loaded, load_err = pcall(base46.load_all_highlights)
+  if not loaded then
+    vim.notify("Base46 highlight loading failed: " .. load_err, vim.log.levels.ERROR)
+  end
+end
+
+load_base46_highlights()
 
 require "options"
 require "nvchad.autocmds"
