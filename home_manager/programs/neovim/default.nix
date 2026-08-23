@@ -23,57 +23,7 @@
     nvim-cmp = nvim-cmp;
     nvim-lspconfig = nvim-lspconfig;
     "nvim-tree.lua" = nvim-tree-lua;
-    nvim-treesitter = nvim-treesitter-legacy.withPlugins (parsers:
-      with parsers; [
-        bash
-        c
-        cpp
-        css
-        cue
-        diff
-        dockerfile
-        dot
-        fish
-        git_config
-        git_rebase
-        gitcommit
-        gitignore
-        go
-        gomod
-        gosum
-        gotmpl
-        gpg
-        helm
-        html
-        http
-        ini
-        javascript
-        json
-        jsonnet
-        kotlin
-        lua
-        markdown
-        markdown_inline
-        nix
-        printf
-        promql
-        proto
-        pug
-        python
-        ruby
-        rust
-        sql
-        ssh_config
-        starlark
-        terraform
-        textproto
-        typescript
-        vim
-        vimdoc
-        xml
-        yaml
-        zig
-      ]);
+    nvim-treesitter = nvim-treesitter;
     nvim-web-devicons = nvim-web-devicons;
     "plenary.nvim" = plenary-nvim;
     "telescope.nvim" = telescope-nvim;
@@ -110,7 +60,9 @@ in {
 
   xdg.configFile."nvim/lua/nix-plugins.lua".text = ''
     return {
-    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: plugin: ''["${name}"] = "${plugin}",'') plugins)}
+    ${lib.concatStringsSep "\n" (
+      lib.mapAttrsToList (name: plugin: ''["${name}"] = "${plugin}",'') plugins
+    )}
     }
   '';
   xdg.configFile."nvim/lua/plugins/init.lua".source = ../../xdg/config_file/nvim/lua/plugins/init.lua;
