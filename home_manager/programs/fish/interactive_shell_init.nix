@@ -14,7 +14,8 @@
 
     # Re-bind fzf's default find-file from Ctrl+T to Ctrl+F.
     # This frees up Ctrl+T, passing it through to be used as the new-tab shortcut in bosun.
-    bind --erase \ct
+    bind --erase --mode insert --user \ct
+    bind --erase --mode insert --preset \ct
     bind \cf fzf-file-widget
 
     source ${pkgs.catppuccin-fzf}
