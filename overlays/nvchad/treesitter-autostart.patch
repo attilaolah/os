@@ -1,24 +1,30 @@
-diff --git a/lua/nvchad/plugins/init.lua b/lua/nvchad/plugins/init.lua
-index c1089c0..51abb02 100644
 --- a/lua/nvchad/plugins/init.lua
 +++ b/lua/nvchad/plugins/init.lua
-@@ -162,5 +162,19 @@ return {
+@@ -162,5 +162,27 @@ return {
      opts = function()
        return require "nvchad.configs.treesitter"
      end,
-+    config = function(_, opts)
-+      require("nvim-treesitter.configs").setup(opts)
-+
-+      local function start_treesitter(event)
-+        pcall(vim.treesitter.start, event.buf)
++    config = function()
++      local function setup_treesitter(buf)
++        if not pcall(vim.treesitter.get_parser, buf) then
++          return
++        end
++        if not pcall(vim.treesitter.start, buf) then
++          return
++        end
++        if vim.bo[buf].indentexpr == "" then
++          vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
++        end
 +      end
 +
-+      start_treesitter { buf = vim.api.nvim_get_current_buf() }
 +      local group = vim.api.nvim_create_augroup("NvChadTreesitterAutostart", { clear = true })
-+      vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
++      vim.api.nvim_create_autocmd("FileType", {
 +        group = group,
-+        callback = start_treesitter,
++        callback = function(args)
++          setup_treesitter(args.buf)
++        end,
 +      })
++      setup_treesitter(vim.api.nvim_get_current_buf())
 +    end,
    },
  }
