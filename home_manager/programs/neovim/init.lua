@@ -34,36 +34,33 @@ for _, grammar in ipairs(require "nix-treesitter-grammars") do
   vim.opt.rtp:append(grammar)
 end
 
--- Load theme.  Base46's cache lives in Neovim's data directory, so it may be
--- absent after that state is cleared even though the plugin is installed.
-local function load_base46_cache()
-  local defaults = vim.g.base46_cache .. "defaults"
-  local statusline = vim.g.base46_cache .. "statusline"
+-- Base46 owns its complete cache lifecycle. This is needed when Neovim's data
+-- directory has been cleared even though NvChad itself is installed.
+local function load_base46_highlights()
+  local mappings = vim.g.base46_cache .. "mappings"
 
-  if vim.fn.filereadable(defaults) == 0 then
-    local ok, base46 = pcall(require, "base46")
-    if ok and type(base46.compile) == "function" then
-      pcall(base46.compile)
-    else
-      -- Let Lazy finish loading before making one safe deferred attempt.
-      vim.schedule(function()
-        local deferred_ok, deferred_base46 = pcall(require, "base46")
-        if deferred_ok and type(deferred_base46.compile) == "function" then
-          pcall(deferred_base46.compile)
-        end
-      end)
+  local ok, base46 = pcall(require, "base46")
+  if not ok then
+    vim.notify("Base46 could not be loaded: " .. base46, vim.log.levels.ERROR)
+    return
+  end
+
+  if vim.fn.filereadable(mappings) == 0 then
+    vim.fn.mkdir(vim.g.base46_cache, "p")
+    local mappings_ok, mappings_err = pcall(base46.str_to_cache, "mappings", "")
+    if not mappings_ok then
+      vim.notify("Base46 mappings cache failed: " .. mappings_err, vim.log.levels.ERROR)
+      return
     end
   end
 
-  if vim.fn.filereadable(defaults) == 1 then
-    dofile(defaults)
-  end
-  if vim.fn.filereadable(statusline) == 1 then
-    dofile(statusline)
+  local loaded, load_err = pcall(base46.load_all_highlights)
+  if not loaded then
+    vim.notify("Base46 highlight loading failed: " .. load_err, vim.log.levels.ERROR)
   end
 end
 
-load_base46_cache()
+load_base46_highlights()
 
 require "options"
 require "nvchad.autocmds"

@@ -6,6 +6,8 @@
 local M = {}
 
 M.base46 = {
+  -- This is Nix-managed and read-only in the live configuration; change the
+  -- declaration here and rebuild rather than manually switching themes.
   theme = "catppuccin",
 }
 
