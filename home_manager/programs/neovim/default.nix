@@ -103,7 +103,7 @@ in {
       # ansible-language-server
     ];
     initLua = builtins.readFile ./init.lua;
-    plugins = lib.unique (builtins.attrValues plugins ++ (nvim-treesitter.dependencies or []));
+    plugins = builtins.attrValues plugins;
 
     # Enable additional language support in the version installed by home-manager.
     withNodeJs = true;
@@ -116,6 +116,13 @@ in {
     ${lib.concatStringsSep "\n" (
       lib.mapAttrsToList (name: plugin: ''["${name}"] = "${plugin}",'') plugins
     )}
+    }
+  '';
+  # Referencing these paths in the generated configuration keeps every grammar
+  # package in the Home Manager generation closure.
+  xdg.configFile."nvim/lua/nix-treesitter-grammars.lua".text = ''
+    return {
+    ${lib.concatMapStringsSep "\n" (grammar: ''  "${grammar}", '') (nvim-treesitter.dependencies or [])}
     }
   '';
   xdg.configFile."nvim/lua/plugins/init.lua".source = ../../xdg/config_file/nvim/lua/plugins/init.lua;
