@@ -2,9 +2,9 @@ final: prev: let
   inherit (builtins) elemAt;
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
-  github-tags = ["yetidevworks/bosun" "2.1.1"]; # extractVersion=^v(?<version>.*)$
-  hash-src = "sha256-GGXganl0o1gXgENMGJFnaOPLIApHsLZuUPLh0+3gw8o=";
-  hash-cargo-deps = "sha256-vEG9lfOh4ti9RBV5a6ZKJDMtdR/c4qKAhbl3087yApA=";
+  github-tags = ["yetidevworks/bosun" "2.1.3"]; # extractVersion=^v(?<version>.*)$
+  hash-src = "sha256-Jxm1ISZLo8wq5jCQYQi9TY7YX4wXmjZnI3t8sVc9GFg=";
+  hash-cargo-deps = "sha256-WgLZigrD0VSSt1Vm4ejywwpCeuSiDl/dorJE21QiHac=";
 
   version = elemAt github-tags 1;
 in {
