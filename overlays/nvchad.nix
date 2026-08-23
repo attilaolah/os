@@ -1,22 +1,23 @@
 final: prev: let
-  fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
+  inherit (builtins) elemAt;
 
-  github-tags = [
-    "NvChad/NvChad"
-    "v2.5"
-  ];
+  github-commits = ["NvChad/NvChad" "v2.5" "add44b952d631981614bbb8cfc6f7002f296dfe6"];
   hash-src = "sha256-EuP+/HWJgqwG5LR2rNvtq7mhFkUDs0oyeG6xbbPogC4=";
+
+  githubRepo = prev.lib.splitString "/" (elemAt github-commits 0);
+  rev = elemAt github-commits 2;
 
   nvchad = prev.vimUtils.buildVimPlugin {
     pname = "nvchad";
-    version = "2.5-unstable-2026-07-03-add44b952";
+    version = "${prev.lib.removePrefix "v" (elemAt github-commits 1)}-unstable+rev=${builtins.substring 0 7 rev}";
     # NvChad requires its user-supplied `chadrc` during module loading, so the
     # generic isolated Neovim require check cannot exercise this plugin.
     doCheck = false;
-    src = fetchFromGitHubTuple {
-      inherit github-tags hash-src;
-      # Fetch the moving branch while retaining the Renovate-visible tag tuple.
-      rev = "refs/heads/v2.5";
+    src = prev.fetchFromGitHub {
+      inherit rev;
+      owner = elemAt githubRepo 0;
+      repo = elemAt githubRepo 1;
+      hash = hash-src;
     };
     dependencies = with prev.vimPlugins; [
       gitsigns-nvim
