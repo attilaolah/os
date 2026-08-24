@@ -30,6 +30,7 @@
       file
       gh
       gitleaks
+      glow
       gnumake
       gnupg
       go-task
@@ -52,6 +53,7 @@
       pwgen
       rar
       rclone
+      renovate
       ripgrep
       rsync
       shellcheck
