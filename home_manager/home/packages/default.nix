@@ -30,6 +30,7 @@
       file
       gh
       gitleaks
+      glow
       gnumake
       gnupg
       go-task
