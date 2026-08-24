@@ -122,7 +122,7 @@ in {
   # package in the Home Manager generation closure.
   xdg.configFile."nvim/lua/nix-treesitter-grammars.lua".text = ''
     return {
-    ${lib.concatMapStringsSep "\n" (grammar: ''  "${grammar}", '') (nvim-treesitter.dependencies or [])}
+    ${lib.concatMapStringsSep "\n" (grammar: ''"${grammar}", '') (nvim-treesitter.dependencies or [])}
     }
   '';
   xdg.configFile."nvim/lua/plugins/init.lua".source = ../../xdg/config_file/nvim/lua/plugins/init.lua;
