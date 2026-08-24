@@ -52,6 +52,7 @@
       pwgen
       rar
       rclone
+      renovate
       ripgrep
       rsync
       shellcheck
