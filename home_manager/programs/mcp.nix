@@ -15,6 +15,11 @@ in {
         command = lib.getExe pkgs.bitbucket-mcp;
       };
 
+      codebase-memory-mcp = {
+        description = "Codebase Memory MCP server";
+        command = lib.getExe pkgs.codebase-memory-mcp;
+      };
+
       atlassian = {
         description = "Atlassian MCP server";
         command = lib.getExe pkgs.mcp-atlassian;
