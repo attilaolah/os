@@ -20,6 +20,7 @@ in {
       ++ [./codebase_memory_mcp/remove-install-update.diff];
     postPatch = ''
       substituteInPlace Makefile.cbm --replace-fail "npm ci &&" ""
+      patchShebangs scripts/embed-frontend.sh
     '';
     npmDeps = prev.fetchNpmDeps {
       src = "${src}/graph-ui";
