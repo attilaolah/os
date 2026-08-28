@@ -3,7 +3,7 @@ final: prev: let
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
   py = prev.python3Packages;
   github-tags = ["headroomlabs-ai/headroom" "0.37.0"]; # extractVersion=^v(?<version>.*)$
-  hash-src = "sha256-ZXQISuof0ExURtxg5au0SkEb0E/DJjQvhrUfzab5L5o=";
+  hash-src = "sha256-89Tkzx56QIZWfNWLaiPdMynZGOLPr5EAP5RnLSgvBsA=";
   hash-cargo-deps = "sha256-iEvap6uLsAqCSv+l/S7K7osxL+yV7Y8pE6Dhaqt2AIA=";
 
   pname = "headroom-ai";
