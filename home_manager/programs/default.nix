@@ -30,6 +30,7 @@
     ]
     ++ lib.lists.optionals (platform == "linux") [
       ./hyprlock
+      ./terminfo.nix
       ./waybar
     ];
 }
