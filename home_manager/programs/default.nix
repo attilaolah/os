@@ -29,8 +29,8 @@
       ./zsh.nix
     ]
     ++ lib.lists.optionals (platform == "linux") [
+      ./home/files/terminfo.nix
       ./hyprlock
-      ./terminfo.nix
       ./waybar
     ];
 }
