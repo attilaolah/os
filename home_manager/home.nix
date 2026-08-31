@@ -17,6 +17,7 @@
     ]
     ++ lib.lists.optionals (platform == "linux") [
       ./gtk.nix
+      ./home/files/terminfo.nix
       ./qt.nix
       ./wayland/window_manager/hyprland.nix
     ];
