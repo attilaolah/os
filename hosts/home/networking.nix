@@ -5,7 +5,7 @@ in {
     hostName = host.name;
     search = [host.domain];
     firewall = {
-      allowedTCPPorts = [22 4001];
+      allowedTCPPorts = [22 4001 7359 8096];
       allowedUDPPorts = [4001];
     };
     nftables.enable = true;
