@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  disabledByDefault = lib.mapAttrs (_: server: server // {enabled = lib.mkDefault false;});
+  disabledByDefault = lib.mapAttrs (_: server: {enabled = lib.mkDefault false;} // server);
   googleChromeSupported = lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.google-chrome;
 in {
   programs.mcp = {
@@ -32,6 +32,7 @@ in {
       };
 
       headroom = {
+        enabled = lib.mkDefault true;
         description = "Headroom MCP server";
         command = lib.getExe pkgs.headroom-ai;
         args = ["mcp" "serve"];
