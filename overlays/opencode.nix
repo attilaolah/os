@@ -15,7 +15,11 @@ _final: prev: let
   patchPostPatch = attrs: {postPatch = (attrs.postPatch or "") + omitEmptyMcpArguments;};
 in {
   opencode = prev.opencode.overrideAttrs (oldAttrs:
-    {node_modules = oldAttrs.node_modules.overrideAttrs patchPreBuild;}
+    {
+      node_modules = oldAttrs.node_modules.overrideAttrs (nodeModulesAttrs:
+        assert nodeModulesAttrs.outputHash == "sha256-28GpwYLMo2cN4Y9cY6/xn9R5EggFj/m1guuSxsbqisM=";
+          (patchPreBuild nodeModulesAttrs) // {outputHash = "sha256-EWS/DKClw1KPZ4iXR+q48QGkSojWy1kgdstUAPh7NaE=";});
+    }
     // patchPreBuild oldAttrs
     // patchPostPatch oldAttrs);
 }
