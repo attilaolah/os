@@ -18,12 +18,6 @@ in {
     };
 
     npmDepsHash = hash-npm-deps;
-    patches = [
-      (prev.fetchpatch {
-        url = "https://github.com/marco-jardim/opencode-model-router/commit/347ac81351b6b7f390b908690f870afd6952f095.patch";
-        hash = "sha256-kiHLUgGS4udnvzTlzlafGzCuCh/d7ht0dNN/dvLcKZw=";
-      })
-    ];
     dontNpmBuild = true;
     doCheck = false;
 

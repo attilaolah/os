@@ -1,4 +1,8 @@
 _final: prev: let
+  breakFilesystemSearchImportCycle = prev.fetchpatch {
+    url = "https://github.com/anomalyco/opencode/commit/7f392ba6178ac1be6f2b6385293a61586cd98a87.patch";
+    hash = "sha256-AnG+asHaWzDp9HpeviX5QrAWzGq5/vGjp3djm6en8Eo=";
+  };
   useNixpkgsBunVersion = ''
     substituteInPlace package.json \
       --replace-fail \
@@ -13,6 +17,7 @@ _final: prev: let
   '';
   patchPreBuild = attrs: {preBuild = (attrs.preBuild or "") + useNixpkgsBunVersion;};
   patchPostPatch = attrs: {postPatch = (attrs.postPatch or "") + omitEmptyMcpArguments;};
+  patchPatches = attrs: {patches = (attrs.patches or []) ++ [breakFilesystemSearchImportCycle];};
 in {
   opencode = prev.opencode.overrideAttrs (oldAttrs:
     {
@@ -21,5 +26,6 @@ in {
           (patchPreBuild nodeModulesAttrs) // {outputHash = "sha256-EWS/DKClw1KPZ4iXR+q48QGkSojWy1kgdstUAPh7NaE=";});
     }
     // patchPreBuild oldAttrs
-    // patchPostPatch oldAttrs);
+    // patchPostPatch oldAttrs
+    // patchPatches oldAttrs);
 }
