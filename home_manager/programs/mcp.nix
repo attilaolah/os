@@ -42,7 +42,14 @@
           package = pkgs.playwright-mcp;
           env =
             {
-              PLAYWRIGHT_MCP_CAPS = "devtools,vision";
+              PLAYWRIGHT_MCP_CAPS = lib.concatStringsSep "," [
+                "devtools"
+                "network"
+                "pdf"
+                "storage"
+                "testing"
+                "vision"
+              ];
               PLAYWRIGHT_MCP_ISOLATED = "1";
             }
             // lib.optionalAttrs
