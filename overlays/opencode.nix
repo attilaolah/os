@@ -1,7 +1,7 @@
 _final: prev: let
   breakFilesystemSearchImportCycle = prev.fetchpatch {
     url = "https://github.com/anomalyco/opencode/commit/7f392ba6178ac1be6f2b6385293a61586cd98a87.patch";
-    hash = "sha256-AnG+asHaWzDp9HpeviX5QrAWzGq5/vGjp3djm6en8Eo=";
+    hash = "sha256-cUYvOpsOsdDMuMjrh9FC3O+sM+r5RHTRSjH95Az7/mE=";
   };
   useNixpkgsBunVersion = ''
     substituteInPlace package.json \
