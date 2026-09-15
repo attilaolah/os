@@ -23,7 +23,7 @@ in {
         "${pkgs.pi-mcp-adapter}/lib/node_modules/pi-mcp-adapter"
       ];
       defaultModel = qwen;
-      defaulProvider = "openai";
+      defaultProvider = "openai";
       enabledModels = [
         qwen
         "gpt-5.6-*"
