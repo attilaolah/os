@@ -2,7 +2,13 @@
   boot = {
     plymouth.enable = true;
     kernelModules = ["kvm-intel"];
-    kernelParams = ["copytoram" "quiet" "nvidia.NVreg_EnableGpuFirmware=0"];
+    kernelParams = [
+      "copytoram"
+      "quiet"
+      "nvidia.NVreg_EnableGpuFirmware=0"
+      # Allow GPU profiling for non-root users.
+      "nvidia.NVreg_RestrictProfilingToAdminUsers=0"
+    ];
     supportedFilesystems = ["nfs"];
     loader = {
       grub = {
