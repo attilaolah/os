@@ -20,7 +20,12 @@
         Headroom = {
           package = pkgs.headroom-ai;
           args = ["mcp" "serve"];
-          # On by default, because the proxy is also on by default.
+          # Necessary as the proxy is also on by default.
+          enabled = lib.mkDefault true;
+        };
+        "Codebase Memory" = {
+          package = pkgs.codebase-memory-mcp;
+          # Relatively cheap and starts quickly.
           enabled = lib.mkDefault true;
         };
 
@@ -30,7 +35,6 @@
         SonarQube.package = pkgs.sonarqube-mcp-server;
         TeamCity.package = pkgs.teamcity-mcp;
 
-        "Codebase Memory".package = pkgs.codebase-memory-mcp;
         "Flux Operator" = {
           package = pkgs.fluxcd-operator-mcp;
           args = ["serve"];
