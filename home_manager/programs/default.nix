@@ -20,6 +20,7 @@
       ./neovim
       ./nix_index.nix
       ./opencode.nix
+      ./pi_coding_agent.nix
       ./rbw.nix
       ./tealdeer.nix
       ./tmux.nix
