@@ -21,7 +21,7 @@
           package = pkgs.bitbucket-mcp;
         };
 
-        codebase-memory-mcp = {
+        codebase-memory = {
           description = "Codebase Memory";
           package = pkgs.codebase-memory-mcp;
         };
