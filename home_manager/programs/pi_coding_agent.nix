@@ -1,4 +1,9 @@
-{pkgs, ...}: let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   qwen = "qwen3.8-flash-next";
 in {
   programs.pi-coding-agent = {
@@ -25,5 +30,11 @@ in {
         "gpt-6-*"
       ];
     };
+  };
+
+  home.file.".pi/agent/mcp.json".text = builtins.toJSON {
+    mcpServers = lib.mapAttrs (_: _: {disabled = true;}) (
+      lib.filterAttrs (_: server: !server.enabled) config.programs.mcp.servers
+    );
   };
 }
