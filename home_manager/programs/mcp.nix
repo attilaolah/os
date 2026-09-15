@@ -11,7 +11,7 @@ in {
 
     servers = disabledByDefault {
       bitbucket = {
-        description = "Bitbucket MCP server";
+        description = "Bitbucket";
         command = lib.getExe pkgs.gcf-proxy;
         args = [
           (lib.getExe pkgs.bitbucket-mcp)
@@ -19,7 +19,7 @@ in {
       };
 
       codebase-memory-mcp = {
-        description = "Codebase Memory MCP server";
+        description = "Codebase Memory";
         command = lib.getExe pkgs.gcf-proxy;
         args = [
           (lib.getExe pkgs.codebase-memory-mcp)
@@ -27,7 +27,7 @@ in {
       };
 
       atlassian = {
-        description = "Atlassian MCP server";
+        description = "Atlassian";
         command = lib.getExe pkgs.gcf-proxy;
         args = [
           (lib.getExe pkgs.mcp-atlassian)
@@ -35,20 +35,20 @@ in {
       };
 
       flux-operator = {
-        description = "Flux Operator MCP server";
+        description = "Flux Operator";
         command = lib.getExe pkgs.gcf-proxy;
         args = [(lib.getExe pkgs.fluxcd-operator-mcp) "serve"];
       };
 
       headroom = {
         enabled = lib.mkDefault true;
-        description = "Headroom MCP server";
+        description = "Headroom";
         command = lib.getExe pkgs.gcf-proxy;
         args = [(lib.getExe pkgs.headroom-ai) "mcp" "serve"];
       };
 
       kubernetes = {
-        description = "Kubernetes MCP server";
+        description = "Kubernetes";
         command = lib.getExe pkgs.gcf-proxy;
         args = [
           (lib.getExe pkgs.kubernetes-mcp-server)
@@ -56,7 +56,7 @@ in {
       };
 
       playwright = {
-        description = "Playwright MCP server";
+        description = "Playwright";
         command = lib.getExe pkgs.gcf-proxy;
         args = [
           (lib.getExe pkgs.playwright-mcp)
@@ -72,7 +72,7 @@ in {
       };
 
       sonarqube = {
-        description = "SonarQube MCP server";
+        description = "SonarQube";
         command = lib.getExe pkgs.gcf-proxy;
         args = [
           (lib.getExe pkgs.sonarqube-mcp-server)
@@ -80,7 +80,7 @@ in {
       };
 
       teamcity = {
-        description = "TeamCity MCP server";
+        description = "TeamCity";
         command = lib.getExe pkgs.gcf-proxy;
         args = [
           (lib.getExe pkgs.teamcity-mcp)
