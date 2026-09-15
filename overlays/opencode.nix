@@ -26,13 +26,13 @@ in {
           if prev.stdenv.hostPlatform.isLinux
           then "sha256-FY/I7zxmWA4tMvFZG5WijdqBcDc0No3a/YmKuxlluNg="
           else if prev.stdenv.hostPlatform.isDarwin
-          then "sha256-28GpwYLMo2cN4Y9cY6/xn9R5EggFj/m1guuSxsbqisM="
+          then "sha256-/njY2BbhqncqQ+gODoTmhBJKTT22VCFAhh8L3kwgHfU="
           else nodeModulesAttrs.outputHash;
         outputHash =
           if prev.stdenv.hostPlatform.isLinux
           then "sha256-Ppc2Kgb9D9xdkrNMyQgPS6rn/zU5zMqMKvAmrFCj1zQ="
           else if prev.stdenv.hostPlatform.isDarwin
-          then "sha256-EWS/DKClw1KPZ4iXR+q48QGkSojWy1kgdstUAPh7NaE="
+          then "sha256-TTdiFxj9wsDHxVKQorvseA6uIxD+muDIqjikVkKWV70="
           else nodeModulesAttrs.outputHash;
       in
         assert nodeModulesAttrs.outputHash == brokenHash;
