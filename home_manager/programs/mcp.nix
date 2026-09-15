@@ -15,7 +15,7 @@
           command = lib.getExe pkgs.gcf-proxy;
           args = [(lib.getExe server.package)] ++ server.args or [];
         }
-        // builtins.removeAttrs server ["args"])
+        // builtins.removeAttrs server ["args" "package"])
       {
         Headroom = {
           package = pkgs.headroom-ai;
