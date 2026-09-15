@@ -2,69 +2,78 @@
   lib,
   pkgs,
   ...
-}: let
-  disabledByDefault = lib.mapAttrs (_: server: {enabled = lib.mkDefault false;} // server);
-  googleChromeSupported = lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.google-chrome;
-in {
+}: {
   programs.mcp = {
     enable = true;
 
-    servers = disabledByDefault {
-      bitbucket = {
-        description = "Bitbucket MCP server";
-        command = lib.getExe pkgs.bitbucket-mcp;
-      };
+    servers =
+      lib.mapAttrs
+      (_: server:
+        {
+          enabled = lib.mkDefault false;
+          command = lib.getExe pkgs.gcf-proxy;
+          args = [(lib.getExe server.package)] ++ server.args or [];
+        }
+        // builtins.removeAttrs server ["args"])
+      {
+        bitbucket = {
+          description = "Bitbucket";
+          package = pkgs.bitbucket-mcp;
+        };
 
-      codebase-memory-mcp = {
-        description = "Codebase Memory MCP server";
-        command = lib.getExe pkgs.codebase-memory-mcp;
-      };
+        codebase-memory-mcp = {
+          description = "Codebase Memory";
+          package = pkgs.codebase-memory-mcp;
+        };
 
-      atlassian = {
-        description = "Atlassian MCP server";
-        command = lib.getExe pkgs.mcp-atlassian;
-      };
+        atlassian = {
+          description = "Atlassian";
+          package = pkgs.mcp-atlassian;
+        };
 
-      flux-operator = {
-        description = "Flux Operator MCP server";
-        command = lib.getExe pkgs.fluxcd-operator-mcp;
-        args = ["serve"];
-      };
+        flux-operator = {
+          description = "Flux Operator";
+          package = pkgs.fluxcd-operator-mcp;
+          args = ["serve"];
+        };
 
-      headroom = {
-        enabled = lib.mkDefault true;
-        description = "Headroom MCP server";
-        command = lib.getExe pkgs.headroom-ai;
-        args = ["mcp" "serve"];
-      };
+        headroom = {
+          description = "Headroom";
+          package = pkgs.headroom-ai;
+          args = ["mcp" "serve"];
+          # On by default, because the proxy is also on by default.
+          enabled = lib.mkDefault true;
+        };
 
-      kubernetes = {
-        description = "Kubernetes MCP server";
-        command = lib.getExe pkgs.kubernetes-mcp-server;
-      };
+        kubernetes = {
+          description = "Kubernetes";
+          package = pkgs.kubernetes-mcp-server;
+        };
 
-      playwright = {
-        description = "Playwright MCP server";
-        command = lib.getExe pkgs.playwright-mcp;
-        env =
-          {
-            PLAYWRIGHT_MCP_CAPS = "devtools,vision";
-            PLAYWRIGHT_MCP_ISOLATED = "1";
-          }
-          // lib.optionalAttrs googleChromeSupported {
-            PLAYWRIGHT_MCP_EXECUTABLE_PATH = lib.getExe pkgs.google-chrome;
-          };
-      };
+        playwright = let
+          browser = pkgs.google-chrome;
+        in {
+          description = "Playwright";
+          package = pkgs.playwright-mcp;
+          env =
+            {
+              PLAYWRIGHT_MCP_CAPS = "devtools,vision";
+              PLAYWRIGHT_MCP_ISOLATED = "1";
+            }
+            // lib.optionalAttrs
+            (lib.meta.availableOn pkgs.stdenv.hostPlatform browser)
+            {PLAYWRIGHT_MCP_EXECUTABLE_PATH = lib.getExe browser;};
+        };
 
-      sonarqube = {
-        description = "SonarQube MCP server";
-        command = lib.getExe pkgs.sonarqube-mcp-server;
-      };
+        sonarqube = {
+          description = "SonarQube";
+          package = pkgs.sonarqube-mcp-server;
+        };
 
-      teamcity = {
-        description = "TeamCity MCP server";
-        command = lib.getExe pkgs.teamcity-mcp;
+        teamcity = {
+          description = "TeamCity";
+          package = pkgs.teamcity-mcp;
+        };
       };
-    };
   };
 }
