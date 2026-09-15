@@ -21,9 +21,22 @@ _final: prev: let
 in {
   opencode = prev.opencode.overrideAttrs (oldAttrs:
     {
-      node_modules = oldAttrs.node_modules.overrideAttrs (nodeModulesAttrs:
-        assert nodeModulesAttrs.outputHash == "sha256-28GpwYLMo2cN4Y9cY6/xn9R5EggFj/m1guuSxsbqisM=";
-          (patchPreBuild nodeModulesAttrs) // {outputHash = "sha256-EWS/DKClw1KPZ4iXR+q48QGkSojWy1kgdstUAPh7NaE=";});
+      node_modules = oldAttrs.node_modules.overrideAttrs (nodeModulesAttrs: let
+        brokenHash =
+          if prev.stdenv.hostPlatform.isLinux
+          then "sha256-tHl+UGkUbalkh+C5RDkRpZ3Q87tgvqnoF4xdih6QeOw="
+          else if prev.stdenv.hostPlatform.isDarwin
+          then "sha256-28GpwYLMo2cN4Y9cY6/xn9R5EggFj/m1guuSxsbqisM="
+          else nodeModulesAttrs.outputHash;
+        outputHash =
+          if prev.stdenv.hostPlatform.isLinux
+          then "sha256-F1ygMH30D/a/T8SaUuY69+LjBGnkHNLmQTvvrsz6NQA="
+          else if prev.stdenv.hostPlatform.isDarwin
+          then "sha256-EWS/DKClw1KPZ4iXR+q48QGkSojWy1kgdstUAPh7NaE="
+          else nodeModulesAttrs.outputHash;
+      in
+        assert nodeModulesAttrs.outputHash == brokenHash;
+          (patchPreBuild nodeModulesAttrs) // {inherit outputHash;});
     }
     // patchPreBuild oldAttrs
     // patchPostPatch oldAttrs
