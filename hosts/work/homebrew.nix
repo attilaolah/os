@@ -14,6 +14,7 @@
 
     # CLI tools:
     brews = [
+      "cocoapods"
       "mas" # Mac App Store CLI
     ];
 
