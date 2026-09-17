@@ -32,6 +32,10 @@
       }/${user.username}";
       stateVersion = "23.11";
 
+      sessionPath = lib.lists.optionals pkgs.stdenv.hostPlatform.isDarwin [
+        "/opt/homebrew/bin"
+      ];
+
       sessionVariables = with config.home;
         lib.attrsets.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
           # Use Secretive as the SSH agent on MacOS. It is installed via Homebrew or environment.systemPackages.
