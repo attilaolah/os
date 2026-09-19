@@ -1,17 +1,4 @@
-_final: prev: let
-  breakFilesystemSearchImportCycle = prev.fetchpatch {
-    url = "https://github.com/anomalyco/opencode/commit/7f392ba6178ac1be6f2b6385293a61586cd98a87.patch";
-    hash = "sha256-cUYvOpsOsdDMuMjrh9FC3O+sM+r5RHTRSjH95Az7/mE=";
-  };
-  omitEmptyMcpArguments = ''
-    substituteInPlace packages/opencode/src/mcp/catalog.ts \
-      --replace-fail \
-        'arguments: (args || {}) as Record<string, unknown>,' \
-        'arguments: Object.fromEntries(Object.entries((args || {}) as Record<string, unknown>).filter(([, value]) => value !== "")),'
-  '';
-  patchPostPatch = attrs: {postPatch = (attrs.postPatch or "") + omitEmptyMcpArguments;};
-  patchPatches = attrs: {patches = (attrs.patches or []) ++ [breakFilesystemSearchImportCycle];};
-in {
+_final: prev: {
   opencode = prev.opencode.overrideAttrs (oldAttrs:
     {
       node_modules = oldAttrs.node_modules.overrideAttrs (nodeModulesAttrs: let
@@ -31,6 +18,5 @@ in {
         assert nodeModulesAttrs.outputHash == brokenHash;
           nodeModulesAttrs // {inherit outputHash;});
     }
-    // patchPostPatch oldAttrs
-    // patchPatches oldAttrs);
+    // oldAttrs);
 }
