@@ -2,9 +2,9 @@ final: prev: let
   inherit (builtins) elemAt;
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
-  github-tags = ["containers/kubernetes-mcp-server" "0.0.66"]; # extractVersion=^v(?<version>.*)$
-  hash-src = "sha256-vnJxSCfnpvOZJXQpKrCAW4QKt5R2PJDYQevA7O1uXZg=";
-  hash-vendor = "sha256-gbqoT4X+wVOEktHm7jaAH9vHrUBrYgR8OjyFz1ljP6k=";
+  github-tags = ["containers/kubernetes-mcp-server" "0.0.67"]; # extractVersion=^v(?<version>.*)$
+  hash-src = "sha256-rejF9JsszB3ZirZhoK1VDbCH/P0Xzmh4TJw5j+okj+M=";
+  hash-vendor = "sha256-TSB2jAWh2PlDHpvzA/rrBbjaR8sgyjivDO0vsbcuvgg=";
 
   version = elemAt github-tags 1;
 in {
