@@ -60,13 +60,13 @@ in {
       wantedBy = ["sockets.target"];
       listenStreams = ["[::]:${port}" "0.0.0.0:${port}"];
       socketConfig = {
-        Accept = true;
         BindIPv6Only = "ipv6-only";
+        Service = "jellyfin-proxy.service";
       };
     };
 
-    services."jellyfin@" = {
-      description = "Jellyfin socket proxy for connection %i";
+    services.jellyfin-proxy = {
+      description = "Jellyfin socket proxy";
       requires = ["jellyfin.service"];
       after = ["jellyfin.service"];
       serviceConfig = {
@@ -83,7 +83,6 @@ in {
           '';
         });
         ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=20min ${socket}";
-        StandardInput = "socket";
       };
     };
   };
