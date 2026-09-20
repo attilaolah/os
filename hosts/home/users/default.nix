@@ -38,6 +38,7 @@ in {
             nfsadmin = true; # homelab direct nfs access
             scanner = hardware.sane.enable;
             lp = services.printing.enable;
+            media = true;
             docker = virtualisation.docker.enable;
             podman = virtualisation.podman.enable;
             wireshark = programs.wireshark.enable;
