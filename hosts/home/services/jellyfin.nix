@@ -58,6 +58,7 @@ in {
       serviceConfig = {
         ExecStartPre = lib.getExe (pkgs.writeShellApplication {
           name = "jellyfin-socket-wait";
+          runtimeInputs = with pkgs; [coreutils];
           text = ''
             for _ in {1..600}; do
               [[ -S "${socket}" ]] && exit 0
