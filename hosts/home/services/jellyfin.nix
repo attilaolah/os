@@ -5,6 +5,7 @@
 }: let
   user = "media";
   group = user;
+  socket = "/run/jellyfin/jellyfin.sock";
 in {
   services.jellyfin = {
     inherit group;
@@ -37,7 +38,7 @@ in {
         RuntimeDirectoryMode = "0750";
         Environment = [
           "JELLYFIN_kestrel__socket=true"
-          "JELLYFIN_kestrel__socketPath=/run/jellyfin/jellyfin.sock"
+          "JELLYFIN_kestrel__socketPath=${socket}"
         ];
       };
     };
@@ -55,8 +56,18 @@ in {
       requires = ["jellyfin.service"];
       after = ["jellyfin.service"];
       serviceConfig = {
-        ExecStartPre = "${pkgs.bash}/bin/bash -c 'for _ in {1..600}; do [[ -S /run/jellyfin/jellyfin.sock ]] && exit 0; sleep 0.1; done; exit 1'";
-        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=20min /run/jellyfin/jellyfin.sock";
+        ExecStartPre = lib.getExe (pkgs.writeShellApplication {
+          name = "jellyfin-socket-wait";
+          text = ''
+            for _ in {1..600}; do
+              [[ -S "${socket}" ]] && exit 0
+              sleep 0.1
+            done
+
+            exit 1
+          '';
+        });
+        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=20min ${socket}";
         StandardInput = "socket";
       };
     };
