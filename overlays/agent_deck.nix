@@ -3,7 +3,7 @@ final: prev: let
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["asheshgoplani/agent-deck" "1.16.14"]; # extractVersion=^v(?<version>.*)$
-  hash-src = "sha256-1kfI8nzURDAHp67Mt7PushWo3uYAu5Sc4kLpMsOL7o4=";
+  hash-src = "sha256-1CDELm7A03YhQ+bVE1rufwLEqCuujZ8kMCy98TUmGMw=";
   hash-vendor = "sha256-ZIBWsEa6IpoW66/kd40UNihBrbo5yjCsRIQatCbt4q8=";
 
   version = elemAt github-tags 1;
