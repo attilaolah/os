@@ -5,7 +5,6 @@
 }: let
   user = "media";
   group = user;
-  socket = "/run/jellyfin/jellyfin.sock";
 in {
   services.jellyfin = {
     inherit group;
@@ -29,26 +28,33 @@ in {
       };
     };
 
-    # Jellyfin has no systemd socket-activation support. Have it listen on a private Unix socket instead.
+    # Jellyfin has no systemd socket-activation support. Have it listen only on loopback instead.
     services.jellyfin = {
       wantedBy = lib.mkForce [];
       unitConfig.StopWhenUnneeded = true;
-      serviceConfig = {
-        RuntimeDirectory = "jellyfin";
-        RuntimeDirectoryMode = "0750";
-        Environment = [
-          "JELLYFIN_kestrel__socket=true"
-          "JELLYFIN_kestrel__socketPath=${socket}"
-        ];
-      };
+      preStart = lib.mkBefore ''
+        install -Dm600 ${pkgs.writeText "jellyfin-network.xml" ''
+          <?xml version="1.0" encoding="utf-8"?>
+          <NetworkConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <LocalNetworkAddresses>
+              <string>127.0.0.1</string>
+            </LocalNetworkAddresses>
+            <InternalHttpPort>8097</InternalHttpPort>
+            <PublicHttpPort>8096</PublicHttpPort>
+          </NetworkConfiguration>
+        ''} /var/lib/jellyfin/config/network.xml
+      '';
     };
 
-    # Exposes Jellyfin on TCP port 8096.
+    # Exposes the loopback-only Jellyfin listener on TCP port 8096.
     sockets.jellyfin = {
       description = "Jellyfin Media Server socket";
       wantedBy = ["sockets.target"];
-      listenStreams = ["8096"];
-      socketConfig.Accept = true;
+      listenStreams = ["[::]:8096" "0.0.0.0:8096"];
+      socketConfig = {
+        Accept = true;
+        BindIPv6Only = "ipv6-only";
+      };
     };
 
     services."jellyfin@" = {
@@ -58,17 +64,17 @@ in {
       serviceConfig = {
         ExecStartPre = lib.getExe (pkgs.writeShellApplication {
           name = "jellyfin-socket-wait";
-          runtimeInputs = with pkgs; [coreutils];
+          runtimeInputs = with pkgs; [netcat-openbsd];
           text = ''
             for _ in {1..600}; do
-              [[ -S "${socket}" ]] && exit 0
+              nc -z 127.0.0.1 8097 && exit 0
               sleep 0.1
             done
 
             exit 1
           '';
         });
-        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=20min ${socket}";
+        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=20min 127.0.0.1:8097";
         StandardInput = "socket";
       };
     };
