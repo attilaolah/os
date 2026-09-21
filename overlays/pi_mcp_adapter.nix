@@ -2,7 +2,7 @@ final: prev: let
   inherit (builtins) elemAt;
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
-  github-tags = ["nicobailon/pi-mcp-adapter" "2.34.0"]; # extractVersion=^v(?<version>.*)$
+  github-tags = ["nicobailon/pi-mcp-adapter" "2.35.0"]; # extractVersion=^v(?<version>.*)$
   hash-src = "sha256-YpiJROIG0/U81wAoImjktbg/d5wGnc6o130IlOrTyEE=";
   hash-npm-deps = "sha256-NnRdqv6cezZ5nv8daje8eK/A5gJFA2F852BkU5cVTRc=";
 
