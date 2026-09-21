@@ -3,8 +3,8 @@ final: prev: let
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["nicobailon/pi-mcp-adapter" "2.36.0"]; # extractVersion=^v(?<version>.*)$
-  hash-src = "sha256-Nd+TNav29lRJ1CSUIRXrBQNq7pudUxvzAk8hWzCkJKA=";
-  hash-npm-deps = "sha256-7ovUXuut4I4wZgjQFgKEkXSN1uhA5Ae3r6y/v8FCiC8=";
+  hash-src = "sha256-PYRDVF5QcZFLJP9z5aYhzgWbuv9yvc0lt9tZKxhHyho=";
+  hash-npm-deps = "sha256-/lOlk0yAv2Vc190UZKaYASddZX63n9imPCye55jmQTo=";
 
   version = elemAt github-tags 1;
   src = fetchFromGitHubTuple {
