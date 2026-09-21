@@ -2,8 +2,8 @@ final: prev: let
   inherit (builtins) elemAt;
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
-  github-tags = ["openai/codex" "0.155.0"]; # extractVersion=^rust-v(?<version>.*)$
-  hash-src = "sha256-O+onwNd5YdE/KUJNBeQxBfK5JohzXenE4eOwejxFptc=";
+  github-tags = ["openai/codex" "0.155.1"]; # extractVersion=^rust-v(?<version>.*)$
+  hash-src = "sha256-iFW66odceRNBsVG5bD9SdcQGxhpm/QIZwYjGCrfMXiI=";
   hash-cargo-deps = "sha256-6IAX/SFSSgSKKFxKsUXoZ9nNQaHJ+EjZ5a4bJwyDdF0=";
 
   version = elemAt github-tags 1;
