@@ -3,8 +3,8 @@ final: prev: let
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
   github-tags = ["openai/codex" "0.156.1"]; # extractVersion=^rust-v(?<version>.*)$
-  hash-src = "sha256-iFW66odceRNBsVG5bD9SdcQGxhpm/QIZwYjGCrfMXiI=";
-  hash-cargo-deps = "sha256-6IAX/SFSSgSKKFxKsUXoZ9nNQaHJ+EjZ5a4bJwyDdF0=";
+  hash-src = "sha256-H53f57hmnyCtn5yPxtBe/A92qyQyzQBeU/vK2qSBrvI=";
+  hash-cargo-deps = "sha256-W87rX/W2J1pwqNrihX+Rj6DfagoZYuB6C+l/S4BhyJM=";
 
   version = elemAt github-tags 1;
 in {
