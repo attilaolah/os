@@ -21,9 +21,10 @@ in {
         datasets
         fastapi
         fastembed
-        httpx
         h2
+        httpx
         jinja2
+        litellm
         magika
         mcp
         numpy
