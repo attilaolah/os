@@ -13,7 +13,7 @@ _final: prev: {
           if prev.stdenv.hostPlatform.isLinux
           then prev.lib.fakeHash
           else if prev.stdenv.hostPlatform.isDarwin
-          then prev.lib.fakeHash
+          then "sha256-WD6HCFDLprNn6oq6qcdD5DOIzsTgKIgr33OzaiuQdxE="
           else nodeModulesAttrs.outputHash;
       in
         assert nodeModulesAttrs.outputHash == brokenHash;
