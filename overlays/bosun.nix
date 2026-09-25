@@ -18,7 +18,8 @@ in {
     };
 
     cargoHash = hash-cargo-deps;
-    nativeCheckInputs = [prev.git];
+    nativeBuildInputs = with prev; [makeWrapper];
+    nativeCheckInputs = with prev; [git];
 
     # Remove when upstream implements a better knob:
     # https://github.com/yetidevworks/bosun/issues/17
