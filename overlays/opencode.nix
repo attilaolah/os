@@ -11,7 +11,7 @@ _final: prev: {
           else nodeModulesAttrs.outputHash;
         outputHash =
           if prev.stdenv.hostPlatform.isLinux
-          then prev.lib.fakeHash
+          then "sha256-6kLoI+VJH6KmerTjDG9pWsWs4ARr2czAb+C4y+VmKe8="
           else if prev.stdenv.hostPlatform.isDarwin
           then "sha256-WD6HCFDLprNn6oq6qcdD5DOIzsTgKIgr33OzaiuQdxE="
           else nodeModulesAttrs.outputHash;
