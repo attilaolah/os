@@ -20,6 +20,13 @@ in {
     cargoHash = hash-cargo-deps;
     nativeCheckInputs = [prev.git];
 
+    # Remove when upstream implements a better knob:
+    # https://github.com/yetidevworks/bosun/issues/17
+    postInstall = ''
+      wrapProgram $out/bin/bosun \
+        --set OPENCODE_CLI_CONFIG_CONTENT '${builtins.toJSON {tabs.mode = "off";}}'
+    '';
+
     meta = {
       description = "Tmux-native orchestrator for AI agent sessions";
       homepage = "https://github.com/yetidevworks/bosun";
