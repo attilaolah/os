@@ -2,9 +2,9 @@ final: prev: let
   inherit (builtins) elemAt;
   fetchFromGitHubTuple = import ./lib/fetch_from_github_tuple.nix prev;
 
-  github-tags = ["nicobailon/pi-mcp-adapter" "2.38.0"]; # extractVersion=^v(?<version>.*)$
-  hash-src = "sha256-NHyfYDtaypPpyebspSzq2OrG6FKiD1WeUlWMNc2kIsg=";
-  hash-npm-deps = "sha256-H2q2gNSvnwbd6vOlTJoTOtXwYSCfBHqJq2cxaXNQkVk=";
+  github-tags = ["nicobailon/pi-mcp-adapter" "5.0.0"]; # extractVersion=^v(?<version>.*)$
+  hash-src = "sha256-F8t9/nbU9yyv4aeA9PPkL2u8ilJGG2ax6+0SIzUORL4=";
+  hash-npm-deps = "sha256-+RgRbvm7xupcezql9KDFYsmtM+kFV25nipxU9hbnx/M=";
 
   version = elemAt github-tags 1;
   src = fetchFromGitHubTuple {
