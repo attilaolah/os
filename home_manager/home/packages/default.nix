@@ -91,7 +91,7 @@
       agent-deck
       bosun
       coderabbit
-      headroom-ai
+      headroom
       qwen-code
 
       # Python, the basics:
